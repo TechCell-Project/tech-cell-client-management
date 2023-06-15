@@ -19,7 +19,15 @@ body {
 }
 
 body {
+  min-height: 100vh;
+  font-family: $primaryFont;
+  font-weight: 500;
   font-size: 16px;
+  letter-spacing: 0;
+  color: $blackColor;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 img {

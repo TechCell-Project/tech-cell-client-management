@@ -1,3 +1,5 @@
-export default function Home() {
-    return <div>Dashboard</div>;
+import LoginComponent from 'components/Form/LoginComponent';
+
+export default function Login() {
+    return <LoginComponent />;
 }

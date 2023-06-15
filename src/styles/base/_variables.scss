@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 // Color & Font
 $primaryColor: #ee4949;
 $primaryLightColor: rgba(238, 73, 73, 0.15);
 $blackColor: #3b3b3b;
 $blackLightColor: rgba(59, 59, 59, 0.15);
+
+$primaryFont: 'Montserrat', sans-serif;
 
 // Break point
 $sm: 600px;

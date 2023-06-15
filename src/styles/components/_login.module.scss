@@ -1,0 +1,63 @@
+@import "../base/variables";
+@import "../base/mixins";
+
+.login {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  & > img {
+    @media (max-width: 1390px) {
+      height: 100% !important;
+    }
+  }
+
+  &Logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  &Form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    position: absolute;
+    inset: 0;
+    padding: 80px;
+
+    @include responsive(max_md) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &Input {
+      max-width: 650px;
+      min-height: 400px;
+      min-width: 450px;
+      background: #F5F5F5;
+      padding: 80px 40px;
+      border-radius: 8px;
+      // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      display: flex;
+      flex-direction: column;
+
+      @include responsive(max_md) {
+        min-width: 370px;
+        padding: 50px 30px;
+      }
+
+
+      &Title {
+        margin-bottom: 15px;
+      }
+
+      &Desc {
+        margin-bottom: 40px;
+        opacity: 0.6;
+        font-size: 15px;
+      }
+    }
+  }
+}

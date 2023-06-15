@@ -1,3 +1,9 @@
+@mixin textGradient($firstColor, $secondColor) {
+  background: -webkit-linear-gradient($firstColor, $secondColor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @mixin responsive($breakpoint) {
   @if $breakpoint ==min_sm {
     @media (min-width: $sm) {
