@@ -35,6 +35,7 @@ const LoginComponent = () => {
                             label="Tài khoản"
                             variant="outlined"
                             sx={{ mb: 4 }}
+                            size='small'
                         />
                         <PasswordInputComponent />
                         <FormControlLabel

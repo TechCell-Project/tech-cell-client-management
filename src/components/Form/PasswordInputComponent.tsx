@@ -14,7 +14,7 @@ const PasswordInputComponent = () => {
         event.preventDefault();
     };
     return (
-        <FormControl fullWidth variant="outlined">
+        <FormControl fullWidth variant="outlined" size='small'>
             <InputLabel htmlFor="password">Mật khẩu</InputLabel>
             <OutlinedInput
                 fullWidth

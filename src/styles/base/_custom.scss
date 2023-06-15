@@ -1,6 +1,16 @@
 .MuiButton-contained {
   background-color: $primaryColor;
   text-transform: capitalize;
+
+  &:hover {
+    background-color: $primaryColor;
+    box-shadow: none;
+  }
+}
+
+.css-nuy4pn-MuiButtonBase-root-MuiButton-root {
+  background-color: $primaryColor;
+  text-transform: capitalize;
   font-weight: 600;
   font-size: 17px;
   box-shadow: none;
@@ -9,6 +19,6 @@
   &:hover {
     background-color: $primaryColor;
     box-shadow: none;
-    
   }
+
 }
