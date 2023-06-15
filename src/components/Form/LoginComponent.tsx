@@ -3,12 +3,13 @@
 import Image from 'next/image';
 import React from 'react';
 import styles from 'styles/components/_login.module.scss';
-import { Button, Stack, TextField, FormControlLabel, Checkbox } from '@mui/material';
+import { Button, Stack, TextField, FormControlLabel, Checkbox, useTheme } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
 import PhoneInTalkRoundedIcon from '@mui/icons-material/PhoneInTalkRounded';
 import PasswordInputComponent from './PasswordInputComponent';
 
 const LoginComponent = () => {
+    const { color } = useTheme();
     return (
         <div className={styles.login}>
             <Image
@@ -38,11 +39,26 @@ const LoginComponent = () => {
                         />
                         <PasswordInputComponent />
                         <FormControlLabel
-                            control={<Checkbox />}
+                            control={<Checkbox size="small" />}
                             label="Nhớ mật khẩu"
                             sx={{ mt: 1 }}
                         />
-                        <Button variant="contained" size="large" sx={{ mt: 2 }}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            sx={{
+                                mt: 2,
+                                color: '#fff',
+                                bgcolor: color.red,
+                                boxShadow: 'none',
+                                textTransform: 'capitalize',
+                                fontWeight: 600,
+                                '&:hover': {
+                                    boxShadow: 'none',
+                                    bgcolor: color.red,
+                                },
+                            }}
+                        >
                             Đăng nhập
                         </Button>
                     </Stack>

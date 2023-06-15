@@ -22,7 +22,7 @@ const PasswordInputComponent = () => {
     };
     return (
         <FormControl fullWidth variant="standard">
-            <InputLabel htmlFor="password">Password</InputLabel>
+            <InputLabel htmlFor="password">Mật khẩu</InputLabel>
             <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
