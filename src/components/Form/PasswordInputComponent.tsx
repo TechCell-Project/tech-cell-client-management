@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import {
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    InputAdornment,
+    IconButton,
+    Input,
+} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -14,10 +21,9 @@ const PasswordInputComponent = () => {
         event.preventDefault();
     };
     return (
-        <FormControl fullWidth variant="outlined">
+        <FormControl fullWidth variant="standard">
             <InputLabel htmlFor="password">Mật khẩu</InputLabel>
-            <OutlinedInput
-                fullWidth
+            <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 endAdornment={
@@ -26,13 +32,11 @@ const PasswordInputComponent = () => {
                             aria-label="toggle password visibility"
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
-                            edge="end"
                         >
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                     </InputAdornment>
                 }
-                label="Mật khẩu"
             />
         </FormControl>
     );
