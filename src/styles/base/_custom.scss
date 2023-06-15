@@ -1,0 +1,14 @@
+.MuiButton-contained {
+  background-color: $primaryColor;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 17px;
+  box-shadow: none;
+  line-height: 2rem;
+
+  &:hover {
+    background-color: $primaryColor;
+    box-shadow: none;
+    
+  }
+}
