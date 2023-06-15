@@ -33,9 +33,8 @@ const LoginComponent = () => {
                             id="username"
                             fullWidth
                             label="Tài khoản"
-                            variant="outlined"
-                            sx={{ mb: 4 }}
-                            size='small'
+                            variant="standard"
+                            sx={{ mb: 3 }}
                         />
                         <PasswordInputComponent />
                         <FormControlLabel
