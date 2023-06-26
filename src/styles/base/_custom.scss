@@ -1,14 +1,49 @@
-.MuiButton-contained {
-  background-color: $primaryColor;
-  text-transform: capitalize;
-  font-weight: 600;
-  font-size: 17px;
-  box-shadow: none;
-  line-height: 2rem;
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  padding: 10px 20px;
+}
+
+.css-ciy9n4-MuiPaper-root-MuiAppBar-root {
+  background-color: transparent;
+  box-shadow: unset;
+  color: $blackColor;
+}
+
+.css-qpl2ez-MuiButtonBase-root-MuiListItemButton-root.Mui-selected {
+  background-color: unset;
+
+  .MuiListItemText-root {
+    span {
+      opacity: 1;
+      transform: translateX(8px);
+    }
+  }
 
   &:hover {
-    background-color: $primaryColor;
-    box-shadow: none;
-    
+    background-color: unset;
+
+    .MuiListItemText-root {
+      span {
+        opacity: 1;
+        transform: translateX(8px);
+      }
+    }
   }
+}
+
+.css-qpl2ez-MuiButtonBase-root-MuiListItemButton-root:hover {
+  background-color: unset;
+
+  .MuiListItemText-root {
+    span {
+      opacity: 1;
+      transform: translateX(8px);
+    }
+  }
+}
+
+.css-1y1qk06-MuiTypography-root {
+  font-size: 15px;
+  transition: all 0.2s ease-in;
+  font-weight: 700;
+  opacity: 0.5;
 }
