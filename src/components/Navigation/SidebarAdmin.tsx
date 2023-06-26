@@ -1,7 +1,10 @@
 'use client';
 
 import React, { ReactNode, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import {
+    Avatar,
     Box,
     CssBaseline,
     Divider,
@@ -12,16 +15,22 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    ListSubheader,
+    Stack,
     Toolbar,
     Typography,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MailIcon from '@mui/icons-material/Mail';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import Image from 'next/image';
+import { LIST_NAV_MAIN } from 'constants/navigation';
+import SearchHeader from './SearchHeader';
+import UserBoxHeader from './UserBoxHeader';
+import ListNavItem from './ListNavItem';
 
 const drawerWidth = 240;
 
@@ -58,6 +67,9 @@ const AppBar = styled(MuiAppBar, {
     ...(open && {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
+        backgroundColor: 'transparent',
+        color: theme.color.black,
+        boxShadow: 'unset',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
@@ -71,12 +83,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
 }));
 
 export default function SidebarAdmin({ children }: { children: React.ReactNode }) {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
+    const pathname = usePathname();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -90,19 +103,29 @@ export default function SidebarAdmin({ children }: { children: React.ReactNode }
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        gap={3}
                         sx={{ mr: 2, ...(open && { display: 'none' }) }}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Persistent drawer
-                    </Typography>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <UserBoxHeader />
+                    </Stack>
+                    <Box sx={{ ...(!open && { display: 'none' }) }}>
+                        <UserBoxHeader />
+                    </Box>
+                    <Stack direction="row" alignItems="center" justifyContent="flex-start">
+                        <SearchHeader />
+                    </Stack>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -118,40 +141,16 @@ export default function SidebarAdmin({ children }: { children: React.ReactNode }
                 anchor="left"
                 open={open}
             >
-                <DrawerHeader>
+                <DrawerHeader sx={{ p: 0 }}>
+                    <Image src="/logo-red.png" alt="Logo Techcell" width={140} height={40} />
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </DrawerHeader>
-                <Divider />
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                    <ListNavItem list={LIST_NAV_MAIN} pathname={pathname} subHeader="Danh mục" />
             </Drawer>
             <Main open={open}>
-                <DrawerHeader/>
+                <DrawerHeader />
                 {children}
             </Main>
         </Box>
