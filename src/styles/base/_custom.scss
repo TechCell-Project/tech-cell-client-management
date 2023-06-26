@@ -1,14 +1,14 @@
-.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+.MuiPaper-root {
   padding: 10px 20px;
 }
 
-.css-ciy9n4-MuiPaper-root-MuiAppBar-root {
+.MuiAppBar-root {
   background-color: transparent;
   box-shadow: unset;
   color: $blackColor;
 }
 
-.css-qpl2ez-MuiButtonBase-root-MuiListItemButton-root.Mui-selected {
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected {
   background-color: unset;
 
   .MuiListItemText-root {
@@ -30,7 +30,7 @@
   }
 }
 
-.css-qpl2ez-MuiButtonBase-root-MuiListItemButton-root:hover {
+.MuiButtonBase-root.MuiListItemButton-root:hover {
   background-color: unset;
 
   .MuiListItemText-root {
@@ -41,7 +41,7 @@
   }
 }
 
-.css-1y1qk06-MuiTypography-root {
+.MuiTypography-root.MuiListItemText-primary {
   font-size: 15px;
   transition: all 0.2s ease-in;
   font-weight: 700;
