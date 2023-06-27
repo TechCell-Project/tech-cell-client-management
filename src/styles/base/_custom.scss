@@ -2,14 +2,34 @@
   padding: 10px 20px;
 }
 
-.MuiAppBar-root {
+.MuiAppBar-root.MuiAppBar-colorPrimary {
   background-color: transparent;
   box-shadow: unset;
   color: $blackColor;
 }
 
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular {
+  padding: 0;
+}
+
+.MuiButtonBase-root.MuiListItemButton-root {
+  position: relative;
+  transition: all ease 0.3s;
+}
+
 .MuiButtonBase-root.MuiListItemButton-root.Mui-selected {
-  background-color: unset;
+  background-color: #f3f6f9;
+  border-radius: 0 10px 10px 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5px;
+    background-color: $blackColor;
+    left: -5px;
+    top: 0;
+  }
 
   .MuiListItemText-root {
     span {

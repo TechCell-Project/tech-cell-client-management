@@ -2,32 +2,25 @@
 
 import React, { ReactNode, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import Image from 'next/image';
 import {
-    Avatar,
     Box,
     CssBaseline,
-    Divider,
     Drawer,
     IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    ListSubheader,
     Stack,
     Toolbar,
-    Typography,
+    Badge,
+    BadgeProps,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import Image from 'next/image';
-import { LIST_NAV_MAIN } from 'constants/navigation';
+import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
+import { LIST_NAV_MAIN, LIST_NAV_OTHER } from 'constants/navigation';
 import SearchHeader from './SearchHeader';
 import UserBoxHeader from './UserBoxHeader';
 import ListNavItem from './ListNavItem';
@@ -86,6 +79,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'space-between',
 }));
 
+const StyledBadge = styled(Badge)<BadgeProps>(() => ({
+    '& .MuiBadge-badge': {
+        right: -1,
+        top: -2,
+    },
+}));
+
 export default function SidebarAdmin({ children }: { children: React.ReactNode }) {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
@@ -118,13 +118,31 @@ export default function SidebarAdmin({ children }: { children: React.ReactNode }
                         >
                             <MenuIcon />
                         </IconButton>
-                        <UserBoxHeader />
+                        <UserBoxHeader role="Admin" name="Admin Name" />
                     </Stack>
                     <Box sx={{ ...(!open && { display: 'none' }) }}>
-                        <UserBoxHeader />
+                        <UserBoxHeader role="Admin" name="Admin Name" />
                     </Box>
-                    <Stack direction="row" alignItems="center" justifyContent="flex-start">
+                    <Stack direction="row" alignItems="center" justifyContent="flex-start" gap={2}>
                         <SearchHeader />
+                        <Stack direction="row" alignItems="center" gap={1}>
+                            <IconButton
+                                aria-label="notifications"
+                                sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}
+                            >
+                                <StyledBadge color="secondary" variant="dot">
+                                    <NotificationsNoneRoundedIcon />
+                                </StyledBadge>
+                            </IconButton>
+                            <IconButton
+                                aria-label="chat"
+                                sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}
+                            >
+                                <StyledBadge color="secondary" variant="dot">
+                                    <ForumRoundedIcon />
+                                </StyledBadge>
+                            </IconButton>
+                        </Stack>
                     </Stack>
                 </Toolbar>
             </AppBar>
@@ -141,13 +159,14 @@ export default function SidebarAdmin({ children }: { children: React.ReactNode }
                 anchor="left"
                 open={open}
             >
-                <DrawerHeader sx={{ p: 0 }}>
+                <DrawerHeader sx={{ p: 0, mb: 2 }}>
                     <Image src="/logo-red.png" alt="Logo Techcell" width={140} height={40} />
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </DrawerHeader>
-                    <ListNavItem list={LIST_NAV_MAIN} pathname={pathname} subHeader="Danh mục" />
+                <ListNavItem list={LIST_NAV_MAIN} pathname={pathname} subHeader="Danh mục" />
+                <ListNavItem list={LIST_NAV_OTHER} pathname={pathname} subHeader="Khác" />
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />

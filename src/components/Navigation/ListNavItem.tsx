@@ -14,7 +14,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 interface NavProps {
     name: string;
-    to: string;
+    to?: string;
     icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
         muiName: string;
     };
@@ -33,7 +33,14 @@ const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
         <List
             subheader={
                 <ListSubheader
-                    sx={{ fontSize: '13px', px: '10px', lineHeight: '40px', mt: 2 }}
+                    sx={{
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        px: '10px',
+                        lineHeight: '40px',
+                        color: "rgba(0, 0, 0, 0.8)",
+                        textTransform: 'uppercase',
+                    }}
                     component="div"
                 >
                     {subHeader ? subHeader : ''}
@@ -42,7 +49,19 @@ const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
         >
             {list?.map((nav, i) => (
                 <ListItem disablePadding key={i}>
-                    <Link href={nav.to} style={{ width: '100%' }}>
+                    {nav.to ? (
+                        <Link href={nav.to} style={{ width: '100%' }}>
+                            <ListItemButton
+                                selected={pathname === nav.to}
+                                sx={{ borderRadius: '10px' }}
+                            >
+                                <ListItemIcon sx={{ minWidth: '40px' }}>
+                                    {<nav.icon />}
+                                </ListItemIcon>
+                                <ListItemText primary={nav.name} color={theme.color.black} />
+                            </ListItemButton>
+                        </Link>
+                    ) : (
                         <ListItemButton
                             selected={pathname === nav.to}
                             sx={{ borderRadius: '10px' }}
@@ -50,7 +69,7 @@ const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
                             <ListItemIcon sx={{ minWidth: '40px' }}>{<nav.icon />}</ListItemIcon>
                             <ListItemText primary={nav.name} color={theme.color.black} />
                         </ListItemButton>
-                    </Link>
+                    )}
                 </ListItem>
             ))}
         </List>
