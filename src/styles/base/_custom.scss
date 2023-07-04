@@ -67,3 +67,11 @@
   font-weight: 700;
   opacity: 0.5;
 }
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl {
+  font-size: 14px;
+
+  &.Mui-focused {
+    font-size: 16px;
+  }
+}

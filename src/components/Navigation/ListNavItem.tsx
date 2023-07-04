@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import {
     List,
@@ -7,27 +7,15 @@ import {
     ListItemIcon,
     ListItemText,
     ListSubheader,
-    SvgIconTypeMap,
     useTheme,
 } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { IListNavProps } from '@interface/navigation';
+import { useAppDispatch } from '@store/store';
+import { logout } from '@store/slices/authSlice';
 
-interface NavProps {
-    name: string;
-    to?: string;
-    icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-        muiName: string;
-    };
-}
-
-interface ListNavProps {
-    list: NavProps[];
-    pathname?: string;
-    subHeader?: string;
-}
-
-const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
+const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
     const theme = useTheme();
+    const dispatch = useAppDispatch();
 
     return (
         <List
@@ -38,7 +26,7 @@ const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
                         fontWeight: 700,
                         px: '10px',
                         lineHeight: '40px',
-                        color: "rgba(0, 0, 0, 0.8)",
+                        color: 'rgba(0, 0, 0, 0.8)',
                         textTransform: 'uppercase',
                     }}
                     component="div"
@@ -63,8 +51,8 @@ const ListNavItem = ({ list, pathname, subHeader }: ListNavProps) => {
                         </Link>
                     ) : (
                         <ListItemButton
-                            selected={pathname === nav.to}
                             sx={{ borderRadius: '10px' }}
+                            onClick={async () => await dispatch(logout())}
                         >
                             <ListItemIcon sx={{ minWidth: '40px' }}>{<nav.icon />}</ListItemIcon>
                             <ListItemText primary={nav.name} color={theme.color.black} />

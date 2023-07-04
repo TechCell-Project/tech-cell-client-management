@@ -13,6 +13,11 @@ declare module '@mui/material/styles' {
         fontFamily: {
             primary: string;
         };
+        palette: {
+          secondary: {
+            main: string;
+          };
+        };
     }
     // allow configuration using `createTheme`
     interface ThemeOptions {
@@ -43,5 +48,10 @@ export const theme: Theme = createTheme({
     },
     typography: {
       fontFamily: ["Montserrat", "sans-serif"].join(","),
+    },
+    palette: {
+      secondary: {
+        main: '#ee4949',
+      },
     },
 });

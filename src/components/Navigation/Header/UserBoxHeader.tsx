@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Avatar, Stack, Typography } from '@mui/material';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import { IUserBox } from '@interface/navigation';
 
-interface Props {
-    name: string;
-    role: string;
-}
-
-const UserBoxHeader = (props: Props) => {
+const UserBoxHeader: FC<IUserBox> = (props) => {
     return (
         <Stack direction="row" alignItems="center" gap="10px">
             <Avatar>

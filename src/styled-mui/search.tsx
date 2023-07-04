@@ -1,8 +1,6 @@
-import React from 'react';
-import { InputBase, alpha, styled } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { InputBase, styled } from '@mui/material';
 
-const Search = styled('div')(({ theme }) => ({
+export const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: '100rem',
     backgroundColor: '#fff',
@@ -18,7 +16,7 @@ const Search = styled('div')(({ theme }) => ({
     // },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+export const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -28,7 +26,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         fontSize: '14px',
@@ -42,16 +40,3 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-
-const SearchHeader = () => {
-    return (
-        <Search>
-            <SearchIconWrapper>
-                <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Tìm kiếm ..." inputProps={{ 'aria-label': 'search' }} />
-        </Search>
-    );
-};
-
-export default SearchHeader;
