@@ -1,9 +1,13 @@
-.MuiPaper-root {
+.MuiDrawer-paper.MuiDrawer-paperAnchorLeft {
   padding: 10px 20px;
 }
 
+.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionFixed {
+  padding: 10px 24px;
+}
+
 .MuiAppBar-root.MuiAppBar-colorPrimary {
-  background-color: transparent;
+  background-color: #f3f6f9;
   box-shadow: unset;
   color: $blackColor;
 }
@@ -73,5 +77,41 @@
 
   &.Mui-focused {
     font-size: 16px;
+  }
+}
+
+.MuiDataGrid-toolbarContainer {
+  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+    color: $primaryColor;
+    background-color: $primaryLightColor;
+    padding: 7px 18px;
+    font-weight: 600;
+  }
+}
+
+.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular,
+.MuiPaginationItem-root.Mui-selected {
+  background-color: $primaryColor !important;
+  color: #fff;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary,
+.MuiButtonBase-root.MuiSwitch-switchBase.MuiSwitch-colorPrimary.Mui-checked {
+  color: $primaryColor;
+}
+
+.MuiButtonBase-root.MuiSwitch-switchBase.MuiSwitch-colorPrimary.Mui-checked+.MuiSwitch-track {
+  background-color: $primaryColor;
+}
+
+.MuiDataGrid-columnHeaderTitleContainerContent {
+  .MuiDataGrid-columnHeaderTitle {
+    font-weight: 700;
+  }
+}
+
+.MuiDataGrid-virtualScrollerRenderZone {
+  .MuiDataGrid-row:nth-child(even) {
+    background-color: rgba(243, 246, 249, 0.4);
   }
 }

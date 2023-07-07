@@ -16,6 +16,6 @@ export interface IListNavProps {
 }
 
 export interface IUserBox {
-    name?: string;
-    role?: string;
+    name?: string | null;
+    role?: string | null;
 }

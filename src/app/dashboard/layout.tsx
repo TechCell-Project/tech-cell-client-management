@@ -2,14 +2,9 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Provider } from 'react-redux';
-import { Montserrat } from 'next/font/google';
 import Sidebar from '@components/Navigation/Sidebar';
 import { LoadingPage } from '@components/Common';
-import { store, useAppSelector } from '@store/store';
-import 'styles/base/index.scss';
-
-const montserrat = Montserrat({ subsets: ['latin'] });
+import { useAppSelector } from '@store/store';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -26,19 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }
     }, [isAuthenticated]);
 
-    return !isAuthenticated ? (
-        <LoadingPage isLoading={true} />
-    ) : (
-        <html lang="en">
-            <head>
-                <link rel="icon" href="/favicon.ico?v=2" />
-                <title>Trang Quản Trị TechCell - Trang Chủ</title>
-            </head>
-            <body className={montserrat.className} style={{ backgroundColor: '#f3f6f9' }}>
-                <Provider store={store}>
-                    <Sidebar>{children}</Sidebar>
-                </Provider>
-            </body>
-        </html>
+    return (
+        <section style={{ backgroundColor: '#f3f6f9' }}>
+            {!isAuthenticated ? <LoadingPage isLoading={true} /> : <Sidebar>{children}</Sidebar>}
+        </section>
     );
 }

@@ -12,17 +12,12 @@ import ListNavItem from './ListNavItem';
 import Header from './Header/Header';
 
 export default function Sidebar({ children }: { children: ReactNode }) {
-    const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
+    const theme = useTheme();
     const pathname = usePathname();
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const handleDrawerOpen = () => setOpen(true);
+    const handleDrawerClose = () => setOpen(false);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -44,7 +39,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
                 open={open}
             >
                 <DrawerHeader sx={{ p: 0, mb: 2 }}>
-                    <Image src="/logo-red.png" alt="Logo Techcell" width={140} height={40} />
+                    <Image src="/logo-red.png" alt="Logo Techcell" width={140} height={40} priority/>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>

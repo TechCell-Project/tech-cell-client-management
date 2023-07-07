@@ -34,36 +34,36 @@ export const AlertMessage: FC<IAlert> = ({ type, status, message, timeout = 3000
         }
     }, [timeout]);
 
-    return !undefined ? (
-        <Zoom in={isVisible} style={{ transitionDuration: '700ms' }}>
-            <Stack
-                sx={{
-                    position: 'fixed',
-                    top: { sm: 30, xs: 10 },
-                    right: { sm: 30, xs: 10 },
-                    zIndex: 9999,
-                }}
-            >
-                <Alert
-                    severity={type}
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => setIsVisible(false)}
-                        >
-                            <CloseIcon fontSize="inherit" />
-                        </IconButton>
-                    }
+    return (
+        !undefined && (
+            <Zoom in={isVisible} style={{ transitionDuration: '700ms' }}>
+                <Stack
+                    sx={{
+                        position: 'fixed',
+                        top: { sm: 30, xs: 10 },
+                        right: { sm: 30, xs: 10 },
+                        zIndex: 9999,
+                    }}
                 >
-                    <AlertTitle>{getStatus}</AlertTitle>
-                    <strong>{message}</strong>
-                </Alert>
-            </Stack>
-        </Zoom>
-    ) : (
-        <></>
+                    <Alert
+                        severity={type}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => setIsVisible(false)}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        <AlertTitle>{getStatus}</AlertTitle>
+                        <strong>{message}</strong>
+                    </Alert>
+                </Stack>
+            </Zoom>
+        )
     );
 };
 

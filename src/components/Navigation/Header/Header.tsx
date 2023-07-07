@@ -6,6 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { BadgeIconButton } from '@styled-mui/badge';
 import UserBoxHeader from './UserBoxHeader';
 import SearchHeader from './SearchHeader';
+import { useAppSelector } from '@store/store';
+import { getRole } from '@utils/index';
 
 interface IHeader {
     open?: boolean;
@@ -13,6 +15,8 @@ interface IHeader {
 }
 
 const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
+    const { user } = useAppSelector((state) => state.auth);
+
     return (
         <Toolbar sx={{ justifyContent: 'space-between' }}>
             <Stack
@@ -29,10 +33,10 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <UserBoxHeader role="Admin" name="Admin Name" />
+                <UserBoxHeader role={getRole(user?.role)} name={`${user?.firstName} ${user?.lastName}`} />
             </Stack>
             <Box sx={{ ...(!open && { display: 'none' }) }}>
-                <UserBoxHeader role="Admin" name="Admin Name" />
+                <UserBoxHeader role={getRole(user?.role)} name={`${user?.firstName} ${user?.lastName}`} />
             </Box>
             <Stack direction="row" alignItems="center" justifyContent="flex-start" gap={2}>
                 <SearchHeader />

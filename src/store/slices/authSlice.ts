@@ -46,8 +46,9 @@ export const login =
         dispatch(isLogin());
         try {
             const response = await loginFetching(payload);
+            const roleAccepted = "Admin" || "SuperAdmin" || "Mod";
 
-            if (response.data.role === 'Admin') {
+            if (response.data.role === roleAccepted) {
                 localStorage.setItem('user', JSON.stringify(response.data));
                 dispatch(loginSuccess(response.data));
                 return {
@@ -64,9 +65,8 @@ export const login =
                 };
             }
         } catch (error: any) {
-            console.log(error);
             dispatch(loginFailure());
-            if (error.response.status === 401 || error.response.status === 404) {
+            if (String(error.response.status).startsWith("4")) {
                 return {
                     type: 'error',
                     status: 2,

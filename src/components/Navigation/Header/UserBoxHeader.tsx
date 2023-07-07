@@ -13,7 +13,7 @@ const UserBoxHeader: FC<IUserBox> = (props) => {
                 <Typography variant="h6" fontSize={16} fontWeight={700}>
                     {props.name}
                 </Typography>
-                <Typography variant="body1" fontSize={12}>
+                <Typography variant="body1" fontSize={12} fontWeight={600} sx={{opacity: 0.7}}>
                     {props.role}
                 </Typography>
             </Stack>

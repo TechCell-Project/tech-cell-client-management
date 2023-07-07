@@ -54,3 +54,19 @@ export const isAccessTokenExpired = () => {
 
     return true; // Trả về true nếu không có access token hoặc không thể giải mã
 };
+
+// common functions
+export const getRole = (role?: string | null) => {
+    switch (role) {
+        case 'User':
+            return 'Khách hàng';
+        case 'Admin':
+            return 'Quản trị viên';
+        case 'Mod':
+            return 'Điều hành viên';
+        case 'SuperAdmin':
+            return 'Quản lý';
+        default:
+            return '';
+    }
+};

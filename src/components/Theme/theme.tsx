@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { Theme } from '@mui/material/styles/createTheme';
+import { viVN } from '@mui/material/locale';
 
 declare module '@mui/material/styles' {
     interface Theme {
@@ -14,9 +15,10 @@ declare module '@mui/material/styles' {
             primary: string;
         };
         palette: {
-          secondary: {
-            main: string;
-          };
+            secondary: {
+                main: string;
+            };
+            mode: string;
         };
     }
     // allow configuration using `createTheme`
@@ -34,24 +36,27 @@ declare module '@mui/material/styles' {
     }
 }
 
-
-export const theme: Theme = createTheme({
-    color: {
-        red: '#ee4949',
-        lightRed: 'rgba(238, 73, 73, 0.15)',
-        black: '#3b3b3b',
-        lightBlack: 'rgba(59, 59, 59, 0.15)',
-        gray: '#777777',
+export const theme: Theme = createTheme(
+    {
+        color: {
+            red: '#ee4949',
+            lightRed: 'rgba(238, 73, 73, 0.08)',
+            black: '#3b3b3b',
+            lightBlack: 'rgba(59, 59, 59, 0.08)',
+            gray: '#777777',
+        },
+        fontFamily: {
+            primary: "'Montserrat', sans-serif",
+        },
+        typography: {
+            fontFamily: ['Montserrat', 'sans-serif'].join(','),
+        },
+        palette: {
+            secondary: {
+                main: '#ee4949',
+              },
+              mode: 'light',
+        },
     },
-    fontFamily: {
-        primary: "'Montserrat', sans-serif",
-    },
-    typography: {
-      fontFamily: ["Montserrat", "sans-serif"].join(","),
-    },
-    palette: {
-      secondary: {
-        main: '#ee4949',
-      },
-    },
-});
+    viVN,
+);
