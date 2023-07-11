@@ -1,33 +1,171 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo } from 'react';
-import { DataTable } from '@components/Common';
-import { COLUMNS_ACCOUNT } from '@constants/data';
-import { getAllUserAccount } from '@store/slices/accountSlice';
-import { useAppDispatch, useAppSelector } from '@store/store';
-import { getRole } from '@utils/index';
+import React, { useEffect, useMemo, useState } from "react";
+import { DataTable } from "@components/Common";
+import { COLUMNS_ACCOUNT } from "@constants/data";
+import {
+  blockAccount,
+  getAllUserAccount,
+  getDetailsUserAccount,
+  unBlockAccount,
+} from "@store/slices/accountSlice";
+import { useAppDispatch, useAppSelector } from "@store/store";
+import { getRole, getUserId } from "@utils/index";
+import { SnackbarMessage } from "@components/Common";
+import { ISnackbarAlert } from "@interface/common";
+import { GridColDef } from "@mui/x-data-grid";
+import { IconButton, Tooltip } from "@mui/material";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import { ConfirmBlock, ChangeRole, DetailsAccount } from "./Dialog";
 
 export const Account = () => {
-    const dispatch = useAppDispatch();
-    const { accounts } = useAppSelector((state) => state.account);
+  const dispatch = useAppDispatch();
+  const { accounts, isLoading } = useAppSelector((state) => state.account);
+  const [alert, setAlert] = useState<ISnackbarAlert>();
 
-    useEffect(() => {
-        dispatch(getAllUserAccount());
-    }, []);
+  useEffect(() => {
+    dispatch(getAllUserAccount());
+  }, []);
 
-    const rows = useMemo(() => {
-        return accounts.map((account, i) => ({
-            id: account._id,
-            no: i + 1,
-            name: `${account.firstName} ${account.lastName}`,
-            role: getRole(account.role),
-            email: account.email,
-        }));
-    }, [accounts]);
+  const rows = useMemo(() => {
+    return accounts.map((account, i) => ({
+      id: account._id,
+      no: i + 1,
+      name: `${account.firstName} ${account.lastName}`,
+      role: getRole(account.role),
+      email: account.email,
+      status:
+        account.block && account.block.isBlocked ? "Bị chặn" : "Hoạt động",
+    }));
+  }, [accounts]);
 
-    return (
+  const handleAccountStatus = async (
+    id: string,
+    email: string,
+    action: "block" | "unblock"
+  ) => {
+    let actionFunction;
+    let successMessage;
+
+    if (action === "block") {
+      actionFunction = blockAccount;
+      successMessage = `Đã chặn ${email} thành công!`;
+    } else if (action === "unblock") {
+      actionFunction = unBlockAccount;
+      successMessage = `Bỏ chặn ${email} thành công!`;
+    }
+
+    if (actionFunction) {
+      const response = await dispatch(actionFunction(id));
+      if (response) {
+        setAlert({
+          type: "success",
+          message: successMessage,
+          timeout: 4000,
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message: "Thất bại, Hệ thống có lỗi xảy ra!",
+          timeout: 4000,
+        });
+      }
+    }
+  };
+
+  const handleConfirmStatus = (status: string, id: string, email: string) => {
+    return useMemo(() => {
+      if (status === "Hoạt động") {
+        return (
+          <ConfirmBlock
+            icon={<BlockOutlinedIcon />}
+            disable={id === getUserId()}
+            tooltip="Chặn"
+            dialogTitle="Xác nhận chặn tài khoản?"
+            dialogContentText={
+              <>
+                Bạn có chắc chắn muốn chặn tài khoản với email: <b>{email}</b>
+              </>
+            }
+            handleClick={() => handleAccountStatus(id, email, "block")}
+          />
+        );
+      } else {
+        return (
+          <ConfirmBlock
+            icon={<LockOpenOutlinedIcon />}
+            tooltip="Bỏ chặn"
+            disable={id === getUserId()}
+            dialogTitle="Xác nhận bỏ chặn tài khoản?"
+            dialogContentText={
+              <>
+                Bạn có chắc chắn muốn bỏ chặn tài khoản với email:
+                <b>{email}</b>
+              </>
+            }
+            handleClick={() => handleAccountStatus(id, email, "unblock")}
+          />
+        );
+      }
+    }, [status, id, email]);
+  };
+
+  const handleChangeRoleStatus = (id: string) => {
+    return useMemo(() => {
+      return (
+        <ChangeRole
+          dialogTitle="Thay đổi vai trò"
+          icon={<ChangeCircleOutlinedIcon />}
+          tooltip="Thay đổi vai trò"
+          id={id}
+          setAlert={setAlert}
+        />
+      );
+    }, [id]);
+  };
+
+  const viewDetailsAccount = (id: string) => {
+    return useMemo(() => {
+      return (
+        <DetailsAccount
+          tooltip="Chi tiết"
+          dialogTitle="Thông tin tài khoản"
+          id={id}
+          icon={<InfoOutlinedIcon />}
+        />
+      );
+    }, [id]);
+  };
+
+  const columns: GridColDef[] = [
+    ...COLUMNS_ACCOUNT,
+    {
+      field: "options",
+      headerName: "Thao Tác",
+      width: 200,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => (
         <>
-            <DataTable column={COLUMNS_ACCOUNT} row={rows} />
+          {handleChangeRoleStatus(params.row.id)}
+          {viewDetailsAccount(params.row.id)}
+          {handleConfirmStatus(
+            params.row.status,
+            params.row.id,
+            params.row.email
+          )}
         </>
-    );
+      ),
+    },
+  ];
+
+  return (
+    <>
+      {alert && !isLoading && <SnackbarMessage {...alert} />}
+      <DataTable column={columns} row={rows} isLoading={isLoading} />
+    </>
+  );
 };

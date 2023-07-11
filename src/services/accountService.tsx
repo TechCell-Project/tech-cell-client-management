@@ -6,6 +6,6 @@ export const getDetailsAccount = (id: string) => instance.get(`${USERS_ENDPOINT}
 
 export const patchBlockAccount = (id: string) => instance.patch(`${USERS_ENDPOINT}/${id}/block`);
 export const patchUnBlockAccount = (id: string) =>
-    instance.patch(`${USERS_ENDPOINT}/${id}/unblock`);
-export const patchChangeRoleAccount = (id: string) =>
-    instance.patch(`${USERS_ENDPOINT}/${id}/change-role`);
+  instance.patch(`${USERS_ENDPOINT}/${id}/unblock`);
+export const patchChangeRoleAccount = (id: string, role: string) =>
+  instance.patch(`${USERS_ENDPOINT}/${id}/change-role`, { role });

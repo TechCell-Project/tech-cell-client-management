@@ -54,6 +54,10 @@
   }
 }
 
+.MuiInputBase-input.MuiOutlinedInput-input {
+  font-size: 15px;
+}
+
 .MuiButtonBase-root.MuiListItemButton-root:hover {
   background-color: unset;
 
@@ -74,9 +78,10 @@
 
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl {
   font-size: 14px;
+  left: 3px;
 
   &.Mui-focused {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -114,4 +119,14 @@
   .MuiDataGrid-row:nth-child(even) {
     background-color: rgba(243, 246, 249, 0.4);
   }
+}
+
+.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.MuiBreadcrumbs-separator {
+  margin-left: 4px;
+  margin-right: 4px;
 }

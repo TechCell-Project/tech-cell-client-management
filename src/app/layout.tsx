@@ -11,21 +11,20 @@ import 'styles/base/index.scss';
 const montserrat = Montserrat({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <html lang="en">
-            <head>
-                <title>Trang Quản Trị TechCell - Đăng nhập</title>
-                <link rel="icon" href="/favicon.ico?v=2" />
-            </head>
-            <body className={montserrat.className}>
-                <ThemeProvider theme={theme}>
-                    <Provider store={store}>
-                        <PersistGate loading={null} persistor={persistor}>
-                            {children}
-                        </PersistGate>
-                    </Provider>
-                </ThemeProvider>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico?v=2" />
+      </head>
+      <body className={montserrat.className}>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              {children}
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

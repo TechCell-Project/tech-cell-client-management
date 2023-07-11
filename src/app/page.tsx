@@ -1,31 +1,36 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Login } from '@components/Form';
-import { useAppDispatch, useAppSelector } from '@store/store';
-import { authenticate } from '@store/slices/authSlice';
-import { LoadingPage } from '@components/Common';
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Login } from "@components/Form";
+import { useAppDispatch, useAppSelector } from "@store/store";
+import { authenticate } from "@store/slices/authSlice";
+import { LoadingPage } from "@components/Common";
+import { TITLE_TECHCELL } from "@constants/data";
 
 export default function LoginPage() {
-    const router = useRouter();
-    const { isAuthenticated } = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(authenticate());
-    }, []);
+  useEffect(() => {
+    dispatch(authenticate());
+  }, []);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            const timeout = setTimeout(() => {
-                router.push('/dashboard');
-            }, 1000);
-            return () => {
-                clearTimeout(timeout);
-            };
-        }
-    }, [isAuthenticated]);
+  useEffect(() => {
+    document.title = `Đăng Nhập - ${TITLE_TECHCELL}`;
+  }, [document.title]);
 
-    return isAuthenticated ? <LoadingPage isLoading={true} /> : <Login />;
+  useEffect(() => {
+    if (isAuthenticated) {
+      const timeout = setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [isAuthenticated]);
+
+  return isAuthenticated ? <LoadingPage isLoading={true} /> : <Login />;
 }
