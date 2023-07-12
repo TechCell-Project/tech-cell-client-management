@@ -30,7 +30,8 @@ export interface IConfirmDialog {
   handleClick?: any;
   dialogTitle?: string;
   dialogContentText?: string | React.ReactNode;
-  disable?: boolean;
+  hidden?: boolean;
+  disabled?: boolean;
 }
 
 export interface IChangeRoleDialog {
@@ -39,6 +40,7 @@ export interface IChangeRoleDialog {
   dialogTitle?: string;
   id: string;
   setAlert?: any;
+  hidden?: boolean;
   disabled?: boolean;
 } 
 

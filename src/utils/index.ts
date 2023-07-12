@@ -1,12 +1,22 @@
 import { IUser } from "@interface/auth";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
-// authentication
-export const getUserId = () => {
+// get information from local storage
+export const getCurrentUserId = () => {
   const userObj = localStorage.getItem("user");
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     const id = user._id;
+    return id;
+  }
+  return null;
+};
+
+export const getCurrentUserRole = () => {
+  const userObj = localStorage.getItem("user");
+  if (userObj) {
+    const user: IUser = JSON.parse(userObj);
+    const id = user.role;
     return id;
   }
   return null;
@@ -32,6 +42,7 @@ export const getRefreshToken = () => {
   return null;
 };
 
+// authentication
 export const setToken = (accessToken: string, refreshToken: string) => {
   const userObj = localStorage.getItem("user");
   if (userObj) {
@@ -79,10 +90,10 @@ export const getRole = (role?: string | null) => {
     default:
       return "";
   }
-};
+}; 
 
 export const formatDateViVN = (dateString: string) => {
-  const date = new Date();
+  const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -91,4 +102,19 @@ export const formatDateViVN = (dateString: string) => {
     minute: "numeric",
   };
   return date.toLocaleString("vi-VN", options);
+};
+
+export const isRoleAccepted = (role: string): boolean => {
+  const currentRole = getCurrentUserRole();
+
+  switch (currentRole) {
+    case "SuperAdmin":
+      return true;
+    case "Admin":
+      return role !== getRole("SuperAdmin") && role !== getRole("Admin");
+    case "Mod":
+      return role === getRole("User");
+    default:
+      return false;
+  }
 };

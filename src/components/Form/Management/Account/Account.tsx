@@ -6,15 +6,13 @@ import { COLUMNS_ACCOUNT } from "@constants/data";
 import {
   blockAccount,
   getAllUserAccount,
-  getDetailsUserAccount,
   unBlockAccount,
 } from "@store/slices/accountSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
-import { getRole, getUserId } from "@utils/index";
+import { getRole, getCurrentUserId, isRoleAccepted } from "@utils/index";
 import { SnackbarMessage } from "@components/Common";
 import { ISnackbarAlert } from "@interface/common";
 import { GridColDef } from "@mui/x-data-grid";
-import { IconButton, Tooltip } from "@mui/material";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -69,20 +67,25 @@ export const Account = () => {
       } else {
         setAlert({
           type: "error",
-          message: "Thất bại, Hệ thống có lỗi xảy ra!",
+          message: "Có lỗi xảy ra. Chặn thất bại!",
           timeout: 4000,
         });
       }
     }
   };
 
-  const handleConfirmStatus = (status: string, id: string, email: string) => {
+  const handleConfirmStatus = (
+    status: string,
+    id: string,
+    email: string,
+    role: string
+  ) => {
     return useMemo(() => {
       if (status === "Hoạt động") {
         return (
           <ConfirmBlock
             icon={<BlockOutlinedIcon />}
-            disable={id === getUserId()}
+            hidden={id === getCurrentUserId()}
             tooltip="Chặn"
             dialogTitle="Xác nhận chặn tài khoản?"
             dialogContentText={
@@ -91,6 +94,7 @@ export const Account = () => {
               </>
             }
             handleClick={() => handleAccountStatus(id, email, "block")}
+            disabled={isRoleAccepted(role)}
           />
         );
       } else {
@@ -98,7 +102,7 @@ export const Account = () => {
           <ConfirmBlock
             icon={<LockOpenOutlinedIcon />}
             tooltip="Bỏ chặn"
-            disable={id === getUserId()}
+            hidden={id === getCurrentUserId()}
             dialogTitle="Xác nhận bỏ chặn tài khoản?"
             dialogContentText={
               <>
@@ -107,13 +111,14 @@ export const Account = () => {
               </>
             }
             handleClick={() => handleAccountStatus(id, email, "unblock")}
+            disabled={isRoleAccepted(role)}
           />
         );
       }
-    }, [status, id, email]);
+    }, [status, id, email, role]);
   };
 
-  const handleChangeRoleStatus = (id: string) => {
+  const handleChangeRoleStatus = (id: string, role: string) => {
     return useMemo(() => {
       return (
         <ChangeRole
@@ -121,10 +126,12 @@ export const Account = () => {
           icon={<ChangeCircleOutlinedIcon />}
           tooltip="Thay đổi vai trò"
           id={id}
+          hidden={id === getCurrentUserId()}
           setAlert={setAlert}
+          disabled={isRoleAccepted(role)}
         />
       );
-    }, [id]);
+    }, [id, role]);
   };
 
   const viewDetailsAccount = (id: string) => {
@@ -150,12 +157,13 @@ export const Account = () => {
       headerAlign: "center",
       renderCell: (params) => (
         <>
-          {handleChangeRoleStatus(params.row.id)}
           {viewDetailsAccount(params.row.id)}
+          {handleChangeRoleStatus(params.row.id, params.row.role)}
           {handleConfirmStatus(
             params.row.status,
             params.row.id,
-            params.row.email
+            params.row.email,
+            params.row.role
           )}
         </>
       ),

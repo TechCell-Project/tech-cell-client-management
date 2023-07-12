@@ -54,14 +54,25 @@ export const ChangeRole = memo((props: IChangeRoleDialog) => {
   ) => {
     try {
       const response = await dispatch(changeRoleAccount(props.id, values.role));
-      if (response) {
+      if (response.statusCode === 400 || response.statusCode === 403) {
+        props.setAlert({
+          type: "error",
+          message: "Có lỗi xảy ra. Đổi vai trò thất bại!",
+          timeout: 4000,
+        });
+      } else {
         props.setAlert({
           type: "success",
-          message: "Đổi vai trò thành công",
+          message: "Đổi vai trò thành công!",
           timeout: 4000,
         });
       }
     } catch (error) {
+      props.setAlert({
+        type: "error",
+        message: "Có lỗi xảy ra. Đổi vai trò thất bại!",
+        timeout: 4000,
+      });
       console.log(error);
     } finally {
       resetForm({ values: { role: "" } });
@@ -71,15 +82,20 @@ export const ChangeRole = memo((props: IChangeRoleDialog) => {
 
   return (
     <>
-      <Tooltip title={props.tooltip}>
-        <IconButton
-          aria-label="change-role"
-          size="medium"
-          onClick={handleClickOpen}
-        >
-          {props.icon}
-        </IconButton>
-      </Tooltip>
+      {!props.hidden && (
+        <Tooltip title={props.tooltip}>
+          <span>
+            <IconButton
+              aria-label="change-role"
+              size="medium"
+              onClick={handleClickOpen}
+              disabled={!props.disabled}
+            >
+              {props.icon}
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
       <Dialog
         keepMounted
         onClose={handleClose}

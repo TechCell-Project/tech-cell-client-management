@@ -35,15 +35,18 @@ export const ConfirmBlock: FC<IConfirmDialog> = memo((props) => {
 
   return (
     <>
-      {!props.disable && (
+      {!props.hidden && (
         <Tooltip title={props.tooltip}>
-          <IconButton
-            aria-label="confirm"
-            size="medium"
-            onClick={handleClickOpen}
-          >
-            {props.icon}
-          </IconButton>
+          <span>
+            <IconButton
+              aria-label="confirm"
+              size="medium"
+              onClick={handleClickOpen}
+              disabled={!props.disabled}
+            >
+              {props.icon}
+            </IconButton>
+          </span>
         </Tooltip>
       )}
       <Dialog

@@ -15,11 +15,13 @@ import {
   useTheme,
   Checkbox,
   FormControlLabel,
+  InputAdornment,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { IDetailsDialog } from "@interface/common";
 import { getDetailsUserAccount } from "@store/slices/accountSlice";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { formatDateViVN, getRole } from "@utils/index";
 
 export const DetailsAccount = memo((props: IDetailsDialog) => {
@@ -87,7 +89,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{ readOnly: true }}
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -97,7 +99,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{ readOnly: true }}
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -107,7 +109,14 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{
+                        readOnly: true,
+                        endAdornment: account?.emailVerified && (
+                          <InputAdornment position="end">
+                            <CheckCircleRoundedIcon fontSize="small" color="primary"/>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -121,7 +130,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{ readOnly: true }}
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -131,7 +140,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{ readOnly: true }}
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -141,7 +150,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       fullWidth
                       variant="outlined"
                       size="small"
-                      inputProps={{ readOnly: true }}
+                      InputProps={{ readOnly: true }}
                     />
                   </Grid>
                   {account?.address && (
@@ -153,7 +162,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                           fullWidth
                           variant="outlined"
                           size="small"
-                          inputProps={{ readOnly: true }}
+                          InputProps={{ readOnly: true }}
                         />
                       </Grid>
                       <Grid item md={4}>
@@ -163,7 +172,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                           fullWidth
                           variant="outlined"
                           size="small"
-                          inputProps={{ readOnly: true }}
+                          InputProps={{ readOnly: true }}
                         />
                       </Grid>
                       <Grid item md={4}>
@@ -173,7 +182,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                           fullWidth
                           variant="outlined"
                           size="small"
-                          inputProps={{ readOnly: true }}
+                          InputProps={{ readOnly: true }}
                         />
                       </Grid>
                       <Grid item md={12}>
@@ -183,7 +192,7 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                           fullWidth
                           variant="outlined"
                           size="small"
-                          inputProps={{ readOnly: true }}
+                          InputProps={{ readOnly: true }}
                           multiline
                           minRows={2}
                           maxRows={4}
@@ -191,22 +200,6 @@ export const DetailsAccount = memo((props: IDetailsDialog) => {
                       </Grid>
                     </>
                   )}
-                  <Grid item md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          size="small"
-                          sx={{
-                            padding: "0 9px",
-                            color: `${theme.color.red} !important`,
-                          }}
-                          checked={account?.emailVerified}
-                          inputProps={{ readOnly: true }}
-                        />
-                      }
-                      label={`${account?.emailVerified ? "Đã xác minh email" : "Chưa xác minh email"}`}
-                    />
-                  </Grid>
                 </Grid>
                 <Stack alignItems="flex-end" sx={{ marginTop: "20px" }}>
                   <Button

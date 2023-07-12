@@ -46,9 +46,7 @@ export const login =
       dispatch(isLogin());
       try {
         const response = await loginFetching(payload);
-        const roleAccepted = "Admin" || "SuperAdmin" || "Mod";
-
-        if (response.data.role === roleAccepted) {
+        if (response.data.role !== "User") {
           localStorage.setItem("user", JSON.stringify(response.data));
           dispatch(loginSuccess(response.data));
           return {

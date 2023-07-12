@@ -7,7 +7,7 @@ import { Breadcrumbs, Typography, Stack } from "@mui/material";
 import HouseRoundedIcon from "@mui/icons-material/HouseRounded";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-const breadcrumbPaths = [
+const paths = [
   { pathname: "/dashboard", name: "Trang chủ" },
   { pathname: "/dashboard/account", name: "Tài khoản" },
   { pathname: "/dashboard/product", name: "Sản phẩm" },
@@ -20,8 +20,8 @@ export const BreadcrumbPath = () => {
   const generateBreadcrumbs = () => {
     const breadcrumbs = [];
     let path = "";
-    for (let i = 0; i < breadcrumbPaths.length; i++) {
-      const breadcrumb = breadcrumbPaths[i];
+    for (let i = 0; i < paths.length; i++) {
+      const breadcrumb = paths[i];
       if (pathname.startsWith(breadcrumb.pathname)) {
         path = breadcrumb.pathname;
         breadcrumbs.push({ pathname: path, name: breadcrumb.name });
