@@ -20,7 +20,7 @@ export interface ILoading {
 
 export interface IDataTable {
   column?: GridColDef<any>[] | null;
-  row?: readonly any[] | null;
+  row: readonly any[];
   isLoading?: boolean;
 }
 

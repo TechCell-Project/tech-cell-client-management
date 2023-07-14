@@ -104,7 +104,7 @@ export const formatDateViVN = (dateString: string) => {
   return date.toLocaleString("vi-VN", options);
 };
 
-export const isRoleAccepted = (role: string): boolean => {
+export const isRoleAccepted = (role?: string): boolean => {
   const currentRole = getCurrentUserRole();
 
   switch (currentRole) {

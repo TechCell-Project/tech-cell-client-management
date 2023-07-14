@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { API_BASE_URL } from "@constants/service";
+import { API_ENDPOINT } from "@constants/service";
 import {
   getAccessToken,
   getRefreshToken,
@@ -9,7 +9,7 @@ import {
 import { refreshFetching } from "./authServices";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_ENDPOINT,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
