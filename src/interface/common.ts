@@ -1,5 +1,5 @@
-import { AlertColor } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
+import { AlertColor, SxProps } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
 
 export interface IAlert {
   type?: AlertColor;
@@ -42,11 +42,21 @@ export interface IChangeRoleDialog {
   setAlert?: any;
   hidden?: boolean;
   disabled?: boolean;
-} 
+}
 
 export interface IDetailsDialog {
   icon?: any;
   tooltip?: string;
   dialogTitle?: string;
   id: string;
-} 
+}
+
+export interface IDialog {
+  isOpen: boolean;
+  handleClose: (event: any) => void;
+  handleSubmit?: (event: any) => void | (({ ...e }) => Promise<void>);
+  dialogTitle: string;
+  dialogStyle?: any;
+  dialogDesc?: string | React.ReactNode;
+  children: React.ReactNode;
+}

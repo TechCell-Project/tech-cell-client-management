@@ -1,59 +1,34 @@
-import React, { memo, useState, useEffect } from "react";
-import { IChangeRoleDialog } from "@interface/common";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  IconButton,
-  Tooltip,
-  useTheme,
-  Typography,
-  Stack,
-  TextField,
-  MenuItem,
-  CircularProgress,
-} from "@mui/material";
+import React, { memo } from "react";
+import {  Stack, TextField, MenuItem } from "@mui/material";
 import SouthRoundedIcon from "@mui/icons-material/SouthRounded";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useAppDispatch, useAppSelector } from "@store/store";
-import {
-  changeRoleAccount,
-  getDetailsUserAccount,
-} from "@store/slices/accountSlice";
+import { useAppDispatch } from "@store/store";
+import { changeRoleAccount } from "@store/slices/accountSlice";
 import { getRole } from "@utils/index";
 import { ROLE_OPTIONS } from "@constants/options";
 import { roleValidate } from "@validate/account.validate";
+import { ButtonCustom, ShowDialog } from "@components/Common";
+import { IColumnAccount } from "@interface/data";
 
-export const ChangeRole = memo((props: IChangeRoleDialog) => {
-  const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const { account, isLoadingDetails } = useAppSelector(
-    (state) => state.account
-  );
+interface Props {
+  dataAccount?: IColumnAccount;
+  setAlert: any;
+  isLoading?: boolean;
+  isOpen: boolean;
+  handleClose: () => void;
+}
+
+export const ChangeRole = memo((props: Props) => {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (open) {
-      dispatch(getDetailsUserAccount(props.id));
-    }
-  }, [open, props.id, dispatch]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = async (
     values: { role: string },
     { resetForm }: FormikHelpers<{ role: string }>
   ) => {
     try {
-      const response = await dispatch(changeRoleAccount(props.id, values.role));
+      const response = await dispatch(
+        changeRoleAccount(String(props.dataAccount?.id), values.role)
+      );
       if (response.statusCode === 400 || response.statusCode === 403) {
         props.setAlert({
           type: "error",
@@ -76,148 +51,108 @@ export const ChangeRole = memo((props: IChangeRoleDialog) => {
       console.log(error);
     } finally {
       resetForm({ values: { role: "" } });
-      handleClose();
+      props.handleClose();
     }
   };
 
   return (
-    <>
-      {!props.hidden && (
-        <Tooltip title={props.tooltip}>
-          <span>
-            <IconButton
-              aria-label="change-role"
-              size="medium"
-              onClick={handleClickOpen}
-              disabled={!props.disabled}
-            >
-              {props.icon}
-            </IconButton>
-          </span>
-        </Tooltip>
-      )}
-      <Dialog
-        keepMounted
-        onClose={handleClose}
-        open={open}
-        sx={{ "& .MuiPaper-root.MuiDialog-paper": { minWidth: 370 } }}
+    <ShowDialog
+      dialogTitle="Thay đổi vai trò"
+      handleClose={props.handleClose}
+      isOpen={props.isOpen}
+      dialogStyle={{ minWidth: 370 }}
+    >
+      <Formik
+        initialValues={{ role: "" }}
+        validationSchema={roleValidate}
+        onSubmit={handleSubmit}
       >
-        <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <ErrorOutlineOutlinedIcon sx={{ fill: theme.color.red }} />
-          <Typography variant="body1" fontWeight={600} fontSize="17px">
-            {props.dialogTitle}
-          </Typography>
-        </DialogTitle>
-        <DialogActions sx={{ padding: "0 24px 16px 24px", gap: "10px" }}>
-          <Formik
-            initialValues={{ role: "" }}
-            validationSchema={roleValidate}
-            onSubmit={handleSubmit}
+        {({
+          values,
+          handleChange,
+          errors,
+          touched,
+          isSubmitting,
+        }) => (
+          <Form
+            style={{
+              width: "100%",
+              marginTop: "10px",
+            }}
           >
-            {({
-              values,
-              handleChange,
-              errors,
-              touched,
-              isSubmitting,
-              resetForm,
-            }) => (
-              <Form
-                style={{
-                  width: "100%",
-                  marginTop: "10px",
-                  textAlign: isLoadingDetails ? "center" : "left",
-                }}
+            <>
+              <Stack
+                direction="column"
+                gap={2}
+                alignItems="center"
+                justifyContent="center"
               >
-                {isLoadingDetails ? (
-                  <CircularProgress sx={{ color: theme.color.red }} />
-                ) : (
-                  <>
-                    <Stack
-                      direction="column"
-                      gap={2}
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <TextField
-                        label="Họ và tên"
-                        value={`${account?.firstName} ${account?.lastName}`}
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        inputProps={{ readOnly: true }}
-                      />
-                      <TextField
-                        label="Vai trò hiện tại"
-                        value={getRole(account?.role) || ""}
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        inputProps={{ readOnly: true }}
-                      />
+                <TextField
+                  label="Họ và tên"
+                  value={props.dataAccount?.name}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  inputProps={{ readOnly: true }}
+                />
+                <TextField
+                  label="Vai trò hiện tại"
+                  value={props.dataAccount?.role || ""}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  inputProps={{ readOnly: true }}
+                />
 
-                      <SouthRoundedIcon fontSize="medium" />
+                <SouthRoundedIcon fontSize="medium" />
 
-                      <TextField
-                        id="role"
-                        name="role"
-                        value={values.role}
-                        select
-                        label="Vai trò mới"
-                        onChange={handleChange}
-                        defaultValue=""
-                        variant="outlined"
-                        error={touched.role && Boolean(errors.role)}
-                        helperText={touched.role && errors.role}
-                        size="small"
-                        fullWidth
-                      >
-                        {ROLE_OPTIONS.map((option, i) => (
-                          <MenuItem
-                            key={i}
-                            value={option.value}
-                            disabled={account?.role === option.value}
-                          >
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Stack>
-                    <Stack
-                      direction="row"
-                      justifyContent="flex-end"
-                      gap={2}
-                      sx={{ mt: 4 }}
+                <TextField
+                  id="role"
+                  name="role"
+                  value={values.role}
+                  select
+                  label="Vai trò mới"
+                  onChange={handleChange}
+                  defaultValue=""
+                  variant="outlined"
+                  error={touched.role && Boolean(errors.role)}
+                  helperText={touched.role && errors.role}
+                  size="small"
+                  fullWidth
+                >
+                  {ROLE_OPTIONS.map((option, i) => (
+                    <MenuItem
+                      key={i}
+                      value={option.value}
+                      disabled={props.dataAccount?.role === getRole(option.value)}
                     >
-                      <Button
-                        onClick={() => {
-                          setOpen(false);
-                          resetForm();
-                        }}
-                        sx={{ textTransform: "unset" }}
-                      >
-                        Hủy bỏ
-                      </Button>
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        sx={{
-                          bgcolor: `${theme.color.red} !important`,
-                          color: "#fff !important",
-                          textTransform: "unset",
-                          padding: "6px 20px",
-                        }}
-                      >
-                        Xác nhận
-                      </Button>
-                    </Stack>
-                  </>
-                )}
-              </Form>
-            )}
-          </Formik>
-        </DialogActions>
-      </Dialog>
-    </>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Stack>
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+                gap={2}
+                sx={{ mt: 4 }}
+              >
+                <ButtonCustom
+                  variant="outlined"
+                  handleClick={props.handleClose}
+                  content="Hủy bỏ"
+                />
+                <ButtonCustom
+                  variant="contained"
+                  type="submit"
+                  disabled={isSubmitting}
+                  content="Xác nhận"
+                />
+              </Stack>
+            </>
+          </Form>
+        )}
+      </Formik>
+    </ShowDialog>
   );
 });

@@ -1,89 +1,104 @@
 "use client";
 
-import React, { FC, useState, memo } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  Tooltip,
-  useTheme,
-  Typography,
-} from "@mui/material";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { IConfirmDialog } from "@interface/common";
+import React, { FC, memo } from "react";
+import { ShowDialog, ButtonCustom } from "@components/Common";
+import { useAppDispatch } from "@store/store";
+import { IColumnAccount } from "@interface/data";
+import { blockAccount, unBlockAccount } from "@store/slices/accountSlice";
 
-export const ConfirmBlock: FC<IConfirmDialog> = memo((props) => {
-  const [open, setOpen] = useState(false);
-  const theme = useTheme();
+interface Props {
+  dataAccount?: IColumnAccount;
+  isOpen: boolean;
+  handleClose: () => void;
+  setAlert: any;
+}
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export const ConfirmBlock: FC<Props> = memo((props) => {
+  const dispatch = useAppDispatch();
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleAccountStatus = async (
+    id?: string,
+    email?: string,
+    action?: "block" | "unblock"
+  ) => {
+    let actionFunction;
+    let successMessage;
+
+    if (action === "block") {
+      actionFunction = blockAccount;
+      successMessage = `Đã chặn ${email} thành công!`;
+    } else if (action === "unblock") {
+      actionFunction = unBlockAccount;
+      successMessage = `Bỏ chặn ${email} thành công!`;
+    }
+
+    if (actionFunction) {
+      const response = await dispatch(actionFunction(String(id)));
+      if (response) {
+        props.setAlert({
+          type: "success",
+          message: successMessage,
+          timeout: 4000,
+        });
+      } else {
+        props.setAlert({
+          type: "error",
+          message: "Có lỗi xảy ra. Chặn thất bại!",
+          timeout: 4000,
+        });
+      }
+    }
   };
 
   const handleConfirm = () => {
-    props.handleClick();
-    handleClose();
+    if (props.dataAccount?.status === "Hoạt động") {
+      handleAccountStatus(
+        props.dataAccount?.id,
+        props.dataAccount?.email,
+        "block"
+      );
+    } else {
+      handleAccountStatus(
+        props.dataAccount?.id,
+        props.dataAccount?.email,
+        "unblock"
+      );
+    }
+    props.handleClose();
   };
 
   return (
-    <>
-      {!props.hidden && (
-        <Tooltip title={props.tooltip}>
-          <span>
-            <IconButton
-              aria-label="confirm"
-              size="medium"
-              onClick={handleClickOpen}
-              disabled={!props.disabled}
-            >
-              {props.icon}
-            </IconButton>
-          </span>
-        </Tooltip>
-      )}
-      <Dialog
-        open={open}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="dialog-description"
-        sx={{ "& .MuiPaper-root.MuiDialog-paper": { maxWidth: 500 } }}
-      >
-        <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <ErrorOutlineOutlinedIcon sx={{ fill: theme.color.red }} />
-          <Typography variant="body1" fontWeight={600} fontSize="17px">
-            {props.dialogTitle}
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="dialog-description">
-            {props.dialogContentText}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ padding: "0 24px 16px 24px", gap: "10px" }}>
-          <Button onClick={handleClose} sx={{ textTransform: "unset" }}>
-            Hủy bỏ
-          </Button>
-          <Button
-            onClick={handleConfirm}
-            sx={{
-              bgcolor: `${theme.color.red} !important`,
-              color: "#fff !important",
-              textTransform: "unset",
-              padding: "6px 20px",
-            }}
-          >
-            Xác nhận
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <ShowDialog
+      dialogTitle={`Xác nhận ${
+        props.dataAccount?.status === "Hoạt động" ? "xóa" : "mở khóa"
+      }  tài khoản?`}
+      isOpen={props.isOpen}
+      handleClose={props.handleClose}
+      dialogStyle={{ maxWidth: 500 }}
+      dialogDesc={
+        props.dataAccount?.status === "Hoạt động" ? (
+          <>
+            Bạn có chắc chắn muốn chặn tài khoản với email:
+            <b style={{ display: "block" }}>{props.dataAccount?.email}</b>
+          </>
+        ) : (
+          <>
+            Bạn có chắc chắn muốn mở khóa tài khoản với email:
+            <b style={{ display: "block" }}>{props.dataAccount?.email}</b>
+          </>
+        )
+      }
+    >
+      <ButtonCustom
+        variant="outlined"
+        content="Hủy bỏ"
+        handleClick={props.handleClose}
+      />
+      <ButtonCustom
+        variant="contained"
+        content="Xác nhận"
+        handleClick={handleConfirm}
+      />
+    </ShowDialog>
   );
 });

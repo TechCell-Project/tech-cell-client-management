@@ -4,32 +4,42 @@ import React, { useEffect, useMemo, useState } from "react";
 import { DataTable } from "@components/Common";
 import { COLUMNS_ACCOUNT } from "@constants/data";
 import {
-  blockAccount,
   getAllUserAccount,
-  unBlockAccount,
+  getDetailsUserAccount,
 } from "@store/slices/accountSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { getRole, getCurrentUserId, isRoleAccepted } from "@utils/index";
 import { SnackbarMessage } from "@components/Common";
 import { ISnackbarAlert } from "@interface/common";
-import { GridColDef } from "@mui/x-data-grid";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { ConfirmBlock, ChangeRole, DetailsAccount } from "./Dialog";
-import ActionCell from "./ActionCell";
+import { Tooltip } from "@mui/material";
+import { IColumnAccount } from "@interface/data";
 
 export const Account = () => {
   const dispatch = useAppDispatch();
   const { accounts, isLoading } = useAppSelector((state) => state.account);
+
   const [alert, setAlert] = useState<ISnackbarAlert>();
+
+  const [dataRowSelected, setDataRowSelected] = useState<IColumnAccount>();
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState<boolean>(false);
+  const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
+  const [openDetails, setOpenDetails] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getAllUserAccount());
   }, []);
 
-  const rows = useMemo(() => {
+  const rows: IColumnAccount[] = useMemo(() => {
     return accounts.map((account, i) => ({
       id: account._id,
       no: i + 1,
@@ -41,114 +51,11 @@ export const Account = () => {
     }));
   }, [accounts]);
 
-  // const handleAccountStatus = async (
-  //   id: string,
-  //   email: string,
-  //   action: "block" | "unblock"
-  // ) => {
-  //   let actionFunction;
-  //   let successMessage;
+  const loadDataDetails = (id: string) => {
+    dispatch(getDetailsUserAccount(id));
+  };
 
-  //   if (action === "block") {
-  //     actionFunction = blockAccount;
-  //     successMessage = `Đã chặn ${email} thành công!`;
-  //   } else if (action === "unblock") {
-  //     actionFunction = unBlockAccount;
-  //     successMessage = `Bỏ chặn ${email} thành công!`;
-  //   }
-
-  //   if (actionFunction) {
-  //     const response = await dispatch(actionFunction(id));
-  //     if (response) {
-  //       setAlert({
-  //         type: "success",
-  //         message: successMessage,
-  //         timeout: 4000,
-  //       });
-  //     } else {
-  //       setAlert({
-  //         type: "error",
-  //         message: "Có lỗi xảy ra. Chặn thất bại!",
-  //         timeout: 4000,
-  //       });
-  //     }
-  //   }
-  // };
-
-  // const handleConfirmStatus = (
-  //   status: string,
-  //   id: string,
-  //   email: string,
-  //   role: string
-  // ) => {
-  //   // return useMemo(() => {
-  //     if (status === "Hoạt động") {
-  //       return (
-  //         <ConfirmBlock
-  //           icon={<BlockOutlinedIcon />}
-  //           hidden={id === getCurrentUserId()}
-  //           tooltip="Chặn"
-  //           dialogTitle="Xác nhận chặn tài khoản?"
-  //           dialogContentText={
-  //             <>
-  //               Bạn có chắc chắn muốn chặn tài khoản với email: <b>{email}</b>
-  //             </>
-  //           }
-  //           handleClick={() => handleAccountStatus(id, email, "block")}
-  //           disabled={isRoleAccepted(role)}
-  //         />
-  //       );
-  //     } else {
-  //       return (
-  //         <ConfirmBlock
-  //           icon={<LockOpenOutlinedIcon />}
-  //           tooltip="Bỏ chặn"
-  //           hidden={id === getCurrentUserId()}
-  //           dialogTitle="Xác nhận bỏ chặn tài khoản?"
-  //           dialogContentText={
-  //             <>
-  //               Bạn có chắc chắn muốn bỏ chặn tài khoản với email:
-  //               <b>{email}</b>
-  //             </>
-  //           }
-  //           handleClick={() => handleAccountStatus(id, email, "unblock")}
-  //           disabled={isRoleAccepted(role)}
-  //         />
-  //       );
-  //     }
-  //   // }, [status, id, email, role]);
-  // };
-
-  // const handleChangeRoleStatus = (id: string, role: string) => {
-  //   // return useMemo(() => {
-  //     return (
-  //       <ChangeRole
-  //         dialogTitle="Thay đổi vai trò"
-  //         icon={<ChangeCircleOutlinedIcon />}
-  //         tooltip="Thay đổi vai trò"
-  //         id={id}
-  //         hidden={id === getCurrentUserId()}
-  //         setAlert={setAlert}
-  //         disabled={isRoleAccepted(role)}
-  //       />
-  //     );
-  //   // }, [id, role]);
-  // };
-
-  // const viewDetailsAccount = (id: string) => {
-  //   // return useMemo(() => {
-  //     return (
-  //       <DetailsAccount
-  //         tooltip="Chi tiết"
-  //         dialogTitle="Thông tin tài khoản"
-  //         id={id}
-  //         icon={<InfoOutlinedIcon />}
-  //       />
-  //     );
-  //   // }, [id]);
-  // };
-
-  const columns: GridColDef[] = [
+  const columns: GridColDef<any>[] = [
     ...COLUMNS_ACCOUNT,
     {
       field: "options",
@@ -156,19 +63,68 @@ export const Account = () => {
       width: 200,
       align: "center",
       headerAlign: "center",
-      renderCell: (params) => <ActionCell params={params} setAlert={setAlert} />
-      // renderCell: (params) => (
-      //   <>
-      //     {viewDetailsAccount(params.row.id)}
-      //     {handleChangeRoleStatus(params.row.id, params.row.role)}
-      //     {handleConfirmStatus(
-      //       params.row.status,
-      //       params.row.id,
-      //       params.row.email,
-      //       params.row.role
-      //     )}
-      //   </>
-      // ),
+      type: "actions",
+      getActions: (params: GridRowParams<any>) => [
+        <Tooltip title="Chi tiết">
+          <GridActionsCellItem
+            icon={<InfoOutlinedIcon />}
+            onClick={() => {
+              setOpenDetails(true), loadDataDetails(params.row.id);
+            }}
+            label="Chi tiết"
+          />
+        </Tooltip>,
+        <Tooltip title="Thay đổi vai trò">
+          <span>
+            <GridActionsCellItem
+              icon={<ChangeCircleOutlinedIcon />}
+              onClick={() => {
+                setOpenChangeRole(true), setDataRowSelected(params.row);
+              }}
+              label="Đổi vai trò"
+              disabled={
+                params.row.id === getCurrentUserId() ||
+                !isRoleAccepted(params.row.role)
+              }
+            />
+          </span>
+        </Tooltip>,
+        <>
+          {params.row.status === "Hoạt động" ? (
+            <Tooltip title="Chặn">
+              <span>
+                <GridActionsCellItem
+                  icon={<BlockOutlinedIcon />}
+                  onClick={() => {
+                    setOpenDeleteConfirm(true), setDataRowSelected(params.row);
+                  }}
+                  label="Chặn tài khoản"
+                  disabled={
+                    params.row.id === getCurrentUserId() ||
+                    !isRoleAccepted(params.row.role)
+                  }
+                />
+              </span>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Mở khóa">
+              <span>
+                <GridActionsCellItem
+                  icon={<LockOpenOutlinedIcon />}
+                  onClick={() => {
+                    setOpenDeleteConfirm(true), setDataRowSelected(params.row);
+                  }}
+                  label="Mở khóa tài khoản"
+                  disabled={
+                    params.row.id === getCurrentUserId() ||
+                    !isRoleAccepted(params.row.role)
+                  }
+                />
+              </span>
+            </Tooltip>
+          )}
+        </>,
+      ],
     },
   ];
 
@@ -176,6 +132,31 @@ export const Account = () => {
     <>
       {alert && !isLoading && <SnackbarMessage {...alert} />}
       <DataTable column={columns} row={rows} isLoading={isLoading} />
+
+      {openDetails && (
+        <DetailsAccount
+          isOpen={openDetails}
+          handleClose={() => setOpenDetails(false)}
+        />
+      )}
+
+      {openChangeRole && (
+        <ChangeRole
+          isOpen={openChangeRole}
+          handleClose={() => setOpenChangeRole(false)}
+          dataAccount={dataRowSelected}
+          setAlert={setAlert}
+        />
+      )}
+
+      {openDeleteConfirm && (
+        <ConfirmBlock
+          isOpen={openDeleteConfirm}
+          handleClose={() => setOpenDeleteConfirm(false)}
+          dataAccount={dataRowSelected}
+          setAlert={setAlert}
+        />
+      )}
     </>
   );
 };
