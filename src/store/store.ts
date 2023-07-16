@@ -1,9 +1,9 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import { authSlice } from './slices/authSlice';
-import { accountSlice } from './slices/accountSlice';
+import { authSlice } from "./slices/authSlice";
+import { accountSlice } from "./slices/accountSlice";
 
 const createNoopStorage = () => {
   return {
@@ -19,26 +19,30 @@ const createNoopStorage = () => {
   };
 };
 
-const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: "root",
+  storage,
+  blacklist: ["account"],
 };
 
 const rootReducer = combineReducers({
-    auth: authSlice.reducer,
-    account: accountSlice.reducer,
+  auth: authSlice.reducer,
+  account: accountSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

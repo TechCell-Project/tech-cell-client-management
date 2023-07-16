@@ -48,10 +48,10 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
             <Stack direction="column">
               <TextField
                 label="Email"
-                name="email"
-                value={values.email || ''}
-                error={touched.email && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
+                name="emailOrUsername"
+                value={values.emailOrUsername || ''}
+                error={touched.emailOrUsername && Boolean(errors.emailOrUsername)}
+                helperText={touched.emailOrUsername && errors.emailOrUsername}
                 fullWidth
                 onChange={handleChange}
                 variant="standard"
