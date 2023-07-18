@@ -65,3 +65,10 @@ interface ActivityLog {
   activityReason?: string;
   activityNote?: string;
 }
+
+export interface IForgotPassword {
+  email?: string | null;
+  otpCode: string | null;
+  password: string | null;
+  re_password: string | null;
+}

@@ -67,6 +67,6 @@ export const AlertMessage: FC<IAlert> = ({ type, status, message, timeout = 3000
   );
 };
 
-export const alertMsg = ({ type, status, message, timeout = 3000 }: IAlert): React.ReactElement => {
+export const alertMsg = ({ type, status, message, timeout = 3000 }: IAlert): ReactElement => {
   return <AlertMessage type={type} status={status} message={message} timeout={timeout} />;
 };

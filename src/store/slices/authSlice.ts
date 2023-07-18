@@ -1,6 +1,6 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { IAuthSlice, ILogin } from "@interface/auth";
-import { loginFetching } from "@services/authServices";
+import { fetchLogin } from "@services/authServices";
 import { IAlert } from "@interface/common";
 
 const initialState: IAuthSlice = {
@@ -45,7 +45,7 @@ export const login =
     async (dispatch: Dispatch): Promise<IAlert> => {
       dispatch(isLogin());
       try {
-        const response = await loginFetching(payload);
+        const response = await fetchLogin(payload);
         if (response.data.role !== "User") {
           localStorage.setItem("user", JSON.stringify(response.data));
           dispatch(loginSuccess(response.data));

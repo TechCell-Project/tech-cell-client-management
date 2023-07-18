@@ -6,9 +6,13 @@ import { Button, useTheme, SxProps } from "@mui/material";
 interface IButtonCustom {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: "submit" | "button";
+  variant: "outlined" | "contained" | "text";
+  size?: "large" | "small" | "medium";
   content?: string;
-  variant: "outlined" | "contained";
   disabled?: boolean;
+  fullWidth?: boolean;
+  styles?: React.CSSProperties;
+  defaultValue?: string;
 }
 
 export const ButtonCustom = (props: IButtonCustom) => {
@@ -20,6 +24,7 @@ export const ButtonCustom = (props: IButtonCustom) => {
     textTransform: "unset",
     padding: "5px 20px",
     width: "max-content",
+    whiteSpace: "nowrap",
   };
 
   const containedStyle: SxProps = {
@@ -28,15 +33,39 @@ export const ButtonCustom = (props: IButtonCustom) => {
     color: "#fff !important",
     textTransform: "unset",
     padding: "5px 20px",
+    whiteSpace: "nowrap",
+  };
+
+  const textStyle: SxProps = {
+    color: `${theme.color.red} !important`,
+    bgcolor: "transparent",
+    padding: "5px 20px",
+    whiteSpace: "nowrap",
+  };
+
+  const getVariant = () => {
+    switch (props.variant) {
+      case "contained":
+        return containedStyle;
+      case "outlined":
+        return outlinedStyle;
+      case "text":
+        return textStyle;
+      default:
+        return null;
+    }
   };
 
   return (
     <Button
       type={props.type || "button"}
       onClick={props.handleClick}
-      sx={props.variant === "outlined" ? outlinedStyle : containedStyle}
+      sx={[{ ...props.styles }, getVariant()]}
       disabled={props.disabled}
-    >
+      size={props.size}
+      fullWidth={props.fullWidth}
+      defaultValue={props.defaultValue}
+    > 
       {props.content}
     </Button>
   );

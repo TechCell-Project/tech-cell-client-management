@@ -20,7 +20,7 @@ body {
 
 body,
 section {
-  font-family: $primaryFont;
+  font-family: $primaryFont !important;
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 0;

@@ -134,3 +134,9 @@
 .MuiDataGrid-actionsCell {
   grid-gap: 5px !important;
 }
+
+.MuiButtonBase-root.MuiButton-root.Mui-disabled {
+  background-color: transparent !important;
+  border: 0 !important;
+  color: rgba(0, 0, 0, 0.26) !important;
+}

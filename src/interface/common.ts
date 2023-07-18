@@ -24,33 +24,6 @@ export interface IDataTable {
   isLoading?: boolean;
 }
 
-export interface IConfirmDialog {
-  icon?: any;
-  tooltip?: string;
-  handleClick?: any;
-  dialogTitle?: string;
-  dialogContentText?: string | React.ReactNode;
-  hidden?: boolean;
-  disabled?: boolean;
-}
-
-export interface IChangeRoleDialog {
-  icon?: any;
-  tooltip?: string;
-  dialogTitle?: string;
-  id: string;
-  setAlert?: any;
-  hidden?: boolean;
-  disabled?: boolean;
-}
-
-export interface IDetailsDialog {
-  icon?: any;
-  tooltip?: string;
-  dialogTitle?: string;
-  id: string;
-}
-
 export interface IDialog {
   isOpen: boolean;
   handleClose: (event: any) => void;

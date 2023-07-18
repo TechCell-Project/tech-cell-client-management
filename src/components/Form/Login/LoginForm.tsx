@@ -1,10 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, memo } from 'react';
+import React, { useState, memo } from "react";
 import {
-  Button,
-  Checkbox,
-  FormControlLabel,
+  Typography,
   Stack,
   TextField,
   useTheme,
@@ -14,24 +12,32 @@ import {
   IconButton,
   Input,
   FormHelperText,
-} from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import AttachEmailIcon from '@mui/icons-material/AttachEmail';
-import { Formik, Form, FormikHelpers } from 'formik';
-import { LoginModel } from 'models';
-import { loginValidate } from '@validate/auth.validate';
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import { Formik, Form, FormikHelpers } from "formik";
+import { LoginModel } from "models";
+import { loginValidate } from "@validate/auth.validate";
+import { ButtonCustom } from "@components/Common";
+import { ForgotPassword } from "../ForgotPassword/ForgotPassword";
 
 interface IProps {
-  handleSubmit: (values: LoginModel, { resetForm }: FormikHelpers<LoginModel>) => Promise<void>;
+  handleSubmit: (
+    values: LoginModel,
+    { resetForm }: FormikHelpers<LoginModel>
+  ) => Promise<void>;
 }
 
 export const LoginForm = memo(({ handleSubmit }: IProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
   const { color } = useTheme();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -47,10 +53,12 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
           <Form>
             <Stack direction="column">
               <TextField
-                label="Email"
+                label="Tên tài khoản hoặc Email"
                 name="emailOrUsername"
-                value={values.emailOrUsername || ''}
-                error={touched.emailOrUsername && Boolean(errors.emailOrUsername)}
+                value={values.emailOrUsername || ""}
+                error={
+                  touched.emailOrUsername && Boolean(errors.emailOrUsername)
+                }
                 helperText={touched.emailOrUsername && errors.emailOrUsername}
                 fullWidth
                 onChange={handleChange}
@@ -73,10 +81,10 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
                 </InputLabel>
                 <Input
                   name="password"
-                  value={values.password || ''}
+                  value={values.password || ""}
                   onChange={handleChange}
                   error={touched.password && Boolean(errors.password)}
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -97,34 +105,39 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
                   </FormHelperText>
                 )}
               </FormControl>
-              <FormControlLabel
-                control={<Checkbox size="small" />}
-                label="Nhớ mật khẩu"
-                sx={{ mt: 1, '& .MuiFormControlLabel-label': { fontSize: '14px' } }}
-              />
-              <Button
-                variant="contained"
-                size="large"
-                type="submit"
-                sx={{
-                  mt: 2,
-                  color: '#fff',
-                  bgcolor: color.red,
-                  boxShadow: 'none',
-                  textTransform: 'capitalize',
-                  fontWeight: 600,
-                  '&:hover': {
-                    boxShadow: 'none',
-                    bgcolor: color.red,
-                  },
-                }}
+
+              <Typography
+                variant="body2"
+                textAlign="right"
+                fontWeight={500}
+                sx={{ pt: 2, cursor: "pointer" }}
+                onClick={() => setOpenForgotPassword(true)}
               >
-                Đăng nhập
-              </Button>
+                Quên mật khẩu?
+              </Typography>
+
+              <ButtonCustom
+                variant="contained"
+                fullWidth
+                type="submit"
+                content="Đăng Nhập"
+                size="large"
+                styles={{
+                  marginTop: "20px",
+                  fontWeight: 600,
+                  padding: "8px 20px !important",
+                }}
+              />
             </Stack>
           </Form>
         )}
       </Formik>
+      {openForgotPassword && (
+        <ForgotPassword
+          isOpen={openForgotPassword}
+          handleClose={() => setOpenForgotPassword(false)}
+        />
+      )}
     </>
   );
 });

@@ -9,11 +9,9 @@ export class RegisterModel extends LoginModel {
   lastName?: string | null = null;
 }
 
-export class UserModel {
-  _id?: string | null = null;
+export class ForgotPasswordModel {
   email?: string | null = null;
-  address?: string[] | null = null;
-  role?: string | null = null;
-  accessToken?: string | null = null;
-  refreshToken?: string | null = null;
+  otpCode?: string | null = null;
+  password?: string | null = null;
+  re_password?: string | null = null;
 }

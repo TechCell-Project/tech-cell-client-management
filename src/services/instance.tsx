@@ -6,7 +6,7 @@ import {
   isAccessTokenExpired,
   setToken,
 } from "@utils/index";
-import { refreshFetching } from "./authServices";
+import { fetchRefresh } from "./authServices";
 
 const instance: AxiosInstance = axios.create({
   baseURL: API_ENDPOINT,
@@ -49,7 +49,7 @@ instance.interceptors.response.use(
 
       if (isTokenExpired) {
         try {
-          const response = await refreshFetching(refreshToken);
+          const response = await fetchRefresh(refreshToken);
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
             response.data;
 
