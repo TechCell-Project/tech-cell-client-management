@@ -14,6 +14,7 @@ import {
   fetchForgotPassword,
   fetchVerifyForgotPassword,
 } from "@services/authServices";
+import { ForgotForm } from "./ForgotForm";
 
 interface Props {
   isOpen: boolean;
@@ -62,7 +63,7 @@ export const ForgotPassword = memo((props: Props) => {
         }
         setAlert({
           message: `Đã gửi mã OTP dến ${email}`,
-          type: "info",
+          type: "success",
         });
       })
       .catch(() =>
@@ -78,28 +79,28 @@ export const ForgotPassword = memo((props: Props) => {
     values: ForgotPasswordModel,
     { resetForm, setSubmitting }: FormikHelpers<ForgotPasswordModel>
   ) => {
+    setIsLoading(true);
     fetchVerifyForgotPassword(values)
-      .then(() =>
+      .then(() => {
         setAlert({
           message: "Đổi mật khẩu thành công!",
           type: "success",
           timeout: 4000,
-        })
-      )
+        });
+        setTimeout(() => {
+          resetForm();
+          props.handleClose();
+        }, 2000);
+      })
       .catch(() =>
         setAlert({
           message: "Đổi mật khẩu thất bại!",
           type: "error",
-          timeout: 4000,
         })
       )
       .finally(() => {
-        setTimeout(() => {
-          resetForm();
-          props.handleClose();
-          setSubmitting(false);
-          setIsLoading(false);
-        }, 2000);
+        setSubmitting(false);
+        setIsLoading(false);
       });
   };
 
@@ -118,71 +119,10 @@ export const ForgotPassword = memo((props: Props) => {
           validationSchema={forgotPasswordValidate}
           onSubmit={handleSubmit}
         >
-          {({ handleChange, errors, touched, isSubmitting, values }) => (
+          {({ isSubmitting }) => (
             <Form style={{ width: "100%" }}>
               <Stack direction="column" gap={2}>
-                <Stack direction="row" gap={2} alignItems="baseline">
-                  <TextField
-                    id="email"
-                    name="email"
-                    label="Email"
-                    error={touched.email && Boolean(errors.email)}
-                    helperText={touched.email && errors.email}
-                    onChange={handleChange}
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                  />
-                  <ButtonCustom
-                    content="Gửi OTP"
-                    variant="text"
-                    handleClick={() => {
-                      if (values.email) {
-                        sendCode(values.email);
-                      }
-                    }}
-                    disabled={!values.email}
-                    styles={{ fontSize: "12px" }}
-                  />
-                </Stack>
-
-                <TextField
-                  id="otpCode"
-                  name="otpCode"
-                  label="Mã OTP"
-                  error={touched.otpCode && Boolean(errors.otpCode)}
-                  helperText={touched.otpCode && errors.otpCode}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                />
-
-                <TextField
-                  id="password"
-                  name="password"
-                  label="Mật khẩu mới"
-                  type="password"
-                  error={touched.password && Boolean(errors.password)}
-                  helperText={touched.password && errors.password}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                />
-
-                <TextField
-                  id="re_password"
-                  name="re_password"
-                  label="Nhập lại mật khảu"
-                  type="password"
-                  error={touched.re_password && Boolean(errors.re_password)}
-                  helperText={touched.re_password && errors.re_password}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                />
+                <ForgotForm sendCode={sendCode} />
 
                 {isActive && (
                   <Typography
