@@ -11,5 +11,5 @@ export default function Page() {
     document.title = `Trang Chủ - ${TITLE_TECHCELL}`;
   }, [document.title, pathname]);
 
-  return <div>Dashboard</div>;
+  return <div></div>;
 }

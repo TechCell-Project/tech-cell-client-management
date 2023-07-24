@@ -18,6 +18,10 @@ body {
   overflow-x: hidden;
 }
 
+body {
+  padding-right: unset !important;
+}
+
 body,
 section {
   font-family: $primaryFont !important;

@@ -11,8 +11,6 @@ import { ForgotPasswordModel } from "@models/Auth";
 
 export const fetchLogin = (payload: ILogin) =>
   instance.post(LOGIN_ENDPOINT, payload);
-export const fetchRegister = (payload: IRegister) =>
-  instance.post(REGISTER_ENDPOINT, payload);
 export const fetchRefresh = (refreshToken: string) =>
   instance.post(REFRESH_TOKEN_ENDPOINT, { refreshToken });
 

@@ -53,7 +53,7 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
           <Form>
             <Stack direction="column">
               <TextField
-                label="Tên tài khoản hoặc Email"
+                label="Tên tài khoản hoặc email"
                 name="emailOrUsername"
                 value={values.emailOrUsername || ""}
                 error={

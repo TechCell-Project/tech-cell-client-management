@@ -6,13 +6,7 @@ import { usePathname } from "next/navigation";
 import { Breadcrumbs, Typography, Stack } from "@mui/material";
 import HouseRoundedIcon from "@mui/icons-material/HouseRounded";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-
-const paths = [
-  { pathname: "/dashboard", name: "Trang chủ" },
-  { pathname: "/dashboard/account", name: "Tài khoản" },
-  { pathname: "/dashboard/product", name: "Sản phẩm" },
-  { pathname: "/dashboard/order", name: "Đơn hàng" },
-];
+import { PATHS } from "@constants/data";
 
 export const BreadcrumbPath = () => {
   const pathname = usePathname();
@@ -20,8 +14,8 @@ export const BreadcrumbPath = () => {
   const generateBreadcrumbs = () => {
     const breadcrumbs = [];
     let path = "";
-    for (let i = 0; i < paths.length; i++) {
-      const breadcrumb = paths[i];
+    for (let i = 0; i < PATHS.length; i++) {
+      const breadcrumb = PATHS[i];
       if (pathname.startsWith(breadcrumb.pathname)) {
         path = breadcrumb.pathname;
         breadcrumbs.push({ pathname: path, name: breadcrumb.name });
@@ -32,12 +26,12 @@ export const BreadcrumbPath = () => {
 
   return (
     <Breadcrumbs
-      separator={<NavigateNextIcon fontSize="small" />}
+      separator={<NavigateNextIcon fontSize="small" sx={{ fill: "#fff" }} />}
       aria-label="breadcrumb"
-      sx={{ marginBottom: "20px" }}
+      // sx={{ marginBottom: "20px" }}
     >
       <Stack direction="row" alignItems="center">
-        <HouseRoundedIcon fontSize="inherit" />
+        <HouseRoundedIcon fontSize="inherit" sx={{ fill: "#fff" }} />
       </Stack>
       {generateBreadcrumbs().map((breadcrumb, index) => (
         <Link
@@ -52,6 +46,7 @@ export const BreadcrumbPath = () => {
             style={{
               fontSize: 14,
               fontWeight: breadcrumb.pathname === pathname ? "bold" : "500",
+              color: "#fff",
             }}
           >
             {breadcrumb.name}

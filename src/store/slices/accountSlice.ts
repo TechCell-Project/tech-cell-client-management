@@ -1,5 +1,6 @@
 import { AnyAction, createSlice, Dispatch } from "@reduxjs/toolkit";
 import {
+  createAccount,
   getAllAccounts,
   getDetailsAccount,
   patchBlockAccount,
@@ -7,6 +8,7 @@ import {
   patchUnBlockAccount,
 } from "@services/accountService";
 import { IAccountSlice } from "@interface/auth";
+import { RegisterModel } from "@models/Auth";
 
 const initialState: IAccountSlice = {
   accounts: [],
@@ -41,6 +43,9 @@ export const accountSlice = createSlice({
       state.account = null;
       state.isLoading = false;
     },
+    createAccountSuccess: (state) => {
+      state.isLoading = false;
+    },
     patchAccountSuccess: (state, { payload }) => {
       const index = state.accounts.findIndex(
         (account) => account._id === payload._id
@@ -50,7 +55,7 @@ export const accountSlice = createSlice({
       }
       state.isLoading = false;
     },
-    patchAccountFailure: (state) => {
+    requestAccountFailure: (state) => {
       state.isLoading = false;
     },
   },
@@ -84,6 +89,20 @@ export const getDetailsUserAccount =
     }
   };
 
+export const createNewAccount =
+  (payload: RegisterModel) => async (dispatch: Dispatch) => {
+    dispatch(isFetching());
+    try {
+      const response = await createAccount(payload);
+      if (response.data) {
+        dispatch(createAccountSuccess(response.data));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(requestAccountFailure());
+    }
+  };
+
 export const blockAccount = (id: string) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
@@ -94,7 +113,7 @@ export const blockAccount = (id: string) => async (dispatch: Dispatch) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    dispatch(patchAccountFailure());
+    dispatch(requestAccountFailure());
   }
 };
 
@@ -108,7 +127,7 @@ export const unBlockAccount = (id: string) => async (dispatch: Dispatch) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    dispatch(patchAccountFailure());
+    dispatch(requestAccountFailure());
   }
 };
 
@@ -123,7 +142,7 @@ export const changeRoleAccount =
       return response.data;
     } catch (error) {
       console.log(error);
-      dispatch(patchAccountFailure());
+      dispatch(requestAccountFailure());
     }
   };
 
@@ -136,7 +155,8 @@ export const {
   getDetailsSuccess,
   getAllFailure,
   getDetailsFailure,
+  createAccountSuccess,
   patchAccountSuccess,
-  patchAccountFailure,
+  requestAccountFailure,
 } = actions;
 export default reducer;

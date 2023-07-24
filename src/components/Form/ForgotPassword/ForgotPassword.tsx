@@ -1,12 +1,7 @@
 import React, { memo, useState, useEffect } from "react";
-import {
-  ButtonCustom,
-  ShowDialog,
-  SnackbarMessage,
-  showSnack,
-} from "@components/Common";
+import { ButtonCustom, ShowDialog, SnackbarMessage } from "@components/Common";
 import { ForgotPasswordModel } from "@models/Auth";
-import { Stack, TextField, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { forgotPasswordValidate } from "@validate/auth.validate";
 import { ISnackbarAlert } from "@interface/common";
@@ -110,7 +105,7 @@ export const ForgotPassword = memo((props: Props) => {
         dialogTitle="Quên mật khẩu"
         handleClose={props.handleClose}
         isOpen={props.isOpen}
-        dialogStyle={{ minWidth: 450 }}
+        dialogStyle={{ minWidth: { xs: 320, md: 450 } }}
       >
         {alert && !isLoading && <SnackbarMessage {...alert} />}
         <Formik

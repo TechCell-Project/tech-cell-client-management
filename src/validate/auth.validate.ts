@@ -8,6 +8,15 @@ export const loginValidate = Yup.object({
     .required("Bạn hãy nhập mật khẩu!"),
 });
 
+export const registerValidate = Yup.object({
+  userName: Yup.string().required("Bạn hãy nhập tên tài khoản!"),
+  password: Yup.string()
+    .min(8, "Mật khẩu có ít nhất 8 kí tự!")
+    .max(24, "Mật khẩu có nhiều nhất 24 kí tự")
+    .required("Bạn hãy nhập mật khẩu!"),
+  role: Yup.string().required("Bạn hãy chọn vai trò!"),
+});
+
 export const forgotPasswordValidate = Yup.object({
   email: Yup.string()
     .email("Sai định dạng email!")

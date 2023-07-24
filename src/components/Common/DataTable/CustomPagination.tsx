@@ -20,6 +20,7 @@ const Pagination = ({
       className={className}
       count={pageCount}
       page={page + 1}
+      shape="rounded"
       onChange={(event, newPage) => {
         onPageChange(event as any, newPage - 1);
       }}

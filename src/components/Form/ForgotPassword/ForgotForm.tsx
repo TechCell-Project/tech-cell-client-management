@@ -76,6 +76,7 @@ export const ForgotForm = memo(
             name="password"
             label="Mật khẩu mới"
             onChange={handleChange}
+            error={touched.password && Boolean(errors.password)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

@@ -4,7 +4,6 @@ import React, { FC, memo } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar, viVN } from "@mui/x-data-grid";
 import { IDataTable } from "@interface/common";
-import { VI_VN_LOCALE } from "@constants/data";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverLay";
 import { CustomPagination } from "./CustomPagination";
 import { CustomLoadingOverLay } from "./CustomLoadingOverLay";
@@ -16,10 +15,9 @@ export const DataTable: FC<IDataTable> = memo((props) => {
         disableRowSelectionOnClick
         columns={props.column || []}
         rows={props.row || []}
-        pageSizeOptions={[5, 10, 20, 50, 100]}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
         pagination
         loading={props.isLoading}
-        // localeText={VI_VN_LOCALE}
         localeText={viVN.components.MuiDataGrid.defaultProps.localeText}
         slots={{
           toolbar: GridToolbar,
