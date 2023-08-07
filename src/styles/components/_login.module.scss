@@ -6,7 +6,7 @@
   overflow: hidden;
   position: relative;
 
-  & > img {
+  &>img {
     @media (max-width: 1390px) {
       height: 100% !important;
     }
@@ -16,6 +16,7 @@
     position: absolute;
     top: 20px;
     left: 20px;
+    z-index: 10;
   }
 
   &Form {
@@ -36,15 +37,16 @@
       max-width: 650px;
       min-height: 400px;
       min-width: 450px;
-      background: #F5F5F5;
+      background: rgba(245, 245, 245, 0.2);
       padding: 80px 40px;
       border-radius: 8px;
-      // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
       display: flex;
       flex-direction: column;
+      backdrop-filter: blur(15px);
 
       @include responsive(max_md) {
-        min-width: 370px;
+        min-width: 320px;
         padding: 50px 30px;
       }
 
@@ -56,7 +58,11 @@
       &Desc {
         margin-bottom: 40px;
         opacity: 0.6;
-        font-size: 15px;
+        font-size: 14px;
+
+        @include responsive(max_md) {
+          font-size: 13px;
+        }
       }
     }
   }

@@ -1,0 +1,40 @@
+@import "../base/variables";
+
+.frame {
+  width: 100%;
+  position: relative;
+  min-height: 170px;
+  margin-top: 20px;
+  background-color: $primaryColor;
+  padding: 14px 24px;
+  border-radius: 20px 0 20px 0;
+
+  &Child {
+    // position: absolute;
+    // top: 40%;
+    // transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-top: 10px;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &Title {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-content: flex-start;
+      
+      h2 {
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}

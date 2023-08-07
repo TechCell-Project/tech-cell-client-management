@@ -1,22 +1,29 @@
-import { Montserrat } from 'next/font/google';
-import SidebarAdmin from 'components/Navigation/SidebarAdmin';
-import 'styles/base/index.scss';
+'use client';
 
-const montserrat = Montserrat({ subsets: ['latin'] });
-
-export const metadata = {
-    title: 'TechCell - Quản trị',
-};
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Sidebar from '@components/Navigation/Sidebar';
+import { LoadingPage } from '@components/Common';
+import { useAppSelector } from '@store/store';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <html lang="en">
-            <head>
-                <link rel="icon" href="/favicon.ico?v=2" />
-            </head>
-            <body className={montserrat.className}>
-                <SidebarAdmin>{children}</SidebarAdmin>
-            </body>
-        </html>
-    );
+  const router = useRouter();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      const timeout = setTimeout(() => {
+        router.push('/');
+      }, 1000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [isAuthenticated]);
+
+  return (
+    <section style={{ backgroundColor: '#f3f6f9' }}>
+      {!isAuthenticated ? <LoadingPage isLoading={true} /> : <Sidebar>{children}</Sidebar>}
+    </section>
+  );
 }
