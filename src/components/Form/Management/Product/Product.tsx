@@ -16,19 +16,19 @@ export const Product = () => {
     dispatch(getAllProduct());
   }, []);
 
-  const rows = products?.data?.map((product, i) => ({
-    id: product._id,
-    no: i + 1,
-    name: product.general.name,
-    categories: product.general.categories,
-    manufacturer: product.general.manufacturer,
-    price: formatWithCommas(product.filterable.price) + "₫",
-    status: getStatusProduct(product.status),
-    review_stats: {
-      average_rating: product.review_stats.average_rating,
-      review_count: product.review_stats.review_count,
-    },
-  }));
+  // const rows = products?.data?.map((product, i) => ({
+  //   id: product._id,
+  //   no: i + 1,
+  //   name: product.general.name,
+  //   categories: product.general.categories,
+  //   manufacturer: product.general.manufacturer,
+  //   price: formatWithCommas(product.filterable.price) + "₫",
+  //   status: getStatusProduct(product.status),
+  //   review_stats: {
+  //     average_rating: product.review_stats.average_rating,
+  //     review_count: product.review_stats.review_count,
+  //   },
+  // }));
 
   const columns: any[] = [
     ...COLUMNS_PRODUCT,
@@ -52,5 +52,5 @@ export const Product = () => {
     },
   ];
 
-  return <DataTable column={columns} row={rows} isLoading={isLoading} />;
+  return <DataTable column={columns} row={[]} isLoading={isLoading} />;
 };
