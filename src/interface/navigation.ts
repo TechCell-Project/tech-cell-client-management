@@ -3,7 +3,18 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 export interface INavProps {
   name?: string;
-  to?: string;
+  to?: URL | string;
+  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+    muiName: string;
+  };
+  isAction?: boolean | string;
+  listChildren?: INavChildProps[];
+}
+
+export interface INavChildProps {
+  name?: string;
+  to: URL | string;
+  isAction?: boolean | string;
   icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
     muiName: string;
   };

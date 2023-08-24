@@ -5,12 +5,12 @@ import { ShowDialog, ButtonCustom } from "@components/Common";
 import { useAppDispatch } from "@store/store";
 import { IColumnAccount } from "@interface/data";
 import { blockAccount, unBlockAccount } from "@store/slices/accountSlice";
+import { enqueueSnackbar } from "notistack";
 
 interface Props {
   dataAccount?: IColumnAccount;
   isOpen: boolean;
   handleClose: () => void;
-  setAlert: any;
 }
 
 export const ConfirmBlock: FC<Props> = memo((props) => {
@@ -35,17 +35,9 @@ export const ConfirmBlock: FC<Props> = memo((props) => {
     if (actionFunction) {
       const response = await dispatch(actionFunction(String(id)));
       if (response) {
-        props.setAlert({
-          type: "success",
-          message: successMessage,
-          timeout: 4000,
-        });
+        enqueueSnackbar(successMessage, { variant: "success" });
       } else {
-        props.setAlert({
-          type: "error",
-          message: "Có lỗi xảy ra. Chặn thất bại!",
-          timeout: 4000,
-        });
+        enqueueSnackbar("Có lỗi xảy ra. Chặn thất bại!", { variant: "error" });
       }
     }
   };

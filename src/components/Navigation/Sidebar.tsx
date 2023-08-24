@@ -28,14 +28,11 @@ export default function Sidebar({ children }: { children: ReactNode }) {
   const theme = useTheme();
   const pathname = usePathname();
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Header open={open} handleDrawerOpen={handleDrawerOpen} />
+        <Header open={open} handleDrawerOpen={() => setOpen(true)} />
       </AppBar>
       <Drawer
         sx={{
@@ -58,7 +55,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
             height={40}
             priority
           />
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => setOpen(false)}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
@@ -77,7 +74,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
           subHeader="Khác"
         />
       </Drawer>
-      <Main open={open} sx={{ padding: 0 }}>
+      <Main open={open} sx={{ padding: 0, overflow: "hidden auto" }}>
         <DrawerHeader />
         <FrameBackground />
         <Stack direction="column" position="relative" top="-45px" p="0 24px 24px 24px">

@@ -1,22 +1,19 @@
 "use client";
 
 import React, { FC, memo } from "react";
-import { Box } from "@mui/material";
 import { DataGrid, GridToolbar, viVN } from "@mui/x-data-grid";
-import { IDataTable } from "@interface/common";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverLay";
 import { CustomPagination } from "./CustomPagination";
 import { CustomLoadingOverLay } from "./CustomLoadingOverLay";
+import { DataTableModel } from "@models/Common";
 
-export const DataTable: FC<IDataTable> = memo((props) => {
+export const DataTable: FC<DataTableModel> = memo((props) => {
   return (
-    <Box sx={{ height: 600, width: 1 }}>
+    <div style={{ height: 720, width: "100%" }}>
       <DataGrid
         disableRowSelectionOnClick
         columns={props.column || []}
         rows={props.row || []}
-        pageSizeOptions={[5, 10, 25, 50, 100]}
-        pagination
         loading={props.isLoading}
         localeText={viVN.components.MuiDataGrid.defaultProps.localeText}
         slots={{
@@ -26,14 +23,15 @@ export const DataTable: FC<IDataTable> = memo((props) => {
           noResultsOverlay: CustomNoRowsOverlay,
           loadingOverlay: CustomLoadingOverLay,
         }}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 10 },
-          },
-        }}
+        pagination
+        paginationMode="server"
+        pageSizeOptions={[5, 10, 25, 50, 100]}
+        rowCount={Number(props.totalRecord)}
+        paginationModel={props.paginationModel}
+        onPaginationModelChange={props.setPaginationModel}
         slotProps={{
           toolbar: {
-            showQuickFilter: true,
+            showQuickFilter: props.isQuickFilter,
             quickFilterProps: { debounceMs: 500 },
           },
         }}
@@ -47,6 +45,6 @@ export const DataTable: FC<IDataTable> = memo((props) => {
           pointerEvents: props.isLoading ? "none" : "auto",
         }}
       />
-    </Box>
+    </div>
   );
 });

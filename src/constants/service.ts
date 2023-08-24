@@ -9,3 +9,12 @@ export const VERIFY_FORGOT_PASSWORD = "/auth/verify-forgot-password";
 
 // Management Account
 export const USERS_ENDPOINT = "/users";
+
+// Management Product
+export const PRODUCTS_ENDPOINT = "/products";
+
+// Categories
+export const CATEGORIES_ENDPOINT = "/categories";
+
+// Attributes
+export const ATTRIBUTES_ENDPOINT = "/attributes";

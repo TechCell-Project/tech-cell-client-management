@@ -4,6 +4,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { authSlice } from "./slices/authSlice";
 import { accountSlice } from "./slices/accountSlice";
+import { productSlice } from "./slices/productSlice";
+import { attributeSlice } from "./slices/attributeSlice";
 
 const createNoopStorage = () => {
   return {
@@ -27,12 +29,14 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["account"],
+  blacklist: ["account", "product", "attribute"],
 };
 
 const rootReducer = combineReducers({
   auth: authSlice.reducer,
   account: accountSlice.reducer,
+  product: productSlice.reducer,
+  attribute: attributeSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

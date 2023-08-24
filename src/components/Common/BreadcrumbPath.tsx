@@ -28,7 +28,6 @@ export const BreadcrumbPath = () => {
     <Breadcrumbs
       separator={<NavigateNextIcon fontSize="small" sx={{ fill: "#fff" }} />}
       aria-label="breadcrumb"
-      // sx={{ marginBottom: "20px" }}
     >
       <Stack direction="row" alignItems="center">
         <HouseRoundedIcon fontSize="inherit" sx={{ fill: "#fff" }} />

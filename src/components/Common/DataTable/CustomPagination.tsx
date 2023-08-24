@@ -1,11 +1,20 @@
 import MuiPagination from '@mui/material/Pagination';
 import { TablePaginationProps } from '@mui/material/TablePagination';
 import {
-  gridPageCountSelector,
+  gridFilteredTopLevelRowCountSelector,
+  gridPageSizeSelector,
   GridPagination,
   useGridApiContext,
+  useGridRootProps,
   useGridSelector,
 } from '@mui/x-data-grid';
+
+const getPageCount = (rowCount: number, pageSize: number): number => {
+  if (pageSize > 0 && rowCount > 0) {
+    return Math.ceil(rowCount / pageSize);
+  }
+  return 0;
+};
 
 const Pagination = ({
   page,
@@ -13,7 +22,17 @@ const Pagination = ({
   className,
 }: Pick<TablePaginationProps, 'page' | 'onPageChange' | 'className'>) => {
   const apiRef = useGridApiContext();
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+  const rootProps = useGridRootProps();
+
+  const pageSize = useGridSelector(apiRef, gridPageSizeSelector);
+  const visibleTopLevelRowCount = useGridSelector(
+    apiRef,
+    gridFilteredTopLevelRowCountSelector
+  );
+  const pageCount = getPageCount(
+    rootProps.rowCount ?? visibleTopLevelRowCount,
+    pageSize
+  );
 
   return (
     <MuiPagination

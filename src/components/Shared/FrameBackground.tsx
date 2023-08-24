@@ -1,21 +1,19 @@
 import React, { FC, memo, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BreadcrumbPath, ButtonCustom } from "@components/Common";
-import { PATHS } from "@constants/data";
+import { PATHS, RootRoutes } from "@constants/data";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import { Register } from "@components/Form";
-import styles from "@styles/components/_background.module.scss";
 import { getCurrentUserRole } from "@utils/index";
-
-const acceptRoutes = [
-  "/dashboard/product",
-  "/dashboard/account",
-  "/dashboard/order",
-];
+import { OpenCreateDialog } from "@models/Dialog";
+import styles from "@styles/components/_background.module.scss";
+import { CreateAttribute } from "@components/Form/Management/Attribute/Dialog/CreateAttribute";
 
 export const FrameBackground: FC = memo(() => {
   const [title, setTitle] = useState<string>("");
-  const [openRegister, setOpenRegister] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<OpenCreateDialog>(
+    new OpenCreateDialog()
+  );
 
   const pathname = usePathname();
   const router = useRouter();
@@ -28,23 +26,49 @@ export const FrameBackground: FC = memo(() => {
           ? `Quản lý ${matchedPath.name.toLowerCase()}`
           : `${matchedPath.name} quản lý`
       );
-    } else if (pathname.startsWith("/dashboard/product")) {
+    } else if (pathname.startsWith(RootRoutes.PRODUCT_ROUTE)) {
       setTitle("Quản lý sản phẩm");
-    } else if (pathname.startsWith("/dashboard/order")) {
+    } else if (pathname.startsWith(RootRoutes.ORDER_ROUTE)) {
       setTitle("Quản lý đơn hàng");
-    } else if (pathname.startsWith("/dashboard/account")) {
+    } else if (pathname.startsWith(RootRoutes.ACCOUNT_ROUTE)) {
       setTitle("Quản lý tài khoản");
     } else {
       setTitle("");
     }
   }, [pathname]);
 
-  const handleAdd = () => {
-    if (pathname === "/dashboard/account") {
-      setOpenRegister(true);
-    } else if (pathname === "/dashboard/product") {
-      router.push("/dashboard/product/create");
-    } else return;
+  const handleClick = (onClick: React.MouseEventHandler<HTMLButtonElement>) => {
+    return (
+      <ButtonCustom
+        variant="outlined"
+        content="Thêm mới"
+        startIcon={<AddCircleRoundedIcon />}
+        colorWhite
+        handleClick={onClick}
+        styles={{ padding: "7px 20px !important" }}
+      />
+    );
+  };
+
+  const renderAddButton = () => {
+    if (
+      pathname === RootRoutes.ACCOUNT_ROUTE &&
+      getCurrentUserRole() === "SuperAdmin"
+    ) {
+      return handleClick(() =>
+        setIsOpen((prev) => ({ ...prev, openRegister: true }))
+      );
+    } else if (pathname === RootRoutes.ATTRIBUTE_ROUTE) {
+      return handleClick(() =>
+        setIsOpen((prev) => ({ ...prev, openAttribute: true }))
+      );
+    } else if (pathname === RootRoutes.CATEGORY_ROUTE) {
+      return handleClick(() =>
+        setIsOpen((prev) => ({ ...prev, openCategory: true }))
+      );
+    } else if (pathname === RootRoutes.PRODUCT_ROUTE) {
+      return handleClick(() => router.push(RootRoutes.PRODUCT_CREATE_ROUTE));
+    }
   };
 
   return (
@@ -57,29 +81,25 @@ export const FrameBackground: FC = memo(() => {
             </div>
             <BreadcrumbPath />
           </div>
-          <div className={styles.frameAction}>
-            {acceptRoutes.includes(pathname) && (
-              <>
-                {pathname === "/dashboard/account" &&
-                getCurrentUserRole() !== "SuperAdmin" ? null : (
-                  <ButtonCustom
-                    variant="outlined"
-                    content="Thêm mới"
-                    startIcon={<AddCircleRoundedIcon />}
-                    colorWhite
-                    handleClick={handleAdd}
-                    styles={{ padding: "7px 20px !important" }}
-                  />
-                )}
-              </>
-            )}
-          </div>
+          <div className={styles.frameAction}>{renderAddButton()}</div>
         </div>
       </div>
-      {openRegister && (
+
+      {isOpen.openRegister && (
         <Register
-          isOpen={openRegister}
-          handleClose={() => setOpenRegister(false)}
+          isOpen={isOpen.openRegister}
+          handleClose={() =>
+            setIsOpen((prev) => ({ ...prev, openRegister: false }))
+          }
+        />
+      )}
+
+      {isOpen.openAttribute && (
+        <CreateAttribute
+          isOpen={isOpen.openAttribute}
+          handleClose={() =>
+            setIsOpen((prev) => ({ ...prev, openAttribute: false }))
+          }
         />
       )}
     </>

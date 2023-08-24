@@ -29,43 +29,6 @@ export interface IAuthSlice {
   isAuthenticated: boolean;
 }
 
-export interface IAccountSlice {
-  accounts: IUserAccount[] | [];
-  account: IUserAccount | null;
-  isLoading: boolean;
-  isLoadingDetails: boolean;
-}
-
-export interface IUserAccount {
-  _id?: string;
-  email?: string;
-  emailVerified?: boolean;
-  role?: string;
-  address?: Address[];
-  firstName?: string;
-  lastName?: string;
-  block?: {
-    isBlocked?: boolean;
-    activityLogs?: ActivityLog[];
-  };
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-interface Address {
-  provinceLevel?: string;
-  districtLevel?: string;
-  communeLevel?: string;
-  detail?: string;
-}
-
-interface ActivityLog {
-  activity?: string;
-  activityBy?: string;
-  activityReason?: string;
-  activityNote?: string;
-}
-
 export interface IForgotPassword {
   email?: string | null;
   otpCode: string | null;

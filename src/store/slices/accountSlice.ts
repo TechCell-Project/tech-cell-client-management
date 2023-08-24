@@ -1,4 +1,4 @@
-import { AnyAction, createSlice, Dispatch } from "@reduxjs/toolkit";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import {
   createAccount,
   getAllAccounts,
@@ -7,11 +7,12 @@ import {
   patchChangeRoleAccount,
   patchUnBlockAccount,
 } from "@services/accountService";
-import { IAccountSlice } from "@interface/auth";
+import { SearchModel } from "@models/Common";
 import { RegisterModel } from "@models/Auth";
+import { AccountSlice, UserDataAccount } from "@models/Account";
 
-const initialState: IAccountSlice = {
-  accounts: [],
+const initialState: AccountSlice = {
+  accounts: new UserDataAccount(),
   account: null,
   isLoading: false,
   isLoadingDetails: false,
@@ -36,7 +37,7 @@ export const accountSlice = createSlice({
       state.isLoadingDetails = false;
     },
     getAllFailure: (state) => {
-      state.accounts = [];
+      state.accounts = new UserDataAccount();
       state.isLoading = false;
     },
     getDetailsFailure: (state) => {
@@ -47,11 +48,11 @@ export const accountSlice = createSlice({
       state.isLoading = false;
     },
     patchAccountSuccess: (state, { payload }) => {
-      const index = state.accounts.findIndex(
+      const index = state.accounts.data.findIndex(
         (account) => account._id === payload._id
       );
       if (index !== -1) {
-        state.accounts[index] = payload;
+        state.accounts.data[index] = payload;
       }
       state.isLoading = false;
     },
@@ -62,10 +63,10 @@ export const accountSlice = createSlice({
 });
 
 // Thunk
-export const getAllUserAccount = () => async (dispatch: Dispatch) => {
+export const getAllUserAccount = (payload: SearchModel) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
-    const response = await getAllAccounts();
+    const response = await getAllAccounts(payload);
     if (response.data) {
       dispatch(getAllSuccess(response.data));
     }

@@ -3,14 +3,15 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { RegisterModel } from "@models/Auth";
 import { registerValidate } from "@validate/auth.validate";
 import { Stack } from "@mui/material";
-import { ShowDialog, ButtonCustom, SnackbarMessage } from "@components/Common";
+import { ShowDialog, ButtonCustom } from "@components/Common";
 import RegisterForm from "./RegisterForm";
-import { ISnackbarAlert } from "@interface/common";
-import { useAppDispatch, useAppSelector } from "@store/store";
+import { useAppDispatch } from "@store/store";
 import {
   createNewAccount,
   getAllUserAccount,
 } from "@store/slices/accountSlice";
+import { enqueueSnackbar } from "notistack";
+import { SearchModel } from "@models/Common";
 
 interface Props {
   isOpen: boolean;
@@ -18,9 +19,7 @@ interface Props {
 }
 
 export const Register = memo((props: Props) => {
-  const [alert, setAlert] = useState<ISnackbarAlert>();
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.account);
 
   const handleSubmit = (
     values: RegisterModel,
@@ -28,21 +27,13 @@ export const Register = memo((props: Props) => {
   ) => {
     dispatch(createNewAccount(values))
       .then(() => {
-        setAlert({
-          message: "Thêm mới tài khoản thành công!",
-          type: "success",
-        });
-        setTimeout(() => {
-          resetForm();
-          props.handleClose();
-        }, 2000);
-        dispatch(getAllUserAccount());
+        enqueueSnackbar("Thêm mới tài khoản thành công!", {variant: "success"});
+        resetForm();
+        props.handleClose();
+        dispatch(getAllUserAccount(new SearchModel()));
       })
       .catch(() =>
-        setAlert({
-          message: "Thêm mới tài khoản thất bại!",
-          type: "error",
-        })
+      enqueueSnackbar("Thêm mới tài khoản thất bại!", {variant: "error"})
       )
       .finally(() => setSubmitting(false));
   };
@@ -54,7 +45,6 @@ export const Register = memo((props: Props) => {
       handleClose={props.handleClose}
       dialogStyle={{ minWidth: { sm: 380, md: 520 } }}
     >
-      {alert && !isLoading && <SnackbarMessage {...alert} />}
       <Formik
         enableReinitialize
         initialValues={new RegisterModel()}

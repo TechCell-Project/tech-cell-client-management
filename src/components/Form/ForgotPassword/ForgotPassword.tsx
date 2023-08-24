@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from "react";
-import { ButtonCustom, ShowDialog, SnackbarMessage } from "@components/Common";
+import { ButtonCustom, ShowDialog } from "@components/Common";
 import { ForgotPasswordModel } from "@models/Auth";
 import { Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -10,6 +10,7 @@ import {
   fetchVerifyForgotPassword,
 } from "@services/authServices";
 import { ForgotForm } from "./ForgotForm";
+import { enqueueSnackbar } from "notistack";
 
 interface Props {
   isOpen: boolean;
@@ -19,8 +20,6 @@ interface Props {
 export const ForgotPassword = memo((props: Props) => {
   const [countdown, setCountdown] = useState<number>(5 * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [alert, setAlert] = useState<ISnackbarAlert>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     let interval: any = null;
@@ -48,7 +47,6 @@ export const ForgotPassword = memo((props: Props) => {
   };
 
   const sendCode = (email: string) => {
-    setIsLoading(true);
     fetchForgotPassword(email)
       .then(() => {
         if (isActive) {
@@ -56,46 +54,28 @@ export const ForgotPassword = memo((props: Props) => {
         } else {
           setIsActive(true);
         }
-        setAlert({
-          message: `Đã gửi mã OTP dến ${email}`,
-          type: "success",
-        });
+        enqueueSnackbar(`Đã gửi mã OTP dến ${email}`, { variant: "success" });
       })
       .catch(() =>
-        setAlert({
-          message: `Có lỗi xảy ra, Gửi mã thất bại!`,
-          type: "error",
-        })
-      )
-      .finally(() => setIsLoading(false));
+        enqueueSnackbar(`Có lỗi xảy ra, Gửi mã thất bại!`, { variant: "error" })
+      );
   };
 
   const handleSubmit = (
     values: ForgotPasswordModel,
     { resetForm, setSubmitting }: FormikHelpers<ForgotPasswordModel>
   ) => {
-    setIsLoading(true);
     fetchVerifyForgotPassword(values)
       .then(() => {
-        setAlert({
-          message: "Đổi mật khẩu thành công!",
-          type: "success",
-          timeout: 4000,
-        });
-        setTimeout(() => {
-          resetForm();
-          props.handleClose();
-        }, 2000);
+        enqueueSnackbar("Đổi mật khẩu thành công!", { variant: "success" });
+        resetForm();
+        props.handleClose();
       })
       .catch(() =>
-        setAlert({
-          message: "Đổi mật khẩu thất bại!",
-          type: "error",
-        })
+        enqueueSnackbar("Đổi mật khẩu thất bại!", { variant: "error" })
       )
       .finally(() => {
         setSubmitting(false);
-        setIsLoading(false);
       });
   };
 
@@ -107,7 +87,6 @@ export const ForgotPassword = memo((props: Props) => {
         isOpen={props.isOpen}
         dialogStyle={{ minWidth: { xs: 320, md: 450 } }}
       >
-        {alert && !isLoading && <SnackbarMessage {...alert} />}
         <Formik
           enableReinitialize
           initialValues={new ForgotPasswordModel()}

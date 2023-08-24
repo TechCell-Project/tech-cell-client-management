@@ -55,6 +55,14 @@
   }
 }
 
+.MuiCollapse-root .MuiCollapse-wrapper .MuiCollapse-wrapperInner .MuiButtonBase-root.MuiListItemButton-root.Mui-selected {
+  background-color: transparent;
+
+  &::before {
+    display: none;
+  }
+}
+
 .MuiInputBase-input.MuiOutlinedInput-input {
   font-size: 15px;
 }

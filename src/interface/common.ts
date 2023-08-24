@@ -22,6 +22,11 @@ export interface IDataTable {
   column?: GridColDef<any>[] | null;
   row: readonly any[];
   isLoading?: boolean;
+  isQuickFilter?: boolean;
+  page?: number | string;
+  pageSize?: number | string;
+  totalPage?: number | string;
+  totalRecord?: number | string;
 }
 
 export interface IDialog {

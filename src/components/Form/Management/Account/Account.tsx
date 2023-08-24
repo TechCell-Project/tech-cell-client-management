@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "@components/Common";
 import { COLUMNS_ACCOUNT } from "@constants/data";
 import {
@@ -8,12 +8,11 @@ import {
   getDetailsUserAccount,
 } from "@store/slices/accountSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
-import { getRole, getCurrentUserId, isRoleAccepted } from "@utils/index";
-import { SnackbarMessage } from "@components/Common";
-import { ISnackbarAlert } from "@interface/common";
+import { getRole, getCurrentUserId, isRoleAccepted, getIndexNo } from "@utils/index";
 import {
   GridActionsCellItem,
   GridColDef,
+  GridPaginationModel,
   GridRowParams,
 } from "@mui/x-data-grid";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
@@ -23,33 +22,31 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { ConfirmBlock, ChangeRole, DetailsAccount } from "./Dialog";
 import { Tooltip } from "@mui/material";
 import { IColumnAccount } from "@interface/data";
+import { SearchModel } from "@models/Common";
 
 export const Account = () => {
   const dispatch = useAppDispatch();
   const { accounts, isLoading } = useAppSelector((state) => state.account);
-
-  const [alert, setAlert] = useState<ISnackbarAlert>();
 
   const [dataRowSelected, setDataRowSelected] = useState<IColumnAccount>();
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState<boolean>(false);
   const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
 
-  useEffect(() => {
-    dispatch(getAllUserAccount());
-  }, []);
+  const [searchAccount, setSearchAccount] = useState<SearchModel>(new SearchModel());
 
-  const rows: IColumnAccount[] = useMemo(() => {
-    return accounts.map((account, i) => ({
-      id: account._id,
-      no: i + 1,
-      name: `${account.firstName} ${account.lastName}`,
-      role: getRole(account.role),
-      email: account.email,
-      status:
-        account.block && account.block.isBlocked ? "Bị chặn" : "Hoạt động",
-    }));
-  }, [accounts]);
+  useEffect(() => {
+    dispatch(getAllUserAccount(searchAccount));
+  }, [searchAccount]);
+
+  const rows: IColumnAccount[] = accounts.data?.map((account, i) => ({
+    id: account._id,
+    no: getIndexNo(i, searchAccount.page, searchAccount.pageSize),
+    name: `${account.firstName} ${account.lastName}`,
+    role: getRole(account.role),  
+    email: account.email,
+    status: account.block && account.block.isBlocked ? "Bị chặn" : "Hoạt động",
+  }));
 
   const loadDataDetails = (id: string) => {
     dispatch(getDetailsUserAccount(id));
@@ -130,8 +127,15 @@ export const Account = () => {
 
   return (
     <>
-      {alert && !isLoading && <SnackbarMessage {...alert} />}
-      <DataTable column={columns} row={rows} isLoading={isLoading} />
+      <DataTable
+        column={columns}
+        row={rows}
+        isLoading={isLoading}
+        isQuickFilter
+        paginationModel={searchAccount}
+        setPaginationModel={setSearchAccount}
+        totalRecord={accounts?.totalRecord}
+      />
 
       {openDetails && (
         <DetailsAccount
@@ -145,7 +149,6 @@ export const Account = () => {
           isOpen={openChangeRole}
           handleClose={() => setOpenChangeRole(false)}
           dataAccount={dataRowSelected}
-          setAlert={setAlert}
         />
       )}
 
@@ -154,7 +157,6 @@ export const Account = () => {
           isOpen={openDeleteConfirm}
           handleClose={() => setOpenDeleteConfirm(false)}
           dataAccount={dataRowSelected}
-          setAlert={setAlert}
         />
       )}
     </>
