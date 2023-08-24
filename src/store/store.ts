@@ -6,6 +6,7 @@ import { authSlice } from "./slices/authSlice";
 import { accountSlice } from "./slices/accountSlice";
 import { productSlice } from "./slices/productSlice";
 import { attributeSlice } from "./slices/attributeSlice";
+import { categorySlice } from "./slices/categorySlice";
 
 const createNoopStorage = () => {
   return {
@@ -29,7 +30,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["account", "product", "attribute"],
+  blacklist: ["account", "product", "attribute", "category"],
 };
 
 const rootReducer = combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   account: accountSlice.reducer,
   product: productSlice.reducer,
   attribute: attributeSlice.reducer,
+  category: categorySlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

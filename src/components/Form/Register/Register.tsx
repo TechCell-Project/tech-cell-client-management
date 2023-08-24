@@ -27,13 +27,15 @@ export const Register = memo((props: Props) => {
   ) => {
     dispatch(createNewAccount(values))
       .then(() => {
-        enqueueSnackbar("Thêm mới tài khoản thành công!", {variant: "success"});
+        enqueueSnackbar("Thêm mới tài khoản thành công!", {
+          variant: "success",
+        });
         resetForm();
         props.handleClose();
         dispatch(getAllUserAccount(new SearchModel()));
       })
       .catch(() =>
-      enqueueSnackbar("Thêm mới tài khoản thất bại!", {variant: "error"})
+        enqueueSnackbar("Thêm mới tài khoản thất bại!", { variant: "error" })
       )
       .finally(() => setSubmitting(false));
   };

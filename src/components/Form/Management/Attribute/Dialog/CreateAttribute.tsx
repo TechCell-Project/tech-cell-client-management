@@ -2,9 +2,11 @@ import React from "react";
 import { ButtonCustom, ShowDialog } from "@components/Common";
 import { AttributeModel, CreateAttributeModel } from "@models/Attribute";
 import { createOrEditValidate } from "@validate/attribute.validate";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { TextField, Stack } from "@mui/material";
-import { useAppSelector } from "@store/store";
+import { useAppDispatch, useAppSelector } from "@store/store";
+import { createNewAttribute } from "@store/slices/attributeSlice";
+import { enqueueSnackbar } from "notistack";
 
 interface Props {
   isOpen: boolean;
@@ -12,7 +14,27 @@ interface Props {
 }
 
 export const CreateAttribute = (props: Props) => {
-  const handleSubmit = () => {};
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (
+    values: CreateAttributeModel,
+    { resetForm, setSubmitting }: FormikHelpers<CreateAttributeModel>
+  ) => {
+    dispatch(createNewAttribute(values))
+      .then(() => {
+        enqueueSnackbar("Thêm mới thông số thành công!", {
+          variant: "success",
+        });
+        resetForm();
+        props.handleClose();
+      })
+      .catch(() =>
+        enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
+          variant: "error",
+        })
+      )
+      .finally(() => setSubmitting(false));
+  };
 
   return (
     <ShowDialog
@@ -23,8 +45,7 @@ export const CreateAttribute = (props: Props) => {
     >
       <Formik
         enableReinitialize
-        initialValues={new CreateAttributeModel()
-        }
+        initialValues={new CreateAttributeModel()}
         validationSchema={createOrEditValidate}
         onSubmit={handleSubmit}
       >

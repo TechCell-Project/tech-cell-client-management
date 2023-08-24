@@ -50,7 +50,7 @@ export const COLUMNS_ATTRIBUTE = [
   },
   {
     field: "label",
-    headerName: "# Mã (label)",
+    headerName: "# Label",
     width: 200,
   },
   {

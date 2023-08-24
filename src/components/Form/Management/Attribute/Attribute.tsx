@@ -5,7 +5,7 @@ import {
   getAllAttributes,
   getDetailAttributeById,
 } from "@store/slices/attributeSlice";
-import { AttributeModel, SearchAttributeModel } from "@models/Attribute";
+import { SearchAttributeModel } from "@models/Attribute";
 import { COLUMNS_ATTRIBUTE } from "@constants/data";
 import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import { getIndexNo } from "@utils/index";

@@ -14,3 +14,12 @@ export interface IColumnAttribute {
   label?: string | null;
   description?: string | null;
 }
+
+export interface IColumnCategory {
+  id?: string | null;
+  no: number;
+  name?: string | null;
+  label?: string | null;
+  description?: string | null;
+  requiresAttribute?: Array<string>;
+}
