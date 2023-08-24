@@ -16,7 +16,7 @@ export const categorySlice = createSlice({
     isFetching: (state) => {
       state.isLoading = true;
     },
-    getAllSuccess: (state, { payload }: { payload: CategoryData }) => {
+    getAllSuccess: (state, { payload }) => {
       state.categories = payload;
       state.isLoading = false;
     },
