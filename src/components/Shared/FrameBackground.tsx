@@ -8,6 +8,7 @@ import { getCurrentUserRole } from "@utils/index";
 import { OpenCreateDialog } from "@models/Dialog";
 import styles from "@styles/components/_background.module.scss";
 import { CreateAttribute } from "@components/Form/Management/Attribute/Dialog/CreateAttribute";
+import { CreateCategory } from "@components/Form/Management/Category/Dialog/CreateCategory";
 
 export const FrameBackground: FC = memo(() => {
   const [title, setTitle] = useState<string>("");
@@ -99,6 +100,15 @@ export const FrameBackground: FC = memo(() => {
           isOpen={isOpen.openAttribute}
           handleClose={() =>
             setIsOpen((prev) => ({ ...prev, openAttribute: false }))
+          }
+        />
+      )}
+
+      {isOpen.openCategory && (
+        <CreateCategory
+          isOpen={isOpen.openCategory}
+          handleClose={() =>
+            setIsOpen((prev) => ({ ...prev, openCategory: false }))
           }
         />
       )}

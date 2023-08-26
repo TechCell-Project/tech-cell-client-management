@@ -1,11 +1,11 @@
 import React from "react";
 import { ButtonCustom, ShowDialog } from "@components/Common";
-import { AttributeModel, CreateAttributeModel } from "@models/Attribute";
+import { AttributeModel, CreateAttributeModel, SearchAttributeModel } from "@models/Attribute";
 import { createOrEditValidate } from "@validate/attribute.validate";
 import { Form, Formik, FormikHelpers } from "formik";
 import { TextField, Stack } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/store";
-import { createNewAttribute } from "@store/slices/attributeSlice";
+import { createNewAttribute, getAllAttributes } from "@store/slices/attributeSlice";
 import { enqueueSnackbar } from "notistack";
 
 interface Props {
@@ -26,6 +26,7 @@ export const CreateAttribute = (props: Props) => {
           variant: "success",
         });
         resetForm();
+        dispatch(getAllAttributes(new SearchAttributeModel()));
         props.handleClose();
       })
       .catch(() =>

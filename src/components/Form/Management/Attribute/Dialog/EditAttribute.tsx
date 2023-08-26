@@ -3,7 +3,7 @@ import { AttributeModel, CreateAttributeModel } from "@models/Attribute";
 import { CircularProgress, Stack, TextField, useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { createOrEditValidate } from "@validate/attribute.validate";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { editAttribute } from "@store/slices/attributeSlice";
 import React from "react";
 import { enqueueSnackbar } from "notistack";
@@ -20,7 +20,10 @@ export const EditAttribute = (props: Props) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
 
-  const handleSubmit = async (values: AttributeModel) => {
+  const handleSubmit = async (
+    values: AttributeModel,
+    { setSubmitting }: FormikHelpers<AttributeModel>
+  ) => {
     try {
       const { name, label, description, _id } = values;
 
@@ -31,11 +34,13 @@ export const EditAttribute = (props: Props) => {
 
       await dispatch(editAttribute(payload, String(_id)));
       enqueueSnackbar("Sửa thông số thành công!", { variant: "success" });
-      
     } catch (error) {
-      enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", { variant: "error" });
+      enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", {
+        variant: "error",
+      });
     } finally {
       props.handleClose();
+      setSubmitting(false);
     }
   };
 

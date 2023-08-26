@@ -10,7 +10,7 @@ import { IListNavProps, INavProps } from "@interface/navigation";
 
 const DASHBOARD_ROUTE = "/dashboard";
 
-export const DRAWER_WIDTH = 240;
+export const DRAWER_WIDTH = 260;
 
 export const LIST_PRODUCT_NAV = [
   { name: "Điện thoại", to: `${DASHBOARD_ROUTE}/product`, icon: PhoneAndroidRoundedIcon},

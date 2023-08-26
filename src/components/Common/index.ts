@@ -8,3 +8,4 @@ export * from "./ShowDialog";
 export * from "./FormGroup/ButtonCustom";
 export * from "./FormGroup/PasswordCustom";
 export * from "./FormGroup/SelectCustom";
+export * from "./FormGroup/MultiSelectCustom";

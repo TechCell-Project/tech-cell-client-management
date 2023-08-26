@@ -16,5 +16,5 @@ export const createCategory = (payload: CategoryModel) =>
 export const getCategoryByLabel = (label: string) =>
   instance.get(`${CATEGORIES_ENDPOINT}/label/${label}`);
 
-export const editCategoryById = (id: string) =>
-  instance.patch(`${CATEGORIES_ENDPOINT}/${id}`);
+export const editCategoryById = (payload: CategoryModel, id: string) =>
+  instance.patch<CategoryModel>(`${CATEGORIES_ENDPOINT}/${id}`, payload);

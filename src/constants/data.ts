@@ -63,6 +63,27 @@ export const COLUMNS_ATTRIBUTE = [
   },
 ];
 
+export const COLUMNS_CATEGORY = [
+  { field: "no", headerName: "STT", width: 70 },
+  {
+    field: "name",
+    headerName: "Thể loại",
+    width: 200,
+  },
+  {
+    field: "label",
+    headerName: "# Label",
+    width: 200,
+  },
+  {
+    field: "requiresAttribute",
+    headerName: "Danh sách thông số/thuộc tính",
+    flex: 1,
+    minWidth: 400,
+    headerAlign: "center",
+  },
+]
+
 export enum RootRoutes {
   DASHBOARD_ROUTE = "/dashboard",
   ACCOUNT_ROUTE = "/dashboard/account",
