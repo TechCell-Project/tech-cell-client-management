@@ -74,9 +74,12 @@ export const createNewCategory =
   (payload: CategoryModel) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
-      await createCategory(payload);
+      const response = await createCategory(payload);
+      if (response.data) {
+        return { success: true };
+      }
     } catch (error) {
-      console.log(error);
+      return { succes: false, error };
     } finally {
       dispatch(fetchedDone());
     }
@@ -95,18 +98,20 @@ export const getDetailsCategoryByLabel =
     }
   };
 
-export const editCategory = (payload: CategoryModel, id: string) => async (dispatch: Dispatch) => {
-  dispatch(isFetching());
-  try {
-    const response = await editCategoryById(payload, id);
-    if (response.data) {
-      dispatch(editSuccess(response.data));
+export const editCategory =
+  (payload: CategoryModel, id: string) => async (dispatch: Dispatch) => {
+    dispatch(isFetching());
+    try {
+      const response = await editCategoryById(payload, id);
+      if (response.data) {
+        dispatch(editSuccess(response.data));
+        return { success: true };
+      }
+    } catch (error) {
+      dispatch(fetchedDone());
+      return { success: false, error };
     }
-  } catch (error) {
-    console.log(error);
-    dispatch(fetchedDone());
-  }
-} 
+  };
 
 const { actions, reducer } = categorySlice;
 

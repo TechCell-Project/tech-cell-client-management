@@ -102,10 +102,11 @@ export const createNewAttribute =
       const response = await postAttribute(payload);
       if (response.data) {
         dispatch(fetchedDone());
+        return { success: true };
       }
     } catch (error) {
-      console.log(error);
       dispatch(fetchedDone());
+      return { success: false, error };
     }
   };
 
@@ -116,10 +117,11 @@ export const editAttribute =
       const response = await patchAttribute(payload, id);
       if (response.data) {
         dispatch(editSuccess(response.data));
+        return { success: true };
       }
     } catch (error) {
-      console.log(error);
       dispatch(fetchedDone());
+      return { success: false, error };
     }
   };
 
@@ -129,10 +131,11 @@ export const removeAttribute = (id: string) => async (dispatch: Dispatch) => {
     const response = await deleteAttribute(id);
     if (response.data) {
       dispatch(deleteSuccess(id));
+      return { success: true };
     }
   } catch (error) {
-    console.log(error);
     dispatch(fetchedDone());
+    return { success: false, error };
   }
 };
 

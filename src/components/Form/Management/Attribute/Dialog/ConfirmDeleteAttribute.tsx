@@ -16,17 +16,24 @@ export const ConfirmDeleteAttribute = (props: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.attribute)
 
-  const handleConfirm = () => {
-    dispatch(removeAttribute(String(props.dataAttribute?.id)))
-      .then(() =>
+  const handleConfirm = async () => {
+    try {
+      const response = await dispatch(removeAttribute(String(props.dataAttribute?.id)));
+
+      if(response?.success) {
         enqueueSnackbar("Xóa thông số thành công!", { variant: "success" })
-      )
-      .catch(() =>
+      } else {
         enqueueSnackbar("Có lỗi xảy ra, xóa thông số thất bại!", {
           variant: "error",
         })
-      )
-      .finally(() => props.handleClose());
+      }
+    } catch (e) {
+      enqueueSnackbar("Có lỗi xảy ra, xóa thông số thất bại!", {
+        variant: "error",
+      })
+    } finally {
+      props.handleClose();
+    }
   };
 
   return (

@@ -30,27 +30,36 @@ export const CreateCategory = (props: Props) => {
     );
   }, []);
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: CategoryModel,
     { resetForm, setSubmitting }: FormikHelpers<CategoryModel>
   ) => {
     const listAttribute = values.requireAttributes?.map((item) => item.label);
 
-    dispatch(createNewCategory({ ...values, requireAttributes: listAttribute }))
-      .then(() => {
+    try {
+      const response = await dispatch(
+        createNewCategory({ ...values, requireAttributes: listAttribute })
+      );
+
+      if (response?.success) {
         enqueueSnackbar("Thêm mới thuộc tính thành công!", {
           variant: "success",
         });
         resetForm();
-        dispatch(getAllCategory(new SearchModel));
+        dispatch(getAllCategory(new SearchModel()));
         props.handleClose();
-      })
-      .catch(() =>
+      } else {
         enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
           variant: "error",
-        })
-      )
-      .finally(() => setSubmitting(false));
+        });
+      }
+    } catch (error) {
+      enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
+        variant: "error",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

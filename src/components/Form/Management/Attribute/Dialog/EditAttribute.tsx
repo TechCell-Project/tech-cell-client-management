@@ -32,8 +32,14 @@ export const EditAttribute = (props: Props) => {
       payload.label = label;
       payload.description = description;
 
-      await dispatch(editAttribute(payload, String(_id)));
-      enqueueSnackbar("Sửa thông số thành công!", { variant: "success" });
+      const response = await dispatch(editAttribute(payload, String(_id)));
+      if(response?.success) {
+        enqueueSnackbar("Sửa thông số thành công!", { variant: "success" });
+      } else {
+        enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", {
+          variant: "error",
+        });
+      }
     } catch (error) {
       enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", {
         variant: "error",

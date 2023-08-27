@@ -1,11 +1,18 @@
 import React from "react";
 import { ButtonCustom, ShowDialog } from "@components/Common";
-import { AttributeModel, CreateAttributeModel, SearchAttributeModel } from "@models/Attribute";
+import {
+  AttributeModel,
+  CreateAttributeModel,
+  SearchAttributeModel,
+} from "@models/Attribute";
 import { createOrEditValidate } from "@validate/attribute.validate";
 import { Form, Formik, FormikHelpers } from "formik";
 import { TextField, Stack } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/store";
-import { createNewAttribute, getAllAttributes } from "@store/slices/attributeSlice";
+import {
+  createNewAttribute,
+  getAllAttributes,
+} from "@store/slices/attributeSlice";
 import { enqueueSnackbar } from "notistack";
 
 interface Props {
@@ -16,25 +23,32 @@ interface Props {
 export const CreateAttribute = (props: Props) => {
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: CreateAttributeModel,
     { resetForm, setSubmitting }: FormikHelpers<CreateAttributeModel>
   ) => {
-    dispatch(createNewAttribute(values))
-      .then(() => {
+    try {
+      const response = await dispatch(createNewAttribute(values));
+
+      if(response?.success) {
         enqueueSnackbar("Thêm mới thông số thành công!", {
           variant: "success",
         });
-        resetForm();
         dispatch(getAllAttributes(new SearchAttributeModel()));
+        resetForm();
         props.handleClose();
-      })
-      .catch(() =>
+      } else {
         enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
           variant: "error",
-        })
-      )
-      .finally(() => setSubmitting(false));
+        });
+      }
+    } catch (error) {
+      enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
+        variant: "error",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

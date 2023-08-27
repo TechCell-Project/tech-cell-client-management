@@ -33,31 +33,39 @@ export const EditCategory = (props: Props) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: CategoryModel,
     { setSubmitting }: FormikHelpers<CategoryModel>
   ) => {
     const listAttributes = values.requireAttributes?.map(
       (attribute) => attribute.label
     );
-    dispatch(
-      editCategory(
-        { ...values, requireAttributes: listAttributes },
-        String(values._id)
-      )
-    )
-      .then(() =>
-        enqueueSnackbar("Thể loại đã được cập nhật!", { variant: "success" })
-      )
-      .catch(() =>
+
+    try {
+      const response = await dispatch(
+        editCategory(
+          { ...values, requireAttributes: listAttributes },
+          String(values._id)
+        )
+      );
+
+      if (response?.success) {
+        enqueueSnackbar("Cập nhật thể loại thành công!", {
+          variant: "success",
+        });
+        props.handleClose();
+      } else {
         enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", {
           variant: "error",
-        })
-      )
-      .finally(() => {
-        props.handleClose();
-        setSubmitting(false);
+        });
+      }
+    } catch (error) {
+      enqueueSnackbar("Có lỗi xảy ra. Chỉnh sửa thất bại!", {
+        variant: "error",
       });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -80,115 +88,110 @@ export const EditCategory = (props: Props) => {
         onSubmit={handleSubmit}
       >
         {({ values, handleChange, errors, touched, isSubmitting }) => (
-          console.log(values),
-          (
-            <Form
-              style={{
-                width: "100%",
-                marginTop: "10px",
-                textAlign: isLoadingDetails ? "center" : "left",
-              }}
-            >
-              {isLoadingDetails ? (
-                <CircularProgress sx={{ color: theme.color.red }} />
-              ) : (
-                <>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        id="name"
-                        name="name"
-                        label="Thể loại"
-                        fullWidth
-                        value={values.name}
-                        onChange={handleChange}
-                        variant="outlined"
-                        size="small"
-                        error={touched.name && Boolean(errors.name)}
-                        helperText={touched.name && errors.name}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        id="label"
-                        name="label"
-                        label="# Label"
-                        value={values.label}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        error={touched.label && Boolean(errors.label)}
-                        helperText={touched.label && errors.label}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        id="url"
-                        name="url"
-                        label="URL"
-                        value={values.url}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        error={touched.url && Boolean(errors.url)}
-                        helperText={touched.url && errors.url}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        id="description"
-                        name="description"
-                        label="Mô tả"
-                        value={values.description}
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                        size="small"
-                        error={
-                          touched.description && Boolean(errors.description)
-                        }
-                        helperText={touched.description && errors.description}
-                        multiline
-                        minRows={1}
-                        maxRows={3}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MultiSelectCustom<CategoryModel>
-                        options={attributes.data}
-                        name="requireAttributes"
-                        label="Thông số kỹ thuật"
-                        displaySelected="name"
-                        placeholder="Thông số"
-                        multiple
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-end"
-                    gap={2}
-                    sx={{ mt: 4 }}
-                  >
-                    <ButtonCustom
+          <Form
+            style={{
+              width: "100%",
+              marginTop: "10px",
+              textAlign: isLoadingDetails ? "center" : "left",
+            }}
+          >
+            {isLoadingDetails ? (
+              <CircularProgress sx={{ color: theme.color.red }} />
+            ) : (
+              <>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="name"
+                      name="name"
+                      label="Thể loại"
+                      fullWidth
+                      value={values.name}
+                      onChange={handleChange}
                       variant="outlined"
-                      handleClick={props.handleClose}
-                      content="Hủy bỏ"
+                      size="small"
+                      error={touched.name && Boolean(errors.name)}
+                      helperText={touched.name && errors.name}
                     />
-                    <ButtonCustom
-                      variant="contained"
-                      type="submit"
-                      disabled={isSubmitting}
-                      content="Xác nhận"
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="label"
+                      name="label"
+                      label="# Label"
+                      value={values.label}
+                      onChange={handleChange}
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      error={touched.label && Boolean(errors.label)}
+                      helperText={touched.label && errors.label}
                     />
-                  </Stack>
-                </>
-              )}
-            </Form>
-          )
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="url"
+                      name="url"
+                      label="URL"
+                      value={values.url}
+                      onChange={handleChange}
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      error={touched.url && Boolean(errors.url)}
+                      helperText={touched.url && errors.url}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="description"
+                      name="description"
+                      label="Mô tả"
+                      value={values.description}
+                      fullWidth
+                      variant="outlined"
+                      onChange={handleChange}
+                      size="small"
+                      error={touched.description && Boolean(errors.description)}
+                      helperText={touched.description && errors.description}
+                      multiline
+                      minRows={1}
+                      maxRows={3}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MultiSelectCustom<CategoryModel>
+                      options={attributes.data}
+                      name="requireAttributes"
+                      label="Thông số kỹ thuật"
+                      displaySelected="name"
+                      placeholder="Thông số"
+                      multiple
+                    />
+                  </Grid>
+                </Grid>
+
+                <Stack
+                  direction="row"
+                  justifyContent="flex-end"
+                  gap={2}
+                  sx={{ mt: 4 }}
+                >
+                  <ButtonCustom
+                    variant="outlined"
+                    handleClick={props.handleClose}
+                    content="Hủy bỏ"
+                  />
+                  <ButtonCustom
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting}
+                    content="Xác nhận"
+                  />
+                </Stack>
+              </>
+            )}
+          </Form>
         )}
       </Formik>
     </ShowDialog>
