@@ -5,7 +5,6 @@ import {
   Typography,
   Stack,
   TextField,
-  useTheme,
   FormControl,
   InputLabel,
   InputAdornment,
@@ -17,7 +16,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import { Formik, Form, FormikHelpers } from "formik";
-import { LoginModel } from "models";
+import { LoginModel } from "models/Auth";
 import { loginValidate } from "@validate/auth.validate";
 import { ButtonCustom } from "@components/Common";
 import { ForgotPassword } from "../ForgotPassword/ForgotPassword";
@@ -32,7 +31,6 @@ interface IProps {
 export const LoginForm = memo(({ handleSubmit }: IProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
-  const { color } = useTheme();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -55,7 +53,7 @@ export const LoginForm = memo(({ handleSubmit }: IProps) => {
               <TextField
                 label="Tên tài khoản hoặc email"
                 name="emailOrUsername"
-                value={values.emailOrUsername || ""}
+                value={values.emailOrUsername ?? ""}
                 error={
                   touched.emailOrUsername && Boolean(errors.emailOrUsername)
                 }

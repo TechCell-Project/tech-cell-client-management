@@ -102,9 +102,9 @@ export const ChangeRole = memo((props: Props) => {
                   size="small"
                   fullWidth
                 >
-                  {ROLE_OPTIONS.map((option, i) => (
+                  {ROLE_OPTIONS.map((option) => (
                     <MenuItem
-                      key={i}
+                      key={option.value}
                       value={option.value}
                       disabled={
                         props.dataAccount?.role === getRole(option.value)

@@ -31,7 +31,7 @@ export interface IDataTable {
 
 export interface IDialog {
   isOpen: boolean;
-  handleClose: (event: any) => void;
+  handleClose: (event?: any) => void;
   handleSubmit?: (event: any) => void | (({ ...e }) => Promise<void>);
   dialogTitle: string;
   dialogStyle?: any;

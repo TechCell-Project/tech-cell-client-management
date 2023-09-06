@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "@components/Common";
 import { COLUMNS_CATEGORY } from "@constants/data";
 import { IColumnCategory } from "@interface/data";
-import { SearchModel } from "@models/Common";
+import { Paging } from "@models/Common";
 import {
   getAllCategory,
   getDetailsCategoryByLabel,
@@ -10,7 +10,6 @@ import {
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { getIndexNo } from "@utils/index";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";
 import { EditCategory } from "./Dialog/EditCategory";
@@ -19,9 +18,7 @@ export const Category = () => {
   const dispatch = useAppDispatch();
   const { categories, isLoading } = useAppSelector((state) => state.category);
 
-  const [searchCategory, setSearchCategory] = useState<SearchModel>(
-    new SearchModel()
-  );
+  const [searchCategory, setSearchCategory] = useState<Paging>(new Paging());
   const [openEdit, setOpenEdit] = useState<boolean>(false);
 
   useEffect(() => {
@@ -32,7 +29,7 @@ export const Category = () => {
     dispatch(getDetailsCategoryByLabel(label));
   };
 
-  const rows: any = categories.data.map((category, i) => ({
+  const rows: Array<IColumnCategory> = categories.data.map((category, i) => ({
     id: category._id,
     no: getIndexNo(i, searchCategory.page, searchCategory.pageSize),
     name: category.name,
@@ -52,7 +49,7 @@ export const Category = () => {
       headerAlign: "center",
       type: "actions",
       getActions: (params: GridRowParams<any>) => [
-        <Tooltip title="Chỉnh sửa">
+        <Tooltip title="Chỉnh sửa" key={params.row.no}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {

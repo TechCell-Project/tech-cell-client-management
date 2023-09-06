@@ -1,13 +1,13 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import {
-  createAccount,
+  postAccount,
   getAllAccounts,
   getDetailsAccount,
   patchBlockAccount,
   patchChangeRoleAccount,
   patchUnBlockAccount,
 } from "@services/accountService";
-import { SearchModel } from "@models/Common";
+import { Paging } from "@models/Common";
 import { RegisterModel } from "@models/Auth";
 import { AccountSlice, UserDataAccount } from "@models/Account";
 
@@ -63,7 +63,7 @@ export const accountSlice = createSlice({
 });
 
 // Thunk
-export const getAllUserAccount = (payload: SearchModel) => async (dispatch: Dispatch) => {
+export const getAllUserAccount = (payload: Paging) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
     const response = await getAllAccounts(payload);
@@ -94,7 +94,7 @@ export const createNewAccount =
   (payload: RegisterModel) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
-      const response = await createAccount(payload);
+      const response = await postAccount(payload);
       if (response.data) {
         dispatch(createAccountSuccess(response.data));
       }

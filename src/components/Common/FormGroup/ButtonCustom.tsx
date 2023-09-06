@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Button, useTheme, SxProps } from "@mui/material";
+import React, { memo } from "react";
+import { Button, useTheme, SxProps, Badge } from "@mui/material";
 
 interface IButtonCustom {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -17,14 +17,20 @@ interface IButtonCustom {
   startIcon?: React.ReactNode;
   colorWhite?: boolean;
   hidden?: boolean;
+  isBadge?: boolean;
+  badgeCount?: number;
 }
 
-export const ButtonCustom = (props: IButtonCustom) => {
+export const ButtonCustom = memo((props: IButtonCustom) => {
   const theme = useTheme();
 
   const outlinedStyle: SxProps = {
-    color: props.colorWhite ? "#fff !important" : `${theme.color.red} !important`,
-    border: props.colorWhite ? "1px solid #fff !important" : `1px solid ${theme.color.red} !important`,
+    color: props.colorWhite
+      ? "#fff !important"
+      : `${theme.color.red} !important`,
+    border: props.colorWhite
+      ? "1px solid #fff !important"
+      : `1px solid ${theme.color.red} !important`,
     textTransform: "unset",
     padding: "5px 20px",
     width: "max-content",
@@ -63,9 +69,9 @@ export const ButtonCustom = (props: IButtonCustom) => {
     }
   };
 
-  return (
+  return !props.isBadge ? (
     <Button
-      type={props.type || "button"}
+      type={props.type ?? "button"}
       onClick={props.handleClick}
       sx={[{ ...props.styles }, getVariant()]}
       disabled={props.disabled}
@@ -78,5 +84,30 @@ export const ButtonCustom = (props: IButtonCustom) => {
     >
       {props.content}
     </Button>
+  ) : (
+    <Badge
+      badgeContent={props.badgeCount}
+      color="secondary"
+      sx={{
+        "& .MuiBadge-invisible": {
+          transform: "scale(1) translate(50%, -50%)",
+        },
+      }}
+    >
+      <Button
+        type={props.type || "button"}
+        onClick={props.handleClick}
+        sx={[{ ...props.styles }, getVariant()]}
+        disabled={props.disabled}
+        size={props.size}
+        fullWidth={props.fullWidth}
+        defaultValue={props.defaultValue}
+        startIcon={props.startIcon}
+        endIcon={props.endIcon}
+        hidden={props.hidden}
+      >
+        {props.content}
+      </Button>
+    </Badge>
   );
-};
+});

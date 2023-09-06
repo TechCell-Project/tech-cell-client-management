@@ -1,8 +1,8 @@
-import { CreateAttributeModel, SearchAttributeModel } from "@models/Attribute";
+import { CreateAttributeModel, PagingAttribute } from "@models/Attribute";
 import instance from "./instance";
 import { ATTRIBUTES_ENDPOINT } from "@constants/service";
 
-export const getAttributes = (payload: SearchAttributeModel) => {
+export const getAttributes = (payload: PagingAttribute) => {
   const { no_limit, select_type, page, pageSize } = payload;
 
   if (no_limit) {

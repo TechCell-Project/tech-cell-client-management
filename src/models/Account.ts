@@ -1,4 +1,4 @@
-import { PagingResponseModel } from "./Common";
+import { PagingResponse } from "./Common";
 
 export class AccountSlice {
   accounts: UserDataAccount = new UserDataAccount();
@@ -7,7 +7,7 @@ export class AccountSlice {
   isLoadingDetails: boolean = false;
 }
 
-export class UserDataAccount extends PagingResponseModel {
+export class UserDataAccount extends PagingResponse {
   data: Array<UserAccount> = [];
 }
 

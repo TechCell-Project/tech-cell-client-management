@@ -1,0 +1,21 @@
+@import "../base/variables";
+
+.titleHighlight {
+  position: relative;
+  padding-left: 30px;
+  width: 100%;
+  background-color: rgba(243, 246, 249, 0.7);
+  padding: 15px 30px;
+  border-radius: 8px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100rem;
+    background-color: $primaryMediumColor;
+    height: 100%;
+    width: 10px;
+  }
+}

@@ -5,7 +5,7 @@ import {
   getAllAttributes,
   getDetailAttributeById,
 } from "@store/slices/attributeSlice";
-import { SearchAttributeModel } from "@models/Attribute";
+import { PagingAttribute } from "@models/Attribute";
 import { COLUMNS_ATTRIBUTE } from "@constants/data";
 import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import { getIndexNo } from "@utils/index";
@@ -21,8 +21,8 @@ export const Attribute = () => {
   const dispatch = useAppDispatch();
   const { attributes, isLoading } = useAppSelector((state) => state.attribute);
 
-  const [searchAttribute, setSearchAttribute] = useState<SearchAttributeModel>(
-    new SearchAttributeModel()
+  const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(
+    new PagingAttribute()
   );
   const [currentAttribute, setCurrentAttribute] = useState<IColumnAttribute>();
   const [isOpen, setIsOpen] = useState<AttributeDialog>(new AttributeDialog());
@@ -55,7 +55,7 @@ export const Attribute = () => {
       headerAlign: "center",
       type: "actions",
       getActions: (params: GridRowParams<any>) => [
-        <Tooltip title="Chỉnh sửa">
+        <Tooltip title="Chỉnh sửa" key={params.row.no}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
@@ -65,7 +65,7 @@ export const Attribute = () => {
             label="Chỉnh sửa"
           />
         </Tooltip>,
-        <Tooltip title="Xóa">
+        <Tooltip title="Xóa" key={params.row.no}>
           <GridActionsCellItem
             icon={<AutoDeleteRoundedIcon />}
             onClick={() => {

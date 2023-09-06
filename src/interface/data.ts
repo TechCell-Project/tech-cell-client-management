@@ -21,5 +21,5 @@ export interface IColumnCategory {
   name?: string | null;
   label?: string | null;
   description?: string | null;
-  requiresAttribute?: Array<string>;
+  requiresAttribute?: string;
 }

@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from "@store/store";
 import { CategoryModel } from "@models/Category";
 import { editAttribute, getAllAttributes } from "@store/slices/attributeSlice";
 import { enqueueSnackbar } from "notistack";
-import { SearchAttributeModel } from "@models/Attribute";
+import { PagingAttribute } from "@models/Attribute";
 import { editCategory } from "@store/slices/categorySlice";
 
 interface Props {
@@ -70,7 +70,7 @@ export const EditCategory = (props: Props) => {
 
   useEffect(() => {
     dispatch(
-      getAllAttributes({ ...new SearchAttributeModel(), no_limit: true })
+      getAllAttributes({ ...new PagingAttribute(), no_limit: true })
     );
   }, []);
 

@@ -124,8 +124,8 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
             ),
           }}
           placeholder={placeholder}
-          error={Boolean(meta && meta.touched && meta.error)}
-          helperText={meta && meta.touched && meta.error ? meta.error : ""}
+          error={Boolean(meta.touched && meta.error)}
+          helperText={meta.touched && meta.error ? meta.error : ""}
         />
       )}
     />
@@ -174,6 +174,6 @@ function MultiSelectCustom<T = any>(props: Props<T>) {
 
 const MemoizedMultiSelectCustom = memo(MultiSelectCustom) as <T = any>(
   props: Props<T>
-) => JSX.Element;
+) => React.JSX.Element;
 
 export { MemoizedMultiSelectCustom as MultiSelectCustom };

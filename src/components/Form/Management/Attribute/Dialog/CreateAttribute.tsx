@@ -3,7 +3,7 @@ import { ButtonCustom, ShowDialog } from "@components/Common";
 import {
   AttributeModel,
   CreateAttributeModel,
-  SearchAttributeModel,
+  PagingAttribute,
 } from "@models/Attribute";
 import { createOrEditValidate } from "@validate/attribute.validate";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -34,7 +34,7 @@ export const CreateAttribute = (props: Props) => {
         enqueueSnackbar("Thêm mới thông số thành công!", {
           variant: "success",
         });
-        dispatch(getAllAttributes(new SearchAttributeModel()));
+        dispatch(getAllAttributes(new PagingAttribute()));
         resetForm();
         props.handleClose();
       } else {

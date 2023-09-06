@@ -14,11 +14,9 @@ export const BreadcrumbPath = () => {
   const generateBreadcrumbs = () => {
     const breadcrumbs = [];
     let path = "";
-    for (let i = 0; i < PATHS.length; i++) {
-      const breadcrumb = PATHS[i];
+    for (const breadcrumb of PATHS) {
       if (pathname.startsWith(breadcrumb.pathname)) {
-        path = breadcrumb.pathname;
-        breadcrumbs.push({ pathname: path, name: breadcrumb.name });
+        breadcrumbs.push({ pathname: breadcrumb.pathname, name: breadcrumb.name });
       }
     }
     return breadcrumbs;

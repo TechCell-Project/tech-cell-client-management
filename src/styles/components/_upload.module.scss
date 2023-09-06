@@ -1,0 +1,33 @@
+.thumbnailContainer {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  width: 100%;
+
+  .thumbnail {
+    padding: 4px;
+
+    &Inner {
+      overflow: hidden;
+      min-width: 0;
+      display: flex;
+      position: relative;
+      min-height: 100px;
+      align-items: center;
+
+      button {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+      }
+    }
+  }
+}
+
+.dropzone {
+  text-align: center;
+  border: 2px dashed #0000004f;
+  padding: 30px;
+  cursor: grab;
+  border-radius: 8px;
+}

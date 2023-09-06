@@ -1,7 +1,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BreadcrumbPath, ButtonCustom } from "@components/Common";
-import { PATHS, RootRoutes } from "@constants/data";
+import { PATHS } from "@constants/data";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import { Register } from "@components/Form";
 import { getCurrentUserRole } from "@utils/index";
@@ -9,6 +9,7 @@ import { OpenCreateDialog } from "@models/Dialog";
 import styles from "@styles/components/_background.module.scss";
 import { CreateAttribute } from "@components/Form/Management/Attribute/Dialog/CreateAttribute";
 import { CreateCategory } from "@components/Form/Management/Category/Dialog/CreateCategory";
+import { Roles, RootRoutes } from "@constants/enum";
 
 export const FrameBackground: FC = memo(() => {
   const [title, setTitle] = useState<string>("");
@@ -54,7 +55,7 @@ export const FrameBackground: FC = memo(() => {
   const renderAddButton = () => {
     if (
       pathname === RootRoutes.ACCOUNT_ROUTE &&
-      getCurrentUserRole() === "SuperAdmin"
+      getCurrentUserRole() === Roles.SuperAdmin
     ) {
       return handleClick(() =>
         setIsOpen((prev) => ({ ...prev, openRegister: true }))

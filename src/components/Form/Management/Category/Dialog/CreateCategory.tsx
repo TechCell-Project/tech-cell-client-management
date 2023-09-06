@@ -10,8 +10,8 @@ import { CategoryModel } from "@models/Category";
 import { createOrEditValidate } from "@validate/category.validate";
 import { TextField, Stack, Grid } from "@mui/material";
 import { getAllAttributes } from "@store/slices/attributeSlice";
-import { SearchAttributeModel } from "@models/Attribute";
-import { SearchModel } from "@models/Common";
+import { PagingAttribute } from "@models/Attribute";
+import { Paging } from "@models/Common";
 import { createNewCategory, getAllCategory } from "@store/slices/categorySlice";
 import { enqueueSnackbar } from "notistack";
 
@@ -26,7 +26,7 @@ export const CreateCategory = (props: Props) => {
 
   useEffect(() => {
     dispatch(
-      getAllAttributes({ ...new SearchAttributeModel(), no_limit: true })
+      getAllAttributes({ ...new PagingAttribute(), no_limit: true })
     );
   }, []);
 
@@ -46,7 +46,7 @@ export const CreateCategory = (props: Props) => {
           variant: "success",
         });
         resetForm();
-        dispatch(getAllCategory(new SearchModel()));
+        dispatch(getAllCategory(new Paging()));
         props.handleClose();
       } else {
         enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
@@ -157,17 +157,17 @@ export const CreateCategory = (props: Props) => {
                 gap={2}
                 sx={{ mt: 4 }}
               >
-                <ButtonCustom
-                  variant="outlined"
-                  handleClick={props.handleClose}
-                  content="Hủy bỏ"
-                />
-                <ButtonCustom
-                  variant="contained"
-                  type="submit"
-                  disabled={isSubmitting}
-                  content="Thêm"
-                />
+                  <ButtonCustom
+                    variant="outlined"
+                    handleClick={props.handleClose}
+                    content="Hủy bỏ"
+                  />
+                  <ButtonCustom
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting}
+                    content="Thêm"
+                  />
               </Stack>
             </>
           </Form>

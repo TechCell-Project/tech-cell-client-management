@@ -1,3 +1,5 @@
+import { RootRoutes } from "./enum";
+
 export const TITLE_TECHCELL = "Trang Quản Trị TechCell";
 
 export const COLUMNS_ACCOUNT = [
@@ -10,32 +12,18 @@ export const COLUMNS_ACCOUNT = [
 
 export const COLUMNS_PRODUCT = [
   { field: "no", headerName: "STT", width: 70 },
-  { field: "name", headerName: "Tên Sản Phẩm", minWidth: 350, maxWidth: 400 },
+  { field: "name", headerName: "Tên Sản Phẩm", width: 200 },
   {
     field: "categories",
-    headerName: "Hệ Điều Hành",
+    headerName: "Thể loại",
     width: 180,
     align: "center",
     headerAlign: "center",
-  },
-  {
-    field: "manufacturer",
-    headerName: "Nhà Sản Xuất",
-    width: 180,
-    align: "center",
-    headerAlign: "center",
-  },
-  {
-    field: "price",
-    headerName: "Giá Niêm Yết (VNĐ)",
-    width: 200,
-    align: "right",
-    headerAlign: "right",
   },
   {
     field: "status",
-    headerName: "Tình Trạng",
-    width: 150,
+    headerName: "Tình Trạng Sản Phẩm",
+    width: 200,
     align: "center",
     headerAlign: "center",
   },
@@ -83,16 +71,6 @@ export const COLUMNS_CATEGORY = [
     headerAlign: "center",
   },
 ]
-
-export enum RootRoutes {
-  DASHBOARD_ROUTE = "/dashboard",
-  ACCOUNT_ROUTE = "/dashboard/account",
-  PRODUCT_ROUTE = "/dashboard/product",
-  PRODUCT_CREATE_ROUTE = "/dashboard/product/create",
-  CATEGORY_ROUTE = "/dashboard/product/category",
-  ATTRIBUTE_ROUTE = "/dashboard/product/attribute",
-  ORDER_ROUTE = "/dashboard/order",
-}
 
 export const PATHS = [
   { pathname: RootRoutes.DASHBOARD_ROUTE, name: "Trang chủ" },

@@ -3,7 +3,7 @@ import {
   AttributeModel,
   AttributeSlice,
   CreateAttributeModel,
-  SearchAttributeModel,
+  PagingAttribute,
   AttributeData,
 } from "@models/Attribute";
 import {
@@ -70,7 +70,7 @@ export const attributeSlice = createSlice({
 
 // Thunk
 export const getAllAttributes =
-  (payload: SearchAttributeModel) => async (dispatch: Dispatch) => {
+  (payload: PagingAttribute) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
       const response = await getAttributes(payload);

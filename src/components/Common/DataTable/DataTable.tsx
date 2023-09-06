@@ -1,38 +1,40 @@
 "use client";
 
-import React, { FC, memo } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { DataGrid, GridToolbar, viVN } from "@mui/x-data-grid";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverLay";
 import { CustomPagination } from "./CustomPagination";
 import { CustomLoadingOverLay } from "./CustomLoadingOverLay";
-import { DataTableModel } from "@models/Common";
+import { DataTableProps } from "@models/Common";
 
-export const DataTable: FC<DataTableModel> = memo((props) => {
-  const styledTable = {
-    padding: "15px 20px 0 20px",
-    borderRadius: 2,
-    gap: "15px",
-    border: 0,
-    bgcolor: "#fff",
-    opacity: props.isLoading ? 0.6 : 1,
-    pointerEvents: props.isLoading ? "none" : "auto",
-    "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
-      py: 1,
-    },
-    "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
-      py: "12px",
-    },
-    "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
-      py: "22px",
-    },
-  };
+export const DataTable: FC<DataTableProps> = memo((props) => {
+  const styledTable = useMemo(() => {
+    return {
+      padding: "15px 20px 0 20px",
+      borderRadius: 2,
+      gap: "15px",
+      border: 0,
+      bgcolor: "#fff",
+      opacity: props.isLoading ? 0.6 : 1,
+      pointerEvents: props.isLoading ? "none" : "auto",
+      "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
+        py: 1,
+      },
+      "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
+        py: "12px",
+      },
+      "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
+        py: "22px",
+      },
+    };
+  }, [props.isLoading]);
 
   return (
     <div style={{ height: 720, width: "100%" }}>
       <DataGrid
         disableRowSelectionOnClick
-        columns={props.column || []}
-        rows={props.row || []}
+        columns={props.column ?? []}
+        rows={props.row ?? []}
         loading={props.isLoading}
         getRowHeight={() => "auto"}
         getEstimatedRowHeight={() => 200}

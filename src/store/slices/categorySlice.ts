@@ -1,9 +1,9 @@
 import { CategoryData, CategoryModel, CategorySlice } from "@models/Category";
-import { SearchModel } from "@models/Common";
+import { PagingCategory } from "@models/Category";
 import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import {
-  createCategory,
-  editCategoryById,
+  postCategory,
+  patchCategory,
   getCategories,
   getCategoryByLabel,
 } from "@services/categoryService";
@@ -58,7 +58,7 @@ export const categorySlice = createSlice({
 
 // Thunk
 export const getAllCategory =
-  (payload: SearchModel) => async (dispatch: Dispatch) => {
+  (payload: PagingCategory) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
       const response = await getCategories(payload);
@@ -74,7 +74,7 @@ export const createNewCategory =
   (payload: CategoryModel) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
-      const response = await createCategory(payload);
+      const response = await postCategory(payload);
       if (response.data) {
         return { success: true };
       }
@@ -102,7 +102,7 @@ export const editCategory =
   (payload: CategoryModel, id: string) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
-      const response = await editCategoryById(payload, id);
+      const response = await patchCategory(payload, id);
       if (response.data) {
         dispatch(editSuccess(response.data));
         return { success: true };

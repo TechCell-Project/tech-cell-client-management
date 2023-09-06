@@ -1,7 +1,7 @@
 "use client";
 
 import { MenuItem, TextField } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 
 interface Props {
   name: string;
@@ -18,7 +18,7 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
-export const SelectCustom = (props: Props) => {
+export const SelectCustom = memo((props: Props) => {
   return (
     <TextField
       id={props.name}
@@ -33,14 +33,23 @@ export const SelectCustom = (props: Props) => {
       helperText={props.helperText}
       size="small"
       fullWidth
-      sx={{ ...props.styles }}
+      sx={{
+        ...props.styles,
+        "& .MuiInputBase-root .MuiSelect-select": {
+          maxHeight: "20px",
+        },
+      }}
       disabled={props.disabled}
     >
-      {props.options.map((option, i) => (
-        <MenuItem key={i} value={option.value} disabled={props.disabledItem}>
+      {props.options.map((option) => (
+        <MenuItem
+          key={option.value}
+          value={option.value}
+          disabled={props.disabledItem}
+        >
           {option.label}
         </MenuItem>
       ))}
     </TextField>
   );
-};
+});

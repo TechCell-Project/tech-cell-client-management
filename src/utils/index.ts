@@ -1,3 +1,4 @@
+import { ProductStatus, Roles } from "@constants/enum";
 import { IUser } from "@interface/auth";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
@@ -79,13 +80,13 @@ export const isAccessTokenExpired = () => {
 // common functions
 export const getRole = (role?: string | null) => {
   switch (role) {
-    case "User":
+    case Roles.User:
       return "Khách hàng";
-    case "Admin":
+    case Roles.Admin:
       return "Quản trị viên";
-    case "Mod":
+    case Roles.Mod:
       return "Điều hành viên";
-    case "SuperAdmin":
+    case Roles.SuperAdmin:
       return "Quản lý";
     default:
       return "";
@@ -93,26 +94,15 @@ export const getRole = (role?: string | null) => {
 };
 
 // get status product
-enum productStatus {
-  ComingSoon = 1,
-  NewArrival = 2,
-  Pre_order = 3,
-  OnSales = 4,
-  Hide = 5,
-  NotSales = 6,
-  LowStock = 7,
-  TemporarilyOutOfStock = 8,
-}
-
 const productStatusMapping: { [key: number]: string } = {
-  [productStatus.ComingSoon]: "Sắp ra mắt",
-  [productStatus.NewArrival]: "Hàng mới về",
-  [productStatus.Pre_order]: "Đặt hàng trước",
-  [productStatus.OnSales]: "Đang bán",
-  [productStatus.Hide]: "Ẩn",
-  [productStatus.NotSales]: "Không bán",
-  [productStatus.LowStock]: "Còn ít hàng",
-  [productStatus.TemporarilyOutOfStock]: "Tạm thời hết hàng",
+  [ProductStatus.ComingSoon]: "Sắp ra mắt",
+  [ProductStatus.NewArrival]: "Hàng mới về",
+  [ProductStatus.Pre_order]: "Đặt hàng trước",
+  [ProductStatus.OnSales]: "Đang bán",
+  [ProductStatus.Hide]: "Ẩn",
+  [ProductStatus.NotSales]: "Không bán",
+  [ProductStatus.LowStock]: "Còn ít hàng",
+  [ProductStatus.TemporarilyOutOfStock]: "Tạm thời hết hàng",
 };
 
 export const getStatusProduct = (value: number): string => {
@@ -148,12 +138,12 @@ export const isRoleAccepted = (role?: string): boolean => {
   const currentRole = getCurrentUserRole();
 
   switch (currentRole) {
-    case "SuperAdmin":
+    case Roles.SuperAdmin:
       return true;
-    case "Admin":
-      return role !== getRole("SuperAdmin") && role !== getRole("Admin");
-    case "Mod":
-      return role === getRole("User");
+    case Roles.Admin:
+      return role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin);
+    case Roles.Mod:
+      return role === getRole(Roles.User);
     default:
       return false;
   }

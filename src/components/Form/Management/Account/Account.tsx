@@ -8,7 +8,12 @@ import {
   getDetailsUserAccount,
 } from "@store/slices/accountSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
-import { getRole, getCurrentUserId, isRoleAccepted, getIndexNo } from "@utils/index";
+import {
+  getRole,
+  getCurrentUserId,
+  isRoleAccepted,
+  getIndexNo,
+} from "@utils/index";
 import {
   GridActionsCellItem,
   GridColDef,
@@ -22,7 +27,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { ConfirmBlock, ChangeRole, DetailsAccount } from "./Dialog";
 import { Tooltip } from "@mui/material";
 import { IColumnAccount } from "@interface/data";
-import { SearchModel } from "@models/Common";
+import { Paging } from "@models/Common";
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +38,7 @@ export const Account = () => {
   const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
 
-  const [searchAccount, setSearchAccount] = useState<SearchModel>(new SearchModel());
+  const [searchAccount, setSearchAccount] = useState<Paging>(new Paging());
 
   useEffect(() => {
     dispatch(getAllUserAccount(searchAccount));
@@ -43,9 +48,9 @@ export const Account = () => {
     id: account._id,
     no: getIndexNo(i, searchAccount.page, searchAccount.pageSize),
     name: `${account.firstName} ${account.lastName}`,
-    role: getRole(account.role),  
+    role: getRole(account.role),
     email: account.email,
-    status: account.block && account.block.isBlocked ? "Bị chặn" : "Hoạt động",
+    status: account.block?.isBlocked ? "Bị chặn" : "Hoạt động",
   }));
 
   const loadDataDetails = (id: string) => {
@@ -62,21 +67,23 @@ export const Account = () => {
       headerAlign: "center",
       type: "actions",
       getActions: (params: GridRowParams<any>) => [
-        <Tooltip title="Chi tiết">
+        <Tooltip title="Chi tiết" key={params.row.no}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => {
-              setOpenDetails(true), loadDataDetails(params.row.id);
+              setOpenDetails(true);
+              loadDataDetails(params.row.id);
             }}
             label="Chi tiết"
           />
         </Tooltip>,
-        <Tooltip title="Thay đổi vai trò">
+        <Tooltip title="Thay đổi vai trò" key={params.row.no}>
           <span>
             <GridActionsCellItem
               icon={<ChangeCircleOutlinedIcon />}
               onClick={() => {
-                setOpenChangeRole(true), setDataRowSelected(params.row);
+                setOpenChangeRole(true);
+                setDataRowSelected(params.row);
               }}
               label="Đổi vai trò"
               disabled={
@@ -93,7 +100,8 @@ export const Account = () => {
                 <GridActionsCellItem
                   icon={<BlockOutlinedIcon />}
                   onClick={() => {
-                    setOpenDeleteConfirm(true), setDataRowSelected(params.row);
+                    setOpenDeleteConfirm(true);
+                    setDataRowSelected(params.row);
                   }}
                   label="Chặn tài khoản"
                   disabled={
@@ -109,7 +117,8 @@ export const Account = () => {
                 <GridActionsCellItem
                   icon={<LockOpenOutlinedIcon />}
                   onClick={() => {
-                    setOpenDeleteConfirm(true), setDataRowSelected(params.row);
+                    setOpenDeleteConfirm(true);
+                    setDataRowSelected(params.row);
                   }}
                   label="Mở khóa tài khoản"
                   disabled={

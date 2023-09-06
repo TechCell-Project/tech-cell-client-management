@@ -11,7 +11,7 @@ import {
   getAllUserAccount,
 } from "@store/slices/accountSlice";
 import { enqueueSnackbar } from "notistack";
-import { SearchModel } from "@models/Common";
+import { Paging } from "@models/Common";
 
 interface Props {
   isOpen: boolean;
@@ -32,7 +32,7 @@ export const Register = memo((props: Props) => {
         });
         resetForm();
         props.handleClose();
-        dispatch(getAllUserAccount(new SearchModel()));
+        dispatch(getAllUserAccount(new Paging()));
       })
       .catch(() =>
         enqueueSnackbar("Thêm mới tài khoản thất bại!", { variant: "error" })

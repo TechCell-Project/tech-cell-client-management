@@ -1,5 +1,9 @@
 import { AttributeModel } from "./Attribute";
-import { PagingResponseModel } from "./Common";
+import { Paging, PagingResponse } from "./Common";
+
+export class PagingCategory extends Paging {
+  no_limit?: boolean = false;
+}
 
 export class CategoryModel {
   _id?: string | null = null;
@@ -17,6 +21,6 @@ export class CategorySlice {
   isLoadingDetails: boolean = false;
 }
 
-export class CategoryData extends PagingResponseModel {
+export class CategoryData extends PagingResponse {
   data: Array<CategoryModel> = [];
 }

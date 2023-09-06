@@ -1,56 +1,62 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "@components/Common";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { getAllProduct } from "@store/slices/productSlice";
-import { GridColDef, GridRowParams } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import { COLUMNS_PRODUCT } from "@constants/data";
-import { formatWithCommas, getStatusProduct } from "@utils/index";
-import { Rating } from "@mui/material";
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import { getIndexNo, getStatusProduct } from "@utils/index";
+import { Tooltip } from "@mui/material";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import { Paging } from "@models/Common";
 
 export const Product = () => {
   const dispatch = useAppDispatch();
   const { products, isLoading } = useAppSelector((state) => state.product);
 
-  useEffect(() => {
-    dispatch(getAllProduct());
-  }, []);
+  const [searchProduct, setSearchProduct] = useState<Paging>(new Paging());
 
-  // const rows = products?.data?.map((product, i) => ({
-  //   id: product._id,
-  //   no: i + 1,
-  //   name: product.general.name,
-  //   categories: product.general.categories,
-  //   manufacturer: product.general.manufacturer,
-  //   price: formatWithCommas(product.filterable.price) + "₫",
-  //   status: getStatusProduct(product.status),
-  //   review_stats: {
-  //     average_rating: product.review_stats.average_rating,
-  //     review_count: product.review_stats.review_count,
-  //   },
-  // }));
+  useEffect(() => {
+    dispatch(getAllProduct(searchProduct));
+  }, [searchProduct]);
+
+  const rows = products.data.map((product, i) => ({
+    id: product._id,
+    no: getIndexNo(i, searchProduct.page, searchProduct.pageSize),
+    name: product.name,
+    categories: product.categories?.map((category) => category).join(", "),
+    status: getStatusProduct(Number(product.status)),
+  }));
 
   const columns: any[] = [
     ...COLUMNS_PRODUCT,
     {
-      field: "review_stats",
-      headerName: "Đánh giá",
+      field: "options",
+      headerName: "Thao Tác",
       width: 200,
       align: "center",
       headerAlign: "center",
-      renderCell: (params: GridRowParams<any>) => (
-        <>
-          <Rating
-            defaultValue={params.row.review_stats.average_rating}
-            precision={0.5}
-            readOnly
-            icon={<StarRoundedIcon/>}
-            />
-          <b> - {params.row.review_stats.review_count}</b>
-        </>
-      ),
+      type: "actions",
+      getActions: (params: GridRowParams<any>) => [
+        <Tooltip title="Chỉnh sửa" key={params.row.no}>
+          <GridActionsCellItem
+            icon={<EditRoundedIcon />}
+            onClick={() => {}}
+            label="Chỉnh sửa"
+          />
+        </Tooltip>,
+      ],
     },
   ];
 
-  return <DataTable column={columns} row={[]} isLoading={isLoading} />;
+  return (
+    <DataTable
+      column={columns}
+      row={rows}
+      isLoading={isLoading}
+      isQuickFilter
+      paginationModel={searchProduct}
+      setPaginationModel={setSearchProduct}
+      totalRecord={products.totalRecord}
+    />
+  );
 };
