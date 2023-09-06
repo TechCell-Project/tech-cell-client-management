@@ -37,17 +37,15 @@ export const ProductCreate = () => {
             formData.append(key, item);
           }
         } else if (typeof value === "object") {
-          if (!formData.has(key)) {
-            formData.append(key, JSON.stringify(value));
-          }
+          formData.set(key, JSON.stringify(value));
         } else {
-          if (!formData.has(key)) {
-            formData.append(key, value);
-          }
+          formData.append(key, value);
         }
       }
 
-      const response = await dispatch(createNewProduct(formData));
+      const response = await dispatch(
+        createNewProduct( formData )
+      );
 
       if (response?.success) {
         enqueueSnackbar("Thêm mới sản phẩm thành công!", {
