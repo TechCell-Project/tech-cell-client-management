@@ -54,6 +54,7 @@ export const TinyEditor = (props: Props) => {
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
       <Editor
+        tinymceScriptSrc={`https://cdn.tiny.cloud/1/${API_KEY_EDITOR}/tinymce/6/tinymce.min.js`}
         onInit={(evt, editor) => (editorRef.current = editor)}
         apiKey={API_KEY_EDITOR}
         initialValue={value}
@@ -67,7 +68,12 @@ export const TinyEditor = (props: Props) => {
         }}
       />
       <ButtonCustom
-        styles={{ position: "absolute", top: "15px", right: "15px", zIndex: 100 }}
+        styles={{
+          position: "absolute",
+          top: "15px",
+          right: "15px",
+          zIndex: 100,
+        }}
         variant="outlined"
         content="Lưu bài"
         handleClick={handleSaveContent}
