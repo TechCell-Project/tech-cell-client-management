@@ -1,6 +1,8 @@
 import { ProductStatus, Roles } from "@constants/enum";
 import { IUser } from "@interface/auth";
+import { ImageModel } from "@models/Product";
 import jwtDecode, { JwtPayload } from "jwt-decode";
+import { debounce } from "lodash";
 
 // get information from local storage
 export const getCurrentUserId = () => {
@@ -78,6 +80,21 @@ export const isAccessTokenExpired = () => {
 };
 
 // common functions
+export const getCountImage = (
+  images: ImageModel[],
+  isThumbnail: boolean = false
+): number => {
+  let count = 0;
+  if (isThumbnail) {
+    count = images.filter((image) => image.isThumbnail === true).length;
+  } else {
+    count = images.filter(
+      (image) => image.isThumbnail === false || image.isThumbnail === undefined
+    ).length;
+  }
+  return count;
+};
+
 export const getRole = (role?: string | null) => {
   switch (role) {
     case Roles.User:
@@ -106,12 +123,16 @@ const productStatusMapping: { [key: number]: string } = {
 };
 
 export const getStatusProduct = (value: number): string => {
-  return productStatusMapping[value] || "?"
+  return productStatusMapping[value] || "?";
 };
 
-export const getIndexNo = (index: number, page: number, pageSize: number): number => {
+export const getIndexNo = (
+  index: number,
+  page: number,
+  pageSize: number
+): number => {
   return index + 1 + page * pageSize;
-}
+};
 
 // format
 export const formatWithCommas = (number: number) => {
@@ -141,10 +162,18 @@ export const isRoleAccepted = (role?: string): boolean => {
     case Roles.SuperAdmin:
       return true;
     case Roles.Admin:
-      return role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin);
+      return (
+        role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin)
+      );
     case Roles.Mod:
       return role === getRole(Roles.User);
     default:
       return false;
   }
 };
+
+// debounce
+export const debounceWithDelay = <T extends any[]>(
+  func: (...args: T) => void,
+  delay: number
+) => debounce(func, delay);

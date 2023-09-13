@@ -1,57 +1,39 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Tabs, Tab, Typography, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
-import { ProductDataRequest } from "@models/Product";
+import { ProductRequest } from "@models/Product";
 import { ButtonCustom } from "@components/Common";
-import styles from "@styles/components/_common.module.scss";
-import { AttributeSection, InforSection, VariantSection } from "../SectionForm";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import { requestProductValidate } from "@validate/product.validate";
 import { useAppDispatch } from "@store/store";
-import { createNewProduct, getAllProduct } from "@store/slices/productSlice";
+import { createNewProduct } from "@store/slices/productSlice";
 import { enqueueSnackbar } from "notistack";
-import { Paging } from "@models/Common";
 import { RootRoutes } from "@constants/enum";
+import { DescTab, InfoBasicTab } from "../CreateTabs";
+
+const tabsCreate = [
+  { name: "Thông số", component: <InfoBasicTab /> },
+  { name: "Mô tả", component: <DescTab /> },
+];
 
 export const ProductCreate = () => {
   const theme = useTheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
   const handleSubmit = async (
-    values: ProductDataRequest,
-    { resetForm, setSubmitting }: FormikHelpers<ProductDataRequest>
+    values: ProductRequest,
+    { resetForm, setSubmitting }: FormikHelpers<ProductRequest>
   ) => {
-    const listCategory = values.productData.categories?.map(
-      (category) => category.label
-    );
-    values.productData.categories = listCategory;
-
     try {
-      const formData = new FormData();
-
-      for (const [key, value] of Object.entries(values)) {
-        if (Array.isArray(value)) {
-          for (const item of value) {
-            formData.append(key, item);
-          }
-        } else if (typeof value === "object") {
-          formData.set(key, JSON.stringify(value));
-        } else {
-          formData.append(key, value);
-        }
-      }
-
-      const response = await dispatch(
-        createNewProduct( formData )
-      );
+      const response = await dispatch(createNewProduct(values));
 
       if (response?.success) {
         enqueueSnackbar("Thêm mới sản phẩm thành công!", {
           variant: "success",
         });
-        dispatch(getAllProduct(new Paging()));
         resetForm();
         router.push(RootRoutes.PRODUCT_ROUTE);
       } else {
@@ -75,12 +57,12 @@ export const ProductCreate = () => {
     >
       <Formik
         enableReinitialize
-        initialValues={new ProductDataRequest()}
+        initialValues={new ProductRequest()}
         onSubmit={handleSubmit}
-        validationSchema={requestProductValidate}
+        // validationSchema={requestProductValidate}
       >
         {({ values, isSubmitting }) => {
-          console.log(values);
+          // console.log(values);
           return (
             <Form>
               <Stack
@@ -99,40 +81,36 @@ export const ProductCreate = () => {
                   </Typography>
                 </Stack>
 
-                <Stack
-                  flexDirection="column"
-                  alignItems="flex-start"
-                  gap={3}
-                  mt="20px"
-                  width="100%"
+                <Tabs
+                  value={tabIndex}
+                  onChange={(event: React.SyntheticEvent, index: number) =>
+                    setTabIndex(index)
+                  }
+                  aria-label="tabs create product"
+                  sx={{
+                    mt: 1,
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: theme.color.red,
+                    },
+                  }}
                 >
-                  <Typography
-                    fontSize="0.9rem"
-                    fontWeight="500"
-                    className={styles.titleHighlight}
-                  >
-                    1. <i>Thông tin cơ bản</i>
-                  </Typography>
-                  <InforSection />
+                  {tabsCreate.map((tab, index) => (
+                    <Tab
+                      key={tab.name}
+                      label={tab.name}
+                      onClick={() => setTabIndex(index)}
+                      sx={{
+                        textTransform: "capitalize",
+                        "&.Mui-selected": {
+                          fontWeight: 700,
+                          color: theme.color.red,
+                        },
+                      }}
+                    />
+                  ))}
+                </Tabs>
 
-                  <Typography
-                    fontSize="0.9rem"
-                    fontWeight="500"
-                    className={styles.titleHighlight}
-                  >
-                    2. <i>Thuộc tính chung</i>
-                  </Typography>
-                  <AttributeSection />
-
-                  <Typography
-                    fontSize="0.9rem"
-                    fontWeight="500"
-                    className={styles.titleHighlight}
-                  >
-                    3. <i>Biến thể</i>
-                  </Typography>
-                  <VariantSection />
-                </Stack>
+                {tabsCreate[tabIndex].component}
 
                 <Stack
                   flexDirection="row"

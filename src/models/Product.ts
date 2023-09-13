@@ -30,34 +30,23 @@ export class ImageModel {
 
 export class ProductRequest {
   name?: string | null = null;
-  description?: string | null = null;
+  description?: string | null = "";
   status?: number | null = null;
   categories?: Array<CategoryModel | any> = new Array<CategoryModel>();
   generalAttributes?: Array<AttributeDynamics> = new Array<AttributeDynamics>();
   variations: Array<VariationModel> = new Array<VariationModel>();
+  generalImages?: Array<ImageModel> = new Array<ImageModel>();
+  descriptionImages?: Array<ImageModel> = new Array<ImageModel>();
 }
 
-export class ProductDataRequest {
-  productData: ProductRequest = new ProductRequest();
-  general: Array<any> = [];
-  general_isthumbnail: Array<any> = [];
-
-  // static create() {
-  //   return new Proxy(new ProductDataRequest(), {
-  //     get(target, property) {
-  //       if (typeof property === 'string' && property.startsWith('variation_')) {
-  //         return '';
-  //       } else {
-  //         return Reflect.get(target, property);
-  //       }
-  //     }
-  //   });
-  // }
-}
+// export class ProductDataRequest {
+//   productData: ProductRequest = new ProductRequest();
+//   general: Array<any> = [];
+//   general_isthumbnail: Array<any> = [];
+// }
 
 export class ProductModel extends ProductRequest {
   _id?: string | null = null;
-  generalImages?: Array<ImageModel> = new Array<ImageModel>();
   createdAt?: string;
   updatedAt?: string;
 }

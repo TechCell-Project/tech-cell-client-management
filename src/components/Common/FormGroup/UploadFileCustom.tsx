@@ -6,14 +6,15 @@ import { useDropzone } from "react-dropzone";
 import styles from "@styles/components/_upload.module.scss";
 import { Box, Stack, Typography, IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
+import { FieldImageProps } from "@models/Image";
 
 export const UploadFileCustom = memo(
   ({
     name,
     imageInits = null,
   }: {
-    name: string;
+    name: FieldImageProps;
     imageInits?: any[] | null;
   }) => {
     const { setFieldValue, values } = useFormikContext<any>();
@@ -21,11 +22,11 @@ export const UploadFileCustom = memo(
       !imageInits ? [] : imageInits
     );
 
-    useEffect(() => {
-      if (values[name] && values[name].length > 0) {
-        setUploadedFiles(values[name]);
-      }
-    }, [values, name]);
+    // useEffect(() => {
+    //   if (values?.["images"] && values?.["images"].length > 0) {
+    //     setUploadedFiles(values?.["images"]);
+    //   }
+    // }, [values, name.field]);
 
     const { getRootProps, getInputProps } = useDropzone({
       accept: {
@@ -47,10 +48,31 @@ export const UploadFileCustom = memo(
     };
 
     useEffect(() => {
-      setFieldValue(name, uploadedFiles);
+      setFieldValue("images", uploadedFiles);
       return () =>
         uploadedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
-    }, [name, uploadedFiles]);
+    }, [name.field, uploadedFiles]);
+
+    const renderImage = (item: any, i: React.Key) => {
+      return (
+        <div className={styles.thumbnail} key={i}>
+          <div className={styles.thumbnailInner}>
+            <img
+              src={item.url || item.preview}
+              alt={item?.name}
+              onLoad={() => {
+                if (item.preview) {
+                  URL.revokeObjectURL(item.preview);
+                }
+              }}
+            />
+            <IconButton onClick={() => handleRemoveFile(item)}>
+              <DisabledByDefaultRoundedIcon />
+            </IconButton>
+          </div>
+        </div>
+      );
+    };
 
     return (
       <Box>
@@ -70,23 +92,19 @@ export const UploadFileCustom = memo(
           • Danh sách ảnh xem trước
         </Typography>
         <aside className={styles.thumbnailContainer}>
-          {uploadedFiles?.map((item, i) => (
-            <div className={styles.thumbnail} key={i}>
-              <div className={styles.thumbnailInner}>
-                <img
-                  src={item.preview}
-                  alt={item.name}
-                  onLoad={() => {
-                    console.log("Image loaded and URL revoked");
-                    URL.revokeObjectURL(item.preview);
-                  }}
-                />
-                <IconButton onClick={() => handleRemoveFile(item)}>
-                  <DisabledByDefaultRoundedIcon />
-                </IconButton>
-              </div>
-            </div>
-          ))}
+          {(imageInits?.length === 0 || values?.["images"]?.length === 0) &&
+            uploadedFiles?.map((item, i) => {
+              return renderImage(item, i);
+            })}
+          {imageInits !== null && name?.isThumbnail
+            ? uploadedFiles
+                .filter((file) => file.isThumbnail === true)
+                ?.map((item, i) => renderImage(item, i))
+            : uploadedFiles
+                .filter(
+                  (file) => !file.isThumbnail || file.isThumbnail === undefined
+                )
+                ?.map((item, i) => renderImage(item, i))}
         </aside>
       </Box>
     );

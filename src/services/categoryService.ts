@@ -1,14 +1,21 @@
 import instance from "./instance";
 import { CATEGORIES_ENDPOINT } from "@constants/service";
-import { CategoryModel } from "@models/Category";
-import { PagingCategory } from "@models/Category";
+import { CategoryModel, PagingCategory } from "@models/Category";
 
-export const getCategories = (payload: PagingCategory) =>
-  instance.get<PagingCategory>(
-    `${CATEGORIES_ENDPOINT}?page=${payload.page + 1}&pageSize=${
-      payload.pageSize
-    }`
-  );
+export const getCategories = (payload: PagingCategory) => {
+  const { no_limit, page, pageSize } = payload;
+  if (no_limit) {
+    return instance.get<PagingCategory>(
+      `${CATEGORIES_ENDPOINT}?no_limit=${no_limit}`
+    );
+  } else {
+    return instance.get<PagingCategory>(
+      `${CATEGORIES_ENDPOINT}?no_limit=${no_limit}page=${
+        page + 1
+      }&pageSize=${pageSize}`
+    );
+  }
+};
 
 export const postCategory = (payload: CategoryModel) =>
   instance.post<CategoryModel>(CATEGORIES_ENDPOINT, payload);

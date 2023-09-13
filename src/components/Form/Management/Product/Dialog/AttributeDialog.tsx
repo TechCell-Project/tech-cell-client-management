@@ -2,7 +2,7 @@ import React from "react";
 import { ButtonCustom, ShowDialog } from "@components/Common";
 import { FieldArray, useFormikContext } from "formik";
 import { IconButton, Grid, TextField, Box, Stack } from "@mui/material";
-import { ProductDataRequest } from "@models/Product";
+import { ProductRequest } from "@models/Product";
 import { AttributeDynamics } from "@models/Attribute";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const AttributeDialog = (props: Props) => {
-  const { values, handleChange } = useFormikContext<ProductDataRequest>();
+  const { values, handleChange } = useFormikContext<ProductRequest>();
 
   return (
     <ShowDialog
@@ -25,18 +25,17 @@ export const AttributeDialog = (props: Props) => {
     >
       <Box sx={{ width: "100%", mt: "15px" }}>
         <FieldArray
-          name={`productData.variations[${props.index}].attributes`}
+          name={`variations[${props.index}].attributes`}
           render={(arrayHelpers) => (
             <>
               <Grid container spacing={2} columns={20}>
-                {values.productData.variations[props.index].attributes?.map(
+                {values.variations[props.index].attributes?.map(
                   (item, i) => (
-                    // console.log(item),
                     <React.Fragment key={i}>
                       <Grid item lg={6}>
                         <TextField
-                          id={`productData.variations[${props.index}].attributes[${i}].k`}
-                          name={`productData.variations[${props.index}].attributes[${i}].k`}
+                          id={`variations[${props.index}].attributes[${i}].k`}
+                          name={`variations[${props.index}].attributes[${i}].k`}
                           label="Thuộc tính"
                           fullWidth
                           value={item.k}
@@ -47,8 +46,8 @@ export const AttributeDialog = (props: Props) => {
                       </Grid>
                       <Grid item lg={6}>
                         <TextField
-                          id={`productData.variations[${props.index}].attributes[${i}].v`}
-                          name={`productData.variations[${props.index}].attributes[${i}].v`}
+                          id={`variations[${props.index}].attributes[${i}].v`}
+                          name={`variations[${props.index}].attributes[${i}].v`}
                           label="Giá trị"
                           value={item.v}
                           fullWidth
@@ -59,8 +58,8 @@ export const AttributeDialog = (props: Props) => {
                       </Grid>
                       <Grid item lg={6}>
                         <TextField
-                          id={`productData.variations[${props.index}].attributes[${i}].u`}
-                          name={`productData.variations[${props.index}].attributes[${i}].u`}
+                          id={`variations[${props.index}].attributes[${i}].u`}
+                          name={`variations[${props.index}].attributes[${i}].u`}
                           label="Đơn vị"
                           value={item.u}
                           fullWidth

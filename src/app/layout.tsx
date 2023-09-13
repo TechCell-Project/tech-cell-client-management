@@ -4,13 +4,10 @@ import { SnackbarClose } from "@components/Common";
 import { ThemeProvider } from "@mui/material";
 import { store, persistor } from "@store/store";
 import { theme } from "components/Theme/theme";
-import { Montserrat } from "next/font/google";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import "styles/base/index.scss";
-
-const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -28,7 +25,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={montserrat.className}>
+      <body>
         <ThemeProvider theme={theme}>
           <SnackbarProvider
             maxSnack={3}

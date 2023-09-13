@@ -31,7 +31,7 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
                 selected={pathname === String(nav.to)}
                 sx={{ borderRadius: "10px" }}
               >
-                <ListItemIcon sx={{ minWidth: "35px" }}>
+                <ListItemIcon sx={{ minWidth: "40px" }}>
                   <nav.icon />
                 </ListItemIcon>
                 <ListItemText primary={nav.name} color={theme.color.black} />
@@ -44,7 +44,7 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
               sx={{ borderRadius: "10px" }}
               onClick={async () => await dispatch(logout())}
             >
-              <ListItemIcon sx={{ minWidth: "35px" }}>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
                 <nav.icon />
               </ListItemIcon>
               <ListItemText primary={nav.name} color={theme.color.black} />
@@ -58,13 +58,13 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
                 sx={{ width: "100%" }}
                 selected={openCollapse}
               >
-                <ListItemIcon sx={{ minWidth: "35px" }}>
+                <ListItemIcon sx={{ minWidth: "40px" }}>
                   {<nav.icon />}
                 </ListItemIcon>
                 <ListItemText primary={nav.name} />
                 {openCollapse ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+              <Collapse in={openCollapse} timeout="auto" unmountOnExit sx={{ mt: "10px" }}>
                 {nav.listChildren.map((child, i) => (
                   <Link href={child.to}  style={{ width: "100%" }} key={i}>
                     <ListItemButton
@@ -73,7 +73,7 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
                     >
                       <ListItemIcon
                         sx={{
-                          minWidth: "35px",
+                          minWidth: "40px",
                           "& .MuiSvgIcon-root": { fontSize: "1.2rem" },
                         }}
                       >

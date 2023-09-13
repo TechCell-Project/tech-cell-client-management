@@ -1,7 +1,7 @@
 import {
   PagingProduct,
   ProductData,
-  ProductDataRequest,
+  ProductRequest,
   ProductSlice,
 } from "@models/Product";
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
@@ -78,7 +78,7 @@ export const getDetailsProduct = (id: string) => async (dispatch: Dispatch) => {
 };
 
 export const createNewProduct =
-  (payload: FormData) => async (dispatch: Dispatch) => {
+  (payload: ProductRequest) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
       const response = await postProduct(payload);

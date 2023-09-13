@@ -1,12 +1,8 @@
-import {
-  ButtonCustom,
-  MultiSelectCustom,
-  SelectCustom,
-} from "@components/Common";
+import { ButtonCustom, SelectCustom } from "@components/Common";
 import React, { useEffect, useState, memo } from "react";
 import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
-import { ProductDataRequest } from "@models/Product";
+import { ImageModel, ProductRequest } from "@models/Product";
 import { STATUS_PRODUCT_OPTIONS } from "@constants/options";
 import CollectionsRoundedIcon from "@mui/icons-material/CollectionsRounded";
 import PhotoRoundedIcon from "@mui/icons-material/PhotoRounded";
@@ -14,13 +10,16 @@ import { useAppDispatch, useAppSelector } from "@store/store";
 import { getAllCategory } from "@store/slices/categorySlice";
 import { PagingCategory } from "@models/Category";
 import { ImageDialog } from "../Dialog/ImageDialog";
-import { ProductStatus } from "@constants/enum";
+import { FieldImageProps } from "@models/Image";
+import { getCountImage } from "@utils/index";
 
 export const InforSection = memo(() => {
-  const { handleChange, values, touched, errors } =
-    useFormikContext<ProductDataRequest>();
+  const { handleChange, setFieldValue, values, touched, errors } =
+    useFormikContext<ProductRequest>();
 
-  const [fieldNameImage, setFieldNameImage] = useState<string | null>(null);
+  const [fieldNameImage, setFieldNameImage] = useState<FieldImageProps | null>(
+    null
+  );
 
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
@@ -34,66 +33,42 @@ export const InforSection = memo(() => {
       <Grid container spacing={2}>
         <Grid item lg={4}>
           <TextField
-            id="productData.name"
-            name="productData.name"
+            id="name"
+            name="name"
             label="Tên sản phẩm"
             onChange={handleChange}
+            value={values.name}
             fullWidth
             variant="outlined"
             size="small"
-            error={
-              touched.productData?.name && Boolean(errors.productData?.name)
-            }
-            helperText={touched.productData?.name && errors.productData?.name}
+            error={touched.name && Boolean(errors.name)}
+            helperText={touched.name && errors.name}
           />
         </Grid>
 
         <Grid item lg={4}>
           <SelectCustom
-            name="productData.status"
+            name="status"
             options={STATUS_PRODUCT_OPTIONS}
             onChange={handleChange}
             content="Trạng thái"
-            error={
-              touched.productData?.status && Boolean(errors.productData?.status)
-            }
-            helperText={
-              touched.productData?.status && errors.productData?.status
-            }
+            error={touched.status && Boolean(errors.status)}
+            helperText={touched.status && errors.status}
           />
         </Grid>
 
         <Grid item lg={4}>
-          <MultiSelectCustom
+          <SelectCustom
             options={categories.data}
-            name="productData.categories"
-            label="Thể loại"
-            displaySelected="name"
-            multiple
-            placeholder="Chọn thể loại..."
-          />
-        </Grid>
-
-        <Grid item lg={5}>
-          <TextField
-            id="productData.description"
-            name="productData.description"
-            label="Mô tả"
-            fullWidth
-            variant="outlined"
-            onChange={handleChange}
-            size="small"
-            error={
-              touched.productData?.description &&
-              Boolean(errors.productData?.description)
+            name="categories"
+            content="Thể loại"
+            onChange={({ target }) =>
+              setFieldValue(target.name, [target.value])
             }
-            helperText={
-              touched.productData?.description &&
-              errors.productData?.description
-            }
-            multiline
-            minRows={3}
-            maxRows={4}
+            displayValue="label"
+            displayOption="name"
+            error={touched.categories && Boolean(errors.categories)}
+            helperText={touched.categories && errors.categories}
           />
         </Grid>
 
@@ -103,18 +78,21 @@ export const InforSection = memo(() => {
             content="Ảnh chính"
             endIcon={<PhotoRoundedIcon />}
             isBadge
-            badgeCount={values.general_isthumbnail?.length || 0}
-            styles={{ marginLeft: "15px" }}
-            handleClick={() => setFieldNameImage("general_isthumbnail")}
+            badgeCount={getCountImage(values.generalImages as ImageModel[], true)}
+            handleClick={() =>
+              setFieldNameImage({ field: "generalImages", isThumbnail: true })
+            }
           />
           <ButtonCustom
             variant="outlined"
             content="Ảnh phụ"
             endIcon={<CollectionsRoundedIcon />}
             isBadge
-            badgeCount={values.general?.length || 0}
+            badgeCount={getCountImage(values.generalImages as ImageModel[])}
             styles={{ marginLeft: "30px" }}
-            handleClick={() => setFieldNameImage("general")}
+            handleClick={() =>
+              setFieldNameImage({ field: "generalImages", isThumbnail: false })
+            }
           />
         </Grid>
       </Grid>
@@ -123,7 +101,7 @@ export const InforSection = memo(() => {
         <ImageDialog
           isOpen={Boolean(fieldNameImage)}
           handleClose={() => setFieldNameImage(null)}
-          name={String(fieldNameImage)}
+          fieldImage={fieldNameImage as FieldImageProps}
         />
       )}
     </>

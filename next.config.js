@@ -7,6 +7,7 @@ const nextConfig = {
     },
     env: {
       API_ENDPOINT: process.env.API_BASE_URL,
+      API_KEY_TINY: process.env.API_KEY_TINYMCE,
     }
 };
 

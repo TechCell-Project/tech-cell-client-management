@@ -1,6 +1,6 @@
 import { PRODUCTS_ENDPOINT } from "@constants/service";
 import instance from "./instance";
-import { PagingProduct, ProductDataRequest } from "@models/Product";
+import { PagingProduct, ProductRequest } from "@models/Product";
 
 export const getProducts = (payload: PagingProduct) => {
   const { page, pageSize, all } = payload;
@@ -15,13 +15,8 @@ export const getProducts = (payload: PagingProduct) => {
   }
 };
 
-export const postProduct = (payload: FormData) =>
-  instance.post<FormData>(PRODUCTS_ENDPOINT, payload, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Accept: "application/json",
-    },
-  });
+export const postProduct = (payload: ProductRequest) =>
+  instance.post<ProductRequest>(PRODUCTS_ENDPOINT, payload);
 
 export const getProductById = (id: string) =>
   instance.get(`${PRODUCTS_ENDPOINT}/${id}`);

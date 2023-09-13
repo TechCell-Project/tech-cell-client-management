@@ -16,9 +16,13 @@ interface Props {
   error?: boolean;
   helperText?: React.ReactNode;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  displayOption?: string;
+  displayValue?: string;
 }
 
 export const SelectCustom = memo((props: Props) => {
+  const { displayOption = "label", displayValue = "value" } = props;
+  
   return (
     <TextField
       id={props.name}
@@ -43,11 +47,11 @@ export const SelectCustom = memo((props: Props) => {
     >
       {props.options.map((option) => (
         <MenuItem
-          key={option.value}
-          value={option.value}
+          key={option[displayValue]}
+          value={option[displayValue]}
           disabled={props.disabledItem}
         >
-          {option.label}
+          {option[displayOption]}
         </MenuItem>
       ))}
     </TextField>
