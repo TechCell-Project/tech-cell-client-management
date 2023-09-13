@@ -7,11 +7,14 @@ import { ButtonCustom, TinyEditor } from "@components/Common";
 import CollectionsRoundedIcon from "@mui/icons-material/CollectionsRounded";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { ProductRequest } from "@models/Product";
+import { FieldImageProps } from "@models/Image";
 
 export const DescTab = memo(() => {
   const theme = useTheme();
   const { values } = useFormikContext<ProductRequest>();
-  const [fieldNameImage, setFieldNameImage] = useState<string | null>(null);
+  const [fieldNameImage, setFieldNameImage] = useState<FieldImageProps | null>(
+    null
+  );
 
   return (
     <>
@@ -51,7 +54,12 @@ export const DescTab = memo(() => {
               endIcon={<CollectionsRoundedIcon />}
               isBadge
               badgeCount={values.descriptionImages?.length ?? 0}
-              handleClick={() => setFieldNameImage("descriptionImages")}
+              handleClick={() =>
+                setFieldNameImage({
+                  field: "descriptionImages",
+                  isThumbnail: false,
+                })
+              }
             />
           </Grid>
           <Grid item xs={12}>
@@ -64,7 +72,7 @@ export const DescTab = memo(() => {
         <ImageDialog
           isOpen={Boolean(fieldNameImage)}
           handleClose={() => setFieldNameImage(null)}
-          name={String(fieldNameImage)}
+          fieldImage={fieldNameImage as FieldImageProps}
         />
       )}
     </>
