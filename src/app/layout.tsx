@@ -1,6 +1,7 @@
 "use client";
 
 import { SnackbarClose } from "@components/Common";
+import { Dynamic } from "@components/Shared";
 import { ThemeProvider } from "@mui/material";
 import { store, persistor } from "@store/store";
 import { theme } from "components/Theme/theme";
@@ -19,25 +20,31 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico?v=2" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <SnackbarProvider
-            maxSnack={3}
-            action={(key) => <SnackbarClose key={key} />}
-          >
-            <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
-                {children}
-              </PersistGate>
-            </Provider>
-          </SnackbarProvider>
-        </ThemeProvider>
+        <Dynamic>
+          <ThemeProvider theme={theme}>
+            <SnackbarProvider
+              maxSnack={3}
+              action={(key) => <SnackbarClose key={key} />}
+            >
+              <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                  {children}
+                </PersistGate>
+              </Provider>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </Dynamic>
       </body>
     </html>
   );

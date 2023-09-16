@@ -35,7 +35,7 @@ export const VariantSection = memo(() => {
     setIndexVariation(index);
     setOpenAttribute(true);
   };
-
+  
   return (
     <>
       <Stack
@@ -139,7 +139,8 @@ export const VariantSection = memo(() => {
                         badgeCount={getCountImage(item.images as ImageModel[], true)}
                         handleClick={() =>
                           setFieldNameImage({
-                            field: `variations[${i}].images`,
+                            field: `variations`,
+                            index: i,
                             isThumbnail: true,
                           })
                         }
@@ -153,7 +154,8 @@ export const VariantSection = memo(() => {
                         badgeCount={getCountImage(item.images as ImageModel[])}
                         handleClick={() =>
                           setFieldNameImage({
-                            field: `variations[${i}].images`,
+                            field: `variations`,
+                            index: i,
                             isThumbnail: false,
                           })
                         }

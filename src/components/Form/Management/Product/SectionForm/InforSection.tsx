@@ -48,6 +48,7 @@ export const InforSection = memo(() => {
 
         <Grid item lg={4}>
           <SelectCustom
+          value={values.status}
             name="status"
             options={STATUS_PRODUCT_OPTIONS}
             onChange={handleChange}
@@ -59,7 +60,8 @@ export const InforSection = memo(() => {
 
         <Grid item lg={4}>
           <SelectCustom
-            options={categories.data}
+            options={[{ label: "", name: "Chọn thể loại"} ,...categories.data]}
+            value={values.categories}
             name="categories"
             content="Thể loại"
             onChange={({ target }) =>

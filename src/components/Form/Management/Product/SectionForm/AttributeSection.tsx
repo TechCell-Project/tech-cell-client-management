@@ -67,6 +67,7 @@ export const AttributeSection = () => {
                 variant="outlined"
                 onChange={handleChange}
                 size="small"
+                disabled
               />
             </Grid>
             <Grid item lg={5}>
@@ -77,10 +78,9 @@ export const AttributeSection = () => {
                 value={item.v}
                 fullWidth
                 variant="outlined"
-                onChange={({ target }) =>
-                  setFieldValue(target.name, target.value)
-                }
+                onChange={handleChange}
                 size="small"
+                // focused
               />
             </Grid>
             <Grid item lg={5}>
@@ -93,6 +93,7 @@ export const AttributeSection = () => {
                 variant="outlined"
                 onChange={handleChange}
                 size="small"
+                // focused
               />
             </Grid>
           </React.Fragment>

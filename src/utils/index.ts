@@ -86,9 +86,9 @@ export const getCountImage = (
 ): number => {
   let count = 0;
   if (isThumbnail) {
-    count = images.filter((image) => image.isThumbnail === true).length;
+    count = images?.filter((image) => image.isThumbnail === true).length;
   } else {
-    count = images.filter(
+    count = images?.filter(
       (image) => image.isThumbnail === false || image.isThumbnail === undefined
     ).length;
   }

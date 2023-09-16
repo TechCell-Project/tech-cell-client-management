@@ -12,21 +12,13 @@ import { FieldImageProps } from "@models/Image";
 export const UploadFileCustom = memo(
   ({
     name,
-    imageInits = null,
+    imageInits = [],
   }: {
     name: FieldImageProps;
-    imageInits?: any[] | null;
+    imageInits?: any[];
   }) => {
-    const { setFieldValue, values } = useFormikContext<any>();
-    const [uploadedFiles, setUploadedFiles] = useState<any[]>(
-      !imageInits ? [] : imageInits
-    );
-
-    // useEffect(() => {
-    //   if (values?.["images"] && values?.["images"].length > 0) {
-    //     setUploadedFiles(values?.["images"]);
-    //   }
-    // }, [values, name.field]);
+    const { setFieldValue } = useFormikContext<any>();
+    const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
 
     const { getRootProps, getInputProps } = useDropzone({
       accept: {
@@ -45,6 +37,29 @@ export const UploadFileCustom = memo(
 
     const handleRemoveFile = (file: any) => {
       setUploadedFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+    };
+
+    const handleRemoveImage = (index: number) => {
+      const files = imageInits.filter((file) =>
+        name.isThumbnail
+          ? file.isThumbnail === true
+          : !file.isThumbnail || file.isThumbnail === undefined
+      );
+      const newFiles = files.filter((_, i) => i !== index);
+
+      if (name.isThumbnail) {
+        setFieldValue(String(name.field), [
+          ...imageInits.filter(
+            (file) => !file.isThumbnail || file.isThumbnail === undefined
+          ),
+          ...newFiles,
+        ]);
+      } else {
+        setFieldValue(String(name.field), [
+          ...imageInits.filter((file) => file.isThumbnail === true),
+          ...newFiles,
+        ]);
+      }
     };
 
     useEffect(() => {
@@ -66,12 +81,30 @@ export const UploadFileCustom = memo(
                 }
               }}
             />
-            <IconButton onClick={() => handleRemoveFile(item)}>
+            <IconButton
+              onClick={() => {
+                if (item.publicId) {
+                  handleRemoveImage(Number(i))
+                } else {
+                  handleRemoveFile(item);
+                }
+              }}
+            >
               <DisabledByDefaultRoundedIcon />
             </IconButton>
           </div>
         </div>
       );
+    };
+
+    const handleUploadCase = () => {
+      const files = imageInits.filter((file) =>
+        name.isThumbnail
+          ? file.isThumbnail === true
+          : !file.isThumbnail || file.isThumbnail === undefined
+      );
+
+      return files.map(renderImage);
     };
 
     return (
@@ -89,22 +122,17 @@ export const UploadFileCustom = memo(
           </Stack>
         </div>
         <Typography fontSize="15px" fontWeight={600} mt="20px">
-          • Danh sách ảnh xem trước
+          • Phần ảnh preview:
         </Typography>
         <aside className={styles.thumbnailContainer}>
-          {(imageInits?.length === 0 || values?.["images"]?.length === 0) &&
-            uploadedFiles?.map((item, i) => {
-              return renderImage(item, i);
-            })}
-          {imageInits !== null && name?.isThumbnail
-            ? uploadedFiles
-                .filter((file) => file.isThumbnail === true)
-                ?.map((item, i) => renderImage(item, i))
-            : uploadedFiles
-                .filter(
-                  (file) => !file.isThumbnail || file.isThumbnail === undefined
-                )
-                ?.map((item, i) => renderImage(item, i))}
+          {uploadedFiles?.map(renderImage)}
+        </aside>
+
+        <Typography fontSize="15px" fontWeight={600} mt="20px">
+          • Phần ảnh đã tải lên:
+        </Typography>
+        <aside className={styles.thumbnailContainer}>
+          {handleUploadCase()}
         </aside>
       </Box>
     );

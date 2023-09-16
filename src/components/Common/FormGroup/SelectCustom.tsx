@@ -45,9 +45,10 @@ export const SelectCustom = memo((props: Props) => {
       }}
       disabled={props.disabled}
     >
-      {props.options.map((option) => (
+      {props.options.map((option, i) => (
         <MenuItem
-          key={option[displayValue]}
+          defaultValue={option[displayValue] ?? ""}
+          key={i}
           value={option[displayValue]}
           disabled={props.disabledItem}
         >

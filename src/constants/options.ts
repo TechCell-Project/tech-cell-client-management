@@ -9,6 +9,7 @@ export const ROLE_OPTIONS = [
 ];
 
 export const STATUS_PRODUCT_OPTIONS = [
+  { label: "Chọn trạng thái", value: null},
   { label: "Sắp ra mắt", value: ProductStatus.ComingSoon},
   { label: "Hàng mới về", value: ProductStatus.NewArrival},
   { label: "Đặt hàng trước", value: ProductStatus.Pre_order},

@@ -18,12 +18,21 @@ export const ImageDialog = memo((props: Props) => {
   const { isOpen, handleClose, fieldImage } = props;
   const { values, setFieldValue } = useFormikContext<ProductRequest>();
   const [isLoading, setIsLoading] = useState(false);
+  const isVariation = fieldImage.field?.startsWith("variations");
 
   const handleUpload = async () => {
     try {
       const formData = new FormData();
-      const imageGeneral = (values as any)[`${fieldImage?.field}`];
+      let imageGeneral: any;
       const fieldTemp = (values as any)["images"];
+
+      if (isVariation) {
+        imageGeneral = (values as any)[`${fieldImage.field}`][
+          Number(fieldImage.index)
+        ]?.images;
+      } else {
+        imageGeneral = (values as any)[`${fieldImage?.field}`];
+      }
 
       fieldTemp?.forEach((value: any) => {
         formData.append("images", value);
@@ -36,13 +45,18 @@ export const ImageDialog = memo((props: Props) => {
 
       if (response.data) {
         let data: ImageModel[] = response.data?.data;
+        const fieldValue = isVariation
+          ? String(fieldImage.field) +
+            `[${Number(fieldImage.index)}]` +
+            ".images"
+          : String(fieldImage.field);
+
         if (fieldImage.isThumbnail) {
           data = { ...(data as any)[0], isThumbnail: true };
-          setFieldValue(String(fieldImage.field), [...imageGeneral, data]);
+          setFieldValue(fieldValue, [...imageGeneral, data]);
         } else {
-          setFieldValue(String(fieldImage.field), [...imageGeneral, ...data]);
+          setFieldValue(fieldValue, [...imageGeneral, ...data]);
         }
-        (values as any)["images"] = [];
       }
       handleClose();
     } catch (err) {
@@ -59,12 +73,24 @@ export const ImageDialog = memo((props: Props) => {
       dialogTitle="Ảnh"
       handleClose={handleClose}
       isOpen={isOpen}
-      dialogStyle={{ minWidth: 560 }}
+      dialogStyle={{ minWidth: 620 }}
     >
       <Box sx={{ width: "100%" }}>
         <UploadFileCustom
-          name={fieldImage}
-          imageInits={(values as any)[`${fieldImage?.field}`]}
+          name={{
+            ...fieldImage,
+            field: isVariation
+              ? String(fieldImage.field) +
+                `[${Number(fieldImage.index)}]` +
+                ".images"
+              : fieldImage.field,
+          }}
+          imageInits={
+            isVariation
+              ? (values as any)[`${fieldImage.field}`][Number(fieldImage.index)]
+                  ?.images
+              : (values as any)[`${fieldImage?.field}`]
+          }
         />
         <Stack direction="row" justifyContent="flex-end" sx={{ mt: 4 }} gap={1}>
           <ButtonCustom
