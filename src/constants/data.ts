@@ -14,7 +14,7 @@ export const COLUMNS_PRODUCT = [
   { field: "no", headerName: "STT", width: 70 },
   { field: "name", headerName: "Tên Sản Phẩm", width: 200 },
   {
-    field: "categories",
+    field: "category",
     headerName: "Thể loại",
     width: 180,
     align: "center",

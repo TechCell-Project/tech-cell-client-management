@@ -1,12 +1,12 @@
-import { ProductStatus, Roles } from "@constants/enum";
-import { IUser } from "@interface/auth";
-import { ImageModel } from "@models/Product";
-import jwtDecode, { JwtPayload } from "jwt-decode";
-import { debounce } from "lodash";
+import { ProductStatus, Roles } from '@constants/enum';
+import { IUser } from '@interface/auth';
+import { ImageModel } from '@models/Product';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { debounce } from 'lodash';
 
 // get information from local storage
 export const getCurrentUserId = () => {
-  const userObj = localStorage.getItem("user");
+  const userObj = localStorage.getItem('user');
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     const id = user._id;
@@ -16,7 +16,7 @@ export const getCurrentUserId = () => {
 };
 
 export const getCurrentUserRole = () => {
-  const userObj = localStorage.getItem("user");
+  const userObj = localStorage.getItem('user');
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     const id = user.role;
@@ -26,7 +26,7 @@ export const getCurrentUserRole = () => {
 };
 
 export const getAccessToken = () => {
-  const userObj = localStorage.getItem("user");
+  const userObj = localStorage.getItem('user');
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     const accessToken = user.accessToken;
@@ -36,7 +36,7 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  const userObj = localStorage.getItem("user");
+  const userObj = localStorage.getItem('user');
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     const refreshToken = user.refreshToken;
@@ -47,12 +47,12 @@ export const getRefreshToken = () => {
 
 // authentication
 export const setToken = (accessToken: string, refreshToken: string) => {
-  const userObj = localStorage.getItem("user");
+  const userObj = localStorage.getItem('user');
   if (userObj) {
     const user: IUser = JSON.parse(userObj);
     user.accessToken = accessToken;
     user.refreshToken = refreshToken;
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   }
 };
 
@@ -80,16 +80,13 @@ export const isAccessTokenExpired = () => {
 };
 
 // common functions
-export const getCountImage = (
-  images: ImageModel[],
-  isThumbnail: boolean = false
-): number => {
+export const getCountImage = (images: ImageModel[], isThumbnail: boolean = false): number => {
   let count = 0;
   if (isThumbnail) {
     count = images?.filter((image) => image.isThumbnail === true).length;
   } else {
     count = images?.filter(
-      (image) => image.isThumbnail === false || image.isThumbnail === undefined
+      (image) => image.isThumbnail === false || image.isThumbnail === undefined,
     ).length;
   }
   return count;
@@ -98,61 +95,64 @@ export const getCountImage = (
 export const getRole = (role?: string | null) => {
   switch (role) {
     case Roles.User:
-      return "Khách hàng";
+      return 'Khách hàng';
     case Roles.Admin:
-      return "Quản trị viên";
+      return 'Quản trị viên';
     case Roles.Mod:
-      return "Điều hành viên";
+      return 'Điều hành viên';
     case Roles.SuperAdmin:
-      return "Quản lý";
+      return 'Quản lý';
     default:
-      return "";
+      return '';
   }
 };
 
 // get status product
 const productStatusMapping: { [key: number]: string } = {
-  [ProductStatus.ComingSoon]: "Sắp ra mắt",
-  [ProductStatus.NewArrival]: "Hàng mới về",
-  [ProductStatus.Pre_order]: "Đặt hàng trước",
-  [ProductStatus.OnSales]: "Đang bán",
-  [ProductStatus.Hide]: "Ẩn",
-  [ProductStatus.NotSales]: "Không bán",
-  [ProductStatus.LowStock]: "Còn ít hàng",
-  [ProductStatus.TemporarilyOutOfStock]: "Tạm thời hết hàng",
+  [ProductStatus.ComingSoon]: 'Sắp ra mắt',
+  [ProductStatus.NewArrival]: 'Hàng mới về',
+  [ProductStatus.Pre_order]: 'Đặt hàng trước',
+  [ProductStatus.OnSales]: 'Đang bán',
+  [ProductStatus.Hide]: 'Ẩn',
+  [ProductStatus.NotSales]: 'Không bán',
+  [ProductStatus.LowStock]: 'Còn ít hàng',
+  [ProductStatus.TemporarilyOutOfStock]: 'Tạm thời hết hàng',
 };
 
 export const getStatusProduct = (value: number): string => {
-  return productStatusMapping[value] || "?";
+  return productStatusMapping[value] || '?';
 };
 
-export const getIndexNo = (
-  index: number,
-  page: number,
-  pageSize: number
-): number => {
+export const getIndexNo = (index: number, page: number, pageSize: number): number => {
   return index + 1 + page * pageSize;
 };
 
 // format
 export const formatWithCommas = (number: number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 export const removeCommas = (inputString: string) => {
-  return parseInt(inputString.replace(/,/g, ""), 10);
+  return parseInt(inputString.replace(/,/g, ''), 10);
 };
 
 export const formatDateViVN = (dateString: string) => {
-  const date = new Date(dateString);
+  const inputDate: Date = new Date(dateString);
+
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
   };
-  return date.toLocaleString("vi-VN", options);
+
+  const dateFormatter: Intl.DateTimeFormat = new Intl.DateTimeFormat('vi-VN', options);
+  const formattedDate: string = dateFormatter.format(inputDate);
+
+  return formattedDate;
 };
 
 export const isRoleAccepted = (role?: string): boolean => {
@@ -162,9 +162,7 @@ export const isRoleAccepted = (role?: string): boolean => {
     case Roles.SuperAdmin:
       return true;
     case Roles.Admin:
-      return (
-        role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin)
-      );
+      return role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin);
     case Roles.Mod:
       return role === getRole(Roles.User);
     default:
@@ -173,7 +171,5 @@ export const isRoleAccepted = (role?: string): boolean => {
 };
 
 // debounce
-export const debounceWithDelay = <T extends any[]>(
-  func: (...args: T) => void,
-  delay: number
-) => debounce(func, delay);
+export const debounceWithDelay = <T extends any[]>(func: (...args: T) => void, delay: number) =>
+  debounce(func, delay);

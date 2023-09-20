@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, memo, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BreadcrumbPath, ButtonCustom } from "@components/Common";

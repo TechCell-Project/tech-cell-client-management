@@ -3,13 +3,13 @@ import { CategoryModel } from "./Category";
 import { Paging, PagingResponse } from "./Common";
 
 export class PagingProduct extends Paging {
-  all?: boolean = false;
+  detail?: boolean = false;
 }
 
 export class PriceModel {
-  base?: number | null = null;
-  sale?: number | null = null;
-  special?: number | null = null;
+  base?: number | string | null = null;
+  sale?: number | string | null = null;
+  special?: number | string | null = null;
 }
 
 export class VariationModel {
@@ -32,7 +32,7 @@ export class ProductRequest {
   name?: string | null = null;
   description?: string | null = "";
   status?: number | null = null;
-  categories?: Array<CategoryModel | any> = new Array<CategoryModel>();
+  category?: CategoryModel = new CategoryModel();
   generalAttributes?: Array<AttributeDynamics> = new Array<AttributeDynamics>();
   variations: Array<VariationModel> = new Array<VariationModel>();
   generalImages?: Array<ImageModel> = new Array<ImageModel>();

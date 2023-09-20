@@ -1,5 +1,5 @@
 import { CategoryData, CategoryModel, CategorySlice } from "@models/Category";
-import { PagingCategory } from "@models/Category";
+import { Paging } from "@models/Common";
 import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import {
   postCategory,
@@ -58,7 +58,7 @@ export const categorySlice = createSlice({
 
 // Thunk
 export const getAllCategory =
-  (payload: PagingCategory) => async (dispatch: Dispatch) => {
+  (payload: Paging) => async (dispatch: Dispatch) => {
     dispatch(isFetching());
     try {
       const response = await getCategories(payload);

@@ -1,7 +1,6 @@
 "use client";
 
 import { SnackbarClose } from "@components/Common";
-import { Dynamic } from "@components/Shared";
 import { ThemeProvider } from "@mui/material";
 import { store, persistor } from "@store/store";
 import { theme } from "components/Theme/theme";
@@ -31,20 +30,18 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Dynamic>
-          <ThemeProvider theme={theme}>
-            <SnackbarProvider
-              maxSnack={3}
-              action={(key) => <SnackbarClose key={key} />}
-            >
-              <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                  {children}
-                </PersistGate>
-              </Provider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </Dynamic>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider
+            maxSnack={3}
+            action={(key) => <SnackbarClose key={key} />}
+          >
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                {children}
+              </PersistGate>
+            </Provider>
+          </SnackbarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

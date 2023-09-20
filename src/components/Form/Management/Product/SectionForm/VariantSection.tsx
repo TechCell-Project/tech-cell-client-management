@@ -1,53 +1,39 @@
-import React, { useState, memo } from "react";
-import {
-  Grid,
-  IconButton,
-  TextField,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { FieldArray, useFormikContext } from "formik";
-import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
-import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
-import { ImageModel, ProductRequest, VariationModel } from "@models/Product";
-import { ButtonCustom, SelectCustom } from "@components/Common";
-import { STATUS_PRODUCT_OPTIONS } from "@constants/options";
-import PhotoRoundedIcon from "@mui/icons-material/PhotoRounded";
-import CollectionsRoundedIcon from "@mui/icons-material/CollectionsRounded";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { AttributeDialog } from "../Dialog/AttributeDialog";
-import { ImageDialog } from "../Dialog/ImageDialog";
-import { FieldImageProps } from "@models/Image";
-import { getCountImage } from "@utils/index";
+import React, { useState, memo } from 'react';
+import { Grid, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import { FieldArray, useFormikContext } from 'formik';
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+import { ImageModel, ProductModel, ProductRequest, VariationModel } from '@models/Product';
+import { ButtonCustom, SelectCustom } from '@components/Common';
+import { STATUS_PRODUCT_OPTIONS } from '@constants/options';
+import PhotoRoundedIcon from '@mui/icons-material/PhotoRounded';
+import CollectionsRoundedIcon from '@mui/icons-material/CollectionsRounded';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import { AttributeDialog } from '../Dialog/AttributeDialog';
+import { ImageDialog } from '../Dialog/ImageDialog';
+import { FieldImageProps } from '@models/Image';
+import { getCountImage } from '@utils/index';
+import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
 
 export const VariantSection = memo(() => {
   const theme = useTheme();
-  const { values, handleChange } = useFormikContext<ProductRequest>();
+  const { values, handleChange, setFieldValue } = useFormikContext<ProductRequest | ProductModel>();
 
   const [openAttribute, setOpenAttribute] = useState<boolean>(false);
   const [indexVariation, setIndexVariation] = useState<number | null>(null);
-  const [fieldNameImage, setFieldNameImage] = useState<FieldImageProps | null>(
-    null
-  );
+  const [fieldNameImage, setFieldNameImage] = useState<FieldImageProps | null>(null);
 
   const handleSetVariationIndex = (index: number) => {
     setIndexVariation(index);
     setOpenAttribute(true);
   };
-  
+
   return (
     <>
-      <Stack
-        flexDirection="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        gap={1}
-      >
+      <Stack flexDirection="row" justifyContent="flex-start" alignItems="center" gap={1}>
         <ErrorOutlineOutlinedIcon sx={{ fill: theme.color.red }} />
         <Typography variant="body1" fontWeight={600} fontSize="13px">
-          Mỗi biến thể bao gồm: số lượng, giá, ảnh, thuộc tính (Dung lượng, màu
-          sắc,...)
+          Mỗi biến thể bao gồm: số lượng, giá, ảnh, thuộc tính (Dung lượng, màu sắc,...)
         </Typography>
       </Stack>
       <FieldArray
@@ -55,21 +41,17 @@ export const VariantSection = memo(() => {
         render={(arrayHelpers) => (
           <>
             <Grid container spacing={2} columns={20}>
-              {values.variations?.map((item, i) => {
+              {values?.variations?.map((item, i) => {
                 return (
                   <React.Fragment key={i}>
                     <Grid item lg={6}>
                       <Stack flexDirection="row" gap={2} alignItems="center">
                         <p>3.{i + 1}</p>
-                        <TextField
-                          id={`variations[${i}].stock`}
+                        <TextFieldCustom
                           name={`variations[${i}].stock`}
                           label="Số lượng"
-                          fullWidth
-                          variant="outlined"
-                          onChange={handleChange}
-                          size="small"
-                          type="number"
+                          type='number'
+                          handleChange={({ target }) => setFieldValue(target.name, +target.value)}
                         />
                       </Stack>
                     </Grid>
@@ -79,47 +61,33 @@ export const VariantSection = memo(() => {
                         options={STATUS_PRODUCT_OPTIONS}
                         onChange={handleChange}
                         content="Trạng thái"
+                        value={item.status}
                       />
                     </Grid>
                     <Grid item lg={6}>
-                      <TextField
-                        id={`variations[${i}].price.base`}
+                      <TextFieldCustom
                         name={`variations[${i}].price.base`}
-                        label="Giá gốc (VNĐ)"
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                        size="small"
-                        type="number"
+                        label="Giá gốc"
+                        type="numeric"
                       />
                     </Grid>
-                    <Grid item lg={2} sx={{ textAlign: "center" }}>
+                    <Grid item lg={2} sx={{ textAlign: 'center' }}>
                       <IconButton onClick={() => arrayHelpers.remove(i)}>
                         <RemoveCircleRoundedIcon />
                       </IconButton>
                     </Grid>
                     <Grid item lg={5}>
-                      <TextField
-                        id={`variations[${i}].price.sale`}
+                      <TextFieldCustom
                         name={`variations[${i}].price.sale`}
-                        label="Đơn giá (VNĐ)"
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                        size="small"
-                        type="number"
+                        label="Đơn giá"
+                        type="numeric"
                       />
                     </Grid>
                     <Grid item lg={5}>
-                      <TextField
-                        id={`variations[${i}].price.special`}
+                      <TextFieldCustom
                         name={`variations[${i}].price.special`}
-                        label="Giá khuyến mãi (VNĐ)"
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                        size="small"
-                        type="number"
+                        label="Giá khuyến mãi"
+                        type="numeric"
                       />
                     </Grid>
                     <Grid item lg={10} sx={{ mb: 2 }}>

@@ -1,6 +1,5 @@
 import { ButtonCustom, ShowDialog } from "@components/Common";
 import { IColumnAttribute } from "@interface/data";
-import { AttributeModel } from "@models/Attribute";
 import { removeAttribute } from "@store/slices/attributeSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { enqueueSnackbar } from "notistack";

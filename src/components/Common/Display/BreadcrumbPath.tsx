@@ -13,7 +13,6 @@ export const BreadcrumbPath = () => {
 
   const generateBreadcrumbs = () => {
     const breadcrumbs = [];
-    let path = "";
     for (const breadcrumb of PATHS) {
       if (pathname.startsWith(breadcrumb.pathname)) {
         breadcrumbs.push({ pathname: breadcrumb.pathname, name: breadcrumb.name });

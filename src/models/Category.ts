@@ -1,9 +1,5 @@
-import { AttributeModel } from "./Attribute";
-import { Paging, PagingResponse } from "./Common";
-
-export class PagingCategory extends Paging {
-  no_limit?: boolean = false;
-}
+import { AttributeModel } from './Attribute';
+import { PagingResponse } from './Common';
 
 export class CategoryModel {
   _id?: string | null = null;

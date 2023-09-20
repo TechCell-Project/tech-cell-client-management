@@ -6,7 +6,6 @@ import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import AttributionRoundedIcon from '@mui/icons-material/AttributionRounded';
-import { IListNavProps, INavProps } from "@interface/navigation";
 
 const DASHBOARD_ROUTE = "/dashboard";
 
@@ -18,12 +17,11 @@ export const LIST_PRODUCT_NAV = [
   { name: "Thông số", to: `${DASHBOARD_ROUTE}/product/attribute`, icon: AttributionRoundedIcon},
 ];
 
-export const LIST_NAV_MAIN: INavProps[] = [
+export const LIST_NAV_MAIN = [
   { name: "Trang chủ", to: `${DASHBOARD_ROUTE}`, icon: HouseRoundedIcon },
   {
     name: "Sản phẩm",
-    // to: `${DASHBOARD_ROUTE}/product`,
-    isAction: true,
+    isCollapse: true,
     icon: BurstModeRoundedIcon,
     listChildren: LIST_PRODUCT_NAV,
   },
@@ -41,5 +39,5 @@ export const LIST_NAV_MAIN: INavProps[] = [
 
 
 export const LIST_NAV_OTHER = [
-  { name: "Đăng xuất", icon: LogoutRoundedIcon, isAction: true},
+  { name: "Đăng xuất", icon: LogoutRoundedIcon, isLogout: true},
 ];

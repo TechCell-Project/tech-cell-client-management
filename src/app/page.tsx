@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@store/store";
 import { authenticate } from "@store/slices/authSlice";
 import { LoadingPage } from "@components/Common";
 import { TITLE_TECHCELL } from "@constants/data";
+import { NoSSRWrapper } from "@components/Shared";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,5 +33,11 @@ export default function LoginPage() {
     }
   }, [isAuthenticated]);
 
-  return isAuthenticated ? <LoadingPage isLoading={true} /> : <Login />;
+  return isAuthenticated ? (
+    <LoadingPage isLoading={true} />
+  ) : (
+    <NoSSRWrapper>
+      <Login />
+    </NoSSRWrapper>
+  );
 }

@@ -21,6 +21,7 @@ export enum RootRoutes {
   ACCOUNT_ROUTE = "/dashboard/account",
   PRODUCT_ROUTE = "/dashboard/product",
   PRODUCT_CREATE_ROUTE = "/dashboard/product/create",
+  PRODUCT_EDIT_ROUTE = "/dashboard/product/edit",
   CATEGORY_ROUTE = "/dashboard/product/category",
   ATTRIBUTE_ROUTE = "/dashboard/product/attribute",
   ORDER_ROUTE = "/dashboard/order",

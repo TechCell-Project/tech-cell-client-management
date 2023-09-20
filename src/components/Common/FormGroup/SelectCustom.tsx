@@ -6,7 +6,6 @@ import React, { memo } from "react";
 interface Props {
   name: string;
   options: any[];
-  // size?: OverridableStringUnion<"small" | "medium", TextFieldPropsSizeOverrides>;
   content?: string;
   disabled?: boolean;
   disabledItem?: boolean;
@@ -22,7 +21,7 @@ interface Props {
 
 export const SelectCustom = memo((props: Props) => {
   const { displayOption = "label", displayValue = "value" } = props;
-  
+
   return (
     <TextField
       id={props.name}
@@ -43,11 +42,17 @@ export const SelectCustom = memo((props: Props) => {
           maxHeight: "20px",
         },
       }}
+      InputLabelProps={{
+        htmlFor: props.name,
+        shrink: true,
+      }}
       disabled={props.disabled}
     >
       {props.options.map((option, i) => (
         <MenuItem
-          defaultValue={option[displayValue] ?? ""}
+          defaultValue={
+            option[displayValue] === null ? "" : option[displayValue]
+          }
           key={i}
           value={option[displayValue]}
           disabled={props.disabledItem}

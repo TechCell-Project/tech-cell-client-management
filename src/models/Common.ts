@@ -1,8 +1,9 @@
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
 export class Paging implements GridPaginationModel {
   page: number;
   pageSize: number;
+  keyword?: string;
 
   constructor() {
     this.page = 0;
@@ -11,10 +12,10 @@ export class Paging implements GridPaginationModel {
 }
 
 export class PagingResponse {
-  page?: number | string = "";
-  pageSize?: number | string = "";
-  totalPage?: number | string = "";
-  totalRecord?: number | string = "";
+  page?: number | string = '';
+  pageSize?: number | string = '';
+  totalPage?: number | string = '';
+  totalRecord?: number | string = '';
 }
 
 export class DataTableProps {
@@ -26,5 +27,5 @@ export class DataTableProps {
   totalRecord?: number | string;
   paginationModel?: GridPaginationModel;
   setPaginationModel?: React.Dispatch<React.SetStateAction<Paging>>;
+  disabledFilter?: boolean;
 }
-

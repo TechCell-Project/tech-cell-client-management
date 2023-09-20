@@ -1,15 +1,18 @@
-"use client";
+'use client';
 
-import React, { memo } from "react";
+import React, { memo } from 'react';
+import { Checkbox, Autocomplete, TextField, CircularProgress } from '@mui/material';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import {
-  Checkbox,
-  Autocomplete,
-  TextField,
-  CircularProgress,
-} from "@mui/material";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { FastField, FieldInputProps, FieldMetaProps, getIn } from "formik";
+  FastField,
+  FastFieldAttributes,
+  FieldInputProps,
+  FieldMetaProps,
+  FormikProps,
+  FormikValues,
+  getIn,
+} from 'formik';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -20,15 +23,14 @@ interface Props<T> {
   displayLabel?: string;
   displaySelected?: string;
   label?: string | JSX.Element;
+  searchValue?: string;
+  handleChangeSearchValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   limit?: number;
   isLoading?: boolean;
   multiple?: boolean;
   placeholder?: string;
-  handleChange?: (
-    value: T | T[] | null,
-    event: React.SyntheticEvent<Element, Event>
-  ) => void;
+  handleChange?: (value: T | T[] | null, event: React.SyntheticEvent<Element, Event>) => void;
 }
 
 interface MultiSelectProps<T> extends Props<T> {
@@ -47,20 +49,21 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
     meta,
     isLoading,
     multiple,
-    displayLabel = "name",
-    displaySelected = "id",
+    displayLabel = 'name',
+    displaySelected = 'id',
     limit = 10,
     placeholder,
     handleChange,
     setFieldValue,
+    searchValue = '',
+    handleChangeSearchValue
   } = props;
 
-  const getDefaultOptionLabel = (option: T) =>
-    getIn(option, displayLabel) ?? "";
+  const getDefaultOptionLabel = (option: T) => getIn(option, displayLabel) ?? '';
 
   const defaultHandleChange = (
     event: React.SyntheticEvent<Element, Event>,
-    value: T | T[] | null
+    value: T | T[] | null,
   ) => {
     if (!value) {
       value = null;
@@ -72,6 +75,8 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
       setFieldValue(name, value);
     }
   };
+
+  console.log(field)
 
   return (
     <Autocomplete
@@ -102,7 +107,7 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
       disableCloseOnSelect
       getOptionLabel={getDefaultOptionLabel}
       onChange={defaultHandleChange}
-      noOptionsText="Không có dữ liệu"
+      // noOptionsText="Không có dữ liệu"
       size="small"
       renderInput={(params) => (
         <TextField
@@ -112,27 +117,30 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
             htmlFor: name,
             shrink: true,
           }}
+          value={searchValue}
+          onChange={handleChangeSearchValue}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading ? (
-                  <CircularProgress color="inherit" size={15} />
-                ) : null}
+                {isLoading ? <CircularProgress color="inherit" size={15} /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
           }}
           placeholder={placeholder}
           error={Boolean(meta.touched && meta.error)}
-          helperText={meta.touched && meta.error ? meta.error : ""}
+          helperText={meta.touched && meta.error ? meta.error : ''}
         />
       )}
     />
   );
 }
 
-const shouldComponentUpdate = (nextProps: any, currentProps: any) =>
+const shouldComponentUpdate = (
+  nextProps: FastFieldAttributes<Props<any> & { formik: FormikValues }>,
+  currentProps: FastFieldAttributes<Props<any> & { formik: FormikValues }>,
+) =>
   nextProps?.options !== currentProps?.options ||
   nextProps?.value !== currentProps?.value ||
   nextProps?.handleChange !== currentProps?.handleChange ||
@@ -145,13 +153,9 @@ const shouldComponentUpdate = (nextProps: any, currentProps: any) =>
   getIn(nextProps.formik.touched, currentProps.name) !==
     getIn(currentProps.formik.touched, currentProps.name);
 
-function MultiSelectCustom<T = any>(props: Props<T>) {
+function AutocompleteCustom<T = any>(props: Props<T>) {
   return (
-    <FastField
-      {...props}
-      name={props.name}
-      shouldUpdate={shouldComponentUpdate}
-    >
+    <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({
         field,
         meta,
@@ -159,7 +163,7 @@ function MultiSelectCustom<T = any>(props: Props<T>) {
       }: {
         field: FieldInputProps<T | T[]>;
         meta: FieldMetaProps<T | T[]>;
-        form: any;
+        form: FormikProps<T | T[]>;
       }) => (
         <AutoCompleteComponent<T>
           {...props}
@@ -172,8 +176,8 @@ function MultiSelectCustom<T = any>(props: Props<T>) {
   );
 }
 
-const MemoizedMultiSelectCustom = memo(MultiSelectCustom) as <T = any>(
-  props: Props<T>
+const MemoizedMultiSelectCustom = memo(AutocompleteCustom) as <T = any>(
+  props: Props<T>,
 ) => React.JSX.Element;
 
-export { MemoizedMultiSelectCustom as MultiSelectCustom };
+export { MemoizedMultiSelectCustom as AutocompleteCustom };

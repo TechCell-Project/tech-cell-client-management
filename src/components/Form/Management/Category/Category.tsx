@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { DataTable } from "@components/Common";
-import { COLUMNS_CATEGORY } from "@constants/data";
-import { IColumnCategory } from "@interface/data";
-import { Paging } from "@models/Common";
-import {
-  getAllCategory,
-  getDetailsCategoryByLabel,
-} from "@store/slices/categorySlice";
-import { useAppDispatch, useAppSelector } from "@store/store";
-import { getIndexNo } from "@utils/index";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
-import { Tooltip } from "@mui/material";
-import { EditCategory } from "./Dialog/EditCategory";
+import React, { useEffect, useState } from 'react';
+import { DataTable, LoadingPage } from '@components/Common';
+import { COLUMNS_CATEGORY } from '@constants/data';
+import { IColumnCategory } from '@interface/data';
+import { Paging } from '@models/Common';
+import { getAllCategory, getDetailsCategoryByLabel } from '@store/slices/categorySlice';
+import { useAppDispatch, useAppSelector } from '@store/store';
+import { getIndexNo } from '@utils/index';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
+import { Tooltip } from '@mui/material';
+import { EditCategory } from './Dialog/EditCategory';
 
 export const Category = () => {
   const dispatch = useAppDispatch();
-  const { categories, isLoading } = useAppSelector((state) => state.category);
+  const { categories, isLoading, isLoadingDetails } = useAppSelector((state) => state.category);
 
   const [searchCategory, setSearchCategory] = useState<Paging>(new Paging());
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -34,20 +31,18 @@ export const Category = () => {
     no: getIndexNo(i, searchCategory.page, searchCategory.pageSize),
     name: category.name,
     label: category.label,
-    requiresAttribute: category.requireAttributes
-      ?.map((attribute) => attribute.name)
-      .join(", "),
+    requiresAttribute: category.requireAttributes?.map((attribute) => attribute.name).join(', '),
   }));
 
   const columns: Array<any> = [
     ...COLUMNS_CATEGORY,
     {
-      field: "options",
-      headerName: "Thao Tác",
+      field: 'options',
+      headerName: 'Thao Tác',
       width: 200,
-      align: "center",
-      headerAlign: "center",
-      type: "actions",
+      align: 'center',
+      headerAlign: 'center',
+      type: 'actions',
       getActions: (params: GridRowParams<any>) => [
         <Tooltip title="Chỉnh sửa" key={params.row.no}>
           <GridActionsCellItem
@@ -75,11 +70,10 @@ export const Category = () => {
         totalRecord={categories.totalRecord}
       />
 
-      {openEdit && (
-        <EditCategory
-          isOpen={openEdit}
-          handleClose={() => setOpenEdit(false)}
-        />
+      {isLoadingDetails ? (
+        <LoadingPage isLoading={isLoadingDetails} isBlur />
+      ) : (
+        <>{openEdit && <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />}</>
       )}
     </>
   );

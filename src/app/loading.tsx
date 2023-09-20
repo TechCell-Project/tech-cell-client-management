@@ -1,5 +1,5 @@
 import { LoadingPage } from "@components/Common";
 
 export default function Loading() {
-  return <LoadingPage/>
+  return <LoadingPage isLoading={true}/>;
 }

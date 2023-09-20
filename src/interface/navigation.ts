@@ -21,7 +21,7 @@ export interface INavChildProps {
 }
 
 export interface IListNavProps {
-  list?: INavProps[];
+  list?: any;
   pathname?: string;
   subHeader?: string;
 }

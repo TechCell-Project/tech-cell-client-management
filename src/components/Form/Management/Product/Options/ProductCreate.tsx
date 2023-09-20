@@ -10,9 +10,9 @@ import { useAppDispatch } from "@store/store";
 import { createNewProduct } from "@store/slices/productSlice";
 import { enqueueSnackbar } from "notistack";
 import { RootRoutes } from "@constants/enum";
-import { DescTab, InfoBasicTab } from "../CreateTabs";
+import { DescTab, InfoBasicTab } from "../Tabs";
 
-const tabsCreate = [
+export const tabsProduct = [
   { name: "Thông số", component: <InfoBasicTab /> },
   { name: "Mô tả", component: <DescTab /> },
 ];
@@ -62,7 +62,7 @@ export const ProductCreate = () => {
         // validationSchema={requestProductValidate}
       >
         {({ values, isSubmitting }) => {
-          // console.log(values);
+          console.log(values);
           return (
             <Form>
               <Stack
@@ -94,7 +94,7 @@ export const ProductCreate = () => {
                     },
                   }}
                 >
-                  {tabsCreate.map((tab, index) => (
+                  {tabsProduct.map((tab, index) => (
                     <Tab
                       key={tab.name}
                       label={tab.name}
@@ -110,7 +110,7 @@ export const ProductCreate = () => {
                   ))}
                 </Tabs>
 
-                {tabsCreate[tabIndex].component}
+                {tabsProduct[tabIndex].component}
 
                 <Stack
                   flexDirection="row"

@@ -1,28 +1,23 @@
-"use client";
+'use client';
 
-import React, { useEffect, memo, useState } from "react";
-import { useFormikContext } from "formik";
-import { useDropzone } from "react-dropzone";
-import styles from "@styles/components/_upload.module.scss";
-import { Box, Stack, Typography, IconButton } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
-import { FieldImageProps } from "@models/Image";
+import React, { useEffect, memo, useState } from 'react';
+import { useFormikContext } from 'formik';
+import { useDropzone } from 'react-dropzone';
+import styles from '@styles/components/_upload.module.scss';
+import { Box, Stack, Typography, IconButton } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import { FieldImageProps } from '@models/Image';
+import Image from 'next/image';
 
 export const UploadFileCustom = memo(
-  ({
-    name,
-    imageInits = [],
-  }: {
-    name: FieldImageProps;
-    imageInits?: any[];
-  }) => {
+  ({ name, imageInits = [] }: { name: FieldImageProps; imageInits?: any[] }) => {
     const { setFieldValue } = useFormikContext<any>();
     const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
 
     const { getRootProps, getInputProps } = useDropzone({
       accept: {
-        "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+        'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
       },
       onDrop: (acceptedFiles) => {
         const objectURLs = acceptedFiles.map((file) => {
@@ -43,15 +38,13 @@ export const UploadFileCustom = memo(
       const files = imageInits.filter((file) =>
         name.isThumbnail
           ? file.isThumbnail === true
-          : !file.isThumbnail || file.isThumbnail === undefined
+          : !file.isThumbnail || file.isThumbnail === undefined,
       );
       const newFiles = files.filter((_, i) => i !== index);
 
       if (name.isThumbnail) {
         setFieldValue(String(name.field), [
-          ...imageInits.filter(
-            (file) => !file.isThumbnail || file.isThumbnail === undefined
-          ),
+          ...imageInits.filter((file) => !file.isThumbnail || file.isThumbnail === undefined),
           ...newFiles,
         ]);
       } else {
@@ -63,16 +56,20 @@ export const UploadFileCustom = memo(
     };
 
     useEffect(() => {
-      setFieldValue("images", uploadedFiles);
-      return () =>
-        uploadedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
+      setFieldValue('images', uploadedFiles);
+      return () => uploadedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [name.field, uploadedFiles]);
 
     const renderImage = (item: any, i: React.Key) => {
       return (
         <div className={styles.thumbnail} key={i}>
           <div className={styles.thumbnailInner}>
-            <img
+            <Image
+              width={0}
+              height={0}
+              loading="lazy"
+              sizes="100vw"
+              style={{ width: '100%', height: 'auto' }}
               src={item.url || item.preview}
               alt={item?.name}
               onLoad={() => {
@@ -84,7 +81,7 @@ export const UploadFileCustom = memo(
             <IconButton
               onClick={() => {
                 if (item.publicId) {
-                  handleRemoveImage(Number(i))
+                  handleRemoveImage(Number(i));
                 } else {
                   handleRemoveFile(item);
                 }
@@ -101,7 +98,7 @@ export const UploadFileCustom = memo(
       const files = imageInits.filter((file) =>
         name.isThumbnail
           ? file.isThumbnail === true
-          : !file.isThumbnail || file.isThumbnail === undefined
+          : !file.isThumbnail || file.isThumbnail === undefined,
       );
 
       return files.map(renderImage);
@@ -111,12 +108,7 @@ export const UploadFileCustom = memo(
       <Box>
         <div {...getRootProps({ className: styles.dropzone })}>
           <input {...getInputProps()} />
-          <Stack
-            flexDirection="row"
-            gap={2}
-            alignContent="center"
-            justifyContent="center"
-          >
+          <Stack flexDirection="row" gap={2} alignContent="center" justifyContent="center">
             <CloudUploadIcon />
             <p>Kéo, thả tệp hoặc click để mở</p>
           </Stack>
@@ -124,17 +116,13 @@ export const UploadFileCustom = memo(
         <Typography fontSize="15px" fontWeight={600} mt="20px">
           • Phần ảnh preview:
         </Typography>
-        <aside className={styles.thumbnailContainer}>
-          {uploadedFiles?.map(renderImage)}
-        </aside>
+        <aside className={styles.thumbnailContainer}>{uploadedFiles?.map(renderImage)}</aside>
 
         <Typography fontSize="15px" fontWeight={600} mt="20px">
           • Phần ảnh đã tải lên:
         </Typography>
-        <aside className={styles.thumbnailContainer}>
-          {handleUploadCase()}
-        </aside>
+        <aside className={styles.thumbnailContainer}>{handleUploadCase()}</aside>
       </Box>
     );
-  }
+  },
 );
