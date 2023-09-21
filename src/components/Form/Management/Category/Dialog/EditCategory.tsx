@@ -1,5 +1,5 @@
 import { ButtonCustom, ShowDialog, AutocompleteCustom } from '@components/Common';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack, Grid, TextField, CircularProgress, useTheme } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { createOrEditValidate } from '@validate/category.validate';
@@ -10,6 +10,7 @@ import { enqueueSnackbar } from 'notistack';
 import { PagingAttribute } from '@models/Attribute';
 import { editCategory } from '@store/slices/categorySlice';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { debounce } from 'lodash';
 
 interface Props {
   isOpen: boolean;
@@ -18,9 +19,17 @@ interface Props {
 
 export const EditCategory = (props: Props) => {
   const { category } = useAppSelector((state) => state.category);
-  const { attributes } = useAppSelector((state) => state.attribute);
+  const { attributes, isLoading } = useAppSelector((state) => state.attribute);
   const dispatch = useAppDispatch();
-  const theme = useTheme();
+  const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
+
+  const debouncedCategory = debounce((searchQuery: PagingAttribute) => {
+    dispatch(getAllAttributes(searchQuery));
+  }, 400);
+
+  useEffect(() => {
+    debouncedCategory(searchAttribute);
+  }, [searchAttribute]);
 
   const handleSubmit = async (
     values: CategoryModel,
@@ -51,10 +60,6 @@ export const EditCategory = (props: Props) => {
       setSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    dispatch(getAllAttributes({ ...new PagingAttribute(), no_limit: true }));
-  }, []);
 
   return (
     <ShowDialog
@@ -103,6 +108,16 @@ export const EditCategory = (props: Props) => {
                   displaySelected="name"
                   placeholder="Thông số"
                   multiple
+                  searchValue={searchAttribute.keyword}
+                  handleChangeSearchValue={({ target }) =>
+                    setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
+                  }
+                  handleBlurSearchValue={() => {
+                    if (searchAttribute.keyword) {
+                      setSearchAttribute(new PagingAttribute());
+                    }
+                  }}
+                  isLoading={isLoading}
                 />
               </Grid>
             </Grid>

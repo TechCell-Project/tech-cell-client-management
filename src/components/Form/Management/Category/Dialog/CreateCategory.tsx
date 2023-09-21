@@ -23,7 +23,7 @@ export const CreateCategory = (props: Props) => {
   const { attributes, isLoading } = useAppSelector((state) => state.attribute);
   const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
 
-  const debouncedCategory = debounce((searchQuery: Paging) => {
+  const debouncedCategory = debounce((searchQuery: PagingAttribute) => {
     dispatch(getAllAttributes(searchQuery));
   }, 400);
 
