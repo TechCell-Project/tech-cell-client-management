@@ -71,17 +71,19 @@ export const getAllProduct = (payload: PagingProduct) => async (dispatch: Dispat
   }
 };
 
-export const getDetailsProduct = (id: string) => async (dispatch: Dispatch) => {
-  dispatch(isFetchingDetails());
-  try {
-    const response = await getProductById(id);
-    if (response.data) {
-      dispatch(getDetailsSuccess(response.data));
+export const getDetailsProduct =
+  (id: string, isDetails: boolean = true) =>
+  async (dispatch: Dispatch) => {
+    dispatch(isFetchingDetails());
+    try {
+      const response = await getProductById(id, isDetails);
+      if (response.data) {
+        dispatch(getDetailsSuccess(response.data));
+      }
+    } catch (error) {
+      dispatch(getDetailsFailure());
     }
-  } catch (error) {
-    dispatch(getDetailsFailure());
-  }
-};
+  };
 
 export const createNewProduct = (payload: ProductRequest) => async (dispatch: Dispatch) => {
   dispatch(isFetchingDetails());
@@ -97,7 +99,7 @@ export const createNewProduct = (payload: ProductRequest) => async (dispatch: Di
   }
 };
 
-export const editProduct = (payload: ProductModel, id: string) => async (dispatch: Dispatch) => {
+export const editProduct = (payload: Partial<ProductModel>, id: string) => async (dispatch: Dispatch) => {
   dispatch(isFetchingDetails());
   try {
     const response = await putProduct(payload, id);

@@ -16,10 +16,10 @@ export class AttributeDynamics {
   k?: string | null = null;
   v?: string | null = null;
   u?: string | null = null;
+  name?: string | null = null;
 }
 
 export class PagingAttribute extends Paging {
-  no_limit?: boolean | null = false;
   select_type?: "only_active" | "only_deleted" | "both_deleted_and_active" =
     "only_active";
 }

@@ -5,10 +5,11 @@ import { HashLoader } from 'react-spinners';
 import { useTheme } from '@mui/material';
 import styles from '@styles/components/_loading.module.scss';
 
-export const LoadingPage: FC<{ isLoading: boolean; isBlur?: boolean }> = ({ isLoading, isBlur }) => {
+export const LoadingPage: FC<{ isLoading: boolean; isBlur?: boolean }> = ({
+  isLoading,
+  isBlur,
+}) => {
   const theme = useTheme();
-
-  console.log(isBlur);
 
   return (
     isLoading && (

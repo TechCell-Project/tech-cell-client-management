@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShowDialog, ButtonCustom, AutocompleteCustom } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -6,11 +6,12 @@ import { CategoryModel } from '@models/Category';
 import { createOrEditValidate } from '@validate/category.validate';
 import { TextField, Stack, Grid } from '@mui/material';
 import { getAllAttributes } from '@store/slices/attributeSlice';
-import { PagingAttribute } from '@models/Attribute';
+import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
 import { enqueueSnackbar } from 'notistack';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { debounce } from 'lodash';
 
 interface Props {
   isOpen: boolean;
@@ -19,11 +20,16 @@ interface Props {
 
 export const CreateCategory = (props: Props) => {
   const dispatch = useAppDispatch();
-  const { attributes } = useAppSelector((state) => state.attribute);
+  const { attributes, isLoading } = useAppSelector((state) => state.attribute);
+  const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
+
+  const debouncedCategory = debounce((searchQuery: Paging) => {
+    dispatch(getAllAttributes(searchQuery));
+  }, 400);
 
   useEffect(() => {
-    dispatch(getAllAttributes({ ...new PagingAttribute(), no_limit: true }));
-  }, []);
+    debouncedCategory(searchAttribute);
+  }, [searchAttribute]);
 
   const handleSubmit = async (
     values: CategoryModel,
@@ -98,13 +104,23 @@ export const CreateCategory = (props: Props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <AutocompleteCustom<CategoryModel>
+                  <AutocompleteCustom<AttributeModel>
                     options={attributes.data}
                     name="requireAttributes"
                     label="Thông số kỹ thuật"
                     displaySelected="name"
                     placeholder="Thông số"
                     multiple
+                    searchValue={searchAttribute.keyword}
+                    handleChangeSearchValue={({ target }) =>
+                      setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
+                    }
+                    handleBlurSearchValue={() => {
+                      if (searchAttribute.keyword) {
+                        setSearchAttribute(new PagingAttribute());
+                      }
+                    }}
+                    isLoading={isLoading}
                   />
                 </Grid>
               </Grid>

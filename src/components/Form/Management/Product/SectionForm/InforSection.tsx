@@ -13,7 +13,7 @@ import { ImageDialog } from '../Dialog/ImageDialog';
 import { FieldImageProps } from '@models/Image';
 import { formatDateViVN, getCountImage } from '@utils/index';
 import { getCategoryByLabel } from '@services/categoryService';
-import { AttributeDynamics } from '@models/Attribute';
+import { AttributeDynamics, AttributeModel } from '@models/Attribute';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
 import { Paging } from '@models/Common';
 import { debounce } from 'lodash';
@@ -30,25 +30,27 @@ export const InforSection = memo(() => {
   const dispatch = useAppDispatch();
   const { categories, isLoading } = useAppSelector((state) => state.category);
 
-  // const debouncedCategory = debounce((searchQuery: Paging) => {
-  //   dispatch(getAllCategory(searchQuery));
-  // }, 600);
+  const debouncedCategory = debounce((searchQuery: Paging) => {
+    dispatch(getAllCategory(searchQuery));
+  }, 400);
 
   useEffect(() => {
-    dispatch(getAllCategory(searchCategory));
+    debouncedCategory(searchCategory);
   }, [searchCategory]);
 
   const handleChangeCategory = (values: CategoryModel) => {
     if (values?.label) {
       setIsFetchCategory(true);
+      setFieldValue('generalAttributes', new Array<AttributeDynamics>());
       getCategoryByLabel(values.label)
         .then(({ data }: { data: CategoryModel }) => {
-          const attributes = data.requireAttributes ?? [];
+          const attributes: AttributeModel[] = data.requireAttributes ?? [];
 
-          const newGeneralAttributes = attributes.map((attribute) => ({
+          const newGeneralAttributes: AttributeDynamics[] = attributes.map((attribute) => ({
             k: attribute.label,
             v: null,
             u: null,
+            name: attribute.name,
           }));
 
           setFieldValue('generalAttributes', newGeneralAttributes);
@@ -105,7 +107,7 @@ export const InforSection = memo(() => {
           <AutocompleteCustom<CategoryModel>
             name="category"
             label="Thể loại"
-            options={!isLoading ? categories?.data : new Array<CategoryModel>()}
+            options={categories.data}
             displayLabel="name"
             displaySelected="label"
             handleChange={(value) => {
@@ -116,6 +118,11 @@ export const InforSection = memo(() => {
             handleChangeSearchValue={({ target }) =>
               setSearchCategory((prev) => ({ ...prev, keyword: target.value }))
             }
+            handleBlurSearchValue={() => {
+              if (searchCategory.keyword) {
+                setSearchCategory(new Paging());
+              }
+            }}
             isLoading={isLoading || isFetchCategory}
           />
         </Grid>

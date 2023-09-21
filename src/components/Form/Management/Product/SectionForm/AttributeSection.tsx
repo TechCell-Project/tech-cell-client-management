@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ProductModel, ProductRequest } from '@models/Product';
 import { Grid, useTheme, Stack, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
 
-export const AttributeSection = () => {
+export const AttributeSection = memo(() => {
   const { values } = useFormikContext<ProductRequest | ProductModel>();
   const theme = useTheme();
 
@@ -18,7 +18,7 @@ export const AttributeSection = () => {
         </Typography>
       </Stack>
       <Grid container spacing={2} columns={16}>
-        {values?.generalAttributes?.map((_, i) => (
+        {values?.generalAttributes?.map((attribute, i) => (
           <React.Fragment key={i}>
             <Grid item lg={1}>
               <Stack flexDirection="row" alignItems="center" height="100%" justifyContent="center">
@@ -26,7 +26,11 @@ export const AttributeSection = () => {
               </Stack>
             </Grid>
             <Grid item lg={5}>
-              <TextFieldCustom name={`generalAttributes[${i}].k`} label="Thuộc tính" readOnly />
+              <TextFieldCustom
+                name={`generalAttributes[${i}].k`}
+                label={`${attribute.name}` ?? 'Thuộc Tính'}
+                readOnly
+              />
             </Grid>
             <Grid item lg={5}>
               <TextFieldCustom name={`generalAttributes[${i}].v`} label="Giá trị" />
@@ -39,4 +43,4 @@ export const AttributeSection = () => {
       </Grid>
     </>
   );
-};
+});

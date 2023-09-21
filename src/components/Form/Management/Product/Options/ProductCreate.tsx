@@ -62,7 +62,7 @@ export const ProductCreate = () => {
         // validationSchema={requestProductValidate}
       >
         {({ values, isSubmitting }) => {
-          console.log(values);
+          // console.log(values);
           return (
             <Form>
               <Stack

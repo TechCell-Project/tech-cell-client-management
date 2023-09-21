@@ -15,7 +15,13 @@ export const getProducts = (payload: PagingProduct) => {
 export const postProduct = (payload: ProductRequest) =>
   instance.post<ProductRequest>(PRODUCTS_ENDPOINT, payload);
 
-export const getProductById = (id: string) => instance.get(`${PRODUCTS_ENDPOINT}/${id}`);
+export const getProductById = (id: string, isDetails?: boolean) => {
+  let url = `${PRODUCTS_ENDPOINT}/${id}`;
+  if (isDetails) {
+    url += `?detail=${isDetails}`;
+  }
+  return instance.get(url);
+};
 
-export const putProduct = (payload: ProductModel, id: string) =>
-  instance.put<ProductModel>(`${PRODUCTS_ENDPOINT}/${id}`, payload);
+export const putProduct = (payload: Partial<ProductModel>, id: string) =>
+  instance.put<Partial<ProductModel>>(`${PRODUCTS_ENDPOINT}/${id}`, payload);

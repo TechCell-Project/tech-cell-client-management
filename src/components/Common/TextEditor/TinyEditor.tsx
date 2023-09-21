@@ -8,6 +8,7 @@ import { ButtonCustom } from '../FormGroup/ButtonCustom';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { HashLoader } from 'react-spinners';
 import { LoadingSection } from '../Display/LoadingSection';
+import { enqueueSnackbar } from 'notistack';
 
 interface Props {
   value?: string;
@@ -45,13 +46,15 @@ export const TinyEditor = memo((props: Props) => {
   const { value, name } = props;
   const { setFieldValue } = useFormikContext();
   const editorRef = useRef<any>(value);
-  const theme = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleSaveContent = () => {
     const content = editorRef.current.getContent();
     if (content) {
       setFieldValue(name, content);
+      enqueueSnackbar('Lưu thành công!', {
+        variant: 'success',
+      });
     }
   };
 

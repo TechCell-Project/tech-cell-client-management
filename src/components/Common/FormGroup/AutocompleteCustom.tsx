@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { Checkbox, Autocomplete, TextField, CircularProgress } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -25,6 +25,7 @@ interface Props<T> {
   label?: string | JSX.Element;
   searchValue?: string;
   handleChangeSearchValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlurSearchValue?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   disabled?: boolean;
   limit?: number;
   isLoading?: boolean;
@@ -56,7 +57,8 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
     handleChange,
     setFieldValue,
     searchValue = '',
-    handleChangeSearchValue
+    handleChangeSearchValue,
+    handleBlurSearchValue,
   } = props;
 
   const getDefaultOptionLabel = (option: T) => getIn(option, displayLabel) ?? '';
@@ -76,8 +78,6 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
     }
   };
 
-  console.log(field)
-
   return (
     <Autocomplete
       {...field}
@@ -87,7 +87,7 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
       loading={isLoading}
       limitTags={limit}
       disabled={disabled}
-      options={options || []}
+      options={options ?? []}
       isOptionEqualToValue={(option, value) =>
         getIn(option, displaySelected) === getIn(value, displaySelected)
       }
@@ -104,7 +104,7 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
           </li>
         );
       }}
-      disableCloseOnSelect
+      disableCloseOnSelect={multiple ? true : false}
       getOptionLabel={getDefaultOptionLabel}
       onChange={defaultHandleChange}
       // noOptionsText="Không có dữ liệu"
@@ -128,6 +128,7 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
               </>
             ),
           }}
+          onBlur={handleBlurSearchValue}
           placeholder={placeholder}
           error={Boolean(meta.touched && meta.error)}
           helperText={meta.touched && meta.error ? meta.error : ''}

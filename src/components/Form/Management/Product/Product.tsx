@@ -25,13 +25,15 @@ export const Product = () => {
   }, [searchProduct]);
 
   const rows = products.data.map((product, i) => {
-    return ({
+    return {
       id: product._id,
       no: getIndexNo(i, searchProduct.page, searchProduct.pageSize),
       name: product.name,
       category: product.category?.name,
       status: getStatusProduct(Number(product.status)),
-    })
+      generalAttributes: product.generalAttributes?.length,
+      variations: product.variations.length,
+    };
   });
 
   const columns: any[] = [

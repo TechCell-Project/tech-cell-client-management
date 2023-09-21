@@ -1,4 +1,12 @@
-import { PagingResponse } from "./Common";
+import { Paging, PagingResponse } from './Common';
+
+export class PagingAccount extends Paging {
+  order_field?: string | null = null;
+  sort_order?: string | null = null;
+  status?: string | null = null;
+  role?: string | null = null;
+  emailVerified?: string | null = null;
+}
 
 export class AccountSlice {
   accounts: UserDataAccount = new UserDataAccount();
