@@ -1,10 +1,11 @@
+// Material Ui
 .MuiDrawer-paper.MuiDrawer-paperAnchorLeft {
   padding: 10px 20px;
 }
 
 .MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionFixed {
-  padding: 10px 24px;
-  padding-right: 24px !important;
+  padding: 10px 30px;
+  padding-right: 30px !important;
 }
 
 .MuiAppBar-root.MuiAppBar-colorPrimary {
@@ -151,3 +152,10 @@
   border: 0 !important;
   color: rgba(0, 0, 0, 0.26) !important;
 }
+
+// Recharts
+.recharts-text.recharts-cartesian-axis-tick-value {
+  font-size: 14px;
+}
+
+

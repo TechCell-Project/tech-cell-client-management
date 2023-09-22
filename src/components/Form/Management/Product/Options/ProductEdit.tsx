@@ -28,15 +28,16 @@ export const ProductEdit = ({ id }: { id: string }) => {
     { setSubmitting }: FormikHelpers<ProductModel>,
   ) => {
     try {
-      const changedFields: Partial<ProductModel> = {};
+      // Just submit field changed when edit
+      
+      // const changedFields: Partial<ProductModel> = {};
+      // for (const key in values) {
+      //   if ((values as any)[key] !== (product as any)[key]) {
+      //     (changedFields as any)[key] = (values as any)[key];
+      //   }
+      // }
 
-      for (const key in values) {
-        if ((values as any)[key] !== (product as any)[key]) {
-          (changedFields as any)[key] = (values as any)[key];
-        }
-      }
-
-      const response = await dispatch(editProduct(changedFields, String(values._id)));
+      const response = await dispatch(editProduct(values, String(values._id)));
 
       if (response?.success) {
         enqueueSnackbar('Chỉnh sửa sản phẩm thành công!', {

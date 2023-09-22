@@ -10,6 +10,9 @@ const nextConfig = {
     API_ENDPOINT: process.env.API_BASE_URL,
     API_KEY_TINY: process.env.API_KEY_TINYMCE,
   },
+  experimental: {
+    appDir: true,
+  },
   images: {
     domains: ['res.cloudinary.com'],
   },

@@ -1,5 +1,5 @@
 import { AutocompleteCustom, ButtonCustom, SelectCustom } from '@components/Common';
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useCallback } from 'react';
 import { Grid } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { ImageModel, ProductModel, ProductRequest } from '@models/Product';
@@ -16,7 +16,6 @@ import { getCategoryByLabel } from '@services/categoryService';
 import { AttributeDynamics, AttributeModel } from '@models/Attribute';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
 import { Paging } from '@models/Common';
-import { debounce } from 'lodash';
 
 export const InforSection = memo(() => {
   const { handleChange, setFieldValue, values, touched, errors } = useFormikContext<
@@ -30,36 +29,42 @@ export const InforSection = memo(() => {
   const dispatch = useAppDispatch();
   const { categories, isLoading } = useAppSelector((state) => state.category);
 
-  const debouncedCategory = debounce((searchQuery: Paging) => {
-    dispatch(getAllCategory(searchQuery));
-  }, 400);
-
   useEffect(() => {
-    debouncedCategory(searchCategory);
+    let timeoutId: NodeJS.Timeout;
+    timeoutId = setTimeout(() => {
+      dispatch(getAllCategory(searchCategory));
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [searchCategory]);
 
-  const handleChangeCategory = (values: CategoryModel) => {
-    if (values?.label) {
-      setIsFetchCategory(true);
-      setFieldValue('generalAttributes', new Array<AttributeDynamics>());
-      getCategoryByLabel(values.label)
-        .then(({ data }: { data: CategoryModel }) => {
-          const attributes: AttributeModel[] = data.requireAttributes ?? [];
+  const handleChangeCategory = useCallback(
+    (values: CategoryModel) => {
+      if (values?.label) {
+        setIsFetchCategory(true);
+        setFieldValue('generalAttributes', new Array<AttributeDynamics>());
+        getCategoryByLabel(values.label)
+          .then(({ data }: { data: CategoryModel }) => {
+            const attributes: AttributeModel[] = data.requireAttributes ?? [];
 
-          const newGeneralAttributes: AttributeDynamics[] = attributes.map((attribute) => ({
-            k: attribute.label,
-            v: null,
-            u: null,
-            name: attribute.name,
-          }));
+            const newGeneralAttributes: AttributeDynamics[] = attributes.map((attribute) => ({
+              k: attribute.label,
+              v: null,
+              u: null,
+              name: attribute.name,
+            }));
 
-          setFieldValue('generalAttributes', newGeneralAttributes);
-        })
-        .finally(() => setIsFetchCategory(false));
-    } else {
-      setFieldValue('generalAttributes', new Array<AttributeDynamics>());
-    }
-  };
+            setFieldValue('generalAttributes', newGeneralAttributes);
+          })
+          .finally(() => setIsFetchCategory(false));
+      } else {
+        setFieldValue('generalAttributes', new Array<AttributeDynamics>());
+      }
+    },
+    [setIsFetchCategory],
+  );
 
   return (
     <>
@@ -107,7 +112,7 @@ export const InforSection = memo(() => {
           <AutocompleteCustom<CategoryModel>
             name="category"
             label="Thể loại"
-            options={categories.data}
+            options={!isLoading ? categories.data : new Array<CategoryModel>()}
             displayLabel="name"
             displaySelected="label"
             handleChange={(value) => {

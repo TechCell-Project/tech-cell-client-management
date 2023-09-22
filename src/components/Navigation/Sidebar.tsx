@@ -77,7 +77,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       <Main open={open} sx={{ padding: 0, overflow: "hidden auto" }}>
         <DrawerHeader />
         <FrameBackground />
-        <Stack direction="column" position="relative" top="-45px" p="0 24px 24px 24px">
+        <Stack direction="column" position="relative" top="-45px" p="0 30px 24px 30px">
           {children}
         </Stack>
       </Main>

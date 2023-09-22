@@ -8,3 +8,5 @@ export * from './Management/Category/Category';
 
 export * from './Management/Product/Options/ProductCreate';
 export * from './Management/Product/Options/ProductEdit';
+
+export * from './Statistics/Statistics';
