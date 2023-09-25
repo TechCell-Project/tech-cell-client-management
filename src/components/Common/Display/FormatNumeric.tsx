@@ -6,27 +6,26 @@ interface Props {
   name: string;
 }
 
-export const FormatNumeric = React.forwardRef<NumericFormatProps, Props>(function NumericFormatCustom(
-  props,
-  ref,
-) {
-  const { onChange, ...other } = props;
+export const FormatNumeric = React.forwardRef<NumericFormatProps, Props>(
+  function NumericFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
 
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      valueIsNumericString
-      suffix=" ₫"
-    />
-  );
-});
+    return (
+      <NumericFormat
+        {...other}
+        getInputRef={ref}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        valueIsNumericString
+        suffix=" ₫"
+      />
+    );
+  },
+);

@@ -3,14 +3,12 @@
 import React, { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import {
-  Box,
-  CssBaseline,
-  Drawer,
-  IconButton,
-  useTheme,
-  Stack,
-} from "@mui/material";
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {

@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     if (!isAuthenticated) {
       const timeout = setTimeout(() => {
         router.push('/');
-      }, 1000);
+      }, 300);
       return () => {
         clearTimeout(timeout);
       };

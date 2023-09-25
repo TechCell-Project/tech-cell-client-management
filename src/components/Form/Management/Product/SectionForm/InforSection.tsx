@@ -1,6 +1,6 @@
 import { AutocompleteCustom, ButtonCustom, SelectCustom } from '@components/Common';
 import React, { useEffect, useState, memo, useCallback } from 'react';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useFormikContext } from 'formik';
 import { ImageModel, ProductModel, ProductRequest } from '@models/Product';
 import { STATUS_PRODUCT_OPTIONS } from '@constants/options';

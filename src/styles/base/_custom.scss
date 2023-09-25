@@ -155,7 +155,12 @@
 
 // Recharts
 .recharts-text.recharts-cartesian-axis-tick-value {
+  font-size: 13px;
+}
+
+.recharts-text.recharts-pie-label-text {
   font-size: 14px;
+  font-weight: 700;
 }
 
 

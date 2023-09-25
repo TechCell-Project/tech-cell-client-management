@@ -18,6 +18,7 @@ export class VariationModel {
   price?: PriceModel = new PriceModel();
   images?: Array<ImageModel> = new Array<ImageModel>();
   status?: string | number | null = null;
+  sku?: string | null = null;
 }
 
 export class ImageModel {
@@ -38,12 +39,6 @@ export class ProductRequest {
   generalImages?: Array<ImageModel> = new Array<ImageModel>();
   descriptionImages?: Array<ImageModel> = new Array<ImageModel>();
 }
-
-// export class ProductDataRequest {
-//   productData: ProductRequest = new ProductRequest();
-//   general: Array<any> = [];
-//   general_isthumbnail: Array<any> = [];
-// }
 
 export class ProductModel extends ProductRequest {
   _id?: string | null = null;

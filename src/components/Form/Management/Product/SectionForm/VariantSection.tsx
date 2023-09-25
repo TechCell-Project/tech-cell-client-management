@@ -1,5 +1,9 @@
 import React, { useState, memo } from 'react';
-import { Grid, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 import { FieldArray, useFormikContext } from 'formik';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
@@ -50,7 +54,7 @@ export const VariantSection = memo(() => {
                         <TextFieldCustom
                           name={`variations[${i}].stock`}
                           label="Số lượng"
-                          type='number'
+                          type="number"
                           handleChange={({ target }) => setFieldValue(target.name, +target.value)}
                         />
                       </Stack>

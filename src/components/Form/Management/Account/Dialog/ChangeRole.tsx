@@ -1,5 +1,7 @@
 import React, { memo } from "react";
-import { Stack, TextField, MenuItem } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 import SouthRoundedIcon from "@mui/icons-material/SouthRounded";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAppDispatch } from "@store/store";

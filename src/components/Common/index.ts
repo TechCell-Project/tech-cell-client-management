@@ -12,5 +12,6 @@ export * from "./FormGroup/PasswordCustom";
 export * from "./FormGroup/SelectCustom";
 export * from "./FormGroup/AutocompleteCustom";
 export * from "./FormGroup/UploadFileCustom";
+export * from "./FormGroup/TextFieldCustom";
 
 export * from "./TextEditor/TinyEditor";

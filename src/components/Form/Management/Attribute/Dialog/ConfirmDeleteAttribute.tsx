@@ -1,9 +1,9 @@
+import React from "react";
 import { ButtonCustom, ShowDialog } from "@components/Common";
 import { IColumnAttribute } from "@interface/data";
 import { removeAttribute } from "@store/slices/attributeSlice";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { enqueueSnackbar } from "notistack";
-import React from "react";
 
 interface Props {
   dataAttribute?: IColumnAttribute;

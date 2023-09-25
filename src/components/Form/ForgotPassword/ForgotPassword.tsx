@@ -1,16 +1,13 @@
-import React, { memo, useState, useEffect } from "react";
-import { ButtonCustom, ShowDialog } from "@components/Common";
-import { ForgotPasswordModel } from "@models/Auth";
-import { Stack, Typography } from "@mui/material";
-import { Form, Formik, FormikHelpers } from "formik";
-import { forgotPasswordValidate } from "@validate/auth.validate";
-import { ISnackbarAlert } from "@interface/common";
-import {
-  fetchForgotPassword,
-  fetchVerifyForgotPassword,
-} from "@services/authServices";
-import { ForgotForm } from "./ForgotForm";
-import { enqueueSnackbar } from "notistack";
+import React, { memo, useState, useEffect } from 'react';
+import { ButtonCustom, ShowDialog } from '@components/Common';
+import { ForgotPasswordModel } from '@models/Auth';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { forgotPasswordValidate } from '@validate/auth.validate';
+import { fetchForgotPassword, fetchVerifyForgotPassword } from '@services/authServices';
+import { ForgotForm } from './ForgotForm';
+import { enqueueSnackbar } from 'notistack';
 
 interface Props {
   isOpen: boolean;
@@ -43,7 +40,7 @@ export const ForgotPassword = memo((props: Props) => {
   const formatTime = (seconds: number): string => {
     const minutes: number = Math.floor(seconds / 60);
     const remainingSeconds: number = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   const sendCode = (email: string) => {
@@ -54,26 +51,22 @@ export const ForgotPassword = memo((props: Props) => {
         } else {
           setIsActive(true);
         }
-        enqueueSnackbar(`Đã gửi mã OTP dến ${email}`, { variant: "success" });
+        enqueueSnackbar(`Đã gửi mã OTP dến ${email}`, { variant: 'success' });
       })
-      .catch(() =>
-        enqueueSnackbar(`Có lỗi xảy ra, Gửi mã thất bại!`, { variant: "error" })
-      );
+      .catch(() => enqueueSnackbar(`Có lỗi xảy ra, Gửi mã thất bại!`, { variant: 'error' }));
   };
 
   const handleSubmit = (
     values: ForgotPasswordModel,
-    { resetForm, setSubmitting }: FormikHelpers<ForgotPasswordModel>
+    { resetForm, setSubmitting }: FormikHelpers<ForgotPasswordModel>,
   ) => {
     fetchVerifyForgotPassword(values)
       .then(() => {
-        enqueueSnackbar("Đổi mật khẩu thành công!", { variant: "success" });
+        enqueueSnackbar('Đổi mật khẩu thành công!', { variant: 'success' });
         resetForm();
         props.handleClose();
       })
-      .catch(() =>
-        enqueueSnackbar("Đổi mật khẩu thất bại!", { variant: "error" })
-      )
+      .catch(() => enqueueSnackbar('Đổi mật khẩu thất bại!', { variant: 'error' }))
       .finally(() => {
         setSubmitting(false);
       });
@@ -94,27 +87,17 @@ export const ForgotPassword = memo((props: Props) => {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form style={{ width: "100%" }}>
+            <Form style={{ width: '100%' }}>
               <Stack direction="column" gap={2}>
                 <ForgotForm sendCode={sendCode} />
 
                 {isActive && (
-                  <Typography
-                    variant="body2"
-                    fontSize="14px"
-                    textAlign="center"
-                  >
-                    Mã OTP còn hiệu lực trong vòng:{" "}
-                    <b>{formatTime(countdown)}</b>
+                  <Typography variant="body2" fontSize="14px" textAlign="center">
+                    Mã OTP còn hiệu lực trong vòng: <b>{formatTime(countdown)}</b>
                   </Typography>
                 )}
 
-                <Stack
-                  direction="row"
-                  justifyContent="flex-end"
-                  gap={1}
-                  sx={{ mt: 1 }}
-                >
+                <Stack direction="row" justifyContent="flex-end" gap={1} sx={{ mt: 1 }}>
                   <ButtonCustom
                     content="Hủy bỏ"
                     variant="outlined"

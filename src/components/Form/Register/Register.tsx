@@ -1,17 +1,14 @@
-import React, { memo, useState } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
-import { RegisterModel } from "@models/Auth";
-import { registerValidate } from "@validate/auth.validate";
-import { Stack } from "@mui/material";
-import { ShowDialog, ButtonCustom } from "@components/Common";
-import RegisterForm from "./RegisterForm";
-import { useAppDispatch } from "@store/store";
-import {
-  createNewAccount,
-  getAllUserAccount,
-} from "@store/slices/accountSlice";
-import { enqueueSnackbar } from "notistack";
-import { Paging } from "@models/Common";
+import React, { memo } from 'react';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { RegisterModel } from '@models/Auth';
+import { registerValidate } from '@validate/auth.validate';
+import Stack from '@mui/material/Stack';
+import { ShowDialog, ButtonCustom } from '@components/Common';
+import RegisterForm from './RegisterForm';
+import { useAppDispatch } from '@store/store';
+import { createNewAccount, getAllUserAccount } from '@store/slices/accountSlice';
+import { enqueueSnackbar } from 'notistack';
+import { Paging } from '@models/Common';
 
 interface Props {
   isOpen: boolean;
@@ -23,20 +20,18 @@ export const Register = memo((props: Props) => {
 
   const handleSubmit = (
     values: RegisterModel,
-    { resetForm, setSubmitting }: FormikHelpers<RegisterModel>
+    { resetForm, setSubmitting }: FormikHelpers<RegisterModel>,
   ) => {
     dispatch(createNewAccount(values))
       .then(() => {
-        enqueueSnackbar("Thêm mới tài khoản thành công!", {
-          variant: "success",
+        enqueueSnackbar('Thêm mới tài khoản thành công!', {
+          variant: 'success',
         });
         resetForm();
         props.handleClose();
         dispatch(getAllUserAccount(new Paging()));
       })
-      .catch(() =>
-        enqueueSnackbar("Thêm mới tài khoản thất bại!", { variant: "error" })
-      )
+      .catch(() => enqueueSnackbar('Thêm mới tài khoản thất bại!', { variant: 'error' }))
       .finally(() => setSubmitting(false));
   };
 
@@ -57,17 +52,8 @@ export const Register = memo((props: Props) => {
           <Form>
             <Stack direction="column" gap={2}>
               <RegisterForm />
-              <Stack
-                direction="row"
-                gap={1}
-                justifyContent="flex-end"
-                sx={{ mt: 2 }}
-              >
-                <ButtonCustom
-                  variant="outlined"
-                  content="Hủy bỏ"
-                  handleClick={props.handleClose}
-                />
+              <Stack direction="row" gap={1} justifyContent="flex-end" sx={{ mt: 2 }}>
+                <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={props.handleClose} />
                 <ButtonCustom
                   variant="contained"
                   content="Đăng ký"

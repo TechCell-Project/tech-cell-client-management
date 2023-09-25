@@ -20,13 +20,13 @@ export default function LoginPage() {
 
   useEffect(() => {
     document.title = `Đăng Nhập - ${TITLE_TECHCELL}`;
-  }, [document.title]);
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
       const timeout = setTimeout(() => {
         router.push("/dashboard");
-      }, 1000);
+      }, 300);
       return () => {
         clearTimeout(timeout);
       };

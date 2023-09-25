@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { getIndexNo } from '@utils/index';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
-import { Tooltip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import { EditCategory } from './Dialog/EditCategory';
+import { DataTableDynamic } from '@components/Shared';
 
 export const Category = () => {
   const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import { formatWithCommas } from '@utils/index';
 import React from 'react';
 import {
@@ -10,10 +10,9 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from 'recharts';
-import styles from "@styles/components/_chart.module.scss";
+} from './ReduceRecharts';
 
-const dataDemo = [
+const data = [
   { month: 'Tháng 1', revenue: 1000000 },
   { month: 'Tháng 2', revenue: 1200000 },
   { month: 'Tháng 3', revenue: 1230000 },
@@ -33,7 +32,7 @@ export const SumRevenueChart = () => {
     <Box width="100%" height={400}>
       <ResponsiveContainer>
         <AreaChart
-          data={dataDemo}
+          data={data}
           margin={{
             top: 10,
             right: 30,
@@ -44,7 +43,10 @@ export const SumRevenueChart = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis tickFormatter={formatWithCommas} />
-          <Tooltip label="Tháng" formatter={(value) => `${formatWithCommas(Number(value))}` + " ₫"}/>
+          <Tooltip
+            label="Tháng"
+            formatter={(value) => `${formatWithCommas(Number(value))}` + ' ₫'}
+          />
           <Legend />
           <Area type="monotone" dataKey="revenue" fill="#FF6666" />
         </AreaChart>

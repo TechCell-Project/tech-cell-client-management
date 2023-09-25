@@ -1,17 +1,15 @@
-import React, { memo } from "react";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Stack,
-  TextField,
-  useTheme,
-  InputAdornment,
-} from "@mui/material";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import { formatDateViVN, getRole } from "@utils/index";
-import { ButtonCustom, ShowDialog } from "@components/Common";
-import { useAppSelector } from "@store/store";
+import React, { memo } from 'react';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { formatDateViVN, getRole } from '@utils/index';
+import { ButtonCustom, ShowDialog } from '@components/Common';
+import { useAppSelector } from '@store/store';
 
 interface Props {
   isOpen: boolean;
@@ -20,9 +18,7 @@ interface Props {
 
 export const DetailsAccount = memo((props: Props) => {
   const theme = useTheme();
-  const { account, isLoadingDetails } = useAppSelector(
-    (state) => state.account
-  );
+  const { account, isLoadingDetails } = useAppSelector((state) => state.account);
 
   return (
     <ShowDialog
@@ -32,9 +28,9 @@ export const DetailsAccount = memo((props: Props) => {
     >
       <Box
         sx={{
-          width: "100%",
-          marginTop: "10px",
-          textAlign: isLoadingDetails ? "center" : "left",
+          width: '100%',
+          marginTop: '10px',
+          textAlign: isLoadingDetails ? 'center' : 'left',
         }}
       >
         {isLoadingDetails ? (
@@ -55,7 +51,7 @@ export const DetailsAccount = memo((props: Props) => {
               <Grid item md={6}>
                 <TextField
                   label="Vai trò"
-                  value={getRole(account?.role) || ""}
+                  value={getRole(account?.role) || ''}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -73,10 +69,7 @@ export const DetailsAccount = memo((props: Props) => {
                     readOnly: true,
                     endAdornment: account?.emailVerified && (
                       <InputAdornment position="end">
-                        <CheckCircleRoundedIcon
-                          fontSize="small"
-                          color="primary"
-                        />
+                        <CheckCircleRoundedIcon fontSize="small" color="primary" />
                       </InputAdornment>
                     ),
                   }}
@@ -85,11 +78,7 @@ export const DetailsAccount = memo((props: Props) => {
               <Grid item md={6}>
                 <TextField
                   label="Trạng thái tài khoản"
-                  value={
-                    account?.block && account?.block.isBlocked
-                      ? "Bị chặn"
-                      : "Hoạt động"
-                  }
+                  value={account?.block && account?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -99,7 +88,7 @@ export const DetailsAccount = memo((props: Props) => {
               <Grid item md={6}>
                 <TextField
                   label="Thời gian tạo"
-                  value={formatDateViVN(account?.createdAt || "")}
+                  value={formatDateViVN(account?.createdAt || '')}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -109,7 +98,7 @@ export const DetailsAccount = memo((props: Props) => {
               <Grid item md={6}>
                 <TextField
                   label="Thời gian chỉnh sửa"
-                  value={formatDateViVN(account?.updatedAt || "")}
+                  value={formatDateViVN(account?.updatedAt || '')}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -121,7 +110,7 @@ export const DetailsAccount = memo((props: Props) => {
                   <Grid item md={4}>
                     <TextField
                       label="Tỉnh, Thành phố"
-                      value={account?.address[0]?.provinceLevel || "..."}
+                      value={account?.address[0]?.provinceLevel || '...'}
                       fullWidth
                       variant="outlined"
                       size="small"
@@ -131,7 +120,7 @@ export const DetailsAccount = memo((props: Props) => {
                   <Grid item md={4}>
                     <TextField
                       label="Quận, Huyện"
-                      value={account?.address[0]?.districtLevel || "..."}
+                      value={account?.address[0]?.districtLevel || '...'}
                       fullWidth
                       variant="outlined"
                       size="small"
@@ -141,7 +130,7 @@ export const DetailsAccount = memo((props: Props) => {
                   <Grid item md={4}>
                     <TextField
                       label="Phường, Xã"
-                      value={account?.address[0]?.communeLevel || "..."}
+                      value={account?.address[0]?.communeLevel || '...'}
                       fullWidth
                       variant="outlined"
                       size="small"
@@ -151,7 +140,7 @@ export const DetailsAccount = memo((props: Props) => {
                   <Grid item md={12}>
                     <TextField
                       label="Đia chỉ cụ thể"
-                      value={account?.address[0]?.detail || "..."}
+                      value={account?.address[0]?.detail || '...'}
                       fullWidth
                       variant="outlined"
                       size="small"
@@ -164,12 +153,8 @@ export const DetailsAccount = memo((props: Props) => {
                 </>
               )}
             </Grid>
-            <Stack alignItems="flex-end" sx={{ marginTop: "20px" }}>
-              <ButtonCustom
-                variant="outlined"
-                handleClick={props.handleClose}
-                content="Đóng"
-              />
+            <Stack alignItems="flex-end" sx={{ marginTop: '20px' }}>
+              <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Đóng" />
             </Stack>
           </>
         )}

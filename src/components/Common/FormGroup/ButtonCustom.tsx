@@ -1,7 +1,9 @@
 "use client";
 
 import React, { memo } from "react";
-import { Button, useTheme, SxProps, Badge } from "@mui/material";
+import { useTheme, SxProps } from "@mui/material";
+import Button from "@mui/material/Button";
+import Badge from "@mui/material/Badge";
 
 interface IButtonCustom {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const path = require("path");
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 // const CopyPlugin = require("copy-webpack-plugin");
 
 const nextConfig = {
@@ -13,6 +16,18 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  modularizeImports: {
+    '@mui/icons-material': {
+      transform: '@mui/icons-material/{{member}}',
+    },
+    '@mui/material': {
+      transform: '{{#if (eq member "useTheme")}}@components/Theme/useTheme{{else}}@mui/material/{{member}}{{/if}}',
+    },
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  esmExternals: false,
   images: {
     domains: ['res.cloudinary.com'],
   },
@@ -32,4 +47,4 @@ const nextConfig = {
   // },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

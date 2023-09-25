@@ -2,7 +2,6 @@ import { ProductStatus, Roles } from '@constants/enum';
 import { IUser } from '@interface/auth';
 import { ImageModel } from '@models/Product';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import { debounce } from 'lodash';
 
 // get information from local storage
 export const getCurrentUserId = () => {
@@ -171,5 +170,5 @@ export const isRoleAccepted = (role?: string): boolean => {
 };
 
 // debounce
-export const debounceWithDelay = <T extends any[]>(func: (...args: T) => void, delay: number) =>
-  debounce(func, delay);
+// export const debounceWithDelay = <T extends any[]>(func: (...args: T) => void, delay: number) =>
+//   debounce(func, delay);

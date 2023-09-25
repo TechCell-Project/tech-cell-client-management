@@ -1,5 +1,6 @@
 import { ButtonCustom, ShowDialog } from '@components/Common';
-import { Box, Stack } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import React, { memo, useState } from 'react';
 import { UploadFileCustom } from '../../../../Common/FormGroup/UploadFileCustom';
 import { useFormikContext } from 'formik';
@@ -20,8 +21,8 @@ export const ImageDialog = memo((props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const isVariation = fieldImage.field?.startsWith('variations');
 
-  console.log((values as any)['images'])
   const handleUpload = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       let imageGeneral: any;

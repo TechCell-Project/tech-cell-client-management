@@ -1,20 +1,25 @@
-import { Box, Stack, Tabs, Tab, Typography, useTheme } from "@mui/material";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
-import { ProductRequest } from "@models/Product";
-import { ButtonCustom } from "@components/Common";
-import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import { requestProductValidate } from "@validate/product.validate";
-import { useAppDispatch } from "@store/store";
-import { createNewProduct } from "@store/slices/productSlice";
-import { enqueueSnackbar } from "notistack";
-import { RootRoutes } from "@constants/enum";
-import { DescTab, InfoBasicTab } from "../Tabs";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { ProductRequest } from '@models/Product';
+import { ButtonCustom } from '@components/Common';
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
+import { requestProductValidate } from '@validate/product.validate';
+import { useAppDispatch } from '@store/store';
+import { createNewProduct } from '@store/slices/productSlice';
+import { enqueueSnackbar } from 'notistack';
+import { RootRoutes } from '@constants/enum';
+import { DescTab, InfoBasicTab } from '../Tabs';
 
 export const tabsProduct = [
-  { name: "Thông số", component: <InfoBasicTab /> },
-  { name: "Mô tả", component: <DescTab /> },
+  { name: 'Thông số', component: <InfoBasicTab /> },
+  { name: 'Mô tả', component: <DescTab /> },
 ];
 
 export const ProductCreate = () => {
@@ -23,27 +28,29 @@ export const ProductCreate = () => {
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
 
+  console.log('a');
+
   const handleSubmit = async (
     values: ProductRequest,
-    { resetForm, setSubmitting }: FormikHelpers<ProductRequest>
+    { resetForm, setSubmitting }: FormikHelpers<ProductRequest>,
   ) => {
     try {
       const response = await dispatch(createNewProduct(values));
 
       if (response?.success) {
-        enqueueSnackbar("Thêm mới sản phẩm thành công!", {
-          variant: "success",
+        enqueueSnackbar('Thêm mới sản phẩm thành công!', {
+          variant: 'success',
         });
         resetForm();
         router.push(RootRoutes.PRODUCT_ROUTE);
       } else {
-        enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
-          variant: "error",
+        enqueueSnackbar('Có lỗi xảy ra, Thêm mới thất bại!', {
+          variant: 'error',
         });
       }
     } catch (error) {
-      enqueueSnackbar("Có lỗi xảy ra, Thêm mới thất bại!", {
-        variant: "error",
+      enqueueSnackbar('Có lỗi xảy ra, Thêm mới thất bại!', {
+        variant: 'error',
       });
     } finally {
       setSubmitting(false);
@@ -51,10 +58,7 @@ export const ProductCreate = () => {
   };
 
   return (
-    <Box
-      component="div"
-      sx={{ bgcolor: "#fff", borderRadius: "8px", padding: "15px 25px" }}
-    >
+    <Box component="div" sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
       <Formik
         enableReinitialize
         initialValues={new ProductRequest()}
@@ -65,11 +69,7 @@ export const ProductCreate = () => {
           // console.log(values);
           return (
             <Form>
-              <Stack
-                width="100%"
-                flexDirection="column"
-                alignItems="flex-start"
-              >
+              <Stack width="100%" flexDirection="column" alignItems="flex-start">
                 <Stack flexDirection="row" alignItems="center" gap={2}>
                   <Typography
                     variant="h5"
@@ -83,13 +83,11 @@ export const ProductCreate = () => {
 
                 <Tabs
                   value={tabIndex}
-                  onChange={(event: React.SyntheticEvent, index: number) =>
-                    setTabIndex(index)
-                  }
+                  onChange={(event: React.SyntheticEvent, index: number) => setTabIndex(index)}
                   aria-label="tabs create product"
                   sx={{
                     mt: 1,
-                    "& .MuiTabs-indicator": {
+                    '& .MuiTabs-indicator': {
                       backgroundColor: theme.color.red,
                     },
                   }}
@@ -100,8 +98,8 @@ export const ProductCreate = () => {
                       label={tab.name}
                       onClick={() => setTabIndex(index)}
                       sx={{
-                        textTransform: "capitalize",
-                        "&.Mui-selected": {
+                        textTransform: 'capitalize',
+                        '&.Mui-selected': {
                           fontWeight: 700,
                           color: theme.color.red,
                         },

@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import { Account } from "@components/Form";
-import { TITLE_TECHCELL } from "@constants/data";
-import { useEffect } from "react";
-import { NoSSRWrapper } from "@components/Shared";
+import { TITLE_TECHCELL } from '@constants/data';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
+import { LoadingPage } from '@components/Common';
+
+const AccountDynamic = dynamic(() => import('@components/Form').then((res) => res.Account), {
+  ssr: false,
+  loading: () => <LoadingPage isLoading={true} isBlur />,
+});
 
 export default function Page() {
   useEffect(() => {
     document.title = `Tài Khoản - ${TITLE_TECHCELL}`;
-  }, [document.title]);
+  }, []);
 
-  return (
-    <NoSSRWrapper>
-      <Account />
-    </NoSSRWrapper>
-  );
+  return <AccountDynamic />;
 }

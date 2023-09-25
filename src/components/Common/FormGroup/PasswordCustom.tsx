@@ -1,16 +1,14 @@
-"use client";
+'use client';
 
-import React, { memo, useState } from "react";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
+import React, { memo, useState } from 'react';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 interface Props {
   content: string;
@@ -35,7 +33,7 @@ export const PasswordCustom = memo((props: Props) => {
         size="small"
         id={props.name}
         name={props.name}
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         error={props.error}
         label={props.content}
         onChange={props.onChange}

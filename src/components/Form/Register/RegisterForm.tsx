@@ -1,23 +1,21 @@
-import React, { memo, useState } from "react";
-import {
-  Grid,
-  TextField,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-  FormHelperText,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import PriorityHighRoundedIcon from "@mui/icons-material/PriorityHighRounded";
-import { RegisterModel } from "@models/Auth";
-import { useFormikContext } from "formik";
-import { ROLE_OPTIONS } from "@constants/options";
+import React, { memo, useState } from 'react';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import FormHelperText from '@mui/material/FormHelperText';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded';
+import { RegisterModel } from '@models/Auth';
+import { useFormikContext } from 'formik';
+import { ROLE_OPTIONS } from '@constants/options';
 
 const RegisterForm = () => {
   const [showPassword, setPassword] = useState<boolean>(false);
@@ -40,16 +38,13 @@ const RegisterForm = () => {
       </Grid>
       <Grid item xs={12} md={6}>
         <FormControl fullWidth variant="outlined" size="small">
-          <InputLabel
-            htmlFor="password"
-            error={touched.password && Boolean(errors.password)}
-          >
+          <InputLabel htmlFor="password" error={touched.password && Boolean(errors.password)}>
             Mật khẩu
           </InputLabel>
           <OutlinedInput
             size="small"
             id="password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             error={touched.password && Boolean(errors.password)}
             name="password"
             label="Mật khẩu"
@@ -68,9 +63,7 @@ const RegisterForm = () => {
             }
           />
           {touched.password && errors.password && (
-            <FormHelperText
-              error={touched.password && Boolean(errors.password)}
-            >
+            <FormHelperText error={touched.password && Boolean(errors.password)}>
               {errors.password}
             </FormHelperText>
           )}
@@ -135,7 +128,7 @@ const RegisterForm = () => {
           size="small"
         />
       </Grid>
-      <Grid item xs={12} sx={{ mt: 1}}>
+      <Grid item xs={12} sx={{ mt: 1 }}>
         <Stack direction="row" gap={1} justifyContent="flex-start" alignItems="center">
           <PriorityHighRoundedIcon fontSize="small" />
           <Typography variant="body1" fontWeight={600} fontSize={13}>

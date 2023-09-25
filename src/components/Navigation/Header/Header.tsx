@@ -1,5 +1,8 @@
 import React, { memo, FC } from 'react';
-import { IconButton, Toolbar, Stack, Box } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
 import MenuIcon from '@mui/icons-material/Menu';

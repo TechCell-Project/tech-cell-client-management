@@ -1,7 +1,10 @@
 import React from 'react';
 import { ButtonCustom, ShowDialog } from '@components/Common';
 import { FieldArray, useFormikContext } from 'formik';
-import { IconButton, Grid, TextField, Box, Stack } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { ProductModel, ProductRequest } from '@models/Product';
 import { AttributeDynamics } from '@models/Attribute';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';

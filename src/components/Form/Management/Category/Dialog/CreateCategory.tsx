@@ -4,14 +4,14 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { CategoryModel } from '@models/Category';
 import { createOrEditValidate } from '@validate/category.validate';
-import { TextField, Stack, Grid } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
 import { getAllAttributes } from '@store/slices/attributeSlice';
 import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
 import { enqueueSnackbar } from 'notistack';
 import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
-import { debounce } from 'lodash';
 
 interface Props {
   isOpen: boolean;

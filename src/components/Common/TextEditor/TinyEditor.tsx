@@ -5,8 +5,7 @@ import { API_KEY_EDITOR } from '@constants/service';
 import { Editor } from '@tinymce/tinymce-react';
 import { useFormikContext } from 'formik';
 import { ButtonCustom } from '../FormGroup/ButtonCustom';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { HashLoader } from 'react-spinners';
+import Box from '@mui/material/Box';
 import { LoadingSection } from '../Display/LoadingSection';
 import { enqueueSnackbar } from 'notistack';
 

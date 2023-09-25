@@ -1,5 +1,8 @@
 import React, { memo, useState } from 'react';
-import { Grid, Stack, Typography, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 import { useFormikContext } from 'formik';
 import styles from '@styles/components/_common.module.scss';
 import { ImageDialog } from '../Dialog/ImageDialog';

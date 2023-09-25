@@ -1,33 +1,20 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { DataTable } from "@components/Common";
-import { COLUMNS_ACCOUNT } from "@constants/data";
-import {
-  getAllUserAccount,
-  getDetailsUserAccount,
-} from "@store/slices/accountSlice";
-import { useAppDispatch, useAppSelector } from "@store/store";
-import {
-  getRole,
-  getCurrentUserId,
-  isRoleAccepted,
-  getIndexNo,
-} from "@utils/index";
-import {
-  GridActionsCellItem,
-  GridColDef,
-  GridPaginationModel,
-  GridRowParams,
-} from "@mui/x-data-grid";
-import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
-import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import { ConfirmBlock, ChangeRole, DetailsAccount } from "./Dialog";
-import { Tooltip } from "@mui/material";
-import { IColumnAccount } from "@interface/data";
-import { Paging } from "@models/Common";
+import React, { useEffect, useState } from 'react';
+import { DataTable } from '@components/Common';
+import { COLUMNS_ACCOUNT } from '@constants/data';
+import { getAllUserAccount, getDetailsUserAccount } from '@store/slices/accountSlice';
+import { useAppDispatch, useAppSelector } from '@store/store';
+import { getRole, getCurrentUserId, isRoleAccepted, getIndexNo } from '@utils/index';
+import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import { ConfirmBlock, ChangeRole, DetailsAccount } from './Dialog';
+import Tooltip from '@mui/material/Tooltip';
+import { IColumnAccount } from '@interface/data';
+import { Paging } from '@models/Common';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +37,7 @@ export const Account = () => {
     name: `${account.firstName} ${account.lastName}`,
     role: getRole(account.role),
     email: account.email,
-    status: account.block?.isBlocked ? "Bị chặn" : "Hoạt động",
+    status: account.block?.isBlocked ? 'Bị chặn' : 'Hoạt động',
   }));
 
   const loadDataDetails = (id: string) => {
@@ -60,12 +47,12 @@ export const Account = () => {
   const columns: GridColDef<any>[] = [
     ...COLUMNS_ACCOUNT,
     {
-      field: "options",
-      headerName: "Thao Tác",
+      field: 'options',
+      headerName: 'Thao Tác',
       width: 200,
-      align: "center",
-      headerAlign: "center",
-      type: "actions",
+      align: 'center',
+      headerAlign: 'center',
+      type: 'actions',
       getActions: (params: GridRowParams<any>) => [
         <Tooltip title="Chi tiết" key={params.row.no}>
           <GridActionsCellItem
@@ -86,15 +73,12 @@ export const Account = () => {
                 setDataRowSelected(params.row);
               }}
               label="Đổi vai trò"
-              disabled={
-                params.row.id === getCurrentUserId() ||
-                !isRoleAccepted(params.row.role)
-              }
+              disabled={params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)}
             />
           </span>
         </Tooltip>,
         <>
-          {params.row.status === "Hoạt động" ? (
+          {params.row.status === 'Hoạt động' ? (
             <Tooltip title="Chặn">
               <span>
                 <GridActionsCellItem
@@ -105,8 +89,7 @@ export const Account = () => {
                   }}
                   label="Chặn tài khoản"
                   disabled={
-                    params.row.id === getCurrentUserId() ||
-                    !isRoleAccepted(params.row.role)
+                    params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)
                   }
                 />
               </span>
@@ -122,8 +105,7 @@ export const Account = () => {
                   }}
                   label="Mở khóa tài khoản"
                   disabled={
-                    params.row.id === getCurrentUserId() ||
-                    !isRoleAccepted(params.row.role)
+                    params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)
                   }
                 />
               </span>
@@ -147,10 +129,7 @@ export const Account = () => {
       />
 
       {openDetails && (
-        <DetailsAccount
-          isOpen={openDetails}
-          handleClose={() => setOpenDetails(false)}
-        />
+        <DetailsAccount isOpen={openDetails} handleClose={() => setOpenDetails(false)} />
       )}
 
       {openChangeRole && (

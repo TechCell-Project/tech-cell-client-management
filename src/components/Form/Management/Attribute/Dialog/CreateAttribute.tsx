@@ -3,11 +3,11 @@ import { ButtonCustom, ShowDialog } from '@components/Common';
 import { CreateAttributeModel, PagingAttribute } from '@models/Attribute';
 import { createOrEditValidate } from '@validate/attribute.validate';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { useAppDispatch } from '@store/store';
 import { createNewAttribute, getAllAttributes } from '@store/slices/attributeSlice';
 import { enqueueSnackbar } from 'notistack';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common';
 
 interface Props {
   isOpen: boolean;

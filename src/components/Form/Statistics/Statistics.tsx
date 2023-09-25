@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import StatisticBox from './StatisticBox';
 import StatisticCharts from './StatisticCharts';
 

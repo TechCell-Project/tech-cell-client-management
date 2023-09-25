@@ -6,13 +6,14 @@ import { PagingAttribute } from '@models/Attribute';
 import { COLUMNS_ATTRIBUTE } from '@constants/data';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
 import { getIndexNo } from '@utils/index';
-import { Tooltip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AutoDeleteRoundedIcon from '@mui/icons-material/AutoDeleteRounded';
 import { AttributeDialog } from '@models/Dialog';
 import { EditAttribute } from './Dialog/EditAttribute';
 import { ConfirmDeleteAttribute } from './Dialog/ConfirmDeleteAttribute';
 import { IColumnAttribute } from '@interface/data';
+import { DataTableDynamic } from '@components/Shared';
 
 export const Attribute = () => {
   const dispatch = useAppDispatch();

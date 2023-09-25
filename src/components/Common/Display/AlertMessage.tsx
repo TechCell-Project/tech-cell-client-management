@@ -1,7 +1,11 @@
 'use client';
 
 import React, { FC, useEffect, useMemo, useState, ReactElement } from 'react';
-import { Alert, AlertTitle, IconButton, Stack, Zoom } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Zoom from '@mui/material/Zoom';
 import CloseIcon from '@mui/icons-material/Close';
 import { IAlert } from '@interface/common';
 

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { ButtonCustom, LoadingSection } from '@components/Common';
 import { ProductModel } from '@models/Product';
-import { Box, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import { useRouter } from 'next/navigation';
@@ -29,7 +34,7 @@ export const ProductEdit = ({ id }: { id: string }) => {
   ) => {
     try {
       // Just submit field changed when edit
-      
+
       // const changedFields: Partial<ProductModel> = {};
       // for (const key in values) {
       //   if ((values as any)[key] !== (product as any)[key]) {

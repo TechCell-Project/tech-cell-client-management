@@ -1,22 +1,24 @@
-import React from "react";
-import { Box, useTheme, LinearProgress } from "@mui/material";
+import React from 'react';
+import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export const CustomLoadingOverLay = () => {
   const theme = useTheme();
-  
+
   return (
     <Box
       sx={{
-        width: "100%",
-        "& .MuiLinearProgress-root": {
+        width: '100%',
+        '& .MuiLinearProgress-root': {
           bgcolor: theme.color.lightRed,
         },
-        "& .MuiLinearProgress-root .MuiLinearProgress-bar": {
+        '& .MuiLinearProgress-root .MuiLinearProgress-bar': {
           bgcolor: theme.color.red,
         },
       }}
     >
-      <LinearProgress/>
+      <LinearProgress />
     </Box>
   );
 };

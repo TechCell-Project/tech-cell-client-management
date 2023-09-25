@@ -7,11 +7,12 @@ import { getAllProduct } from '@store/slices/productSlice';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
 import { COLUMNS_PRODUCT } from '@constants/data';
 import { getIndexNo, getStatusProduct } from '@utils/index';
-import { Tooltip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
+import { DataTableDynamic } from '@components/Shared';
 
 export const Product = () => {
   const dispatch = useAppDispatch();

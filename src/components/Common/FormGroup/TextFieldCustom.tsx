@@ -1,4 +1,6 @@
-import React, { ChangeEvent, InputHTMLAttributes, memo, useState } from 'react';
+"use client";
+
+import React, { ChangeEvent, memo, useState } from 'react';
 import { TextField } from '@mui/material';
 import {
   FastField,

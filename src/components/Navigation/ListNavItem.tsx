@@ -2,16 +2,14 @@
 
 import React, { FC, useState } from 'react';
 import Link from 'next/link';
-import {
-  Collapse,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  useTheme,
-} from '@mui/material';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import { useTheme } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { IListNavProps } from '@interface/navigation';
@@ -28,7 +26,7 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
       const renderItem = () => {
         if (!nav.isCollapse && !nav.isLogout) {
           return (
-            <Link href={nav.to} style={{ width: '100%' }}>
+            <Link href={nav.to} style={{ width: '100%' }} shallow>
               <ListItemButton selected={pathname === String(nav.to)} sx={{ borderRadius: '10px' }}>
                 <ListItemIcon sx={{ minWidth: '40px' }}>
                   <nav.icon />
@@ -63,7 +61,7 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
               </ListItemButton>
               <Collapse in={openCollapse} timeout="auto" unmountOnExit sx={{ mt: '10px' }}>
                 {nav.listChildren.map((child: any, i: number) => (
-                  <Link href={child.to} style={{ width: '100%' }} key={i}>
+                  <Link href={child.to} style={{ width: '100%' }} key={i} shallow>
                     <ListItemButton
                       selected={pathname === String(child.to)}
                       sx={{ borderRadius: '10px', pl: '5px' }}

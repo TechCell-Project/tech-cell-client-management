@@ -1,13 +1,13 @@
 import { ButtonCustom, ShowDialog } from '@components/Common';
 import { AttributeModel, CreateAttributeModel } from '@models/Attribute';
-import { Stack, useTheme } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { createOrEditValidate } from '@validate/attribute.validate';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { editAttribute } from '@store/slices/attributeSlice';
 import React from 'react';
 import { enqueueSnackbar } from 'notistack';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common';
 
 interface Props {
   isOpen: boolean;
@@ -17,7 +17,6 @@ interface Props {
 export const EditAttribute = (props: Props) => {
   const { attribute } = useAppSelector((state) => state.attribute);
   const dispatch = useAppDispatch();
-  const theme = useTheme();
 
   const handleSubmit = async (
     values: AttributeModel,
