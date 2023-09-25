@@ -28,8 +28,6 @@ export const ProductCreate = () => {
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
 
-  console.log('a');
-
   const handleSubmit = async (
     values: ProductRequest,
     { resetForm, setSubmitting }: FormikHelpers<ProductRequest>,
@@ -66,7 +64,7 @@ export const ProductCreate = () => {
         // validationSchema={requestProductValidate}
       >
         {({ values, isSubmitting }) => {
-          // console.log(values);
+          console.log(values);
           return (
             <Form>
               <Stack width="100%" flexDirection="column" alignItems="flex-start">
