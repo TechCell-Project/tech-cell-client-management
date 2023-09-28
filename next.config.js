@@ -27,7 +27,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  esmExternals: false,
+  // esmExternals: false,
   images: {
     domains: ['res.cloudinary.com'],
   },

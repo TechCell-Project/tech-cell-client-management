@@ -1,4 +1,4 @@
-import { CreateAttributeModel, PagingAttribute } from '@models/Attribute';
+import { AttributeModel, CreateAttributeModel, PagingAttribute } from '@models/Attribute';
 import instance from './instance';
 import { ATTRIBUTES_ENDPOINT } from '@constants/service';
 
@@ -10,11 +10,12 @@ export const getAttributes = (payload: PagingAttribute) => {
   if (select_type) {
     url += `&select_type=${select_type}`;
   }
+
   if (keyword) {
     url += `&keyword=${keyword}`;
   }
 
-  return instance.get<PagingAttribute>(url);
+  return instance.get<Array<AttributeModel>>(url);
 };
 
 export const postAttribute = (payload: CreateAttributeModel) =>

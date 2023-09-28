@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useFormikContext } from 'formik';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
 
 export const AttributeSection = memo(() => {
   const { values } = useFormikContext<ProductRequest | ProductModel>();

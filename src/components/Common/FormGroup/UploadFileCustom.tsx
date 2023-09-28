@@ -24,10 +24,9 @@ export const UploadFileCustom = memo(
       },
       onDrop: (acceptedFiles) => {
         const objectURLs = acceptedFiles.map((file) => {
-          const fileWithPreview = Object.assign(file, {
+          return Object.assign(file, {
             preview: URL.createObjectURL(file),
           });
-          return fileWithPreview;
         });
         setUploadedFiles(objectURLs);
       },
@@ -61,7 +60,7 @@ export const UploadFileCustom = memo(
     useEffect(() => {
       setFieldValue('images', uploadedFiles);
       return () => uploadedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
-    }, [name.field, uploadedFiles]);
+    }, [name.field, uploadedFiles, setFieldValue]);
 
     const renderImage = (item: any, i: React.Key) => {
       return (

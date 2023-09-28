@@ -46,3 +46,9 @@ a {
 .tox-promotion {
   display: none;
 }
+
+.Toastify__toast-body {
+  font-family: $primaryFont;
+  font-weight: 500;
+  font-size: 14px;
+}

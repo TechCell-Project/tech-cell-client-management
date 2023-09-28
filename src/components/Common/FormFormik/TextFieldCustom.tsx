@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import React, { ChangeEvent, memo, useState } from 'react';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import {
   FastField,
   FastFieldAttributes,
@@ -12,7 +12,7 @@ import {
   FormikValues,
   getIn,
 } from 'formik';
-import { FormatNumeric } from '../Display/FormatNumeric';
+import { FormatNumeric } from '@components/Common';
 
 interface Props {
   name: string;
@@ -57,7 +57,7 @@ const TextFieldComponent = (props: TextFieldProps) => {
     handleChange,
     readOnly,
     setFieldValue,
-    defaultValue
+    defaultValue,
   } = props;
 
   const [value, setValue] = useState<string>(field.value);
@@ -85,7 +85,7 @@ const TextFieldComponent = (props: TextFieldProps) => {
       name={name}
       variant={variant}
       value={value}
-      size="small"
+      size='small'
       fullWidth
       label={label}
       onChange={onChange}
@@ -113,7 +113,7 @@ const TextFieldComponent = (props: TextFieldProps) => {
 export const TextFieldCustom = memo((props: Props) => {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
-      {({ field, meta, form }: FastFieldProps<any> & { form: FormikProps<any> }) => (
+      {({ field, meta, form }: FastFieldProps & { form: FormikProps<any> }) => (
         <TextFieldComponent
           {...props}
           field={field}
@@ -135,10 +135,10 @@ const shouldComponentUpdate = (
     nextProps?.disabled !== currentProps?.disabled ||
     Object.keys(nextProps).length !== Object.keys(currentProps).length ||
     getIn(nextProps.formik.values, currentProps.name) !==
-      getIn(currentProps.formik.values, currentProps.name) ||
+    getIn(currentProps.formik.values, currentProps.name) ||
     getIn(nextProps.formik.errors, currentProps.name) !==
-      getIn(currentProps.formik.errors, currentProps.name) ||
+    getIn(currentProps.formik.errors, currentProps.name) ||
     getIn(nextProps.formik.touched, currentProps.name) !==
-      getIn(currentProps.formik.touched, currentProps.name)
+    getIn(currentProps.formik.touched, currentProps.name)
   );
 };

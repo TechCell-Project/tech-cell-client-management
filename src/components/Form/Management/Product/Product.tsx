@@ -12,7 +12,6 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
-import { DataTableDynamic } from '@components/Shared';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ export const Product = () => {
 
   useEffect(() => {
     dispatch(getAllProduct(searchProduct));
-  }, [searchProduct]);
+  }, [searchProduct, dispatch]);
 
   const rows = products.data.map((product, i) => {
     return {

@@ -25,7 +25,7 @@ interface Props<T> {
   options: T[];
   displayLabel?: string;
   displaySelected?: string;
-  label?: string | JSX.Element;
+  label?: string | React.JSX.Element;
   searchValue?: string;
   handleChangeSearchValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlurSearchValue?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -94,6 +94,8 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
       isOptionEqualToValue={(option, value) =>
         getIn(option, displaySelected) === getIn(value, displaySelected)
       }
+      // inputValue={searchValue ?? undefined}
+      // onInputChange={handleChangeSearchValue ?? undefined}
       renderOption={(props, option, { selected }) => {
         return (
           <li {...props}>
@@ -107,7 +109,7 @@ function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
           </li>
         );
       }}
-      disableCloseOnSelect={multiple ? true : false}
+      disableCloseOnSelect={!!multiple}
       getOptionLabel={getDefaultOptionLabel}
       onChange={defaultHandleChange}
       // noOptionsText="Không có dữ liệu"

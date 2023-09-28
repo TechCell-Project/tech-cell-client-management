@@ -6,6 +6,8 @@ export * from './Management/Product/Product';
 export * from './Management/Attribute/Attribute';
 export * from './Management/Category/Category';
 
+export * from './ChangePassword/ChangePassword';
+
 export * from './Management/Product/Options/ProductCreate';
 export * from './Management/Product/Options/ProductEdit';
 

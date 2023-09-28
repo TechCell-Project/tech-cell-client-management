@@ -94,3 +94,4 @@ export const PATHS = [
   { pathname: RootRoutes.ATTRIBUTE_ROUTE, name: 'Thông số' },
   { pathname: RootRoutes.ORDER_ROUTE, name: 'Đơn hàng' },
 ];
+

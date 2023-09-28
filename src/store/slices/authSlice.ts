@@ -1,7 +1,9 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import { IAuthSlice, ILogin } from "@interface/auth";
-import { fetchLogin } from "@services/authServices";
-import { IAlert } from "@interface/common";
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { IAuthSlice, ILogin } from '@interface/auth';
+import { fetchLogin } from '@services/authServices';
+import { IAlert } from '@interface/common';
+import { toast } from 'react-toastify';
+import axios, { AxiosError } from 'axios';
 
 const initialState: IAuthSlice = {
   user: null,
@@ -10,7 +12,7 @@ const initialState: IAuthSlice = {
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     isLogin: (state) => {
@@ -35,54 +37,41 @@ export const authSlice = createSlice({
 
 // Thunk
 export const authenticate = () => async (dispatch: Dispatch) => {
-  if (localStorage.getItem("user")) {
+  if (localStorage.getItem('user')) {
     dispatch(authenticatedSuccess());
   }
 };
 
 export const login =
   (payload: ILogin) =>
-    async (dispatch: Dispatch): Promise<IAlert> => {
+    async (dispatch: Dispatch) => {
       dispatch(isLogin());
       try {
         const response = await fetchLogin(payload);
-        
-        if (response.data.role !== "User") {
-          localStorage.setItem("user", JSON.stringify(response.data));
+
+        if (response.data.role !== 'User') {
+          localStorage.setItem('user', JSON.stringify(response.data));
           dispatch(loginSuccess(response.data));
-          return {
-            type: "success",
-            status: 1,
-            message: "Bạn đã đăng nhập thành công!",
-          };
+          toast.success('Đăng nhập thành công!');
         } else {
           dispatch(loginFailure());
-          return {
-            type: "warning",
-            status: 3,
-            message: "Tài khoàn của bạn không có quyền đăng nhập!",
-          };
+          toast.warning('Tài khoản này có quyền đăng nhập!');
         }
-      } catch (error: any) {
+      } catch (error) {
         dispatch(loginFailure());
-        if (String(error.response.status).startsWith("4")) {
-          return {
-            type: "error",
-            status: 2,
-            message: "Tài khoàn hoặc mật khẩu không đúng!",
-          };
-        } else {
-          return {
-            type: "error",
-            status: 2,
-            message: "Hệ thống có lỗi xảy ra!",
-          };
+        if (axios.isAxiosError(error)) {
+          if (error.response && error.response.status === 406) {
+            toast.warning('Vui lòng xác thực email để đăng nhập!');
+            return { isVerify: false };
+          } else {
+            toast.error('Đăng nhập không thành công!');
+          }
         }
       }
     };
 
-export const logout = () => async (dispatch: Dispatch) => {
-  localStorage.removeItem("user");
+export const logout = () => (dispatch: Dispatch) => {
+  localStorage.removeItem('user');
   dispatch(loginFailure());
 };
 

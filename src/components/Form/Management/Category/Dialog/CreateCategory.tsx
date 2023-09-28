@@ -11,7 +11,7 @@ import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
 import { enqueueSnackbar } from 'notistack';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
 
 interface Props {
   isOpen: boolean;
@@ -115,7 +115,7 @@ export const CreateCategory = (props: Props) => {
                     placeholder="Thông số"
                     multiple
                     searchValue={searchAttribute.keyword}
-                    handleChangeSearchValue={({ target }) =>
+                    handleChangeSearchValue={({target}) =>
                       setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
                     }
                     handleBlurSearchValue={() => {

@@ -18,3 +18,9 @@ export class ForgotPasswordModel {
   password?: string | null = null;
   re_password?: string | null = null;
 }
+
+export class AccountChangePass {
+  oldPassword?: string = '';
+  newPassword?: string = '';
+  reNewPassword?: string = '';
+}

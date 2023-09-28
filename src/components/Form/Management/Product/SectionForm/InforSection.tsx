@@ -14,7 +14,7 @@ import { FieldImageProps } from '@models/Image';
 import { formatDateViVN, getCountImage } from '@utils/index';
 import { getCategoryByLabel } from '@services/categoryService';
 import { AttributeDynamics, AttributeModel } from '@models/Attribute';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
 import { Paging } from '@models/Common';
 
 export const InforSection = memo(() => {
@@ -63,7 +63,7 @@ export const InforSection = memo(() => {
         setFieldValue('generalAttributes', new Array<AttributeDynamics>());
       }
     },
-    [setIsFetchCategory],
+    [setIsFetchCategory, setFieldValue],
   );
 
   return (
@@ -72,20 +72,20 @@ export const InforSection = memo(() => {
         {(values as ProductModel)?._id && (
           <>
             <Grid item lg={4}>
-              <TextFieldCustom name="_id" label="ID" readOnly />
+              <TextFieldCustom name='_id' label='ID' readOnly />
             </Grid>
             <Grid item lg={4}>
               <TextFieldCustom
-                name="readOnlyCreatedAt"
-                label="Thời gian tạo"
+                name='readOnlyCreatedAt'
+                label='Thời gian tạo'
                 defaultValue={formatDateViVN(String((values as ProductModel).createdAt))}
                 readOnly
               />
             </Grid>
             <Grid item lg={4}>
               <TextFieldCustom
-                name="readOnlyUpdatedAt"
-                label="Thời gian chỉnh sửa"
+                name='readOnlyUpdatedAt'
+                label='Thời gian chỉnh sửa'
                 defaultValue={formatDateViVN(String((values as ProductModel).updatedAt))}
                 readOnly
               />
@@ -93,16 +93,16 @@ export const InforSection = memo(() => {
           </>
         )}
         <Grid item lg={4}>
-          <TextFieldCustom name="name" label="Tên sản phẩm" />
+          <TextFieldCustom name='name' label='Tên sản phẩm' />
         </Grid>
 
         <Grid item lg={4}>
           <SelectCustom
             value={values?.status}
-            name="status"
+            name='status'
             options={STATUS_PRODUCT_OPTIONS}
             onChange={handleChange}
-            content="Trạng thái"
+            content='Trạng thái'
             error={touched.status && Boolean(errors.status)}
             helperText={touched.status && errors.status}
           />
@@ -110,11 +110,11 @@ export const InforSection = memo(() => {
 
         <Grid item lg={4}>
           <AutocompleteCustom<CategoryModel>
-            name="category"
-            label="Thể loại"
+            name='category'
+            label='Thể loại'
             options={!isLoading ? categories.data : new Array<CategoryModel>()}
-            displayLabel="name"
-            displaySelected="label"
+            displayLabel='name'
+            displaySelected='label'
             handleChange={(value) => {
               setFieldValue('category', value);
               handleChangeCategory(value as CategoryModel);
@@ -123,6 +123,9 @@ export const InforSection = memo(() => {
             handleChangeSearchValue={({ target }) =>
               setSearchCategory((prev) => ({ ...prev, keyword: target.value }))
             }
+            // handleChangeSearchValue={(e, newInputValue) =>
+            //   setSearchCategory((prev) => ({ ...prev, keyword: newInputValue }))
+            // }
             handleBlurSearchValue={() => {
               if (searchCategory.keyword) {
                 setSearchCategory(new Paging());
@@ -134,16 +137,16 @@ export const InforSection = memo(() => {
 
         <Grid item lg={7}>
           <ButtonCustom
-            variant="outlined"
-            content="Ảnh chính"
+            variant='outlined'
+            content='Ảnh chính'
             endIcon={<PhotoRoundedIcon />}
             isBadge
             badgeCount={getCountImage(values?.generalImages as ImageModel[], true)}
             handleClick={() => setFieldNameImage({ field: 'generalImages', isThumbnail: true })}
           />
           <ButtonCustom
-            variant="outlined"
-            content="Ảnh phụ"
+            variant='outlined'
+            content='Ảnh phụ'
             endIcon={<CollectionsRoundedIcon />}
             isBadge
             badgeCount={getCountImage(values?.generalImages as ImageModel[])}

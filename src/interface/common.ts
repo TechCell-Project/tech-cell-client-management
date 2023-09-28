@@ -6,6 +6,7 @@ export interface IAlert {
   status?: 1 | 2 | 3;
   message?: string;
   timeout?: number;
+  statusCode?: number;
 }
 
 export interface ISnackbarAlert {

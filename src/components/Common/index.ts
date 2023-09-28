@@ -10,8 +10,9 @@ export * from "./Display/LoadingSection";
 export * from "./FormGroup/ButtonCustom";
 export * from "./FormGroup/PasswordCustom";
 export * from "./FormGroup/SelectCustom";
-export * from "./FormGroup/AutocompleteCustom";
 export * from "./FormGroup/UploadFileCustom";
-export * from "./FormGroup/TextFieldCustom";
+
+export * from "./FormFormik/AutocompleteCustom";
+export * from "./FormFormik/TextFieldCustom";
 
 export * from "./TextEditor/TinyEditor";

@@ -10,7 +10,7 @@ import { getAllAttributes } from '@store/slices/attributeSlice';
 import { enqueueSnackbar } from 'notistack';
 import { PagingAttribute } from '@models/Attribute';
 import { editCategory } from '@store/slices/categorySlice';
-import { TextFieldCustom } from '@components/Common/FormGroup/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
 import { debounce } from 'lodash';
 
 interface Props {
@@ -113,7 +113,7 @@ export const EditCategory = (props: Props) => {
                   placeholder="Thông số"
                   multiple
                   searchValue={searchAttribute.keyword}
-                  handleChangeSearchValue={({ target }) =>
+                  handleChangeSearchValue={({target}) =>
                     setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
                   }
                   handleBlurSearchValue={() => {

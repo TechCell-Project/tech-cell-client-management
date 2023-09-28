@@ -3,11 +3,7 @@ export const API_ENDPOINT = process.env.API_ENDPOINT;
 export const API_KEY_EDITOR = process.env.API_KEY_TINY;
 
 // Authentication
-export const LOGIN_ENDPOINT = "/auth/login";
-export const REGISTER_ENDPOINT = "/auth/register";
-export const REFRESH_TOKEN_ENDPOINT = "/auth/refresh-token";
-export const FORGOT_PASSWORD = "/auth/forgot-password";
-export const VERIFY_FORGOT_PASSWORD = "/auth/verify-forgot-password";
+export const AUTH_ENDPOINT = "/auth";
 
 // Management Account
 export const USERS_ENDPOINT = "/users";

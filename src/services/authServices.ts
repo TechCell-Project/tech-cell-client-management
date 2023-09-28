@@ -1,21 +1,25 @@
-import instance from "./instance";
-import {
-  FORGOT_PASSWORD,
-  LOGIN_ENDPOINT,
-  REFRESH_TOKEN_ENDPOINT,
-  VERIFY_FORGOT_PASSWORD,
-} from "@constants/service";
-import { ILogin } from "@interface/auth";
-import { ForgotPasswordModel } from "@models/Auth";
+import instance from './instance';
+import { AUTH_ENDPOINT } from '@constants/service';
+import { ILogin } from '@interface/auth';
+import { ForgotPasswordModel, AccountChangePass } from '@models/Auth';
 
 export const fetchLogin = (payload: ILogin) =>
-  instance.post(LOGIN_ENDPOINT, payload);
+  instance.post(`${AUTH_ENDPOINT}/login`, payload);
 
 export const fetchRefresh = (refreshToken: string) =>
-  instance.post(REFRESH_TOKEN_ENDPOINT, { refreshToken });
+  instance.post(`${AUTH_ENDPOINT}/refresh-token`, { refreshToken });
 
 export const fetchForgotPassword = (email: string) =>
-  instance.post(FORGOT_PASSWORD, { email });
-  
+  instance.post(`${AUTH_ENDPOINT}/forgot-password`, { email });
+
 export const fetchVerifyForgotPassword = (payload: ForgotPasswordModel) =>
-  instance.post(VERIFY_FORGOT_PASSWORD, payload);
+  instance.post(`${AUTH_ENDPOINT}/verify-forgot-password`, payload);
+
+export const postChangePass = (payload: AccountChangePass) => instance.post(`${AUTH_ENDPOINT}/change-password`, payload);
+
+export const verifyEmail = (email: string, otpCode: string) => instance.post(`${AUTH_ENDPOINT}/verify-email`, {
+  email,
+  otpCode,
+});
+
+export const sendOtpVerify = (email: string) => instance.post(`${AUTH_ENDPOINT}/resend-verify-email-otp`, { email });
