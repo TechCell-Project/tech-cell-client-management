@@ -7,8 +7,8 @@ import { ShowDialog, ButtonCustom } from '@components/Common';
 import RegisterForm from './RegisterForm';
 import { useAppDispatch } from '@store/store';
 import { createNewAccount, getAllUserAccount } from '@store/slices/accountSlice';
-import { enqueueSnackbar } from 'notistack';
 import { Paging } from '@models/Common';
+import { toast } from 'react-toastify';
 
 interface Props {
   isOpen: boolean;
@@ -24,20 +24,18 @@ export const Register = memo((props: Props) => {
   ) => {
     dispatch(createNewAccount(values))
       .then(() => {
-        enqueueSnackbar('Thêm mới tài khoản thành công!', {
-          variant: 'success',
-        });
+        toast.success('Thêm mới tài khoản thành công!');
         resetForm();
         props.handleClose();
         dispatch(getAllUserAccount(new Paging()));
       })
-      .catch(() => enqueueSnackbar('Thêm mới tài khoản thất bại!', { variant: 'error' }))
+      .catch(() => toast('Thêm mới tài khoản thất bại!'))
       .finally(() => setSubmitting(false));
   };
 
   return (
     <ShowDialog
-      dialogTitle="Thêm mới tài khoản"
+      dialogTitle='Thêm mới tài khoản'
       isOpen={props.isOpen}
       handleClose={props.handleClose}
       dialogStyle={{ minWidth: { sm: 380, md: 520 } }}
@@ -50,14 +48,14 @@ export const Register = memo((props: Props) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Stack direction="column" gap={2}>
+            <Stack direction='column' gap={2}>
               <RegisterForm />
-              <Stack direction="row" gap={1} justifyContent="flex-end" sx={{ mt: 2 }}>
-                <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={props.handleClose} />
+              <Stack direction='row' gap={1} justifyContent='flex-end' sx={{ mt: 2 }}>
+                <ButtonCustom variant='outlined' content='Hủy bỏ' handleClick={props.handleClose} />
                 <ButtonCustom
-                  variant="contained"
-                  content="Đăng ký"
-                  type="submit"
+                  variant='contained'
+                  content='Đăng ký'
+                  type='submit'
                   disabled={isSubmitting}
                 />
               </Stack>

@@ -13,7 +13,7 @@ import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceR
 import { useRouter } from 'next/navigation';
 import { editProduct, getDetailsProduct } from '@store/slices/productSlice';
 import { tabsProduct } from './ProductCreate';
-import { enqueueSnackbar } from 'notistack';
+import { toast } from 'react-toastify';
 import { RootRoutes } from '@constants/enum';
 
 export const ProductEdit = ({ id }: { id: string }) => {
@@ -25,8 +25,8 @@ export const ProductEdit = ({ id }: { id: string }) => {
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(getDetailsProduct(id));
-  }, [id]);
+    dispatch(getDetailsProduct(id)).then();
+  }, [id, dispatch]);
 
   const handleSubmit = async (
     values: ProductModel,
@@ -45,19 +45,13 @@ export const ProductEdit = ({ id }: { id: string }) => {
       const response = await dispatch(editProduct(values, String(values._id)));
 
       if (response?.success) {
-        enqueueSnackbar('Chỉnh sửa sản phẩm thành công!', {
-          variant: 'success',
-        });
+        toast.success('Chỉnh sửa sản phẩm thành công!');
         router.push(RootRoutes.PRODUCT_ROUTE);
       } else {
-        enqueueSnackbar('Có lỗi xảy ra, Chỉnh sửa thất bại!', {
-          variant: 'error',
-        });
+        toast.error('Có lỗi xảy ra, Chỉnh sửa thất bại!');
       }
     } catch (error) {
-      enqueueSnackbar('Có lỗi xảy ra, chỉnh sửa thất bại!', {
-        variant: 'error',
-      });
+      toast.error('Có lỗi xảy ra, chỉnh sửa thất bại!');
     } finally {
       setSubmitting(false);
     }
@@ -66,17 +60,17 @@ export const ProductEdit = ({ id }: { id: string }) => {
   return isLoadingDetails ? (
     <LoadingSection isLoading={isLoadingDetails} />
   ) : (
-    <Box component="div" sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
+    <Box component='div' sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
       <Formik enableReinitialize initialValues={product as ProductModel} onSubmit={handleSubmit}>
         {({ isSubmitting, dirty }) => {
           return (
             <Form>
-              <Stack width="100%" flexDirection="column" alignItems="flex-start">
-                <Stack flexDirection="row" alignItems="center" gap={2}>
+              <Stack width='100%' flexDirection='column' alignItems='flex-start'>
+                <Stack flexDirection='row' alignItems='center' gap={2}>
                   <Typography
-                    variant="h5"
-                    fontSize="1.2rem"
-                    fontWeight="600"
+                    variant='h5'
+                    fontSize='1.2rem'
+                    fontWeight='600'
                     color={theme.color.black}
                   >
                     Chỉnh sửa sản phẩm
@@ -86,7 +80,7 @@ export const ProductEdit = ({ id }: { id: string }) => {
                 <Tabs
                   value={tabIndex}
                   onChange={(event: React.SyntheticEvent, index: number) => setTabIndex(index)}
-                  aria-label="tabs create product"
+                  aria-label='tabs create product'
                   sx={{
                     mt: 1,
                     '& .MuiTabs-indicator': {
@@ -113,24 +107,24 @@ export const ProductEdit = ({ id }: { id: string }) => {
                 {tabsProduct[tabIndex].component}
 
                 <Stack
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  width="100%"
-                  gap="15px"
+                  flexDirection='row'
+                  alignItems='center'
+                  justifyContent='flex-end'
+                  width='100%'
+                  gap='15px'
                   mt={2}
                 >
                   <ButtonCustom
-                    variant="text"
+                    variant='text'
                     handleClick={() => router.back()}
-                    content="Quay lại"
+                    content='Quay lại'
                     startIcon={<KeyboardBackspaceRoundedIcon />}
                   />
                   <ButtonCustom
-                    variant="contained"
-                    type="submit"
+                    variant='contained'
+                    type='submit'
                     disabled={!dirty || isSubmitting}
-                    content="Lưu"
+                    content='Lưu'
                   />
                 </Stack>
               </Stack>

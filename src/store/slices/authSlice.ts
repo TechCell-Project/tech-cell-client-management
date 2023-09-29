@@ -62,7 +62,7 @@ export const login =
         if (axios.isAxiosError(error)) {
           if (error.response && error.response.status === 406) {
             toast.warning('Vui lòng xác thực email để đăng nhập!');
-            return { isVerify: false };
+            return { isNotVerify: true };
           } else {
             toast.error('Đăng nhập không thành công!');
           }

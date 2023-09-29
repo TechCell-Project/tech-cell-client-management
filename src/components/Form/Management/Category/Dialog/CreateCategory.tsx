@@ -10,8 +10,8 @@ import { getAllAttributes } from '@store/slices/attributeSlice';
 import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
-import { enqueueSnackbar } from 'notistack';
 import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
+import { toast } from 'react-toastify';
 
 interface Props {
   isOpen: boolean;
@@ -46,21 +46,15 @@ export const CreateCategory = (props: Props) => {
       );
 
       if (response?.success) {
-        enqueueSnackbar('Thêm mới thuộc tính thành công!', {
-          variant: 'success',
-        });
+        toast.success('Thêm mới thuộc tính thành công!');
         resetForm();
-        dispatch(getAllCategory(new Paging()));
+        await dispatch(getAllCategory(new Paging()));
         props.handleClose();
       } else {
-        enqueueSnackbar('Có lỗi xảy ra, Thêm mới thất bại!', {
-          variant: 'error',
-        });
+        toast.error('Có lỗi xảy ra, Thêm mới thất bại!');
       }
     } catch (error) {
-      enqueueSnackbar('Có lỗi xảy ra, Thêm mới thất bại!', {
-        variant: 'error',
-      });
+      toast.error('Có lỗi xảy ra, Thêm mới thất bại!');
     } finally {
       setSubmitting(false);
     }
@@ -68,7 +62,7 @@ export const CreateCategory = (props: Props) => {
 
   return (
     <ShowDialog
-      dialogTitle="Thêm mới thể loại"
+      dialogTitle='Thêm mới thể loại'
       handleClose={props.handleClose}
       isOpen={props.isOpen}
       dialogStyle={{ minWidth: 560 }}
@@ -89,18 +83,18 @@ export const CreateCategory = (props: Props) => {
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <TextFieldCustom name="name" label="Thể loại" />
+                  <TextFieldCustom name='name' label='Thể loại' />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextFieldCustom name="label" label="# Label" />
+                  <TextFieldCustom name='label' label='# Label' />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextFieldCustom name="url" label="URL" />
+                  <TextFieldCustom name='url' label='URL' />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextFieldCustom
-                    name="description"
-                    label="Mô tả"
+                    name='description'
+                    label='Mô tả'
                     isTextArea
                     minRowArea={1}
                     maxRowArea={3}
@@ -109,13 +103,13 @@ export const CreateCategory = (props: Props) => {
                 <Grid item xs={12}>
                   <AutocompleteCustom<AttributeModel>
                     options={attributes.data}
-                    name="requireAttributes"
-                    label="Thông số kỹ thuật"
-                    displaySelected="name"
-                    placeholder="Thông số"
+                    name='requireAttributes'
+                    label='Thông số kỹ thuật'
+                    displaySelected='name'
+                    placeholder='Thông số'
                     multiple
                     searchValue={searchAttribute.keyword}
-                    handleChangeSearchValue={({target}) =>
+                    handleChangeSearchValue={({ target }) =>
                       setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
                     }
                     handleBlurSearchValue={() => {
@@ -128,13 +122,13 @@ export const CreateCategory = (props: Props) => {
                 </Grid>
               </Grid>
 
-              <Stack direction="row" justifyContent="flex-end" gap={2} sx={{ mt: 4 }}>
-                <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Hủy bỏ" />
+              <Stack direction='row' justifyContent='flex-end' gap={2} sx={{ mt: 4 }}>
+                <ButtonCustom variant='outlined' handleClick={props.handleClose} content='Hủy bỏ' />
                 <ButtonCustom
-                  variant="contained"
-                  type="submit"
+                  variant='contained'
+                  type='submit'
                   disabled={isSubmitting}
-                  content="Thêm"
+                  content='Thêm'
                 />
               </Stack>
             </>

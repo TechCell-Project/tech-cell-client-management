@@ -1,13 +1,12 @@
-import { ButtonCustom, ShowDialog } from '@components/Common';
+import React from 'react';
+import { ButtonCustom, ShowDialog, TextFieldCustom } from '@components/Common';
 import { AttributeModel, CreateAttributeModel } from '@models/Attribute';
 import Stack from '@mui/material/Stack';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { createOrEditValidate } from '@validate/attribute.validate';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { editAttribute } from '@store/slices/attributeSlice';
-import React from 'react';
-import { enqueueSnackbar } from 'notistack';
-import { TextFieldCustom } from '@components/Common';
+import { toast } from 'react-toastify';
 
 interface Props {
   isOpen: boolean;
@@ -32,16 +31,12 @@ export const EditAttribute = (props: Props) => {
 
       const response = await dispatch(editAttribute(payload, String(_id)));
       if (response?.success) {
-        enqueueSnackbar('Sửa thông số thành công!', { variant: 'success' });
+        toast.success('Sửa thông số thành công!');
       } else {
-        enqueueSnackbar('Có lỗi xảy ra. Chỉnh sửa thất bại!', {
-          variant: 'error',
-        });
+        toast.error('Có lỗi xảy ra. Chỉnh sửa thất bại!');
       }
     } catch (error) {
-      enqueueSnackbar('Có lỗi xảy ra. Chỉnh sửa thất bại!', {
-        variant: 'error',
-      });
+      toast.error('Có lỗi xảy ra. Chỉnh sửa thất bại!');
     } finally {
       props.handleClose();
       setSubmitting(false);

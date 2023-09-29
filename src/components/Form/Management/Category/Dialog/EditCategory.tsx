@@ -1,4 +1,4 @@
-import { ButtonCustom, ShowDialog, AutocompleteCustom } from '@components/Common';
+import { ButtonCustom, ShowDialog, AutocompleteCustom, TextFieldCustom } from '@components/Common';
 import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -7,11 +7,9 @@ import { createOrEditValidate } from '@validate/category.validate';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { CategoryModel } from '@models/Category';
 import { getAllAttributes } from '@store/slices/attributeSlice';
-import { enqueueSnackbar } from 'notistack';
 import { PagingAttribute } from '@models/Attribute';
 import { editCategory } from '@store/slices/categorySlice';
-import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
-import { debounce } from 'lodash';
+import { toast } from 'react-toastify';
 
 interface Props {
   isOpen: boolean;
@@ -27,7 +25,7 @@ export const EditCategory = (props: Props) => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     timeoutId = setTimeout(() => {
-      dispatch(getAllAttributes(searchAttribute));
+      dispatch(getAllAttributes(searchAttribute)).then();
     }, 500);
 
     return () => {
@@ -47,19 +45,13 @@ export const EditCategory = (props: Props) => {
       );
 
       if (response?.success) {
-        enqueueSnackbar('Cập nhật thể loại thành công!', {
-          variant: 'success',
-        });
+        toast.success('Cập nhật thể loại thành công!');
         props.handleClose();
       } else {
-        enqueueSnackbar('Có lỗi xảy ra. Chỉnh sửa thất bại!', {
-          variant: 'error',
-        });
+        toast.error('Có lỗi xảy ra. Chỉnh sửa thất bại!');
       }
     } catch (error) {
-      enqueueSnackbar('Có lỗi xảy ra. Chỉnh sửa thất bại!', {
-        variant: 'error',
-      });
+      toast.error('Có lỗi xảy ra. Chỉnh sửa thất bại!');
     } finally {
       setSubmitting(false);
     }

@@ -1,10 +1,8 @@
 'use client';
 
-import { SnackbarClose } from '@components/Common';
 import { ThemeProvider } from '@mui/material/styles';
 import { store, persistor } from '@store/store';
 import { theme } from 'components/Theme/theme';
-import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
@@ -27,13 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <body>
     <ToastContainer theme='colored' autoClose={3000} newestOnTop closeOnClick position='top-right' />
     <ThemeProvider theme={theme}>
-      <SnackbarProvider maxSnack={3} action={(key) => <SnackbarClose key={key} />}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            {children}
-          </PersistGate>
-        </Provider>
-      </SnackbarProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {children}
+        </PersistGate>
+      </Provider>
     </ThemeProvider>
     </body>
     </html>

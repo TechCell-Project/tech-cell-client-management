@@ -4,10 +4,9 @@ import React, { memo, useRef, useState } from 'react';
 import { API_KEY_EDITOR } from '@constants/service';
 import { Editor } from '@tinymce/tinymce-react';
 import { useFormikContext } from 'formik';
-import { ButtonCustom } from '../FormGroup/ButtonCustom';
+import { ButtonCustom, LoadingSection } from '@components/Common';
 import Box from '@mui/material/Box';
-import { LoadingSection } from '../Display/LoadingSection';
-import { enqueueSnackbar } from 'notistack';
+import { toast } from 'react-toastify';
 
 interface Props {
   value?: string;
@@ -50,10 +49,8 @@ export const TinyEditor = memo((props: Props) => {
   const handleSaveContent = () => {
     const content = editorRef.current.getContent();
     if (content) {
-      setFieldValue(name, content);
-      enqueueSnackbar('Lưu thành công!', {
-        variant: 'success',
-      });
+      setFieldValue(name, content).then();
+      toast.success('Lưu bài thành công!');
     }
   };
 
@@ -87,8 +84,8 @@ export const TinyEditor = memo((props: Props) => {
               right: '15px',
               zIndex: 100,
             }}
-            variant="outlined"
-            content="Lưu bài"
+            variant='outlined'
+            content='Lưu bài'
             handleClick={handleSaveContent}
           />
         )}

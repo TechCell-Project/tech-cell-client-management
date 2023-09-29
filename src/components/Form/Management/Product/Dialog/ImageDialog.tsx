@@ -2,12 +2,12 @@ import { ButtonCustom, ShowDialog } from '@components/Common';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import React, { memo, useState } from 'react';
-import { UploadFileCustom } from '../../../../Common/FormGroup/UploadFileCustom';
+import { UploadFileCustom } from '@components/Common';
 import { useFormikContext } from 'formik';
 import { ImageModel, ProductRequest } from '@models/Product';
 import { FieldImageProps } from '@models/Image';
-import { enqueueSnackbar } from 'notistack';
 import { postImage } from '@services/imageService';
+import { toast } from 'react-toastify';
 
 interface Props {
   isOpen: boolean;
@@ -39,9 +39,7 @@ export const ImageDialog = memo((props: Props) => {
       });
 
       const response = await postImage(formData);
-      enqueueSnackbar('Tải ảnh thành công!', {
-        variant: 'success',
-      });
+      toast.success('Tải ảnh thành công!');
 
       if (response.data) {
         let data: ImageModel[] = response.data?.data;
@@ -51,16 +49,14 @@ export const ImageDialog = memo((props: Props) => {
 
         if (fieldImage.isThumbnail) {
           data = { ...(data as any)[0], isThumbnail: true };
-          setFieldValue(fieldValue, [...imageGeneral, data]);
+          await setFieldValue(fieldValue, [...imageGeneral, data]);
         } else {
-          setFieldValue(fieldValue, [...imageGeneral, ...data]);
+          await setFieldValue(fieldValue, [...imageGeneral, ...data]);
         }
       }
       handleClose();
     } catch (err) {
-      enqueueSnackbar('Hệ thống lỗi, tải ảnh thất bại!', {
-        variant: 'error',
-      });
+      toast.error('Hệ thống lỗi, tải ảnh thất bại!');
     } finally {
       setIsLoading(false);
     }

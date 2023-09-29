@@ -37,7 +37,7 @@ export const LoginForm = memo(() => {
   const handleSubmit = async (values: LoginModel, { resetForm, setSubmitting }: FormikHelpers<LoginModel>) => {
     try {
       const response = await dispatch(login(values));
-      if (!response?.isVerify) {
+      if (response?.isNotVerify) {
         setIsOpenVerify(true);
       }
     } finally {
