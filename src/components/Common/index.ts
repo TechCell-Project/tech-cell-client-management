@@ -1,5 +1,3 @@
-export * from "./Display/AlertMessage";
-export * from "./Display/SnackbarClose";
 export * from "./Display/LoadingPage";
 export * from "./DataTable/DataTable";
 export * from "./Display/BreadcrumbPath";
