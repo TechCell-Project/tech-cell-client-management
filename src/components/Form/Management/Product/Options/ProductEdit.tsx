@@ -15,6 +15,7 @@ import { editProduct, getDetailsProduct } from '@store/slices/productSlice';
 import { tabsProduct } from './ProductCreate';
 import { toast } from 'react-toastify';
 import { RootRoutes } from '@constants/enum';
+import { requestProductValidate } from '@validate/product.validate';
 
 export const ProductEdit = ({ id }: { id: string }) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -61,7 +62,12 @@ export const ProductEdit = ({ id }: { id: string }) => {
     <LoadingSection isLoading={isLoadingDetails} />
   ) : (
     <Box component='div' sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
-      <Formik enableReinitialize initialValues={product as ProductModel} onSubmit={handleSubmit}>
+      <Formik
+        enableReinitialize
+        initialValues={product as ProductModel}
+        onSubmit={handleSubmit}
+        validationSchema={requestProductValidate}
+      >
         {({ isSubmitting, dirty }) => {
           return (
             <Form>

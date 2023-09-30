@@ -1,6 +1,6 @@
 import { PRODUCTS_ENDPOINT } from '@constants/service';
 import instance from './instance';
-import { PagingProduct, ProductModel, ProductRequest } from '@models/Product';
+import { PagingProduct, ProductData, ProductModel, ProductRequest } from '@models/Product';
 
 export const getProducts = (payload: PagingProduct) => {
   const { page, pageSize, keyword } = payload;
@@ -9,18 +9,18 @@ export const getProducts = (payload: PagingProduct) => {
   if (keyword) {
     url += `&keyword=${keyword}`;
   }
-  return instance.get<PagingProduct>(url);
+  return instance.get<ProductData>(url);
 };
 
 export const postProduct = (payload: ProductRequest) =>
-  instance.post<ProductRequest>(PRODUCTS_ENDPOINT, payload);
+  instance.post<ProductModel>(PRODUCTS_ENDPOINT, payload);
 
 export const getProductById = (id: string, isDetails?: boolean) => {
   let url = `${PRODUCTS_ENDPOINT}/${id}`;
   if (isDetails) {
     url += `?detail=${isDetails}`;
   }
-  return instance.get(url);
+  return instance.get<ProductModel>(url);
 };
 
 export const putProduct = (payload: Partial<ProductModel>, id: string) =>

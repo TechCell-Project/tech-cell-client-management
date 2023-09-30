@@ -55,7 +55,7 @@ export const ProductCreate = () => {
         enableReinitialize
         initialValues={new ProductRequest()}
         onSubmit={handleSubmit}
-        // validationSchema={requestProductValidate}
+        validationSchema={requestProductValidate}
       >
         {({ values, isSubmitting }) => {
           // console.log(values);

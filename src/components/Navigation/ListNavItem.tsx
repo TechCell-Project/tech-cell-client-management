@@ -9,15 +9,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import { useTheme, Theme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { IListNavProps } from '@interface/navigation';
 import { useAppDispatch } from '@store/store';
 import { logout } from '@store/slices/authSlice';
 import { ChangePassword } from '@components/Form';
 
-const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
+interface Props {
+  list?: any;
+  pathname?: string;
+  subHeader?: string;
+}
+
+const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
@@ -73,7 +78,8 @@ const ListNavItem: FC<IListNavProps> = ({ list, pathname, subHeader }) => {
                 <ListItemText primary={nav.name} />
                 {openCollapse ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <Collapse in={openCollapse} timeout='auto' unmountOnExit sx={{ mt: '10px' }}>
+              <Collapse in={openCollapse} timeout='auto' unmountOnExit
+                sx={{ transition: 'all ease-in 0.3s', m: '10px 0' }}>
                 {nav.listChildren.map((child: any, i: number) => (
                   <Link href={child.to} style={{ width: '100%' }} key={i} shallow>
                     <ListItemButton

@@ -8,8 +8,6 @@ import {
   useGridRootProps,
   useGridSelector,
 } from '@mui/x-data-grid';
-// import { gridFilteredTopLevelRowCountSelector } from '@mui/x-data-grid/hooks/features/filter';
-// import { gridPageSizeSelector } from '@mui/x-data-grid/hooks/features/pagination';
 
 const getPageCount = (rowCount: number, pageSize: number): number => {
   if (pageSize > 0 && rowCount > 0) {

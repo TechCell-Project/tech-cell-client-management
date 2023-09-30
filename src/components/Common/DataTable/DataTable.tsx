@@ -32,7 +32,7 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
   return (
     <div style={{ height: 720, width: '100%' }}>
       <DataGrid
-        disableColumnFilter
+        // disableColumnFilter
         disableRowSelectionOnClick
         columns={props.column ?? []}
         rows={props.row ?? []}

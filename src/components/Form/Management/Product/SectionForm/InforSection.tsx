@@ -32,19 +32,19 @@ export const InforSection = memo(() => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     timeoutId = setTimeout(() => {
-      dispatch(getAllCategory(searchCategory));
+      dispatch(getAllCategory(searchCategory)).then();
     }, 500);
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [searchCategory]);
+  }, [searchCategory, dispatch]);
 
   const handleChangeCategory = useCallback(
     (values: CategoryModel) => {
       if (values?.label) {
         setIsFetchCategory(true);
-        setFieldValue('generalAttributes', new Array<AttributeDynamics>());
+        setFieldValue('generalAttributes', new Array<AttributeDynamics>()).then();
         getCategoryByLabel(values.label)
           .then(({ data }: { data: CategoryModel }) => {
             const attributes: AttributeModel[] = data.requireAttributes ?? [];
@@ -56,11 +56,11 @@ export const InforSection = memo(() => {
               name: attribute.name,
             }));
 
-            setFieldValue('generalAttributes', newGeneralAttributes);
+            setFieldValue('generalAttributes', newGeneralAttributes).then();
           })
           .finally(() => setIsFetchCategory(false));
       } else {
-        setFieldValue('generalAttributes', new Array<AttributeDynamics>());
+        setFieldValue('generalAttributes', new Array<AttributeDynamics>()).then();
       }
     },
     [setIsFetchCategory, setFieldValue],
@@ -116,7 +116,7 @@ export const InforSection = memo(() => {
             displayLabel='name'
             displaySelected='label'
             handleChange={(value) => {
-              setFieldValue('category', value);
+              setFieldValue('category', value).then();
               handleChangeCategory(value as CategoryModel);
             }}
             searchValue={searchCategory.keyword}

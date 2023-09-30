@@ -24,10 +24,10 @@ export interface IDataTable {
   row: readonly any[];
   isLoading?: boolean;
   isQuickFilter?: boolean;
-  page?: number | string;
-  pageSize?: number | string;
-  totalPage?: number | string;
-  totalRecord?: number | string;
+  page?: number | null;
+  pageSize?: number | null;
+  totalPage?: number | null;
+  totalRecord?: number | null;
 }
 
 export interface IDialog {

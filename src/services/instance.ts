@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     const statusCode = error.response?.status || error.response?.statusCode;
 
     if (statusCode === 403) {
-      await store.dispatch(logout());
+      store.dispatch(logout());
     }
 
     if (statusCode === 401 && !prevRequest._retry) {
@@ -46,9 +46,7 @@ instance.interceptors.response.use(
         return Promise.reject(error);
       }
 
-      const isTokenExpired = isAccessTokenExpired();
-
-      if (isTokenExpired) {
+      if (isAccessTokenExpired()) {
         try {
           const response = await fetchRefresh(refreshToken);
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;

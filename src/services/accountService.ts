@@ -2,14 +2,15 @@ import { USERS_ENDPOINT } from '@constants/service';
 import instance from './instance';
 import { RegisterModel } from '@models/Auth';
 import { Paging } from '@models/Common';
+import { UserAccount, UserDataAccount } from '@models/Account';
 
 export const getAllAccounts = (payload: Paging) =>
-  instance.get(
+  instance.get<UserDataAccount>(
     `${USERS_ENDPOINT}?page=${Number(payload.page) + 1}&pageSize=${payload.pageSize}`,
   );
 
 export const getDetailsAccount = (id: string) =>
-  instance.get(`${USERS_ENDPOINT}/${id}`)
+  instance.get<UserAccount>(`${USERS_ENDPOINT}/${id}`);
 
 export const postAccount = (payload: RegisterModel) =>
   instance.post(`${USERS_ENDPOINT}`, payload);

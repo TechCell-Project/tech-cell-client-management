@@ -3,14 +3,6 @@ export interface ILogin {
   password?: string | null;
 }
 
-export interface IRegister {
-  email?: string | null;
-  password?: string | null;
-  re_password?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-}
-
 export interface IUser {
   _id?: string | null;
   email?: string | null;
@@ -29,9 +21,3 @@ export interface IAuthSlice {
   isAuthenticated: boolean;
 }
 
-export interface IForgotPassword {
-  email?: string | null;
-  otpCode: string | null;
-  password: string | null;
-  re_password: string | null;
-}

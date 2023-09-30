@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import React, { ReactNode, useState } from "react";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+import React, { ReactNode, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material';
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useTheme } from '@mui/material/styles';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
   DRAWER_WIDTH,
   LIST_NAV_MAIN,
   LIST_NAV_OTHER,
-} from "@constants/navigation";
-import { AppBar, DrawerHeader, Main } from "@styled-mui/appBar";
-import ListNavItem from "./ListNavItem";
-import Header from "./Header/Header";
-import { FrameBackground } from "@components/Shared";
+} from '@constants/navigation';
+import { AppBar, DrawerHeader, Main } from '@styled-mui/appBar';
+import ListNavItem from './ListNavItem';
+import Header from './Header/Header';
+import { FrameBackground } from '@components/Shared';
 
 export default function Sidebar({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<boolean>(true);
@@ -27,34 +27,34 @@ export default function Sidebar({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position='fixed' open={open}>
         <Header open={open} handleDrawerOpen={() => setOpen(true)} />
       </AppBar>
       <Drawer
         sx={{
           width: DRAWER_WIDTH,
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
+          '& .MuiDrawer-paper': {
             width: DRAWER_WIDTH,
-            boxSizing: "border-box",
+            boxSizing: 'border-box',
           },
         }}
-        variant="persistent"
-        anchor="left"
+        variant='persistent'
+        anchor='left'
         open={open}
       >
         <DrawerHeader sx={{ p: 0, mb: 2 }}>
           <Image
-            src="/logo-red.png"
-            alt="Logo Techcell"
+            src='/logo-red.png'
+            alt='Logo Techcell'
             width={140}
             height={40}
             priority
           />
           <IconButton onClick={() => setOpen(false)}>
-            {theme.direction === "ltr" ? (
+            {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
@@ -64,18 +64,18 @@ export default function Sidebar({ children }: { children: ReactNode }) {
         <ListNavItem
           list={LIST_NAV_MAIN}
           pathname={pathname}
-          subHeader="Danh mục"
+          subHeader='Danh mục'
         />
         <ListNavItem
           list={LIST_NAV_OTHER}
           pathname={pathname}
-          subHeader="Khác"
+          subHeader='Khác'
         />
       </Drawer>
-      <Main open={open} sx={{ padding: 0, overflow: "hidden auto" }}>
+      <Main open={open} sx={{ padding: 0, overflow: 'hidden auto' }}>
         <DrawerHeader />
         <FrameBackground />
-        <Stack direction="column" position="relative" top="-45px" p="0 30px 24px 30px">
+        <Stack direction='column' position='relative' top='-45px' p='0 30px 24px 30px'>
           {children}
         </Stack>
       </Main>

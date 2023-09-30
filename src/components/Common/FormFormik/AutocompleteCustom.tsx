@@ -43,7 +43,7 @@ interface MultiSelectProps<T> extends Props<T> {
   setFieldValue: (name: string, value: T | T[] | null) => void;
 }
 
-function AutoCompleteComponent<T>(props: MultiSelectProps<T>) {
+function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
   const {
     name,
     disabled,
@@ -171,7 +171,7 @@ function AutocompleteCustom<T = any>(props: Props<T>) {
         meta: FieldMetaProps<T | T[]>;
         form: FormikProps<T | T[]>;
       }) => (
-        <AutoCompleteComponent<T>
+        <AutocompleteComponent<T>
           {...props}
           field={field}
           meta={meta}

@@ -28,8 +28,8 @@ export const Account = () => {
   const [searchAccount, setSearchAccount] = useState<Paging>(new Paging());
 
   useEffect(() => {
-    dispatch(getAllUserAccount(searchAccount));
-  }, [searchAccount]);
+    dispatch(getAllUserAccount(searchAccount)).then();
+  }, [searchAccount, dispatch]);
 
   const rows: IColumnAccount[] = accounts.data?.map((account, i) => ({
     id: account._id,
@@ -41,7 +41,7 @@ export const Account = () => {
   }));
 
   const loadDataDetails = (id: string) => {
-    dispatch(getDetailsUserAccount(id));
+    dispatch(getDetailsUserAccount(id)).then();
   };
 
   const columns: GridColDef<any>[] = [

@@ -31,9 +31,9 @@ export class ImageModel {
 
 export class ProductRequest {
   name?: string | null = null;
-  description?: string | null = "";
+  description?: string = "Chưa có mô tả!";
   status?: number | null = null;
-  category?: CategoryModel = new CategoryModel();
+  category?: CategoryModel | null = null;
   generalAttributes?: Array<AttributeDynamics> = new Array<AttributeDynamics>();
   variations: Array<VariationModel> = new Array<VariationModel>();
   generalImages?: Array<ImageModel> = new Array<ImageModel>();

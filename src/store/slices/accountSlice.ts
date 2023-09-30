@@ -1,4 +1,4 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import {
   postAccount,
   getAllAccounts,
@@ -6,10 +6,10 @@ import {
   patchBlockAccount,
   patchChangeRoleAccount,
   patchUnBlockAccount,
-} from "@services/accountService";
-import { Paging } from "@models/Common";
-import { RegisterModel } from "@models/Auth";
-import { AccountSlice, UserDataAccount } from "@models/Account";
+} from '@services/accountService';
+import { Paging } from '@models/Common';
+import { RegisterModel } from '@models/Auth';
+import { AccountSlice, UserDataAccount } from '@models/Account';
 
 const initialState: AccountSlice = {
   accounts: new UserDataAccount(),
@@ -19,7 +19,7 @@ const initialState: AccountSlice = {
 };
 
 export const accountSlice = createSlice({
-  name: "account",
+  name: 'account',
   initialState,
   reducers: {
     isFetching: (state) => {
@@ -49,7 +49,7 @@ export const accountSlice = createSlice({
     },
     patchAccountSuccess: (state, { payload }) => {
       const index = state.accounts.data.findIndex(
-        (account) => account._id === payload._id
+        (account) => account._id === payload._id,
       );
       if (index !== -1) {
         state.accounts.data[index] = payload;

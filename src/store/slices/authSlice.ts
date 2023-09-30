@@ -1,9 +1,8 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { IAuthSlice, ILogin } from '@interface/auth';
 import { fetchLogin } from '@services/authServices';
-import { IAlert } from '@interface/common';
 import { toast } from 'react-toastify';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 const initialState: IAuthSlice = {
   user: null,
@@ -55,7 +54,7 @@ export const login =
           toast.success('Đăng nhập thành công!');
         } else {
           dispatch(loginFailure());
-          toast.warning('Tài khoản này có quyền đăng nhập!');
+          toast.warning('Tài khoản này không có quyền đăng nhập!');
         }
       } catch (error) {
         dispatch(loginFailure());
