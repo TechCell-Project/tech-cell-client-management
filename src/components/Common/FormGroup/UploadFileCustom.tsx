@@ -12,13 +12,15 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { FieldImageProps } from '@models/Image';
 import Image from 'next/image';
+import { useTheme } from '@mui/material/styles';
 
 export const UploadFileCustom = memo(
   ({ name, imageInits = [] }: { name: FieldImageProps; imageInits?: any[] }) => {
+    const theme = useTheme();
     const { setFieldValue } = useFormikContext<any>();
     const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
 
-    const { getRootProps, getInputProps } = useDropzone({
+    const { getRootProps, getInputProps, fileRejections } = useDropzone({
       accept: {
         'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
       },
@@ -30,6 +32,16 @@ export const UploadFileCustom = memo(
         });
         setUploadedFiles(objectURLs);
       },
+      maxFiles: name.isThumbnail ? 1 : 10,
+      validator: (file) => {
+        if (file.size > 10 * 1024 * 1024) {
+          return {
+            code: 'file-too-large',
+            message: 'File ảnh tải lên cần < 10mb',
+          };
+        }
+        return null;
+      },
     });
 
     const handleRemoveFile = (file: any) => {
@@ -40,25 +52,25 @@ export const UploadFileCustom = memo(
       const files = imageInits.filter((file) =>
         name.isThumbnail
           ? file.isThumbnail === true
-          : !file.isThumbnail || file.isThumbnail === undefined,
+          : !file.isThumbnail || false,
       );
       const newFiles = files.filter((_, i) => i !== index);
 
       if (name.isThumbnail) {
         setFieldValue(String(name.field), [
-          ...imageInits.filter((file) => !file.isThumbnail || file.isThumbnail === undefined),
+          ...imageInits.filter((file) => !file.isThumbnail || false),
           ...newFiles,
-        ]);
+        ]).then();
       } else {
         setFieldValue(String(name.field), [
           ...imageInits.filter((file) => file.isThumbnail === true),
           ...newFiles,
-        ]);
+        ]).then();
       }
     };
 
     useEffect(() => {
-      setFieldValue('images', uploadedFiles);
+      setFieldValue('images', uploadedFiles).then();
       return () => uploadedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [name.field, uploadedFiles, setFieldValue]);
 
@@ -69,8 +81,8 @@ export const UploadFileCustom = memo(
             <Image
               width={0}
               height={0}
-              loading="lazy"
-              sizes="100vw"
+              loading='lazy'
+              sizes='100vw'
               style={{ width: '100%', height: 'auto' }}
               src={item.url || item.preview}
               alt={item?.name}
@@ -100,7 +112,7 @@ export const UploadFileCustom = memo(
       const files = imageInits.filter((file) =>
         name.isThumbnail
           ? file.isThumbnail === true
-          : !file.isThumbnail || file.isThumbnail === undefined,
+          : !file.isThumbnail || false,
       );
 
       return files.map(renderImage);
@@ -110,17 +122,18 @@ export const UploadFileCustom = memo(
       <Box>
         <div {...getRootProps({ className: styles.dropzone })}>
           <input {...getInputProps()} />
-          <Stack flexDirection="row" gap={2} alignContent="center" justifyContent="center">
+          <Stack flexDirection='row' gap={2} alignContent='center' justifyContent='center'>
             <CloudUploadIcon />
             <p>Kéo, thả tệp hoặc click để mở</p>
           </Stack>
         </div>
-        <Typography fontSize="15px" fontWeight={600} mt="20px">
+
+        <Typography fontSize='15px' fontWeight={600} mt='20px'>
           • Phần ảnh preview:
         </Typography>
         <aside className={styles.thumbnailContainer}>{uploadedFiles?.map(renderImage)}</aside>
 
-        <Typography fontSize="15px" fontWeight={600} mt="20px">
+        <Typography fontSize='15px' fontWeight={600} mt='20px'>
           • Phần ảnh đã tải lên:
         </Typography>
         <aside className={styles.thumbnailContainer}>{handleUploadCase()}</aside>

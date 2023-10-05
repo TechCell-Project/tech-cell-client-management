@@ -17,7 +17,7 @@ import { IDialog } from '@interface/common';
 export const ShowDialog: FC<IDialog> = memo((props) => {
   const theme = useTheme();
 
-  const handleCloseDialog = (event: React.SyntheticEvent<Element, Event>, reason: string) => {
+  const handleCloseDialog = (_: React.SyntheticEvent<Element, Event>, reason: string) => {
     if (reason && reason === 'backdropClick') {
       return;
     }

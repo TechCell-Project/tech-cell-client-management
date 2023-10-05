@@ -12,10 +12,9 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes } from '@store/slices/attributeSlice';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
+interface Props extends DialogAction{
   index: number;
 }
 

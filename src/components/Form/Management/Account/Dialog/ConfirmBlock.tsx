@@ -6,11 +6,10 @@ import { useAppDispatch } from '@store/store';
 import { IColumnAccount } from '@interface/data';
 import { blockAccount, unBlockAccount } from '@store/slices/accountSlice';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
+interface Props extends DialogAction{
   dataAccount?: IColumnAccount;
-  isOpen: boolean;
-  handleClose: () => void;
 }
 
 export const ConfirmBlock: FC<Props> = memo((props) => {
@@ -48,13 +47,13 @@ export const ConfirmBlock: FC<Props> = memo((props) => {
         props.dataAccount?.id,
         props.dataAccount?.email,
         'block',
-      );
+      ).then();
     } else {
       handleAccountStatus(
         props.dataAccount?.id,
         props.dataAccount?.email,
         'unblock',
-      );
+      ).then();
     }
     props.handleClose();
   };

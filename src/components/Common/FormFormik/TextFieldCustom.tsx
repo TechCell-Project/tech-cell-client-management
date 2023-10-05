@@ -110,21 +110,6 @@ const TextFieldComponent = (props: TextFieldProps) => {
   );
 };
 
-export const TextFieldCustom = memo((props: Props) => {
-  return (
-    <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
-      {({ field, meta, form }: FastFieldProps & { form: FormikProps<any> }) => (
-        <TextFieldComponent
-          {...props}
-          field={field}
-          meta={meta}
-          setFieldValue={form.setFieldValue}
-        />
-      )}
-    </FastField>
-  );
-});
-
 const shouldComponentUpdate = (
   nextProps: FastFieldAttributes<Props & { formik: FormikValues }>,
   currentProps: FastFieldAttributes<Props & { formik: FormikValues }>,
@@ -142,3 +127,19 @@ const shouldComponentUpdate = (
     getIn(currentProps.formik.touched, currentProps.name)
   );
 };
+
+export const TextFieldCustom = memo((props: Props) => {
+  return (
+    <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
+      {({ field, meta, form }: FastFieldProps & { form: FormikProps<any> }) => (
+        <TextFieldComponent
+          {...props}
+          field={field}
+          meta={meta}
+          setFieldValue={form.setFieldValue}
+        />
+      )}
+    </FastField>
+  );
+});
+

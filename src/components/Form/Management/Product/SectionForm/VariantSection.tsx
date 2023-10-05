@@ -18,11 +18,14 @@ import { ImageDialog } from '../Dialog/ImageDialog';
 import { FieldImageProps } from '@models/Image';
 import { getCountImage } from '@utils/index';
 import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
+import { DeleteVariationDialog } from '@components/Form/Management/Product/Dialog/DeleteVariationDialog';
 
 export const VariantSection = memo(() => {
   const theme = useTheme();
   const { values, handleChange, setFieldValue } = useFormikContext<ProductRequest | ProductModel>();
 
+  const [currentVariation, setCurrentVariation] = useState<VariationModel>(new VariationModel());
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
   const [openAttribute, setOpenAttribute] = useState<boolean>(false);
   const [indexVariation, setIndexVariation] = useState<number | null>(null);
   const [fieldNameImage, setFieldNameImage] = useState<FieldImageProps | null>(null);
@@ -34,14 +37,14 @@ export const VariantSection = memo(() => {
 
   return (
     <>
-      <Stack flexDirection="row" justifyContent="flex-start" alignItems="center" gap={1}>
+      <Stack flexDirection='row' justifyContent='flex-start' alignItems='center' gap={1}>
         <ErrorOutlineOutlinedIcon sx={{ fill: theme.color.red }} />
-        <Typography variant="body1" fontWeight={600} fontSize="13px">
+        <Typography variant='body1' fontWeight={600} fontSize='13px'>
           Mỗi biến thể bao gồm: số lượng, giá, ảnh, thuộc tính (Dung lượng, màu sắc,...)
         </Typography>
       </Stack>
       <FieldArray
-        name="variations"
+        name='variations'
         render={(arrayHelpers) => (
           <>
             <Grid container spacing={2} columns={20}>
@@ -49,12 +52,12 @@ export const VariantSection = memo(() => {
                 return (
                   <React.Fragment key={i}>
                     <Grid item lg={6}>
-                      <Stack flexDirection="row" gap={2} alignItems="center">
+                      <Stack flexDirection='row' gap={2} alignItems='center'>
                         <p>3.{i + 1}</p>
                         <TextFieldCustom
                           name={`variations[${i}].stock`}
-                          label="Số lượng"
-                          type="number"
+                          label='Số lượng'
+                          type='number'
                           handleChange={({ target }) => setFieldValue(target.name, +target.value)}
                         />
                       </Stack>
@@ -64,47 +67,54 @@ export const VariantSection = memo(() => {
                         name={`variations[${i}].status`}
                         options={STATUS_PRODUCT_OPTIONS}
                         onChange={handleChange}
-                        content="Trạng thái"
+                        content='Trạng thái'
                         value={item.status}
                       />
                     </Grid>
                     <Grid item lg={6}>
                       <TextFieldCustom
                         name={`variations[${i}].price.base`}
-                        label="Giá gốc"
-                        type="numeric"
+                        label='Giá gốc'
+                        type='numeric'
                       />
                     </Grid>
                     <Grid item lg={2} sx={{ textAlign: 'center' }}>
-                      <IconButton onClick={() => arrayHelpers.remove(i)}>
+                      <IconButton onClick={() => {
+                        if ((values as ProductModel)?._id && Boolean(item.sku)) {
+                          setOpenConfirm(true);
+                          setCurrentVariation(item);
+                        } else {
+                          arrayHelpers.remove(i);
+                        }
+                      }}>
                         <RemoveCircleRoundedIcon />
                       </IconButton>
                     </Grid>
                     <Grid item lg={5}>
                       <TextFieldCustom
                         name={`variations[${i}].price.sale`}
-                        label="Đơn giá"
-                        type="numeric"
+                        label='Đơn giá'
+                        type='numeric'
                       />
                     </Grid>
                     <Grid item lg={5}>
                       <TextFieldCustom
                         name={`variations[${i}].price.special`}
-                        label="Giá khuyến mãi"
-                        type="numeric"
+                        label='Giá khuyến mãi'
+                        type='numeric'
                       />
                     </Grid>
                     <Grid item lg={10} sx={{ mb: 2 }}>
                       <ButtonCustom
-                        variant="text"
-                        content="Thuộc tính"
+                        variant='text'
+                        content='Thuộc tính'
                         handleClick={() => handleSetVariationIndex(i)}
                         isBadge
                         badgeCount={item.attributes?.length ?? 0}
                       />
                       <ButtonCustom
-                        variant="text"
-                        content="Ảnh chính"
+                        variant='text'
+                        content='Ảnh chính'
                         endIcon={<PhotoRoundedIcon />}
                         styles={{ marginLeft: 5 }}
                         isBadge
@@ -118,8 +128,8 @@ export const VariantSection = memo(() => {
                         }
                       />
                       <ButtonCustom
-                        variant="text"
-                        content="Ảnh phụ"
+                        variant='text'
+                        content='Ảnh phụ'
                         endIcon={<CollectionsRoundedIcon />}
                         styles={{ marginLeft: 5 }}
                         isBadge
@@ -139,8 +149,8 @@ export const VariantSection = memo(() => {
             </Grid>
 
             <ButtonCustom
-              variant="outlined"
-              content="Thêm biến thể"
+              variant='outlined'
+              content='Thêm biến thể'
               startIcon={<AddBoxRoundedIcon />}
               handleClick={() => arrayHelpers.push(new VariationModel())}
             />
@@ -158,6 +168,14 @@ export const VariantSection = memo(() => {
                 isOpen={Boolean(fieldNameImage)}
                 handleClose={() => setFieldNameImage(null)}
                 fieldImage={fieldNameImage as FieldImageProps}
+              />
+            )}
+
+            {openConfirm && Boolean(currentVariation) && (
+              <DeleteVariationDialog
+                isOpen={openConfirm}
+                handleClose={() => setOpenConfirm(false)}
+                data={currentVariation}
               />
             )}
           </>

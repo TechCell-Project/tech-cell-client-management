@@ -30,14 +30,14 @@ export const COLUMNS_PRODUCT = [
   {
     field: 'generalAttributes',
     headerName: 'Tổng Số Thông Số',
-    width: 200,
+    width: 170,
     align: 'center',
     headerAlign: 'center',
   },
   {
     field: 'variations',
     headerName: 'Tổng Số Biến Thể',
-    width: 200,
+    width: 150,
     align: 'center',
     headerAlign: 'center',
   },

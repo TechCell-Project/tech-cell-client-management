@@ -68,7 +68,8 @@ export const ProductEdit = ({ id }: { id: string }) => {
         onSubmit={handleSubmit}
         validationSchema={requestProductValidate}
       >
-        {({ isSubmitting, dirty }) => {
+        {({ values, isSubmitting, dirty }) => {
+          console.log(values);
           return (
             <Form>
               <Stack width='100%' flexDirection='column' alignItems='flex-start'>

@@ -6,7 +6,8 @@ import {
   ProductSlice,
 } from '@models/Product';
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { getProductById, getProducts, postProduct, putProduct } from '@services/productService';
+import { deleteProduct, getProductById, getProducts, postProduct, putProduct } from '@services/productService';
+import { toast } from 'react-toastify';
 
 const initialState: ProductSlice = {
   products: new ProductData(),
@@ -42,11 +43,19 @@ export const productSlice = createSlice({
       state.isLoadingDetails = false;
     },
     editSuccess: (state, { payload }) => {
-      const index = state.products.data.findIndex((product) => product._id === payload._id);
+      const index = state.products.data.findIndex(
+        (product) => product._id === payload._id,
+      );
       if (index !== -1) {
         state.products.data[index] = payload;
       }
       state.isLoadingDetails = false;
+    },
+    deleteSuccess: (state, { payload }: { payload: string }) => {
+      state.products.data = state.products.data.filter(
+        (product) => product._id !== payload,
+      );
+      state.isLoading = false;
     },
     fetchedDone: (state) => {
       state.isLoading = false;
@@ -73,17 +82,17 @@ export const getAllProduct = (payload: PagingProduct) => async (dispatch: Dispat
 
 export const getDetailsProduct =
   (id: string, isDetails: boolean = true) =>
-  async (dispatch: Dispatch) => {
-    dispatch(isFetchingDetails());
-    try {
-      const response = await getProductById(id, isDetails);
-      if (response.data) {
-        dispatch(getDetailsSuccess(response.data));
+    async (dispatch: Dispatch) => {
+      dispatch(isFetchingDetails());
+      try {
+        const response = await getProductById(id, isDetails);
+        if (response.data) {
+          dispatch(getDetailsSuccess(response.data));
+        }
+      } catch (error) {
+        dispatch(getDetailsFailure());
       }
-    } catch (error) {
-      dispatch(getDetailsFailure());
-    }
-  };
+    };
 
 export const createNewProduct = (payload: ProductRequest) => async (dispatch: Dispatch) => {
   dispatch(isFetchingDetails());
@@ -114,6 +123,23 @@ export const editProduct = (payload: Partial<ProductModel>, id: string) => async
   }
 };
 
+export const removeProduct = (id: string) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await deleteProduct(id);
+    if (response.status === 200) {
+      dispatch(deleteSuccess(id));
+      toast.success('Xóa sản phẩm thành công!');
+    } else {
+      toast.error('Xóa phẩm thất bại!');
+    }
+  } catch {
+    toast.error('Xóa phẩm thất bại!');
+  } finally {
+    dispatch(fetchedDone());
+  }
+};
+
 const { actions, reducer } = productSlice;
 
 export const {
@@ -126,5 +152,6 @@ export const {
   getDetailsSuccess,
   getDetailsFailure,
   editSuccess,
+  deleteSuccess,
 } = actions;
 export default reducer;

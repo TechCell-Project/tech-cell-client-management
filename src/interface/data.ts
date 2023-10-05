@@ -23,3 +23,13 @@ export interface IColumnCategory {
   description?: string | null;
   requiresAttribute?: string;
 }
+
+export interface IColumnProduct {
+  id?: string | null;
+  no: number;
+  name?: string | null;
+  category?: string | null;
+  status: string;
+  generalAttributes?: number;
+  variations: number;
+}

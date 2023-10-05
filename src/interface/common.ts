@@ -1,34 +1,4 @@
-import { AlertColor, SxProps } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
-
-export interface IAlert {
-  type?: AlertColor;
-  status?: 1 | 2 | 3;
-  message?: string;
-  timeout?: number;
-  statusCode?: number;
-}
-
-export interface ISnackbarAlert {
-  type?: AlertColor;
-  message?: string;
-  timeout?: number;
-}
-
-export interface ILoading {
-  isLoading?: boolean;
-}
-
-export interface IDataTable {
-  column?: GridColDef<any>[] | null;
-  row: readonly any[];
-  isLoading?: boolean;
-  isQuickFilter?: boolean;
-  page?: number | null;
-  pageSize?: number | null;
-  totalPage?: number | null;
-  totalRecord?: number | null;
-}
+import React from 'react';
 
 export interface IDialog {
   isOpen: boolean;
@@ -38,4 +8,9 @@ export interface IDialog {
   dialogStyle?: any;
   dialogDesc?: string | React.ReactNode;
   children: React.ReactNode;
+}
+
+export interface DialogAction {
+  isOpen: boolean;
+  handleClose: () => void;
 }

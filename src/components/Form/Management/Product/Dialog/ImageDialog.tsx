@@ -8,10 +8,9 @@ import { ImageModel, ProductRequest } from '@models/Product';
 import { FieldImageProps } from '@models/Image';
 import { postImage } from '@services/imageService';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
+interface Props extends DialogAction {
   fieldImage: FieldImageProps;
 }
 
@@ -64,7 +63,7 @@ export const ImageDialog = memo((props: Props) => {
 
   return (
     <ShowDialog
-      dialogTitle="Ảnh"
+      dialogTitle='Ảnh'
       handleClose={handleClose}
       isOpen={isOpen}
       dialogStyle={{ minWidth: 620 }}
@@ -83,13 +82,13 @@ export const ImageDialog = memo((props: Props) => {
               : (values as any)[`${fieldImage?.field}`]
           }
         />
-        <Stack direction="row" justifyContent="flex-end" sx={{ mt: 4 }} gap={1}>
-          <ButtonCustom variant="outlined" handleClick={handleClose} content="Đóng" />
+        <Stack direction='row' justifyContent='flex-end' sx={{ mt: 4 }} gap={1}>
+          <ButtonCustom variant='outlined' handleClick={handleClose} content='Đóng' />
           <ButtonCustom
-            variant="contained"
+            variant='contained'
             handleClick={() => handleUpload()}
             disabled={isLoading}
-            content="Tải lên"
+            content='Tải lên'
           />
         </Stack>
       </Box>
