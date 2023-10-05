@@ -48,7 +48,7 @@ export const ImageDialog = memo((props: Props) => {
 
         if (fieldImage.isThumbnail) {
           data = { ...(data as any)[0], isThumbnail: true };
-          await setFieldValue(fieldValue, [...imageGeneral, data]);
+          await setFieldValue(fieldValue, [...imageGeneral?.filter((image: ImageModel) => !image.isThumbnail), data]);
         } else {
           await setFieldValue(fieldValue, [...imageGeneral, ...data]);
         }
