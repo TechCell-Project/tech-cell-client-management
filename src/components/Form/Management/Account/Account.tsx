@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { DataTable } from '@components/Common';
+import { ButtonCustom, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { COLUMNS_ACCOUNT } from '@constants/data';
 import { getAllUserAccount, getDetailsUserAccount } from '@store/slices/accountSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
@@ -14,7 +14,12 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import { ConfirmBlock, ChangeRole, DetailsAccount } from './Dialog';
 import Tooltip from '@mui/material/Tooltip';
 import { IColumnAccount } from '@interface/data';
+import { Form, Formik } from 'formik';
+import { PagingAccount } from '@models/Account';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { Paging } from '@models/Common';
+import { ACCOUNT_EMAIL_OPTIONS, ACCOUNT_ROLE_OPTIONS, ACCOUNT_STATUS_OPTIONS } from '@constants/options';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +30,20 @@ export const Account = () => {
   const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
 
-  const [searchAccount, setSearchAccount] = useState<Paging>(new Paging());
+  const [searchAccount, setSearchAccount] = useState<PagingAccount>(new PagingAccount());
+  const [paging, setPaging] = useState<Paging>(new Paging());
 
   useEffect(() => {
-    dispatch(getAllUserAccount(searchAccount)).then();
-  }, [searchAccount, dispatch]);
+    loadUserAccount();
+  }, [searchAccount, paging]);
+
+  const loadUserAccount = () => {
+    dispatch(getAllUserAccount({
+      ...searchAccount,
+      page: paging.page,
+      pageSize: paging.pageSize,
+    })).then();
+  };
 
   const rows: IColumnAccount[] = accounts.data?.map((account, i) => ({
     id: account._id,
@@ -44,7 +58,7 @@ export const Account = () => {
     dispatch(getDetailsUserAccount(id)).then();
   };
 
-  const columns: GridColDef<any>[] = [
+  const columns: GridColDef[] = [
     ...COLUMNS_ACCOUNT,
     {
       field: 'options',
@@ -54,17 +68,17 @@ export const Account = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<any>) => [
-        <Tooltip title="Chi tiết" key={params.row.no}>
+        <Tooltip title='Chi tiết' key={params.row.no}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => {
               setOpenDetails(true);
               loadDataDetails(params.row.id);
             }}
-            label="Chi tiết"
+            label='Chi tiết'
           />
         </Tooltip>,
-        <Tooltip title="Thay đổi vai trò" key={params.row.no}>
+        <Tooltip title='Thay đổi vai trò' key={params.row.no}>
           <span>
             <GridActionsCellItem
               icon={<ChangeCircleOutlinedIcon />}
@@ -72,14 +86,14 @@ export const Account = () => {
                 setOpenChangeRole(true);
                 setDataRowSelected(params.row);
               }}
-              label="Đổi vai trò"
+              label='Đổi vai trò'
               disabled={params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)}
             />
           </span>
         </Tooltip>,
         <>
           {params.row.status === 'Hoạt động' ? (
-            <Tooltip title="Chặn">
+            <Tooltip title='Chặn'>
               <span>
                 <GridActionsCellItem
                   icon={<BlockOutlinedIcon />}
@@ -87,7 +101,7 @@ export const Account = () => {
                     setOpenDeleteConfirm(true);
                     setDataRowSelected(params.row);
                   }}
-                  label="Chặn tài khoản"
+                  label='Chặn tài khoản'
                   disabled={
                     params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)
                   }
@@ -95,7 +109,7 @@ export const Account = () => {
               </span>
             </Tooltip>
           ) : (
-            <Tooltip title="Mở khóa">
+            <Tooltip title='Mở khóa'>
               <span>
                 <GridActionsCellItem
                   icon={<LockOpenOutlinedIcon />}
@@ -103,7 +117,7 @@ export const Account = () => {
                     setOpenDeleteConfirm(true);
                     setDataRowSelected(params.row);
                   }}
-                  label="Mở khóa tài khoản"
+                  label='Mở khóa tài khoản'
                   disabled={
                     params.row.id === getCurrentUserId() || !isRoleAccepted(params.row.role)
                   }
@@ -118,15 +132,56 @@ export const Account = () => {
 
   return (
     <>
-      <DataTable
-        column={columns}
-        row={rows}
-        isLoading={isLoading}
-        isQuickFilter
-        paginationModel={searchAccount}
-        setPaginationModel={setSearchAccount}
-        totalRecord={accounts?.totalRecord}
-      />
+      <Formik
+        initialValues={{ ...searchAccount }}
+        onSubmit={(values) => {
+          setSearchAccount(values);
+          setPaging((prev) => ({ ...prev, page: 0 }));
+        }}
+      >
+        {({}) => {
+          return (
+            <Form>
+              <Box sx={{
+                bgcolor: '#fff',
+                padding: '25px 20px 20px 20px',
+                borderRadius: 2,
+                gap: '15px',
+                border: 0,
+                mb: '30px',
+              }}>
+                <Grid container spacing={2}>
+                  <Grid item md={3}>
+                    <TextFieldCustom name='keyword' label='Từ khóa' />
+                  </Grid>
+                  <Grid item md={3}>
+                    <SelectInputCustom name='status' label='Trạng thái' options={ACCOUNT_STATUS_OPTIONS} />
+                  </Grid>
+                  <Grid item md={3}>
+                    <SelectInputCustom name='role' label='Vai trò' options={ACCOUNT_ROLE_OPTIONS} />
+                  </Grid>
+                  <Grid item md={3}>
+                    <SelectInputCustom name='emailVerified' label='Tình trạng email' options={ACCOUNT_EMAIL_OPTIONS} />
+                  </Grid>
+                  <Grid item md={12} textAlign="right">
+                    <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <DataTable
+                column={columns}
+                row={rows}
+                isLoading={isLoading}
+                isQuickFilter
+                paginationModel={paging}
+                setPaginationModel={setPaging}
+                totalRecord={accounts?.totalRecord}
+              />
+            </Form>
+          );
+        }}
+      </Formik>
 
       {openDetails && (
         <DetailsAccount isOpen={openDetails} handleClose={() => setOpenDetails(false)} />

@@ -1,6 +1,5 @@
 import {
   PagingProduct,
-  ProductData,
   ProductModel,
   ProductRequest,
   ProductSlice,
@@ -8,9 +7,10 @@ import {
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { deleteProduct, getProductById, getProducts, postProduct, putProduct } from '@services/productService';
 import { toast } from 'react-toastify';
+import { PagingResponse } from '@models/Common';
 
 const initialState: ProductSlice = {
-  products: new ProductData(),
+  products: new PagingResponse<ProductModel>(),
   product: null,
   isLoading: false,
   isLoadingDetails: false,
@@ -31,7 +31,7 @@ export const productSlice = createSlice({
       state.isLoading = false;
     },
     getAllFailure: (state) => {
-      state.products = new ProductData();
+      state.products = new PagingResponse<ProductModel>();
       state.isLoading = false;
     },
     getDetailsSuccess: (state, { payload }) => {

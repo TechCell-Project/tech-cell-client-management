@@ -1,9 +1,8 @@
 import instance from './instance';
 import { AUTH_ENDPOINT } from '@constants/service';
-import { ILogin } from '@interface/auth';
-import { ForgotPasswordModel, AccountChangePass } from '@models/Auth';
+import { ForgotPasswordModel, AccountChangePass, LoginModel } from '@models/Auth';
 
-export const fetchLogin = (payload: ILogin) =>
+export const fetchLogin = (payload: LoginModel) =>
   instance.post(`${AUTH_ENDPOINT}/login`, payload);
 
 export const fetchRefresh = (refreshToken: string) =>

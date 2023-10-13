@@ -4,12 +4,12 @@ import { ProductStatus, Roles } from '@constants/enum';
 import { getCurrentUserRole } from '@utils/local';
 
 export const getCountImage = (images: ImageModel[], isThumbnail: boolean = false): number => {
-  let count = 0;
+  let count: number;
   if (isThumbnail) {
     count = images?.filter((image) => image.isThumbnail).length;
   } else {
     count = images?.filter(
-      (image) => !image.isThumbnail || image.isThumbnail === undefined,
+      (image) => !image.isThumbnail || false,
     ).length;
   }
   return count;
@@ -40,6 +40,7 @@ const productStatusMapping: { [key: number]: string } = {
   [ProductStatus.NotSales]: 'Không bán',
   [ProductStatus.LowStock]: 'Còn ít hàng',
   [ProductStatus.TemporarilyOutOfStock]: 'Tạm thời hết hàng',
+  [ProductStatus.Deleted]: 'Đã xóa',
 };
 
 export const getStatusProduct = (value: number): string => {
@@ -95,4 +96,20 @@ export const isRoleAccepted = (role?: string): boolean => {
     default:
       return false;
   }
+};
+
+export const getSearchParams = <T extends number | string = any>(payload: Record<string, T>): string => {
+  const url = new URLSearchParams();
+
+  Object.entries(payload).map(([key, value]) => {
+    if (key === "page") {
+      value = (parseInt(value as string, 10) + 1) as T;
+    }
+    if (value === null || !value) {
+      return;
+    }
+    url.append(key, value.toString());
+  });
+
+  return url.toString();
 };

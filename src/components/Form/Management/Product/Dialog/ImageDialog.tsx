@@ -24,7 +24,7 @@ export const ImageDialog = memo((props: Props) => {
     setIsLoading(true);
     try {
       const formData = new FormData();
-      let imageGeneral: any;
+      let imageGeneral: ImageModel[];
       const fieldTemp = (values as any)['images'];
 
       if (isVariation) {

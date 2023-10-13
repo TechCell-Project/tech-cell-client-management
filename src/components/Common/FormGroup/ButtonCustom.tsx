@@ -34,7 +34,7 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
       ? "1px solid #fff !important"
       : `1px solid ${theme.color.red} !important`,
     textTransform: "unset",
-    padding: "5px 20px",
+    padding: "6px 20px",
     width: "max-content",
     whiteSpace: "nowrap",
   };
@@ -44,7 +44,7 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
     border: `1px solid ${theme.color.red} !important`,
     color: "#fff !important",
     textTransform: "unset",
-    padding: "5px 20px",
+    padding: "6px 20px",
     whiteSpace: "nowrap",
   };
 
@@ -53,7 +53,7 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
       ? `#fff !important`
       : `${theme.color.red} !important`,
     bgcolor: "transparent",
-    padding: "5px 20px",
+    padding: "6px 20px",
     whiteSpace: "nowrap",
     textTransform: "unset",
   };

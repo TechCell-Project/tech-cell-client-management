@@ -1,7 +1,7 @@
 'use client';
 
 import React, { FC, memo, useMemo } from 'react';
-import { DataGrid, GridToolbar, viVN } from '@mui/x-data-grid';
+import { DataGrid, viVN } from '@mui/x-data-grid';
 import { CustomNoRowsOverlay } from './CustomNoRowsOverLay';
 import { CustomPagination } from './CustomPagination';
 import { CustomLoadingOverLay } from './CustomLoadingOverLay';
@@ -32,7 +32,6 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
   return (
     <div style={{ height: 720, width: '100%' }}>
       <DataGrid
-        // disableColumnFilter
         disableRowSelectionOnClick
         columns={props.column ?? []}
         rows={props.row ?? []}
@@ -41,7 +40,6 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
         getEstimatedRowHeight={() => 200}
         localeText={viVN.components.MuiDataGrid.defaultProps.localeText}
         slots={{
-          toolbar: GridToolbar,
           pagination: CustomPagination,
           noRowsOverlay: CustomNoRowsOverlay,
           noResultsOverlay: CustomNoRowsOverlay,
@@ -53,12 +51,6 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
         rowCount={Number(props.totalRecord)}
         paginationModel={props.paginationModel}
         onPaginationModelChange={props.setPaginationModel}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: props.isQuickFilter,
-            quickFilterProps: { debounceMs: 500 },
-          },
-        }}
         sx={styledTable}
       />
     </div>

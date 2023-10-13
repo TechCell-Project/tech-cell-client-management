@@ -7,12 +7,12 @@ import {
   patchChangeRoleAccount,
   patchUnBlockAccount,
 } from '@services/accountService';
-import { Paging } from '@models/Common';
+import { PagingResponse } from '@models/Common';
 import { RegisterModel } from '@models/Auth';
-import { AccountSlice, UserDataAccount } from '@models/Account';
+import { AccountSlice, PagingAccount, UserAccount } from '@models/Account';
 
 const initialState: AccountSlice = {
-  accounts: new UserDataAccount(),
+  accounts: new PagingResponse<UserAccount>(),
   account: null,
   isLoading: false,
   isLoadingDetails: false,
@@ -37,7 +37,7 @@ export const accountSlice = createSlice({
       state.isLoadingDetails = false;
     },
     getAllFailure: (state) => {
-      state.accounts = new UserDataAccount();
+      state.accounts = new PagingResponse<UserAccount>();
       state.isLoading = false;
     },
     getDetailsFailure: (state) => {
@@ -63,7 +63,7 @@ export const accountSlice = createSlice({
 });
 
 // Thunk
-export const getAllUserAccount = (payload: Paging) => async (dispatch: Dispatch) => {
+export const getAllUserAccount = (payload: PagingAccount) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
     const response = await getAllAccounts(payload);

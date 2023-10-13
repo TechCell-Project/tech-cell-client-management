@@ -68,8 +68,7 @@ export const ProductEdit = ({ id }: { id: string }) => {
         onSubmit={handleSubmit}
         validationSchema={requestProductValidate}
       >
-        {({ values, isSubmitting, dirty }) => {
-          console.log(values);
+        {({ isSubmitting, dirty }) => {
           return (
             <Form>
               <Stack width='100%' flexDirection='column' alignItems='flex-start'>
@@ -86,7 +85,7 @@ export const ProductEdit = ({ id }: { id: string }) => {
 
                 <Tabs
                   value={tabIndex}
-                  onChange={(event: React.SyntheticEvent, index: number) => setTabIndex(index)}
+                  onChange={(_: React.SyntheticEvent, index: number) => setTabIndex(index)}
                   aria-label='tabs create product'
                   sx={{
                     mt: 1,

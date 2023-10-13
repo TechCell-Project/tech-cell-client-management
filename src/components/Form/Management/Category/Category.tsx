@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataTable, LoadingPage } from '@components/Common';
+import { ButtonCustom, DataTable, LoadingPage, TextFieldCustom } from '@components/Common';
 import { COLUMNS_CATEGORY } from '@constants/data';
 import { IColumnCategory } from '@interface/data';
 import { Paging } from '@models/Common';
@@ -10,7 +10,9 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import { EditCategory } from './Dialog/EditCategory';
-import { DataTableDynamic } from '@components/Shared';
+import { Form, Formik } from 'formik';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -20,11 +22,15 @@ export const Category = () => {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getAllCategory(searchCategory));
+    loadCategories();
   }, [searchCategory]);
 
+  const loadCategories = () => {
+    dispatch(getAllCategory({...searchCategory})).then();
+  }
+
   const handleGetDetails = (label: string) => {
-    dispatch(getDetailsCategoryByLabel(label));
+    dispatch(getDetailsCategoryByLabel(label)).then();
   };
 
   const rows: Array<IColumnCategory> = categories.data.map((category, i) => ({
@@ -44,7 +50,7 @@ export const Category = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams<any>) => [
+      getActions: (params: GridRowParams) => [
         <Tooltip title="Chỉnh sửa" key={params.row.no}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
@@ -61,6 +67,37 @@ export const Category = () => {
 
   return (
     <>
+      <Formik
+        initialValues={{...searchCategory}}
+        onSubmit={(values) => {
+          setSearchCategory({ ...values, page: 0 });
+        }}
+      >
+        {() => {
+          return (
+            <Form>
+              <Box sx={{
+                bgcolor: '#fff',
+                padding: '25px 20px 20px 20px',
+                borderRadius: 2,
+                gap: '15px',
+                border: 0,
+                mb: '30px',
+              }}>
+                <Grid container spacing={2}>
+                  <Grid item md={3}>
+                    <TextFieldCustom name='keyword' label='Từ khóa' />
+                  </Grid>
+                  <Grid item md={2} >
+                    <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Form>
+          )
+        }}
+      </Formik>
+
       <DataTable
         column={columns}
         row={rows}

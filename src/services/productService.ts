@@ -1,15 +1,12 @@
 import { PRODUCTS_ENDPOINT } from '@constants/service';
 import instance from './instance';
-import { PagingProduct, ProductData, ProductModel, ProductRequest } from '@models/Product';
+import { PagingProduct, ProductModel, ProductRequest } from '@models/Product';
+import { PagingResponse } from '@models/Common';
+import { getSearchParams } from '@utils/funcs';
 
 export const getProducts = (payload: PagingProduct) => {
-  const { page, pageSize, keyword } = payload;
-  let url = `${PRODUCTS_ENDPOINT}?page=${page + 1}&pageSize=${pageSize}`;
-
-  if (keyword) {
-    url += `&keyword=${keyword}`;
-  }
-  return instance.get<ProductData>(url);
+  const url = getSearchParams(payload);
+  return instance.get<PagingResponse<ProductModel>>(PRODUCTS_ENDPOINT + "?" + url);
 };
 
 export const postProduct = (payload: ProductRequest) =>

@@ -1,28 +1,28 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import {
   AttributeModel,
   AttributeSlice,
   CreateAttributeModel,
   PagingAttribute,
-  AttributeData,
-} from "@models/Attribute";
+} from '@models/Attribute';
 import {
   deleteAttribute,
   getAttributes,
   getByIdAttribute,
   patchAttribute,
   postAttribute,
-} from "@services/attributeService";
+} from '@services/attributeService';
+import { PagingResponse } from '@models/Common';
 
 const initialState: AttributeSlice = {
-  attributes: new AttributeData(),
+  attributes: new PagingResponse<AttributeModel>(),
   attribute: null,
   isLoading: false,
   isLoadingDetail: false,
 };
 
 export const attributeSlice = createSlice({
-  name: "attribute",
+  name: 'attribute',
   initialState,
   reducers: {
     isFetching: (state) => {
@@ -36,7 +36,7 @@ export const attributeSlice = createSlice({
       state.isLoading = false;
     },
     getAllFailure: (state) => {
-      state.attributes = new AttributeData();
+      state.attributes = new PagingResponse<AttributeModel>();
       state.isLoading = false;
     },
     getDetailsSuccess: (state, { payload }: { payload: AttributeModel }) => {
@@ -49,7 +49,7 @@ export const attributeSlice = createSlice({
     },
     editSuccess: (state, { payload }: { payload: AttributeModel }) => {
       const index = state.attributes.data.findIndex(
-        (attribute) => attribute._id === payload._id
+        (attribute) => attribute._id === payload._id,
       );
       if (index !== -1) {
         state.attributes.data[index] = payload;
@@ -58,7 +58,7 @@ export const attributeSlice = createSlice({
     },
     deleteSuccess: (state, { payload }: { payload: string }) => {
       state.attributes.data = state.attributes.data.filter(
-        (attribute) => attribute._id !== payload
+        (attribute) => attribute._id !== payload,
       );
       state.isLoading = false;
     },

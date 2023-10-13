@@ -2,15 +2,11 @@ import instance from './instance';
 import { CATEGORIES_ENDPOINT } from '@constants/service';
 import { CategoryModel } from '@models/Category';
 import { Paging } from '@models/Common';
+import { getSearchParams } from '@utils/funcs';
 
 export const getCategories = (payload: Paging) => {
-  const { page, pageSize, keyword } = payload;
-  let url = `${CATEGORIES_ENDPOINT}?page=${page + 1}&pageSize=${pageSize}`;
-  
-  if (keyword) {
-    url += `&keyword=${keyword}`;
-  }
-  return instance.get<Paging>(url);
+  const url = getSearchParams(payload);
+  return instance.get<Paging>(CATEGORIES_ENDPOINT + '?' + url);
 };
 
 export const postCategory = (payload: CategoryModel) =>

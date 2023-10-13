@@ -9,14 +9,10 @@ export class PagingAccount extends Paging {
 }
 
 export class AccountSlice {
-  accounts: UserDataAccount = new UserDataAccount();
+  accounts: PagingResponse<UserAccount> = new PagingResponse<UserAccount>();
   account: UserAccount | null = null;
   isLoading: boolean = false;
   isLoadingDetails: boolean = false;
-}
-
-export class UserDataAccount extends PagingResponse {
-  data: Array<UserAccount> = [];
 }
 
 export class UserAccount {

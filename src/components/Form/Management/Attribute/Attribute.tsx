@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataTable, LoadingPage } from '@components/Common';
+import { ButtonCustom, DataTable, LoadingPage, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes, getDetailAttributeById } from '@store/slices/attributeSlice';
 import { PagingAttribute } from '@models/Attribute';
@@ -13,22 +13,31 @@ import { AttributeDialog } from '@models/Dialog';
 import { EditAttribute } from './Dialog/EditAttribute';
 import { ConfirmDeleteAttribute } from './Dialog/ConfirmDeleteAttribute';
 import { IColumnAttribute } from '@interface/data';
-import { DataTableDynamic } from '@components/Shared';
+import { Paging } from '@models/Common';
+import { Form, Formik } from 'formik';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 
 export const Attribute = () => {
   const dispatch = useAppDispatch();
   const { attributes, isLoading, isLoadingDetail } = useAppSelector((state) => state.attribute);
 
+  const [paging, setPaging] = useState<Paging>(new Paging());
   const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
   const [currentAttribute, setCurrentAttribute] = useState<IColumnAttribute>();
   const [isOpen, setIsOpen] = useState<AttributeDialog>(new AttributeDialog());
 
   useEffect(() => {
-    dispatch(getAllAttributes(searchAttribute));
+    loadAttributes();
   }, [searchAttribute]);
 
   const handleGetDetails = (id: string) => {
-    dispatch(getDetailAttributeById(id));
+    dispatch(getDetailAttributeById(id)).then();
+  };
+
+  const loadAttributes = () => {
+    dispatch(getAllAttributes({ ...searchAttribute, page: paging.page, pageSize: paging.pageSize })).then();
   };
 
   const rows: Array<IColumnAttribute> = attributes.data?.map((attribute, i) => ({
@@ -49,24 +58,24 @@ export const Attribute = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<any>) => [
-        <Tooltip title="Chỉnh sửa" key={params.row.no}>
+        <Tooltip title='Chỉnh sửa' key={params.row.no}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
               handleGetDetails(params.row.id);
               setIsOpen((prev) => ({ ...prev, openEdit: true }));
             }}
-            label="Chỉnh sửa"
+            label='Chỉnh sửa'
           />
         </Tooltip>,
-        <Tooltip title="Xóa" key={params.row.no}>
+        <Tooltip title='Xóa' key={params.row.no}>
           <GridActionsCellItem
             icon={<AutoDeleteRoundedIcon />}
             onClick={() => {
               setCurrentAttribute(params.row);
               setIsOpen((prev) => ({ ...prev, openConfirmDelete: true }));
             }}
-            label="Xóa"
+            label='Xóa'
           />
         </Tooltip>,
       ],
@@ -75,13 +84,48 @@ export const Attribute = () => {
 
   return (
     <>
+      <Formik
+        initialValues={{ ...searchAttribute }}
+        onSubmit={(values) => {
+          setSearchAttribute(values);
+          setPaging((prev) => ({ ...prev, page: 0 }));
+        }}
+      >
+        {() => {
+          return (
+            <Form>
+              <Box sx={{
+                bgcolor: '#fff',
+                padding: '25px 20px 20px 20px',
+                borderRadius: 2,
+                gap: '15px',
+                border: 0,
+                mb: '30px',
+              }}>
+                <Grid container spacing={2}>
+                  <Grid item md={3}>
+                    <TextFieldCustom name='keyword' label='Từ khóa' />
+                  </Grid>
+                  <Grid item md={3}>
+                    <SelectInputCustom name='select_type' label='Trạng thái' options={PRODUCT_TYPE_OPTIONS} />
+                  </Grid>
+                  <Grid item md={2}>
+                    <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Form>
+          );
+        }}
+      </Formik>
+
       <DataTable
         column={columns}
         row={rows}
         isLoading={isLoading}
         isQuickFilter
-        paginationModel={searchAttribute}
-        setPaginationModel={setSearchAttribute}
+        paginationModel={paging}
+        setPaginationModel={setPaging}
         totalRecord={attributes?.totalRecord}
       />
 

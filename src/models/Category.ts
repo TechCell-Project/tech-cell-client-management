@@ -11,12 +11,8 @@ export class CategoryModel {
 }
 
 export class CategorySlice {
-  categories: CategoryData = new CategoryData();
+  categories: PagingResponse<CategoryModel> = new PagingResponse<CategoryModel>();
   category: CategoryModel | null = null;
   isLoading: boolean = false;
   isLoadingDetails: boolean = false;
-}
-
-export class CategoryData extends PagingResponse {
-  data: Array<CategoryModel> = [];
 }

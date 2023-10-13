@@ -12,11 +12,10 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { FieldImageProps } from '@models/Image';
 import Image from 'next/image';
-import { useTheme } from '@mui/material/styles';
+import { ImageModel } from '@models/Product';
 
 export const UploadFileCustom = memo(
-  ({ name, imageInits = [] }: { name: FieldImageProps; imageInits?: any[] }) => {
-    const theme = useTheme();
+  ({ name, imageInits = [] }: { name: FieldImageProps; imageInits?: ImageModel[] }) => {
     const { setFieldValue } = useFormikContext<any>();
     const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
 
@@ -51,7 +50,7 @@ export const UploadFileCustom = memo(
     const handleRemoveImage = (index: number) => {
       const files = imageInits.filter((file) =>
         name.isThumbnail
-          ? file.isThumbnail === true
+          ? file.isThumbnail
           : !file.isThumbnail || false,
       );
       const newFiles = files.filter((_, i) => i !== index);
@@ -63,7 +62,7 @@ export const UploadFileCustom = memo(
         ]).then();
       } else {
         setFieldValue(String(name.field), [
-          ...imageInits.filter((file) => file.isThumbnail === true),
+          ...imageInits.filter((file) => file.isThumbnail),
           ...newFiles,
         ]).then();
       }
@@ -111,7 +110,7 @@ export const UploadFileCustom = memo(
     const handleUploadCase = () => {
       const files = imageInits.filter((file) =>
         name.isThumbnail
-          ? file.isThumbnail === true
+          ? file.isThumbnail
           : !file.isThumbnail || false,
       );
 

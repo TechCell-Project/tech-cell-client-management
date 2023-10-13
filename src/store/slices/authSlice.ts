@@ -1,8 +1,9 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { IAuthSlice, ILogin } from '@interface/auth';
+import { IAuthSlice } from '@interface/auth';
 import { fetchLogin } from '@services/authServices';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { LoginModel } from '@models/Auth';
 
 const initialState: IAuthSlice = {
   user: null,
@@ -42,7 +43,7 @@ export const authenticate = () => async (dispatch: Dispatch) => {
 };
 
 export const login =
-  (payload: ILogin) =>
+  (payload: LoginModel) =>
     async (dispatch: Dispatch) => {
       dispatch(isLogin());
       try {

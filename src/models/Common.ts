@@ -11,11 +11,12 @@ export class Paging implements GridPaginationModel {
   }
 }
 
-export class PagingResponse {
+export class PagingResponse<T = unknown> {
   page?: number | null = null;
   pageSize?: number | null = null;
   totalPage?: number | null = null;
   totalRecord?: number | null = null;
+  data: T[] = [];
 }
 
 export class DataTableProps {

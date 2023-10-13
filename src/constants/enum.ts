@@ -14,6 +14,7 @@ export enum ProductStatus {
   NotSales = 6,
   LowStock = 7,
   TemporarilyOutOfStock = 8,
+  Deleted = -1,
 }
 
 export enum RootRoutes {

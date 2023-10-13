@@ -1,13 +1,24 @@
 import { USERS_ENDPOINT } from '@constants/service';
 import instance from './instance';
 import { RegisterModel } from '@models/Auth';
-import { Paging } from '@models/Common';
-import { UserAccount, UserDataAccount } from '@models/Account';
+import { Paging, PagingResponse } from '@models/Common';
+import { PagingAccount, UserAccount } from '@models/Account';
 
-export const getAllAccounts = (payload: Paging) =>
-  instance.get<UserDataAccount>(
-    `${USERS_ENDPOINT}?page=${Number(payload.page) + 1}&pageSize=${payload.pageSize}`,
-  );
+export const getAllAccounts = (payload: PagingAccount) => {
+  let url = new URLSearchParams();
+
+  Object.entries(payload).map(([key, value]) => {
+    if(key === "page") {
+      value += 1;
+    }
+    if(value === null || !value) {
+      return;
+    }
+    url.append(key, value);
+  });
+
+  return instance.get<PagingResponse<UserAccount>>(USERS_ENDPOINT + "?" + url.toString());
+};
 
 export const getDetailsAccount = (id: string) =>
   instance.get<UserAccount>(`${USERS_ENDPOINT}/${id}`);
