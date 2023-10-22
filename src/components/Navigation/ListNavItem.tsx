@@ -14,7 +14,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useAppDispatch } from '@store/store';
 import { logout } from '@store/slices/authSlice';
-import { ChangePassword } from '@components/Form';
+import { ChangePassword, Profile } from '@components/Features';
 
 interface Props {
   list?: any;
@@ -22,18 +22,35 @@ interface Props {
   subHeader?: string;
 }
 
+const NavWithAction = ({ item, handleClick }: { item: any, handleClick: React.MouseEventHandler<HTMLDivElement> }) => {
+  const theme = useTheme();
+
+  return (
+    <ListItemButton
+      sx={{ borderRadius: '10px' }}
+      onClick={handleClick}
+    >
+      <ListItemIcon sx={{ minWidth: '40px' }}>
+        <item.icon />
+      </ListItemIcon>
+      <ListItemText primary={item.name} color={theme.color.black} />
+    </ListItemButton>
+  );
+};
+
 const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
   const [openChangePass, setOpenChangePass] = useState<boolean>(false);
+  const [openProfile, setOpenProfile] = useState<boolean>(false);
 
   const renderLinkNav = () => {
     return list?.map((nav: any, i: number) => {
       const renderItem = () => {
-        if (!nav.isCollapse && !nav.isLogout && !nav.isChangePass) {
+        if (!nav.isCollapse && !nav.isLogout && !nav.isChangePass && !nav.isProfile) {
           return (
-            <Link href={nav.to} style={{ width: '100%' }} shallow>
+            <Link href={`${nav.to}`} style={{ width: '100%' }} shallow>
               <ListItemButton selected={pathname === String(nav.to)} sx={{ borderRadius: '10px' }}>
                 <ListItemIcon sx={{ minWidth: '40px' }}>
                   <nav.icon />
@@ -44,27 +61,15 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
           );
         } else if (nav.isLogout) {
           return (
-            <ListItemButton
-              sx={{ borderRadius: '10px' }}
-              onClick={() => dispatch(logout())}
-            >
-              <ListItemIcon sx={{ minWidth: '40px' }}>
-                <nav.icon />
-              </ListItemIcon>
-              <ListItemText primary={nav.name} color={theme.color.black} />
-            </ListItemButton>
+            <NavWithAction item={nav} handleClick={() => dispatch(logout())} />
           );
         } else if (nav.isChangePass) {
           return (
-            <ListItemButton
-              sx={{ borderRadius: '10px' }}
-              onClick={() => setOpenChangePass(true)}
-            >
-              <ListItemIcon sx={{ minWidth: '40px' }}>
-                <nav.icon />
-              </ListItemIcon>
-              <ListItemText primary={nav.name} color={theme.color.black} />
-            </ListItemButton>
+            <NavWithAction item={nav} handleClick={() => setOpenChangePass(true)} />
+          );
+        } else if (nav.isProfile) {
+          return (
+            <NavWithAction item={nav} handleClick={() => setOpenProfile(true)} />
           );
         } else if (nav.isCollapse) {
           return (
@@ -78,10 +83,14 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
                 <ListItemText primary={nav.name} />
                 {openCollapse ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <Collapse in={openCollapse} timeout='auto' unmountOnExit
-                sx={{ transition: 'all ease-in 0.3s', m: '10px 0' }}>
+              <Collapse
+                in={openCollapse}
+                timeout='auto'
+                unmountOnExit
+                sx={{ transition: 'all ease-in 0.3s', m: '10px 0' }}
+              >
                 {nav.listChildren.map((child: any, i: number) => (
-                  <Link href={child.to} style={{ width: '100%' }} key={i} shallow>
+                  <Link href={`${child.to}`} style={{ width: '100%' }} key={i} shallow>
                     <ListItemButton
                       selected={pathname === String(child.to)}
                       sx={{ borderRadius: '10px', pl: '5px' }}
@@ -143,6 +152,10 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
 
       {openChangePass && (
         <ChangePassword isOpen={openChangePass} handleClose={() => setOpenChangePass(false)} />
+      )}
+
+      {openProfile && (
+        <Profile isOpen={openProfile} handleClose={() => setOpenProfile(false)} />
       )}
     </>
   );

@@ -2,17 +2,18 @@ import { AttributeModel, CreateAttributeModel, PagingAttribute } from '@models/A
 import instance from './instance';
 import { ATTRIBUTES_ENDPOINT } from '@constants/service';
 import { getSearchParams } from '@utils/funcs';
+import { PagingResponse } from '@models/Common';
 
 export const getAttributes = (payload: PagingAttribute) => {
   const url = getSearchParams(payload);
-  return instance.get<Array<AttributeModel>>(ATTRIBUTES_ENDPOINT + '?' + url);
+  return instance.get<PagingResponse<AttributeModel>>(ATTRIBUTES_ENDPOINT + '?' + url);
 };
 
 export const postAttribute = (payload: CreateAttributeModel) =>
-  instance.post<CreateAttributeModel>(`${ATTRIBUTES_ENDPOINT}`, payload);
+  instance.post(`${ATTRIBUTES_ENDPOINT}`, payload);
 
 export const patchAttribute = (payload: CreateAttributeModel, id: string) =>
-  instance.patch<CreateAttributeModel>(`${ATTRIBUTES_ENDPOINT}/${id}`, payload);
+  instance.patch(`${ATTRIBUTES_ENDPOINT}/${id}`, payload);
 
 export const getByIdAttribute = (id: string) => instance.get(`${ATTRIBUTES_ENDPOINT}/${id}`);
 

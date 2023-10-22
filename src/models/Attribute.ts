@@ -20,8 +20,7 @@ export class AttributeDynamics {
 }
 
 export class PagingAttribute extends Paging {
-  select_type?: "only_active" | "only_deleted" | "both_deleted_and_active" =
-    "only_active";
+  select_type?: string | null = null;
 }
 
 export class AttributeSlice {

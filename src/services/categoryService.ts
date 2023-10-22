@@ -1,12 +1,12 @@
 import instance from './instance';
 import { CATEGORIES_ENDPOINT } from '@constants/service';
 import { CategoryModel } from '@models/Category';
-import { Paging } from '@models/Common';
+import { Paging, PagingResponse } from '@models/Common';
 import { getSearchParams } from '@utils/funcs';
 
 export const getCategories = (payload: Paging) => {
   const url = getSearchParams(payload);
-  return instance.get<Paging>(CATEGORIES_ENDPOINT + '?' + url);
+  return instance.get<PagingResponse<CategoryModel>>(CATEGORIES_ENDPOINT + '?' + url);
 };
 
 export const postCategory = (payload: CategoryModel) =>

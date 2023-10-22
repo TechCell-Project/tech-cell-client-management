@@ -17,8 +17,8 @@ import {
   getIn,
 } from 'formik';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
+const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 interface Props<T> {
   name: string;
@@ -35,6 +35,8 @@ interface Props<T> {
   multiple?: boolean;
   placeholder?: string;
   handleChange?: (value: T | T[] | null, event: React.SyntheticEvent<Element, Event>) => void;
+  isNotCheckbox?: boolean;
+  handleBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
 
 interface MultiSelectProps<T> extends Props<T> {
@@ -62,6 +64,8 @@ function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
     searchValue = '',
     handleChangeSearchValue,
     handleBlurSearchValue,
+    isNotCheckbox = false,
+    handleBlur,
   } = props;
 
   const getDefaultOptionLabel = (option: T) => getIn(option, displayLabel) ?? '';
@@ -94,17 +98,18 @@ function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
       isOptionEqualToValue={(option, value) =>
         getIn(option, displaySelected) === getIn(value, displaySelected)
       }
-      // inputValue={searchValue ?? undefined}
-      // onInputChange={handleChangeSearchValue ?? undefined}
+      onBlur={handleBlur}
       renderOption={(props, option, { selected }) => {
         return (
           <li {...props}>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 5 }}
-              checked={selected}
-            />
+            {!isNotCheckbox && (
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 5 }}
+                checked={selected}
+              />
+            )}
             {getIn(option, displayLabel)}
           </li>
         );
@@ -113,7 +118,7 @@ function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
       getOptionLabel={getDefaultOptionLabel}
       onChange={defaultHandleChange}
       // noOptionsText="Không có dữ liệu"
-      size="small"
+      size='small'
       renderInput={(params) => (
         <TextField
           {...params}
@@ -128,7 +133,7 @@ function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading ? <CircularProgress color="inherit" size={15} /> : null}
+                {isLoading ? <CircularProgress color='inherit' size={15} /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
@@ -153,20 +158,20 @@ const shouldComponentUpdate = (
   nextProps?.disabled !== currentProps?.disabled ||
   Object.keys(nextProps).length !== Object.keys(currentProps).length ||
   getIn(nextProps.formik.values, currentProps.name) !==
-    getIn(currentProps.formik.values, currentProps.name) ||
+  getIn(currentProps.formik.values, currentProps.name) ||
   getIn(nextProps.formik.errors, currentProps.name) !==
-    getIn(currentProps.formik.errors, currentProps.name) ||
+  getIn(currentProps.formik.errors, currentProps.name) ||
   getIn(nextProps.formik.touched, currentProps.name) !==
-    getIn(currentProps.formik.touched, currentProps.name);
+  getIn(currentProps.formik.touched, currentProps.name);
 
 function AutocompleteCustom<T = any>(props: Props<T>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({
-        field,
-        meta,
-        form,
-      }: {
+          field,
+          meta,
+          form,
+        }: {
         field: FieldInputProps<T | T[]>;
         meta: FieldMetaProps<T | T[]>;
         form: FormikProps<T | T[]>;

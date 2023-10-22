@@ -10,8 +10,9 @@ const nextConfig = {
     includePaths: [path.join(__dirname, "styles")],
   },
   env: {
-    API_ENDPOINT: process.env.API_BASE_URL,
-    API_KEY_TINY: process.env.API_KEY_TINYMCE,
+    API_BASE_URL: process.env.API_BASE_URL,
+    API_KEY_TINYMCE: process.env.API_KEY_TINYMCE,
+    // API_LOCATION: process.env.API_LOCATION,
   },
   experimental: {
     appDir: true,

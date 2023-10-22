@@ -6,7 +6,7 @@ import { TITLE_TECHCELL } from '@constants/data';
 import { LoadingPage } from '@components/Common';
 
 const ProductEditDynamic = dynamic(
-  () => import('@components/Form').then((res) => res.ProductEdit),
+  () => import('@components/Features').then((res) => res.ProductEdit),
   {
     ssr: false,
     loading: () => <LoadingPage isLoading={true} isBlur />,

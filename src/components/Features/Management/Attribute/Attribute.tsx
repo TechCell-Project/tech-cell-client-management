@@ -114,20 +114,20 @@ export const Attribute = () => {
                   </Grid>
                 </Grid>
               </Box>
+
+              <DataTable
+                column={columns}
+                row={rows}
+                isLoading={isLoading}
+                paginationModel={paging}
+                setPaginationModel={setPaging}
+                totalRecord={attributes?.totalRecord}
+              />
             </Form>
           );
         }}
       </Formik>
 
-      <DataTable
-        column={columns}
-        row={rows}
-        isLoading={isLoading}
-        isQuickFilter
-        paginationModel={paging}
-        setPaginationModel={setPaging}
-        totalRecord={attributes?.totalRecord}
-      />
 
       {isLoadingDetail ? (
         <LoadingPage isLoading={isLoadingDetail} isBlur />

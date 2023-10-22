@@ -1,3 +1,6 @@
+import { IUser } from '@interface/auth';
+import { UserAccount } from '@models/Account';
+
 export class LoginModel {
   emailOrUsername?: string | null = null;
   password?: string | null = null;
@@ -23,4 +26,11 @@ export class AccountChangePass {
   oldPassword?: string = '';
   newPassword?: string = '';
   reNewPassword?: string = '';
+}
+
+export class AuthSlice {
+  user: UserAccount | null = new UserAccount();
+  isLoading: boolean = false;
+  isLoadingProfile: boolean = false;
+  isAuthenticated: boolean = false;
 }

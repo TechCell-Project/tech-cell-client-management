@@ -55,7 +55,7 @@ const TextFieldComponent = (props: TextFieldProps) => {
     maxRowArea,
     className = '',
     handleChange,
-    readOnly,
+    readOnly = false,
     setFieldValue,
     defaultValue,
   } = props;
@@ -128,7 +128,7 @@ const shouldComponentUpdate = (
   );
 };
 
-export const TextFieldCustom = memo((props: Props) => {
+function TextFieldCustom(props: Props) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({ field, meta, form }: FastFieldProps & { form: FormikProps<any> }) => (
@@ -141,5 +141,9 @@ export const TextFieldCustom = memo((props: Props) => {
       )}
     </FastField>
   );
-});
+}
+
+const MemoizedTextFieldCustom = memo(TextFieldCustom);
+
+export { MemoizedTextFieldCustom as TextFieldCustom };
 

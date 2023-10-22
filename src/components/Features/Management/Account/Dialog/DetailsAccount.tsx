@@ -130,7 +130,7 @@ export const DetailsAccount = memo((props: Props) => {
                   <Grid item md={4}>
                     <TextField
                       label="Phường, Xã"
-                      value={account?.address[0]?.communeLevel || '...'}
+                      value={account?.address[0]?.wardLevel || '...'}
                       fullWidth
                       variant="outlined"
                       size="small"

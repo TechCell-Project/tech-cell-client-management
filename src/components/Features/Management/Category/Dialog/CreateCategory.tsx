@@ -10,7 +10,7 @@ import { getAllAttributes } from '@store/slices/attributeSlice';
 import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
-import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common';
 import { toast } from 'react-toastify';
 
 interface Props {

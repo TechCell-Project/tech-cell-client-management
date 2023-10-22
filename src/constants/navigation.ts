@@ -7,6 +7,7 @@ import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import AttributionRoundedIcon from '@mui/icons-material/AttributionRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 const DASHBOARD_ROUTE = '/dashboard';
 
@@ -40,6 +41,7 @@ export const LIST_NAV_MAIN = [
 
 
 export const LIST_NAV_OTHER = [
-  { name: 'Đổi mật khẩu',icon: ManageAccountsRoundedIcon, isChangePass: true },
+  { name: 'Hồ sơ', icon: AccountCircleRoundedIcon, isProfile: true },
+  { name: 'Đổi mật khẩu', icon: ManageAccountsRoundedIcon, isChangePass: true },
   { name: 'Đăng xuất', icon: LogoutRoundedIcon, isLogout: true },
 ];

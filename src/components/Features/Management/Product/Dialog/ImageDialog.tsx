@@ -6,7 +6,7 @@ import { UploadFileCustom } from '@components/Common';
 import { useFormikContext } from 'formik';
 import { ImageModel, ProductRequest } from '@models/Product';
 import { FieldImageProps } from '@models/Image';
-import { postImage } from '@services/imageService';
+import { postImages } from '@services/imageService';
 import { toast } from 'react-toastify';
 import { DialogAction } from '@interface/common';
 
@@ -37,7 +37,7 @@ export const ImageDialog = memo((props: Props) => {
         formData.append('images', value);
       });
 
-      const response = await postImage(formData);
+      const response = await postImages(formData);
       toast.success('Tải ảnh thành công!');
 
       if (response.data) {

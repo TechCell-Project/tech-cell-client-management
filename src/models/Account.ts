@@ -1,4 +1,5 @@
 import { Paging, PagingResponse } from './Common';
+import { District, Location, Province, Ward } from '@models/Location';
 
 export class PagingAccount extends Paging {
   order_field?: string | null = null;
@@ -16,31 +17,41 @@ export class AccountSlice {
 }
 
 export class UserAccount {
-  _id?: string;
-  email?: string;
-  emailVerified?: boolean;
-  role?: string;
-  address?: Address[];
-  firstName?: string;
-  lastName?: string;
+  _id: string | null = null;
+  email: string | null = null;
+  emailVerified: boolean = false;
+  role: string | null = null;
+  userName: string | null = null;
+  avatar: string = '';
+  address: Address[] = new Array<Address>();
+  accessToken: string | null = null;
+  refreshToken: string | null = null;
+  firstName: string | null = null;
+  lastName: string | null = null;
   block?: {
     isBlocked?: boolean;
     activityLogs?: ActivityLog[];
   };
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string | null = null;
+  updatedAt: string | null = null;
 }
 
 export class Address {
-  provinceLevel?: string;
-  districtLevel?: string;
-  communeLevel?: string;
-  detail?: string;
+  addressName: string | null = null;
+  customerName: string | null = null;
+  phoneNumbers: string | null = null;
+  provinceLevel: Province | Province[] | null = null;
+  districtLevel: District | District[] | null = null;
+  wardLevel: Ward | Ward[] | null = null;
+  detail: string | null = null;
+  isDefault: boolean = false;
+  listDistrict: Array<District> | Promise<Array<District>> = new Array<District>();
+  listWard: Array<Ward> | Promise<Array<Ward>> = new Array<Ward>();
 }
 
 export class ActivityLog {
-  activity?: string;
-  activityBy?: string;
-  activityReason?: string;
-  activityNote?: string;
+  activity: string | null = null;
+  activityBy: string | null = null;
+  activityReason: string | null = null;
+  activityNote: string | null = null;
 }

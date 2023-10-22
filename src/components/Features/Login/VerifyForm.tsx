@@ -13,7 +13,7 @@ interface Props {
   handleClose: () => void;
 }
 
-const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
+export const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
   const [countdown, setCountdown] = useState<number>(5 * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -114,5 +114,3 @@ const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
     </ShowDialog>
   );
 });
-
-export default VerifyForm;

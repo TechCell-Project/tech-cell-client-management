@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { TITLE_TECHCELL } from '@constants/data';
 import { LoadingPage } from '@components/Common';
 
-const CategoryDynamic = dynamic(() => import('@components/Form').then((res) => res.Category), {
+const CategoryDynamic = dynamic(() => import('@components/Features').then((res) => res.Category), {
   ssr: false,
   loading: () => <LoadingPage isLoading={true} isBlur />,
 });

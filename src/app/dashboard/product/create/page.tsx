@@ -6,7 +6,7 @@ import { TITLE_TECHCELL } from '@constants/data';
 import { LoadingPage } from '@components/Common';
 
 const ProductCreateDynamic = dynamic(
-  () => import('@components/Form').then((res) => res.ProductCreate),
+  () => import('@components/Features').then((res) => res.ProductCreate),
   {
     ssr: false,
     loading: () => <LoadingPage isLoading={true} isBlur />,

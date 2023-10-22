@@ -45,7 +45,7 @@ export const Account = () => {
     })).then();
   };
 
-  const rows: IColumnAccount[] = accounts.data?.map((account, i) => ({
+  const rows = accounts.data?.map((account, i) => ({
     id: account._id,
     no: getIndexNo(i, searchAccount.page, searchAccount.pageSize),
     name: `${account.firstName} ${account.lastName}`,
@@ -67,7 +67,7 @@ export const Account = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams<any>) => [
+      getActions: (params: GridRowParams) => [
         <Tooltip title='Chi tiết' key={params.row.no}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}

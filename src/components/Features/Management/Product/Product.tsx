@@ -14,14 +14,11 @@ import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
 import { IColumnProduct } from '@interface/data';
-import { DeleteProductDialog } from '@components/Form/Management/Product/Dialog/DeleteProductDialog';
+import { DeleteProductDialog } from './Dialog/DeleteProductDialog';
 import { PagingProduct } from '@models/Product';
 import { Form, Formik } from 'formik';
 import Grid from '@mui/material/Grid';
 import {
-  ACCOUNT_EMAIL_OPTIONS,
-  ACCOUNT_ROLE_OPTIONS,
-  ACCOUNT_STATUS_OPTIONS,
   PRODUCT_TYPE_OPTIONS,
 } from '@constants/options';
 import Box from '@mui/material/Box';
@@ -90,7 +87,7 @@ export const Product = () => {
   return (
     <>
       <Formik
-        initialValues={{...searchProduct}}
+        initialValues={{ ...searchProduct }}
         onSubmit={(values) => {
           setSearchProduct(values);
           setPaging((prev) => ({ ...prev, page: 0 }));

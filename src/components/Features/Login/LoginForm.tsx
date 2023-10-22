@@ -20,7 +20,7 @@ import { ButtonCustom } from '@components/Common';
 import { ForgotPassword } from '../ForgotPassword/ForgotPassword';
 import { useAppDispatch } from '@store/store';
 import { login } from '@store/slices/authSlice';
-import VerifyForm from '@components/Form/Login/VerifyForm';
+import { VerifyForm } from '@components/Features';
 
 
 export const LoginForm = memo(() => {

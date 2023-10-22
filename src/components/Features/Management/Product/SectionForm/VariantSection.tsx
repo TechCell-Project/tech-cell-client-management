@@ -17,8 +17,8 @@ import { AttributeDialog } from '../Dialog/AttributeDialog';
 import { ImageDialog } from '../Dialog/ImageDialog';
 import { FieldImageProps } from '@models/Image';
 import { getCountImage } from '@utils/index';
-import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
-import { DeleteVariationDialog } from '@components/Form/Management/Product/Dialog/DeleteVariationDialog';
+import { TextFieldCustom } from '@components/Common';
+import { DeleteVariationDialog } from '../Dialog/DeleteVariationDialog';
 
 export const VariantSection = memo(() => {
   const theme = useTheme();

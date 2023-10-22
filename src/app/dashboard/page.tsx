@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { TITLE_TECHCELL } from '@constants/data';
 import { LoadingPage } from '@components/Common';
 
-const StatisticsDynamic = dynamic(() => import('@components/Form').then((res) => res.Statistics), {
+const StatisticsDynamic = dynamic(() => import('@components/Features').then((res) => res.Statistics), {
   ssr: false,
   loading: () => <LoadingPage isLoading={true} isBlur />,
 });

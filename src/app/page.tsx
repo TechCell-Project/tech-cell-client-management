@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Login } from "@components/Form";
+import { Login } from "@components/Features";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { authenticate } from "@store/slices/authSlice";
 import { LoadingPage } from "@components/Common";
