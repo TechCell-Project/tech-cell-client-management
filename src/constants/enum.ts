@@ -3,7 +3,7 @@ export enum Roles {
   Admin = "Admin",
   Mod = "Mod",
   SuperAdmin = "SuperAdmin",
-}   
+}
 
 export enum ProductStatus {
   ComingSoon = 1,

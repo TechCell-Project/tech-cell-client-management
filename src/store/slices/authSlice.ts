@@ -1,5 +1,4 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { IAuthSlice } from '@interface/auth';
 import { fetchLogin } from '@services/authServices';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -96,7 +95,7 @@ export const getCurrentUser = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const editProfileInfo = (payload: ProfileInfoRequest) => async (dispatch: Dispatch) => {
+export const editProfileInfo = (payload: Partial<UserAccount>) => async (dispatch: Dispatch) => {
   dispatch(isLoadingProfile());
   try {
     const response = await patchProfileInfo(payload);

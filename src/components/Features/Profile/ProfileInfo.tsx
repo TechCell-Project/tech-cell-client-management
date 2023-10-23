@@ -18,12 +18,14 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
   const dispatch = useAppDispatch();
 
   const handleSubmit = (values: UserAccount, { setSubmitting }: FormikHelpers<UserAccount>) => {
-    const payload = new ProfileInfoRequest(values);
-    if (!payload.avatar) {
-      payload.avatar = '';
+    const valueChanged: Partial<UserAccount> = {};
+    for (const key in values) {
+      if ((values as any)[key] !== (user as any)[key]) {
+        (valueChanged as any)[key] = (values as any)[key];
+      }
     }
 
-    dispatch(editProfileInfo(payload)).then().finally(() => {
+    dispatch(editProfileInfo(valueChanged)).then().finally(() => {
       setSubmitting(false);
       handleClose();
     });
@@ -31,19 +33,13 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
 
   return (
     <Formik
-      initialValues={{
-        ...user as UserAccount,
-        role: getRole(user?.role),
-        block: user?.block && user?.block.isBlocked ? 'Bị chặn' : 'Hoạt động',
-        createdAt: formatDateViVN(String(user?.createdAt)),
-        updatedAt: formatDateViVN(String(user?.updatedAt)),
-      }}
+      initialValues={{ ...user as UserAccount }}
       onSubmit={handleSubmit}>
       {({ values, dirty, isSubmitting }) => {
         return (
           <Form>
             <Stack flexDirection='row' alignItems='flex-start' gap={5}>
-              <ProfileAvatar initAvatar={values.avatar} />
+              <ProfileAvatar />
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <p style={{ fontSize: '13px', fontWeight: 600 }}>1. Thông tin mặc định</p>
@@ -69,16 +65,19 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
                   <TextFieldCustom name='_id' label='ID' readOnly />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='block' label='Trạng thái' readOnly />
+                  <TextFieldCustom name='a' label='Trạng thái' readOnly
+                    defaultValue={values?.block && values?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'} />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='createdAt' label='Ngày tạo' readOnly />
+                  <TextFieldCustom name='b' label='Ngày tạo' readOnly
+                    defaultValue={formatDateViVN(String(values?.createdAt))} />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='updatedAt' label='Ngày cập nhật' readOnly />
+                  <TextFieldCustom name='c' label='Ngày cập nhật' readOnly
+                    defaultValue={formatDateViVN(String(values?.updatedAt))} />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='role' label='Vai trò' readOnly />
+                  <TextFieldCustom name='d' label='Vai trò' readOnly defaultValue={getRole(values.role)} />
                 </Grid>
                 <Grid item xs={12} mt={1}>
                   <p style={{ fontSize: '13px', fontWeight: 600 }}>2. Thông tin chỉnh sửa</p>

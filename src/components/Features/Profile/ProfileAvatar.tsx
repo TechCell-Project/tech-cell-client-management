@@ -10,9 +10,9 @@ import { ButtonCustom } from '@components/Common';
 import { postImage } from '@services/imageService';
 import { toast } from 'react-toastify';
 
-export const ProfileAvatar = memo(({ initAvatar }: { initAvatar: string }) => {
-  const [avatar, setAvatar] = useState<string | File>(initAvatar);
-  const { setFieldValue } = useFormikContext<UserAccount>();
+export const ProfileAvatar = memo(() => {
+  const { values, setFieldValue } = useFormikContext<UserAccount>();
+  const [avatar, setAvatar] = useState<string | File>(values.avatar);
 
   const handleDrop = (dropped: File[]) => {
     if (dropped.length > 0) {
@@ -28,7 +28,7 @@ export const ProfileAvatar = memo(({ initAvatar }: { initAvatar: string }) => {
       const { data, status } = await postImage(formData);
       if (status === 201) {
         toast.success('Tải ảnh thành công!');
-        setFieldValue('avatar', data.url).then();
+        setFieldValue('avatar', data.publicId).then();
       } else {
         toast.error('Tải ảnh thất bại!');
       }

@@ -5,6 +5,6 @@ import { ProfileAddressRequest, ProfileInfoRequest } from '@models/Profile';
 
 export const getProfile = () => instance.get<UserAccount>(PROFILE_ENDPOINT);
 
-export const patchProfileInfo = (payload: ProfileInfoRequest) => instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/info`, payload);
+export const patchProfileInfo = (payload: Partial<UserAccount>) => instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/info`, payload);
 
 export const patchProfileAddress = (payload: ProfileAddressRequest) => instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/address`, payload);

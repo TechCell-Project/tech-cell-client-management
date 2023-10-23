@@ -8,6 +8,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { deleteProduct, getProductById, getProducts, postProduct, putProduct } from '@services/productService';
 import { toast } from 'react-toastify';
 import { PagingResponse } from '@models/Common';
+import { HttpStatusCode } from 'axios';
 
 const initialState: ProductSlice = {
   products: new PagingResponse<ProductModel>(),
@@ -126,8 +127,8 @@ export const editProduct = (payload: Partial<ProductModel>, id: string) => async
 export const removeProduct = (id: string) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
-    const response = await deleteProduct(id);
-    if (response.status === 200) {
+    const { status } = await deleteProduct(id);
+    if (status === HttpStatusCode.Ok) {
       dispatch(deleteSuccess(id));
       toast.success('Xóa sản phẩm thành công!');
     } else {
