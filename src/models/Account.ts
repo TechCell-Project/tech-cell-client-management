@@ -1,5 +1,6 @@
 import { Paging, PagingResponse } from './Common';
 import { District, Location, Province, Ward } from '@models/Location';
+import { ImageModel } from '@models/Product';
 
 export class PagingAccount extends Paging {
   order_field?: string | null = null;
@@ -22,7 +23,8 @@ export class UserAccount {
   emailVerified: boolean = false;
   role: string | null = null;
   userName: string | null = null;
-  avatar: string = '';
+  avatar: ImageModel | Blob = new ImageModel();
+  avatarPublicId?: string | null = null;
   address: Address[] = new Array<Address>();
   accessToken: string | null = null;
   refreshToken: string | null = null;

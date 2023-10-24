@@ -11,12 +11,16 @@ import { formatDateViVN, getRole } from '@utils/funcs';
 import Stack from '@mui/material/Stack';
 import { ProfileAvatar } from '@components/Features/Profile/ProfileAvatar';
 import { editProfileInfo, getCurrentUser } from '@store/slices/authSlice';
+import { postImage } from '@services/imageService';
+import { HttpStatusCode } from 'axios';
+import { toast } from 'react-toastify';
+import { profileInfoValidate } from '@validate/profile.validate';
 
 export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) => {
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (values: UserAccount, { setSubmitting }: FormikHelpers<UserAccount>) => {
+  const handleSubmit = async (values: UserAccount, { setSubmitting }: FormikHelpers<UserAccount>) => {
     const valueChanged: Partial<UserAccount> = {};
     for (const key in values) {
       if ((values as any)[key] !== (user as any)[key]) {
@@ -24,18 +28,35 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
       }
     }
 
-    dispatch(editProfileInfo(valueChanged))
-      .then(() => dispatch(getCurrentUser()))
-      .finally(() => {
-        setSubmitting(false);
-        handleClose();
-      });
+    try {
+      if (valueChanged.avatar) {
+        const formData = new FormData();
+        formData.append('image', valueChanged.avatar as Blob);
+
+        const { data, status } = await postImage(formData);
+        if (status === HttpStatusCode.Created) {
+          valueChanged.avatarPublicId = data.publicId;
+          delete valueChanged.avatar;
+        }
+      }
+      dispatch(editProfileInfo(valueChanged))
+        .then(() => dispatch(getCurrentUser()))
+        .finally(() => {
+          setSubmitting(false);
+          handleClose();
+        });
+    } catch {
+      toast.error('Cập nhật thông tin hồ sơ thất bại!');
+    }
   };
 
   return (
     <Formik
       initialValues={{ ...user as UserAccount }}
-      onSubmit={handleSubmit}>
+      enableReinitialize
+      onSubmit={handleSubmit}
+      validationSchema={profileInfoValidate}
+    >
       {({ values, dirty, isSubmitting }) => {
         return (
           <Form>

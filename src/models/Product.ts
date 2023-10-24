@@ -26,8 +26,6 @@ export class ImageModel {
   publicId?: string | null = null;
   url?: string | null = null;
   isThumbnail?: boolean = false;
-  isPlaceholder?: boolean = false;
-  isDeleted?: boolean = false;
 }
 
 export class ProductRequest {

@@ -16,3 +16,8 @@ export const profileAddressValidate = Yup.object({
     }),
   ),
 });
+
+export const profileInfoValidate = Yup.object({
+  firstName: Yup.string().required('Vui lòng nhập tên!'),
+  lastName: Yup.string().required('Vui lòng nhập họ!'),
+})
