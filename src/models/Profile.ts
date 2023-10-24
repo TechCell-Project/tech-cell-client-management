@@ -2,21 +2,21 @@ import { Address, UserAccount } from '@models/Account';
 import { getDistrict, getWard } from '@services/locationService';
 import { District, Province, Ward } from '@models/Location';
 
-export class ProfileInfoRequest {
-  userName: string | null = null;
-  firstName: string | null = null;
-  lastName: string | null = null;
-  avatar: string | null = null;
-
-  constructor(values: UserAccount) {
-    Object.assign(this, {
-      userName: values.userName,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      avatar: values.avatar,
-    });
-  }
-}
+// export class ProfileInfoRequest {
+//   userName: string | null = null;
+//   firstName: string | null = null;
+//   lastName: string | null = null;
+//   avatar: string | null = null;
+//
+//   constructor(values: UserAccount) {
+//     Object.assign(this, {
+//       userName: values.userName,
+//       firstName: values.firstName,
+//       lastName: values.lastName,
+//       avatar: values.avatar,
+//     });
+//   }
+// }
 
 export class ProfileAddressRequest {
   address: Array<Address> = new Array<Address>();

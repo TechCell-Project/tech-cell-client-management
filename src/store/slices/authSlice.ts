@@ -1,11 +1,12 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { fetchLogin } from '@services/authServices';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import { AuthSlice, LoginModel } from '@models/Auth';
 import { UserAccount } from '@models/Account';
 import { getProfile, patchProfileAddress, patchProfileInfo } from '@services/profileService';
-import { ProfileAddressRequest, ProfileInfoRequest } from '@models/Profile';
+import { ProfileAddressRequest } from '@models/Profile';
+import { getAccessToken, getRefreshToken } from '@utils/local';
 
 const initialState: AuthSlice = {
   user: new UserAccount(),
@@ -86,9 +87,15 @@ export const login =
 export const getCurrentUser = () => async (dispatch: Dispatch) => {
   dispatch(isLoadingProfile());
   try {
-    const response = await getProfile();
-    if (response.status === 200) {
-      dispatch(getUserSuccess(response.data));
+    const { status, data } = await getProfile();
+    if (status === HttpStatusCode.Ok) {
+      const extendsUser: UserAccount = {
+        ...data,
+        accessToken: String(getAccessToken()),
+        refreshToken: String(getRefreshToken()),
+      };
+      localStorage.setItem('user', JSON.stringify(extendsUser));
+      dispatch(getUserSuccess(extendsUser));
     }
   } catch {
     dispatch(loadedProfile());
@@ -96,32 +103,24 @@ export const getCurrentUser = () => async (dispatch: Dispatch) => {
 };
 
 export const editProfileInfo = (payload: Partial<UserAccount>) => async (dispatch: Dispatch) => {
-  dispatch(isLoadingProfile());
   try {
-    const response = await patchProfileInfo(payload);
-    if (response.status === 200) {
+    const { status } = await patchProfileInfo(payload);
+    if (status === HttpStatusCode.Ok) {
       toast.success('Cập nhật thông tin hồ sơ thành công!');
-      dispatch(getUserSuccess(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data));
     }
   } catch {
     toast.error('Cập nhật thông tin hồ sơ thất bại!');
-    dispatch(loadedProfile());
   }
 };
 
 export const editProfileAddress = (payload: ProfileAddressRequest) => async (dispatch: Dispatch) => {
-  dispatch(isLoadingProfile());
   try {
-    const response = await patchProfileAddress(payload);
-    if (response.status === 200) {
+    const { status } = await patchProfileAddress(payload);
+    if (status === HttpStatusCode.Ok) {
       toast.success('Cập nhật địa chỉ hồ sơ thành công!');
-      dispatch(getUserSuccess(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data));
     }
   } catch {
     toast.error('Cập nhật địa chỉ hồ sơ thất bại!');
-    dispatch(loadedProfile());
   }
 };
 

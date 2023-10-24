@@ -6,8 +6,6 @@ import { ProfileInfo } from './ProfileInfo';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useTheme } from '@mui/material/styles';
-import { getCurrentUser, getUserSuccess } from '@store/slices/authSlice';
-import { useAppDispatch } from '@store/store';
 
 export const Profile = ({ isOpen, handleClose }: DialogAction) => {
   const [tabIndex, setTabIndex] = useState<number>(0);

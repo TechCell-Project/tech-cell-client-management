@@ -28,6 +28,7 @@ export class UserAccount {
   refreshToken: string | null = null;
   firstName: string | null = null;
   lastName: string | null = null;
+  password?: string | null = null;
   block?: {
     isBlocked?: boolean;
     activityLogs?: ActivityLog[];

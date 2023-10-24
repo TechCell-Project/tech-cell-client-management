@@ -8,10 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import TextField from '@mui/material/TextField';
 import { formatDateViVN, getRole } from '@utils/funcs';
-import { ProfileInfoRequest } from '@models/Profile';
 import Stack from '@mui/material/Stack';
 import { ProfileAvatar } from '@components/Features/Profile/ProfileAvatar';
-import { editProfileInfo } from '@store/slices/authSlice';
+import { editProfileInfo, getCurrentUser } from '@store/slices/authSlice';
 
 export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) => {
   const { user } = useAppSelector((state) => state.auth);
@@ -25,10 +24,12 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
       }
     }
 
-    dispatch(editProfileInfo(valueChanged)).then().finally(() => {
-      setSubmitting(false);
-      handleClose();
-    });
+    dispatch(editProfileInfo(valueChanged))
+      .then(() => dispatch(getCurrentUser()))
+      .finally(() => {
+        setSubmitting(false);
+        handleClose();
+      });
   };
 
   return (
