@@ -1,7 +1,7 @@
 import instance from '@services/instance';
 import { UserAccount } from '@models/Account';
 import { PROFILE_ENDPOINT } from '@constants/service';
-import { ProfileAddressRequest, ProfileInfoRequest } from '@models/Profile';
+import { ProfileAddressRequest } from '@models/Profile';
 
 export const getProfile = () => instance.get<UserAccount>(PROFILE_ENDPOINT);
 
