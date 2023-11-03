@@ -1,6 +1,6 @@
-import instance from './instance';
 import { AUTH_ENDPOINT } from '@constants/service';
 import { ForgotPasswordModel, AccountChangePass, LoginModel } from '@models/Auth';
+import instance from '@config/axios.config';
 
 export const fetchLogin = (payload: LoginModel) =>
   instance.post(`${AUTH_ENDPOINT}/login`, payload);

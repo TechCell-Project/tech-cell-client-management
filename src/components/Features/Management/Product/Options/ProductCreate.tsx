@@ -27,12 +27,16 @@ export const ProductCreate = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
+  const [initValue, setInitValue] = useState<ProductRequest>(new ProductRequest());
 
   const handleSubmit = async (
-    values: ProductRequest,
+    values: Partial<ProductRequest>,
     { resetForm, setSubmitting }: FormikHelpers<ProductRequest>,
   ) => {
     try {
+      if(values.listTempAtt) {
+        delete values.listTempAtt;
+      }
       const response = await dispatch(createNewProduct(values));
 
       if (response?.success) {
@@ -52,8 +56,8 @@ export const ProductCreate = () => {
   return (
     <Box component='div' sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
       <Formik
+        initialValues={{ ...initValue }}
         enableReinitialize
-        initialValues={new ProductRequest()}
         onSubmit={handleSubmit}
         validationSchema={requestProductValidate}
       >

@@ -1,7 +1,7 @@
-import instance from '@services/instance';
 import { UserAccount } from '@models/Account';
 import { PROFILE_ENDPOINT } from '@constants/service';
 import { ProfileAddressRequest } from '@models/Profile';
+import instance from '@config/axios.config';
 
 export const getProfile = () => instance.get<UserAccount>(PROFILE_ENDPOINT);
 

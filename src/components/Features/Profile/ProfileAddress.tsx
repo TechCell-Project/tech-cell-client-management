@@ -2,27 +2,27 @@ import React, { memo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { District, Province, Ward } from '@models/Location';
-import { getDistrict, getProvince, getWard } from '@services/locationService';
+import { getProvince } from '@services/locationService';
 import Grid from '@mui/material/Grid';
 import { AutocompleteCustom, ButtonCustom, TextFieldCustom } from '@components/Common';
 import { ProfileAddressRequest } from '@models/Profile';
-import { Address, UserAccount } from '@models/Account';
+import { Address } from '@models/Account';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import { editProfileAddress } from '@store/slices/authSlice';
+import { editProfileAddress, getCurrentUser } from '@store/slices/authSlice';
 import { profileAddressValidate } from '@validate/profile.validate';
+import { toast } from 'react-toastify';
+import { patchProfileAddress } from '@services/profileService';
+import { HttpStatusCode } from 'axios';
 
 export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
   const [provinces, setProvinces] = useState<Array<Province>>(new Array<Province>());
-  const [initValues, setInitValues] = useState<ProfileAddressRequest>(
-    new ProfileAddressRequest(user?.address as Array<Address>),
-  );
 
   useEffect(() => {
     getProvince()
@@ -30,36 +30,46 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
       .catch(() => setProvinces(new Array<Province>()));
   }, []);
 
-  useEffect(() => {
-    if (user?.address && user?.address?.length > 0) {
-      const newValue = user.address.map((item) => {
-        const { province_id } = item.provinceLevel as Province;
-        const { district_id } = item.districtLevel as District;
-
-        getDistrict(String(province_id))
-          .then(({ data }) => item.listDistrict = data)
-          .catch(() => item.listDistrict = []);
-        getWard(String(district_id))
-          .then(({ data }) => item.listWard = data)
-          .catch(() => item.listWard = []);
-
-        return item;
-      });
-
-      setInitValues(new ProfileAddressRequest(newValue));
-    }
-  }, [user?.address]);
-
   const handleSubmit = (values: ProfileAddressRequest, { setSubmitting }: FormikHelpers<ProfileAddressRequest>) => {
-    dispatch(editProfileAddress(values)).then().finally(() => {
-      setSubmitting(false);
-      handleClose();
+    values.address = values.address.map((item) => {
+      if (item.listDistrict) {
+        delete item.listDistrict;
+      }
+      if (item.listWard) {
+        delete item.listWard;
+      }
+      return item;
     });
+
+    // try {
+    //   const { status } = await patchProfileAddress(values);
+    //   if (status === HttpStatusCode.Ok) {
+    //     toast.success('Cập nhật địa chỉ thành công!');
+    //     await dispatch(getCurrentUser());
+    //   }
+    //
+    // } catch {
+    //   toast.error('Cập nhật địa chỉ thất bại!');
+    // } finally {
+    //   setSubmitting(false);
+    //   handleClose();
+    // }
+
+    patchProfileAddress(values)
+      .then(() => {
+        toast.success('Cập nhật địa chỉ thành công!');
+        dispatch(getCurrentUser()).then();
+      })
+      .catch(() => toast.error('Cập nhật địa chỉ thất bại!'))
+      .finally(() => {
+        setSubmitting(false);
+        handleClose();
+      });
   };
 
   return (
     <Formik
-      initialValues={{ ...initValues }}
+      initialValues={new ProfileAddressRequest(user?.address as Array<Address>)}
       enableReinitialize
       onSubmit={handleSubmit}
       validationSchema={profileAddressValidate}
@@ -98,7 +108,7 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
                         </Stack>
                       </Grid>
                       <Grid item md={3}>
-                        <AutocompleteCustom
+                        <AutocompleteCustom<Province>
                           name={`address[${i}].provinceLevel`}
                           isNotCheckbox
                           label='Tỉnh / thành'
@@ -127,7 +137,7 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
                         />
                       </Grid>
                       <Grid item md={3}>
-                        <AutocompleteCustom
+                        <AutocompleteCustom<District>
                           name={`address[${i}].districtLevel`}
                           label='Quận / huyện'
                           isNotCheckbox
@@ -154,7 +164,7 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
                         />
                       </Grid>
                       <Grid item md={3}>
-                        <AutocompleteCustom
+                        <AutocompleteCustom<Ward>
                           name={`address[${i}].wardLevel`}
                           label='Xã / phường'
                           isNotCheckbox

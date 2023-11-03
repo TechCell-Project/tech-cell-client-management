@@ -41,18 +41,19 @@ export const InforSection = memo(() => {
   }, [searchCategory, dispatch]);
 
   const handleChangeCategory = useCallback(
-    (values: CategoryModel) => {
-      if (values?.label) {
+    (payload: CategoryModel) => {
+      if (payload?.label) {
         setIsFetchCategory(true);
         setFieldValue('generalAttributes', new Array<AttributeDynamics>()).then();
-        getCategoryByLabel(values.label)
+
+        getCategoryByLabel(payload.label)
           .then(({ data }: { data: CategoryModel }) => {
             const attributes: AttributeModel[] = data.requireAttributes ?? [];
 
             const newGeneralAttributes: AttributeDynamics[] = attributes.map((attribute) => ({
               k: attribute.label,
-              v: null,
-              u: null,
+              v: values.listTempAtt.find((item) => item.k === attribute.label)?.v ?? null,
+              u: values.listTempAtt.find((item) => item.k === attribute.label)?.u ?? null,
               name: attribute.name,
             }));
 
@@ -117,15 +118,15 @@ export const InforSection = memo(() => {
             displaySelected='label'
             handleChange={(value) => {
               setFieldValue('category', value).then();
+              if (values.generalAttributes) {
+                values.listTempAtt = values.generalAttributes;
+              }
               handleChangeCategory(value as CategoryModel);
             }}
             searchValue={searchCategory.keyword}
             handleChangeSearchValue={({ target }) =>
               setSearchCategory((prev) => ({ ...prev, keyword: target.value }))
             }
-            // handleChangeSearchValue={(e, newInputValue) =>
-            //   setSearchCategory((prev) => ({ ...prev, keyword: newInputValue }))
-            // }
             handleBlurSearchValue={() => {
               if (searchCategory.keyword) {
                 setSearchCategory(new Paging());

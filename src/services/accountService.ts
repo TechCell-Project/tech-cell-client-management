@@ -1,22 +1,12 @@
 import { USERS_ENDPOINT } from '@constants/service';
-import instance from './instance';
 import { RegisterModel } from '@models/Auth';
-import { Paging, PagingResponse } from '@models/Common';
+import { PagingResponse } from '@models/Common';
 import { PagingAccount, UserAccount } from '@models/Account';
+import instance from '@config/axios.config';
+import { getSearchParams } from '@utils/funcs';
 
 export const getAllAccounts = (payload: PagingAccount) => {
-  let url = new URLSearchParams();
-
-  Object.entries(payload).map(([key, value]) => {
-    if(key === "page") {
-      value += 1;
-    }
-    if(value === null || !value) {
-      return;
-    }
-    url.append(key, value);
-  });
-
+  let url = getSearchParams(payload)
   return instance.get<PagingResponse<UserAccount>>(USERS_ENDPOINT + "?" + url.toString());
 };
 

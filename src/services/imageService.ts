@@ -1,6 +1,6 @@
-import instance from './instance';
 import { IMAGES_ENDPOINT } from '@constants/service';
 import { ImageModel } from '@models/Product';
+import instance from '@config/axios.config';
 
 export const getImageById = (id: string) =>
   instance.get(`${IMAGES_ENDPOINT}/${id}`);

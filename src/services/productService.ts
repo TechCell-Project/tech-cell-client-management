@@ -1,15 +1,15 @@
 import { PRODUCTS_ENDPOINT } from '@constants/service';
-import instance from './instance';
 import { PagingProduct, ProductModel, ProductRequest } from '@models/Product';
 import { PagingResponse } from '@models/Common';
 import { getSearchParams } from '@utils/funcs';
+import instance from '@config/axios.config';
 
 export const getProducts = (payload: PagingProduct) => {
   const url = getSearchParams(payload);
   return instance.get<PagingResponse<ProductModel>>(PRODUCTS_ENDPOINT + "?" + url);
 };
 
-export const postProduct = (payload: ProductRequest) =>
+export const postProduct = (payload: Partial<ProductRequest>) =>
   instance.post<ProductModel>(PRODUCTS_ENDPOINT, payload);
 
 export const getProductById = (id: string, isDetails?: boolean) => {

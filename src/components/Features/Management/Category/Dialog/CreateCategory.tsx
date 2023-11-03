@@ -26,7 +26,7 @@ export const CreateCategory = (props: Props) => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     timeoutId = setTimeout(() => {
-      dispatch(getAllAttributes(searchAttribute)).then();
+      dispatch(getAllAttributes({ ...searchAttribute, pageSize: 40 })).then();
     }, 500);
 
     return () => {

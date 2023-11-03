@@ -30,8 +30,10 @@
             "@validate/*": ["validate/*"],
             "@styled-mui/*": ["styled-mui/*"],
             "@interface/*": ["interface/*"],
-            "@models/*": ["models/*"],            
-            "@utils/*": ["utils/*"],            
+            "@models/*": ["models/*"],
+            "@utils/*": ["utils/*"],
+            "@hooks/*": ["hooks/*"],
+            "@config/*": ["config/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "env.d.ts"],

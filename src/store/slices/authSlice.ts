@@ -31,6 +31,7 @@ export const authSlice = createSlice({
     getUserSuccess: (state, { payload }) => {
       state.user = payload;
       state.isLoadingProfile = false;
+      state.isAuthenticated = true;
     },
     authenticatedSuccess: (state) => {
       state.isLoading = false;

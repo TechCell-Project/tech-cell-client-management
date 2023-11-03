@@ -1,8 +1,8 @@
-import instance from './instance';
 import { CATEGORIES_ENDPOINT } from '@constants/service';
 import { CategoryModel } from '@models/Category';
 import { Paging, PagingResponse } from '@models/Common';
 import { getSearchParams } from '@utils/funcs';
+import instance from '@config/axios.config';
 
 export const getCategories = (payload: Paging) => {
   const url = getSearchParams(payload);

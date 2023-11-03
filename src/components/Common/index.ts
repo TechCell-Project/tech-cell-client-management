@@ -9,6 +9,7 @@ export * from './FormGroup/ButtonCustom';
 export * from './FormGroup/PasswordCustom';
 export * from './FormGroup/SelectCustom';
 export * from './FormGroup/UploadFileCustom';
+export * from './FormGroup/TextViewCustom';
 
 export * from './FormFormik/AutocompleteCustom';
 export * from './FormFormik/TextFieldCustom';

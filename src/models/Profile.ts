@@ -24,6 +24,24 @@ export class ProfileAddressRequest {
   constructor(values: Array<Address>) {
     if (values.length > 0) {
       Object.assign(this, { address: values });
+
+      // this.address = values.map((item) => {
+      //   const { province_id } = item?.provinceLevel as Province ?? null;
+      //   const { district_id } = item?.districtLevel as District ?? null;
+      //
+      //   if (province_id) {
+      //     getDistrict(String(province_id))
+      //       .then(({ data }) => item.listDistrict = data)
+      //       .catch(() => item.listDistrict = new Array<District>());
+      //   }
+      //   if (district_id) {
+      //     getWard(String(district_id))
+      //       .then(({ data }) => item.listWard = data)
+      //       .catch(() => item.listWard = new Array<Ward>);
+      //   }
+      //
+      //   return item;
+      // });
     }
   }
 

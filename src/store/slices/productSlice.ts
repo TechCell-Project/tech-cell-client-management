@@ -95,7 +95,7 @@ export const getDetailsProduct =
       }
     };
 
-export const createNewProduct = (payload: ProductRequest) => async (dispatch: Dispatch) => {
+export const createNewProduct = (payload: Partial<ProductRequest>) => async (dispatch: Dispatch) => {
   dispatch(isFetchingDetails());
   try {
     const response = await postProduct(payload);

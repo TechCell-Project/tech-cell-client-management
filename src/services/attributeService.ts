@@ -1,8 +1,8 @@
 import { AttributeModel, CreateAttributeModel, PagingAttribute } from '@models/Attribute';
-import instance from './instance';
 import { ATTRIBUTES_ENDPOINT } from '@constants/service';
 import { getSearchParams } from '@utils/funcs';
 import { PagingResponse } from '@models/Common';
+import instance from '@config/axios.config';
 
 export const getAttributes = (payload: PagingAttribute) => {
   const url = getSearchParams(payload);

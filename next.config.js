@@ -12,7 +12,7 @@ const nextConfig = {
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
     API_KEY_TINYMCE: process.env.API_KEY_TINYMCE,
-    // API_LOCATION: process.env.API_LOCATION,
+    URL_HOST_SOCKET_IO: process.env.URL_HOST_SOCKET_IO,
   },
   experimental: {
     appDir: true,

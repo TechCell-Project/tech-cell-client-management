@@ -1,7 +1,7 @@
 // Environment variables
 export const API_BASE_URL = process.env.API_BASE_URL;
 export const API_KEY_EDITOR = process.env.API_KEY_TINYMCE;
-// export const API_LOCATION = process.env.API_LOCATION;
+export const URL_HOST_SOCKET_IO = process.env.URL_HOST_SOCKET_IO;
 
 // Authentication
 export const AUTH_ENDPOINT = '/auth';
@@ -24,6 +24,8 @@ export const ATTRIBUTES_ENDPOINT = '/attributes';
 // Images
 export const IMAGES_ENDPOINT = '/images';
 
+// Address Vietnam Location Province
 export const ADDRESS_ENDPOINT = '/address';
 
-// export const PROVINCE_ENDPOINT = '/api/province';
+// Notification Socket.io
+export const NOTIFICATION_ENDPOINT = 'notifications';
