@@ -6,6 +6,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useFormikContext } from 'formik';
 import { ButtonCustom, LoadingSection } from '@components/Common';
 import Box from '@mui/material/Box';
+import SaveAsRoundedIcon from '@mui/icons-material/SaveAsRounded';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -68,6 +69,7 @@ export const TinyEditor = memo((props: Props) => {
           apiKey={API_KEY_EDITOR}
           initialValue={value}
           init={{
+            menubar: false,
             height: 600,
             plugins: pluginTiny,
             toolbar: toolbarTiny,
@@ -80,13 +82,14 @@ export const TinyEditor = memo((props: Props) => {
           <ButtonCustom
             styles={{
               position: 'absolute',
-              top: '15px',
-              right: '15px',
+              top: '6px',
+              right: '12px',
               zIndex: 100,
             }}
-            variant='outlined'
+            variant='text'
             content='Lưu bài'
             handleClick={handleSaveContent}
+            endIcon={<SaveAsRoundedIcon />}
           />
         )}
       </>

@@ -1,4 +1,5 @@
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid/models';
+import React from 'react';
 
 export class Paging implements GridPaginationModel {
   page: number;
@@ -20,7 +21,7 @@ export class PagingResponse<T = unknown> {
 }
 
 export class DataTableProps {
-  column?: GridColDef<any>[] | null;
+  column?: GridColDef[] | null;
   row?: readonly any[];
   isLoading?: boolean;
   isQuickFilter?: boolean;

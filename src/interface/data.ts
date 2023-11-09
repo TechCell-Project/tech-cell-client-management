@@ -33,3 +33,9 @@ export interface IColumnProduct {
   generalAttributes?: number;
   variations: number;
 }
+
+export interface IColumnOrder {
+  id?: string | null;
+  no: number;
+  trackingCode: string | null;
+}

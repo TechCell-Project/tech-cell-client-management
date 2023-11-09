@@ -1,234 +1,152 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
-import { District, Province, Ward } from '@models/Location';
-import { getProvince } from '@services/locationService';
 import Grid from '@mui/material/Grid';
-import { AutocompleteCustom, ButtonCustom, TextFieldCustom } from '@components/Common';
+import { ButtonCustom, TextViewCustom } from '@components/Common';
 import { ProfileAddressRequest } from '@models/Profile';
 import { Address } from '@models/Account';
-import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import { editProfileAddress, getCurrentUser } from '@store/slices/authSlice';
-import { profileAddressValidate } from '@validate/profile.validate';
+import { getCurrentUser } from '@store/slices/authSlice';
 import { toast } from 'react-toastify';
 import { patchProfileAddress } from '@services/profileService';
 import { HttpStatusCode } from 'axios';
+import CODAddress from './COEAddress';
+import CFDeleteAddress from '@components/Features/Profile/CFDeleteAddress';
+import { getAddressLocation } from '@utils/funcs';
+import Typography from '@mui/material/Typography';
+import Image from 'next/image';
 
 export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
-  const [provinces, setProvinces] = useState<Array<Province>>(new Array<Province>());
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
+  const [currentAddress, setCurrentAddress] = useState<Address | null>(null);
+  const [addressIndex, setAddressIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    getProvince()
-      .then(({ data }) => setProvinces(data))
-      .catch(() => setProvinces(new Array<Province>()));
-  }, []);
+  const handleSetDefault = (index: number) => {
+    const newValue: Array<Address> | undefined = user?.address.map(
+      (item, i) => (
+        { ...item, isDefault: i === index }
+      ));
+    if (newValue) {
+      const values = new ProfileAddressRequest(newValue);
 
-  const handleSubmit = (values: ProfileAddressRequest, { setSubmitting }: FormikHelpers<ProfileAddressRequest>) => {
-    values.address = values.address.map((item) => {
-      if (item.listDistrict) {
-        delete item.listDistrict;
-      }
-      if (item.listWard) {
-        delete item.listWard;
-      }
-      return item;
-    });
-
-    // try {
-    //   const { status } = await patchProfileAddress(values);
-    //   if (status === HttpStatusCode.Ok) {
-    //     toast.success('Cập nhật địa chỉ thành công!');
-    //     await dispatch(getCurrentUser());
-    //   }
-    //
-    // } catch {
-    //   toast.error('Cập nhật địa chỉ thất bại!');
-    // } finally {
-    //   setSubmitting(false);
-    //   handleClose();
-    // }
-
-    patchProfileAddress(values)
-      .then(() => {
-        toast.success('Cập nhật địa chỉ thành công!');
-        dispatch(getCurrentUser()).then();
-      })
-      .catch(() => toast.error('Cập nhật địa chỉ thất bại!'))
-      .finally(() => {
-        setSubmitting(false);
-        handleClose();
-      });
+      patchProfileAddress(values)
+        .then(() => {
+          toast.success('Đổi địa chỉ mặc định thành công!');
+          dispatch(getCurrentUser()).then();
+        })
+        .catch((error) => {
+          if (error.response && error.response.status !== HttpStatusCode.Unauthorized) {
+            toast.error('Đổi địa chỉ mặc định thất bại!');
+          }
+        });
+    }
   };
 
   return (
-    <Formik
-      initialValues={new ProfileAddressRequest(user?.address as Array<Address>)}
-      enableReinitialize
-      onSubmit={handleSubmit}
-      validationSchema={profileAddressValidate}
-    >
-      {({ values, dirty, setValues, setFieldValue, isSubmitting }) => {
-        const handleSetDefault = (index: number) => {
-          const newValue: Array<Address> = values.address.map((item, i) => ({ ...item, isDefault: i === index }));
-          setFieldValue('address', newValue).then();
-        };
-
-        return (
-          <Form>
-            <FieldArray
-              name='address'
-              render={(arrayHelpers) => (
-                <Grid container spacing={2}>
-                  {values.address?.map((_, i) => (
-                    <React.Fragment key={i}>
-                      <Grid item xs={12}>
-                        <Stack flexDirection='row' justifyContent='space-between' alignItems='center'>
-                          <Stack flexDirection='row' justifyContent='flex-start' alignItems='center' gap={2}>
-                            <p style={{ fontSize: '14px', fontWeight: 600 }}>Địa chỉ {i + 1}:</p>
-                            {_.isDefault ? (
-                              <CheckCircleRoundedIcon fontSize='small' color='primary' />
-                            ) : (
-                              <ButtonCustom
-                                variant='text'
-                                content='Chọn làm mặc định'
-                                handleClick={() => handleSetDefault(i)}
-                              />
-                            )}
-                          </Stack>
-                          <IconButton onClick={() => arrayHelpers.remove(i)}>
-                            <RemoveCircleRoundedIcon />
-                          </IconButton>
-                        </Stack>
-                      </Grid>
-                      <Grid item md={3}>
-                        <AutocompleteCustom<Province>
-                          name={`address[${i}].provinceLevel`}
-                          isNotCheckbox
-                          label='Tỉnh / thành'
-                          options={provinces}
-                          displayLabel='province_name'
-                          displaySelected='province_id'
-                          handleChange={async (value) => {
-                            let newDistrict: Array<District>;
-                            // @ts-ignore
-                            if (value?.province_id) {
-                              // @ts-ignore
-                              newDistrict = await ProfileAddressRequest.loadDistricts(String(value?.province_id));
-                            }
-                            setValues(prev => {
-                              const newValue = { ...prev };
-
-                              newValue.address[i].provinceLevel = value;
-                              newValue.address[i].districtLevel = null;
-                              newValue.address[i].wardLevel = null;
-                              newValue.address[i].listWard = new Array<Ward>();
-                              newValue.address[i].listDistrict = newDistrict;
-
-                              return newValue;
-                            });
-                          }}
-                        />
-                      </Grid>
-                      <Grid item md={3}>
-                        <AutocompleteCustom<District>
-                          name={`address[${i}].districtLevel`}
-                          label='Quận / huyện'
-                          isNotCheckbox
-                          options={values.address[i].listDistrict as Array<District>}
-                          displayLabel='district_name'
-                          displaySelected='district_id'
-                          handleChange={async (value) => {
-                            let newWard: Array<Ward>;
-                            // @ts-ignore
-                            if (value?.district_id) {
-                              // @ts-ignore
-                              newWard = await ProfileAddressRequest.loadWards(String(value.district_id));
-                            }
-                            setValues(prev => {
-                              const newValue = { ...prev };
-
-                              newValue.address[i].districtLevel = value;
-                              newValue.address[i].wardLevel = null;
-                              newValue.address[i].listWard = newWard;
-
-                              return newValue;
-                            });
-                          }}
-                        />
-                      </Grid>
-                      <Grid item md={3}>
-                        <AutocompleteCustom<Ward>
-                          name={`address[${i}].wardLevel`}
-                          label='Xã / phường'
-                          isNotCheckbox
-                          options={values.address[i]?.listWard as Array<Ward>}
-                          displayLabel='ward_name'
-                          displaySelected='ward_code'
-                        />
-                      </Grid>
-
-                      <Grid item md={3}>
-                        <TextFieldCustom
-                          name={`address[${i}].addressName`}
-                          label='Địa chỉ'
-                          placeholder='Nhà, công ty,...'
-                        />
-                      </Grid>
-                      <Grid item md={3}>
-                        <TextFieldCustom name={`address[${i}].customerName`} label='Tên khách hàng' />
-                      </Grid>
-                      <Grid item md={3}>
-                        <TextFieldCustom name={`address[${i}].phoneNumbers`} label='Số điện thoại' type='number' />
-                      </Grid>
-                      <Grid item md={6}>
-                        <TextFieldCustom
-                          name={`address[${i}].detail`}
-                          label='Địa chỉ cụ thể'
-                          isTextArea
-                          minRowArea={1}
-                          maxRowArea={3}
-                        />
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-
-                  {/*{values.address.length <= 2 && (*/}
-                  <Grid item md={12} mt={2}>
-                    <ButtonCustom
-                      variant='outlined'
-                      content='Thêm địa chỉ'
-                      startIcon={<AddBoxRoundedIcon />}
-                      handleClick={() => arrayHelpers.push(new Address())}
-                    />
-                  </Grid>
-                  {/*)}*/}
-                </Grid>
-              )}
-            />
-
-            <Stack direction='row' justifyContent='flex-end' gap={1} mt={2}>
-              <ButtonCustom
-                content='Hủy bỏ'
-                variant='outlined'
-                handleClick={handleClose}
+    <>
+      <Grid container spacing={1}>
+        {user?.address?.length !== 0 ? (
+          user?.address?.map((item, i) => (
+            <React.Fragment key={i}>
+              <Grid item xs={12}>
+                <Stack flexDirection='row' justifyContent='space-between' alignItems='center'>
+                  <Stack flexDirection='row' justifyContent='flex-start' alignItems='center' gap={2}>
+                    <p style={{ fontSize: '14px', fontWeight: 600 }}>{i + 1}. {item.addressName}</p>
+                    {item.isDefault ? (
+                      <CheckCircleRoundedIcon fontSize='small' color='primary' />
+                    ) : (
+                      <ButtonCustom
+                        variant='text'
+                        content='Chọn làm mặc định'
+                        handleClick={() => handleSetDefault(i)}
+                      />
+                    )}
+                  </Stack>
+                  <Stack flexDirection='row' alignItems='center' gap='5px'>
+                    <IconButton onClick={() => {
+                      setCurrentAddress(item);
+                      setAddressIndex(i);
+                    }}>
+                      <EditRoundedIcon />
+                    </IconButton>
+                    <IconButton onClick={() => {
+                      setOpenConfirm(true);
+                      setAddressIndex(i);
+                    }}>
+                      <RemoveCircleRoundedIcon />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography fontSize='18px'>{item.customerName} &nbsp;|&nbsp; {item.phoneNumbers}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextViewCustom label='Địa chỉ' content={getAddressLocation(item)} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextViewCustom label='Địa chỉ cụ thể' content={String(item.detail)} />
+              </Grid>
+            </React.Fragment>
+          ))
+        ) : (
+          <Grid item xs={12}>
+            <Stack flexDirection='column' gap='10px' alignItems='center' justifyContent='center'>
+              <Image
+                width={250}
+                height={250}
+                src='/empty.png'
+                alt='Empty address'
+                style={{ objectFit: 'contain' }}
               />
-              <ButtonCustom
-                content='Lưu địa chỉ'
-                variant='contained'
-                type='submit'
-                disabled={!dirty || isSubmitting}
-              />
+              <Typography variant='body2' fontWeight={500}>Bạn chưa có địa chỉ nào!</Typography>
             </Stack>
-          </Form>
-        );
-      }}
-    </Formik>
+          </Grid>
+        )}
+      </Grid>
+
+      <Stack direction='row' justifyContent='flex-end' gap={1} mt={2}>
+        <ButtonCustom
+          content='Hủy bỏ'
+          variant='outlined'
+          handleClick={handleClose}
+        />
+        <ButtonCustom
+          content='Thêm địa chỉ'
+          variant='contained'
+          handleClick={() => setCurrentAddress(new Address())}
+        />
+      </Stack>
+
+      {Boolean(currentAddress) && (
+        <CODAddress
+          isOpen={Boolean(currentAddress)}
+          handleClose={() => {
+            setCurrentAddress(null);
+            setAddressIndex(null);
+          }}
+          data={currentAddress as Address}
+          index={addressIndex as number}
+        />
+      )}
+
+      {openConfirm !== null && (
+        <CFDeleteAddress
+          isOpen={openConfirm}
+          handleClose={() => {
+            setOpenConfirm(false);
+            setAddressIndex(null);
+          }}
+          addressIndex={addressIndex as number}
+        />
+      )}
+    </>
   );
 });
+

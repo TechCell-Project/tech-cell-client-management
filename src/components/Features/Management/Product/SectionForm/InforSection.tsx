@@ -52,8 +52,8 @@ export const InforSection = memo(() => {
 
             const newGeneralAttributes: AttributeDynamics[] = attributes.map((attribute) => ({
               k: attribute.label,
-              v: values.listTempAtt.find((item) => item.k === attribute.label)?.v ?? null,
-              u: values.listTempAtt.find((item) => item.k === attribute.label)?.u ?? null,
+              v: values.listTempAtt?.find((item) => item.k === attribute.label)?.v ?? null,
+              u: values.listTempAtt?.find((item) => item.k === attribute.label)?.u ?? null,
               name: attribute.name,
             }));
 
@@ -118,7 +118,7 @@ export const InforSection = memo(() => {
             displaySelected='label'
             handleChange={(value) => {
               setFieldValue('category', value).then();
-              if (values.generalAttributes) {
+              if (values.generalAttributes && values.listTempAtt) {
                 values.listTempAtt = values.generalAttributes;
               }
               handleChangeCategory(value as CategoryModel);

@@ -3,10 +3,8 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { UserAccount } from '@models/Account';
 import Grid from '@mui/material/Grid';
-import { ButtonCustom, TextFieldCustom } from '@components/Common';
-import InputAdornment from '@mui/material/InputAdornment';
+import { ButtonCustom, TextFieldCustom, TextViewCustom } from '@components/Common';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import TextField from '@mui/material/TextField';
 import { formatDateViVN, getRole } from '@utils/funcs';
 import Stack from '@mui/material/Stack';
 import { ProfileAvatar } from '@components/Features/Profile/ProfileAvatar';
@@ -67,39 +65,41 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
                   <p style={{ fontSize: '13px', fontWeight: 600 }}>1. Thông tin mặc định</p>
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <TextViewCustom
                     label='Email'
-                    value={values?.email}
-                    fullWidth
-                    variant='outlined'
-                    size='small'
-                    InputProps={{
-                      readOnly: true,
-                      endAdornment: values?.emailVerified && (
-                        <InputAdornment position='end'>
-                          <CheckCircleRoundedIcon fontSize='small' color='primary' />
-                        </InputAdornment>
-                      ),
-                    }}
+                    content={String(values.email)}
+                    unit={values?.emailVerified && <CheckCircleRoundedIcon fontSize='small' color='primary' />}
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextFieldCustom name='_id' label='ID' readOnly />
+                  <TextViewCustom
+                    label='Id'
+                    content={String(values._id)}
+                  />
                 </Grid>
-                <Grid item md={4}>
-                  <TextFieldCustom name='a' label='Trạng thái' readOnly
-                    defaultValue={values?.block && values?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'} />
+                <Grid item md={6}>
+                  <TextViewCustom
+                    label='Ngày tạo'
+                    content={formatDateViVN(String(values?.createdAt))}
+                  />
                 </Grid>
-                <Grid item md={4}>
-                  <TextFieldCustom name='b' label='Ngày tạo' readOnly
-                    defaultValue={formatDateViVN(String(values?.createdAt))} />
+                <Grid item md={6}>
+                  <TextViewCustom
+                    label='Ngày cập nhật'
+                    content={formatDateViVN(String(values?.updatedAt))}
+                  />
                 </Grid>
-                <Grid item md={4}>
-                  <TextFieldCustom name='c' label='Ngày cập nhật' readOnly
-                    defaultValue={formatDateViVN(String(values?.updatedAt))} />
+                <Grid item md={6}>
+                  <TextViewCustom
+                    label='Trạng thái'
+                    content={values?.block && values?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'}
+                  />
                 </Grid>
-                <Grid item md={4}>
-                  <TextFieldCustom name='d' label='Vai trò' readOnly defaultValue={getRole(values.role)} />
+                <Grid item md={6}>
+                  <TextViewCustom
+                    label='Vai trò'
+                    content={getRole(values.role)}
+                  />
                 </Grid>
                 <Grid item xs={12} mt={1}>
                   <p style={{ fontSize: '13px', fontWeight: 600 }}>2. Thông tin chỉnh sửa</p>

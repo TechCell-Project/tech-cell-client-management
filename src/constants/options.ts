@@ -1,11 +1,10 @@
-import { ProductStatus } from './enum';
+import { PaymentMethod, PaymentOrder, PaymentStatus, ProductStatus } from './enum';
 
 export const ROLE_OPTIONS = [
   { value: '', label: 'Không' },
   { value: 'User', label: 'Khách hàng' },
   { value: 'Mod', label: 'Điều hành viên' },
   { value: 'Admin', label: 'Quản trị viên' },
-  // { value: "SuperAdmin", label: "Quản lý" },
 ];
 
 export const STATUS_PRODUCT_OPTIONS = [
@@ -43,4 +42,22 @@ export const PRODUCT_TYPE_OPTIONS = [
   { name: 'Đang mở', value: 'only_active' },
   { name: 'Đã xóa', value: 'only_deleted' },
   { name: 'Tất cả', value: 'both_deleted_and_active' },
+];
+
+export const PAYMENT_METHOD_OPTIONS = [
+  { name: 'COD', value: PaymentMethod.COD },
+  { name: 'VNPay', value: PaymentMethod.VNPAY },
+];
+
+export const PAYMENT_STATUS_OPTIONS = [
+  { name: 'Chưa xử lý', value: PaymentStatus.PENDING },
+  { name: 'Đã hoàn thành', value: PaymentStatus.COMPLETED },
+  { name: 'Hoàn / trả hàng', value: PaymentStatus.REFUNDED },
+  { name: 'Đã hủy', value: PaymentStatus.CANCELLED },
+  { name: 'Đang xử lý', value: PaymentStatus.PROCESSING },
+];
+
+export const ORDER_STATUS_OPTIONS = [
+  ...PAYMENT_STATUS_OPTIONS,
+  { name: 'Đang vận chuyển', value: PaymentOrder.SHIPPING },
 ];

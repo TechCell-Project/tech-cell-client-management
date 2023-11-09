@@ -28,11 +28,10 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // esmExternals: false,
   images: {
     domains: ['res.cloudinary.com'],
   },
-  // Config Self-hosted Tiny MCE 
+  // Config Self-hosted Tiny MCE
   // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
   //   config.plugins.push(
   //     new CopyPlugin({

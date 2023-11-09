@@ -4,11 +4,7 @@ import AvatarEditor from 'react-avatar-editor';
 import Typography from '@mui/material/Typography';
 import styles from '@styles/components/_upload.module.scss';
 import { useFormikContext } from 'formik';
-import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import { UserAccount } from '@models/Account';
-import { ButtonCustom } from '@components/Common';
-import { postImage } from '@services/imageService';
-import { toast } from 'react-toastify';
 import { ImageModel } from '@models/Product';
 
 export const ProfileAvatar = memo(() => {
@@ -21,21 +17,6 @@ export const ProfileAvatar = memo(() => {
       setFieldValue('avatar', dropped[0]).then();
     }
   };
-
-  // const handleUpload = async () => {
-  //   if (Boolean(avatar)) {
-  //     const formData = new FormData();
-  //     formData.append('image', avatar);
-  //
-  //     const { data, status } = await postImage(formData);
-  //     if (status === 201) {
-  //       toast.success('Tải ảnh thành công!');
-  //       setFieldValue('avatar', data).then();
-  //     } else {
-  //       toast.error('Tải ảnh thất bại!');
-  //     }
-  //   }
-  // };
 
   return (
     <Dropzone
@@ -50,13 +31,6 @@ export const ProfileAvatar = memo(() => {
             <AvatarEditor width={120} height={120} image={avatar} borderRadius={1000} />
             <input {...getInputProps()} />
           </div>
-          {/*<ButtonCustom*/}
-          {/*  variant='text'*/}
-          {/*  content='Tải ảnh'*/}
-          {/*  handleClick={handleUpload}*/}
-          {/*  disabled={typeof avatar !== 'object'}*/}
-          {/*  endIcon={<CloudUploadRoundedIcon />}*/}
-          {/*/>*/}
         </div>
       )}
     </Dropzone>

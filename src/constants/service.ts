@@ -27,5 +27,8 @@ export const IMAGES_ENDPOINT = '/images';
 // Address Vietnam Location Province
 export const ADDRESS_ENDPOINT = '/address';
 
-// Notification Socket.io
-export const NOTIFICATION_ENDPOINT = 'notifications';
+// Notification
+export const NOTIFICATION_ENDPOINT = '/notifications';
+
+//Orders
+export const ORDER_ENDPOINT = '/orders-mnt'

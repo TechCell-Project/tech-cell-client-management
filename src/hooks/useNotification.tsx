@@ -1,16 +1,30 @@
 import { useEffect, useState } from 'react';
-import { Paging } from '@models/Common';
+import socket from '@config/socket_io.config';
 
-class PagingNotify extends Paging {
-  readType: string | null = null;
-}
+const useNotification = () => {
+  const [notifications, setNotifications] = useState();
 
-export const useNotification = () => {
-  const [notifications, setNotifications] = useState()
+  const handleMarkAsRead = (notificationId: string) => {
+    if (notificationId) {
+      socket.emit('mark-notification-as-read', { notificationId });
+    }
+  };
 
   useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connected to socket io server!');
+    });
 
+    socket.on('new-order-admin', (data) => {
+      setNotifications(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  return { notifications };
-}
+  return { notifications, setNotifications, handleMarkAsRead };
+};
+
+export default useNotification;

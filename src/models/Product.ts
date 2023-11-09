@@ -46,10 +46,6 @@ export class ProductModel extends ProductRequest {
   updatedAt?: string;
 }
 
-// export class ProductData extends PagingResponse {
-//   data: Array<ProductModel> = [];
-// }
-
 export class ProductSlice {
   products: PagingResponse<ProductModel> = new PagingResponse<ProductModel>();
   product: ProductModel | null = null;

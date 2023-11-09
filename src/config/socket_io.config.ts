@@ -13,4 +13,6 @@ const manager = new Manager(URL_HOST_SOCKET_IO, {
   autoConnect: false,
 });
 
-export default manager;
+const socket = manager.socket('/');
+
+export default socket;

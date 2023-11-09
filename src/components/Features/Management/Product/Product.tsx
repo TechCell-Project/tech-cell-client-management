@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllProduct } from '@store/slices/productSlice';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
 import { COLUMNS_PRODUCT } from '@constants/data';
-import { getIndexNo, getStatusProduct } from '@utils/index';
+import { getIndexNo, productStatusMapping } from '@utils/index';
 import Tooltip from '@mui/material/Tooltip';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
@@ -18,9 +18,7 @@ import { DeleteProductDialog } from './Dialog/DeleteProductDialog';
 import { PagingProduct } from '@models/Product';
 import { Form, Formik } from 'formik';
 import Grid from '@mui/material/Grid';
-import {
-  PRODUCT_TYPE_OPTIONS,
-} from '@constants/options';
+import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 
 export const Product = () => {
@@ -47,7 +45,7 @@ export const Product = () => {
       no: getIndexNo(i, searchProduct.page, searchProduct.pageSize),
       name: product.name,
       category: product.category?.name,
-      status: getStatusProduct(Number(product.status)),
+      status: productStatusMapping[Number(product.status)],
       generalAttributes: product.generalAttributes?.length,
       variations: product.variations.length,
     };
@@ -125,7 +123,6 @@ export const Product = () => {
         column={columns}
         row={rows}
         isLoading={isLoading}
-        isQuickFilter
         paginationModel={paging}
         setPaginationModel={setPaging}
         totalRecord={products.totalRecord}

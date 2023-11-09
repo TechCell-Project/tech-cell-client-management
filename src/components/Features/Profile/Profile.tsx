@@ -18,7 +18,7 @@ export const Profile = ({ isOpen, handleClose }: DialogAction) => {
 
   return (
     <ShowDialog dialogTitle='Hồ sơ' isOpen={isOpen} handleClose={handleClose}
-      dialogStyle={{ minWidth: { md: '70%' } }}>
+      dialogStyle={{ minWidth: { lg: '65%', xs: '90%' } }}>
       <div style={{ width: '100%' }}>
         <Tabs
           value={tabIndex}

@@ -1,7 +1,9 @@
 // common functions
 import { ImageModel } from '@models/Product';
-import { ProductStatus, Roles } from '@constants/enum';
+import { PaymentOrder, PaymentStatus, ProductStatus, Roles } from '@constants/enum';
 import { getCurrentUserRole } from '@utils/local';
+import { Address } from '@models/Account';
+import { District, Province, Ward } from '@models/Location';
 
 export const getCountImage = (images: ImageModel[], isThumbnail: boolean = false): number => {
   let count: number;
@@ -30,8 +32,8 @@ export const getRole = (role?: string | null) => {
   }
 };
 
-// get status product
-const productStatusMapping: { [key: number]: string } = {
+// get status ViVN
+export const productStatusMapping: { [key: number]: string } = {
   [ProductStatus.ComingSoon]: 'Sắp ra mắt',
   [ProductStatus.NewArrival]: 'Hàng mới về',
   [ProductStatus.Pre_order]: 'Đặt hàng trước',
@@ -43,8 +45,13 @@ const productStatusMapping: { [key: number]: string } = {
   [ProductStatus.Deleted]: 'Đã xóa',
 };
 
-export const getStatusProduct = (value: number): string => {
-  return productStatusMapping[value] || '?';
+export const orderStatusMapping: { [key: string]: string } = {
+  [PaymentStatus.PENDING]: 'Chưa xử lý',
+  [PaymentStatus.COMPLETED]: 'Đã hoàn thành',
+  [PaymentStatus.CANCELLED]: 'Đã hủy',
+  [PaymentStatus.REFUNDED]: 'Hoàn / trả hàng',
+  [PaymentStatus.PROCESSING]: 'Đang xử lý',
+  [PaymentOrder.SHIPPING]: 'Đang vận chuyển',
 };
 
 export const getIndexNo = (index: number, page: number, pageSize: number): number => {
@@ -102,7 +109,7 @@ export const getSearchParams = <T extends number | string = any>(payload: Record
   const url = new URLSearchParams();
 
   Object.entries(payload).map(([key, value]) => {
-    if (key === "page") {
+    if (key === 'page') {
       value = (parseInt(value as string, 10) + 1) as T;
     }
     if (value === null || !value) {
@@ -112,4 +119,12 @@ export const getSearchParams = <T extends number | string = any>(payload: Record
   });
 
   return url.toString();
+};
+
+export const getAddressLocation = (address: Address) => {
+  return `
+    ${(address.wardLevel as Ward).ward_name},
+    ${(address.districtLevel as District).district_name},
+    ${(address.provinceLevel as Province).province_name}
+  `;
 };

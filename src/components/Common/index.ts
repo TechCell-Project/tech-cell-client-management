@@ -4,6 +4,7 @@ export * from './Display/BreadcrumbPath';
 export * from './Display/ShowDialog';
 export * from './Display/FormatNumeric';
 export * from './Display/LoadingSection';
+export * from './Display/Icon';
 
 export * from './FormGroup/ButtonCustom';
 export * from './FormGroup/PasswordCustom';
@@ -16,3 +17,4 @@ export * from './FormFormik/TextFieldCustom';
 export * from './FormFormik/SelectCustom';
 
 export * from './TextEditor/TinyEditor';
+

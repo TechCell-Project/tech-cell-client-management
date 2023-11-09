@@ -1,8 +1,19 @@
+export enum RootRoutes {
+  DASHBOARD_ROUTE = '/dashboard',
+  ACCOUNT_ROUTE = '/dashboard/account',
+  PRODUCT_ROUTE = '/dashboard/product',
+  PRODUCT_CREATE_ROUTE = '/dashboard/product/create',
+  PRODUCT_EDIT_ROUTE = '/dashboard/product/edit',
+  CATEGORY_ROUTE = '/dashboard/product/category',
+  ATTRIBUTE_ROUTE = '/dashboard/product/attribute',
+  ORDER_ROUTE = '/dashboard/order',
+}
+
 export enum Roles {
-  User = "User",
-  Admin = "Admin",
-  Mod = "Mod",
-  SuperAdmin = "SuperAdmin",
+  User = 'User',
+  Admin = 'Admin',
+  Mod = 'Mod',
+  SuperAdmin = 'SuperAdmin',
 }
 
 export enum ProductStatus {
@@ -17,13 +28,19 @@ export enum ProductStatus {
   Deleted = -1,
 }
 
-export enum RootRoutes {
-  DASHBOARD_ROUTE = "/dashboard",
-  ACCOUNT_ROUTE = "/dashboard/account",
-  PRODUCT_ROUTE = "/dashboard/product",
-  PRODUCT_CREATE_ROUTE = "/dashboard/product/create",
-  PRODUCT_EDIT_ROUTE = "/dashboard/product/edit",
-  CATEGORY_ROUTE = "/dashboard/product/category",
-  ATTRIBUTE_ROUTE = "/dashboard/product/attribute",
-  ORDER_ROUTE = "/dashboard/order",
+export enum PaymentMethod {
+  COD = 'COD',
+  VNPAY = 'VNPAY',
+}
+
+export enum PaymentStatus {
+  PENDING = 'pending',
+  CANCELLED = 'cancelled',
+  COMPLETED = 'completed',
+  PROCESSING = 'processing',
+  REFUNDED = 'refunded',
+}
+
+export enum PaymentOrder {
+  SHIPPING = 'shipping',
 }

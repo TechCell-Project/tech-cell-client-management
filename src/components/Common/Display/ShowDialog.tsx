@@ -54,7 +54,7 @@ export const ShowDialog: FC<IDialog> = memo((props) => {
           <DialogContentText id='dialog-description'>{props.dialogDesc}</DialogContentText>
         </DialogContent>
       )}
-      <DialogActions sx={{ padding: '0 24px 16px 24px', gap: '10px' }}>
+      <DialogActions sx={{ padding: '0 24px 20px 24px', gap: '10px' }}>
         {props.children}
       </DialogActions>
     </Dialog>

@@ -6,10 +6,11 @@ import Stack from '@mui/material/Stack';
 
 interface Props {
   label: string;
-  content: string | number;
+  content: string;
   stylesLabel?: React.CSSProperties;
   stylesContent?: React.CSSProperties;
   titleNoContent?: string;
+  unit?: React.ReactNode;
 }
 
 export const TextViewCustom = memo((
@@ -19,12 +20,23 @@ export const TextViewCustom = memo((
     titleNoContent = '.......',
     stylesLabel,
     stylesContent,
+    unit,
   }: Props) => {
 
   return (
-    <Stack flexDirection='row' alignItems='center' justifyContent='center' gap='10px'>
-      <Typography sx={{ ...stylesLabel }}>{label}</Typography>
-      <Typography sx={{ ...stylesContent }}>{content ?? titleNoContent}</Typography>
+    <Stack flexDirection='row' alignItems='center' justifyContent='flex-start' gap='8px' width='100%'>
+      <Typography sx={{ ...stylesLabel, fontSize: '15px' }}>{label}:</Typography>
+      <Stack flexDirection='row' alignItems='center' gap='5px'>
+        <Typography sx={{
+          ...stylesContent,
+          fontSize: '15px',
+          fontWeight: 500,
+        }}
+        >
+          {content ?? titleNoContent}
+        </Typography>
+        {unit && unit}
+      </Stack>
     </Stack>
   );
 });

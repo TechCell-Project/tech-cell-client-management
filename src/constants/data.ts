@@ -86,6 +86,22 @@ export const COLUMNS_CATEGORY = [
   },
 ];
 
+export const COLUMNS_ORDER = [
+  { field: 'no', headerName: 'STT', width: 70 },
+  {
+    field: 'trackingCode',
+    headerName: 'Mã theo dõi',
+    width: 250,
+  },
+  {
+    field: 'orderStatus',
+    headerName: 'Trạng thái',
+    headerAlign: 'center',
+    align: 'center',
+    width: 150,
+  },
+];
+
 export const PATHS = [
   { pathname: RootRoutes.DASHBOARD_ROUTE, name: 'Trang chủ' },
   { pathname: RootRoutes.ACCOUNT_ROUTE, name: 'Tài khoản' },

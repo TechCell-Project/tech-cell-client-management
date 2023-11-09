@@ -48,8 +48,6 @@ export class Address {
   wardLevel: Ward | Ward[] | null = null;
   detail: string | null = null;
   isDefault: boolean = false;
-  listDistrict?: Array<District> | Promise<Array<District>> | null = new Array<District>();
-  listWard?: Array<Ward> | Promise<Array<Ward>> | null = new Array<Ward>();
 }
 
 export class ActivityLog {

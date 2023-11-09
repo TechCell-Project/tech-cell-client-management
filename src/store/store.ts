@@ -1,12 +1,8 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { persistStore, persistReducer } from "redux-persist";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import { authSlice } from "./slices/authSlice";
-import { accountSlice } from "./slices/accountSlice";
-import { productSlice } from "./slices/productSlice";
-import { attributeSlice } from "./slices/attributeSlice";
-import { categorySlice } from "./slices/categorySlice";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import { accountSlice, attributeSlice, authSlice, categorySlice, orderSlice, productSlice } from '@store/slices';
 
 const createNoopStorage = () => {
   return {
@@ -23,14 +19,14 @@ const createNoopStorage = () => {
 };
 
 const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
+  typeof window !== 'undefined'
+    ? createWebStorage('local')
     : createNoopStorage();
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  blacklist: ["account", "product", "attribute", "category"],
+  blacklist: ['account', 'product', 'attribute', 'category', 'order'],
 };
 
 const rootReducer = combineReducers({
@@ -39,6 +35,7 @@ const rootReducer = combineReducers({
   product: productSlice.reducer,
   attribute: attributeSlice.reducer,
   category: categorySlice.reducer,
+  order: orderSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

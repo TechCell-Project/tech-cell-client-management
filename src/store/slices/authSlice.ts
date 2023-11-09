@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 import axios, { HttpStatusCode } from 'axios';
 import { AuthSlice, LoginModel } from '@models/Auth';
 import { UserAccount } from '@models/Account';
-import { getProfile, patchProfileAddress, patchProfileInfo } from '@services/profileService';
-import { ProfileAddressRequest } from '@models/Profile';
+import { getProfile, patchProfileInfo } from '@services/profileService';
 import { getAccessToken, getRefreshToken } from '@utils/local';
 
 const initialState: AuthSlice = {
@@ -52,8 +51,10 @@ export const authSlice = createSlice({
 
 // Thunk
 export const authenticate = () => async (dispatch: Dispatch) => {
-  if (localStorage.getItem('user')) {
-    dispatch(authenticatedSuccess());
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('user')) {
+      dispatch(authenticatedSuccess());
+    }
   }
 };
 
@@ -109,21 +110,25 @@ export const editProfileInfo = (payload: Partial<UserAccount>) => async (dispatc
     if (status === HttpStatusCode.Ok) {
       toast.success('Cập nhật thông tin hồ sơ thành công!');
     }
-  } catch {
-    toast.error('Cập nhật thông tin hồ sơ thất bại!');
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status !== HttpStatusCode.Unauthorized) {
+        toast.error('Cập nhật thông tin hồ sơ thất bại!');
+      }
+    }
   }
 };
 
-export const editProfileAddress = (payload: ProfileAddressRequest) => async (dispatch: Dispatch) => {
-  try {
-    const { status } = await patchProfileAddress(payload);
-    if (status === HttpStatusCode.Ok) {
-      toast.success('Cập nhật địa chỉ hồ sơ thành công!');
-    }
-  } catch {
-    toast.error('Cập nhật địa chỉ hồ sơ thất bại!');
-  }
-};
+// export const editProfileAddress = (payload: ProfileAddressRequest) => async (dispatch: Dispatch) => {
+//   try {
+//     const { status } = await patchProfileAddress(payload);
+//     if (status === HttpStatusCode.Ok) {
+//       toast.success('Cập nhật địa chỉ hồ sơ thành công!');
+//     }
+//   } catch {
+//     toast.error('Cập nhật địa chỉ hồ sơ thất bại!');
+//   }
+// };
 
 export const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem('user');

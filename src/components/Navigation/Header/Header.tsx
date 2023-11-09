@@ -3,14 +3,12 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
-import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
 import MenuIcon from '@mui/icons-material/Menu';
-import { BadgeIconButton } from '@styled-mui/badge';
 import UserBoxHeader from './UserBoxHeader';
 import SearchHeader from './SearchHeader';
 import { useAppSelector } from '@store/store';
 import { getRole } from '@utils/index';
+import { Notification } from '@components/Features';
 
 interface IHeader {
   open?: boolean;
@@ -23,16 +21,16 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
   return (
     <Toolbar sx={{ justifyContent: 'space-between' }}>
       <Stack
-        direction="row"
-        alignItems="center"
+        direction='row'
+        alignItems='center'
         gap={3}
         sx={{ mr: 2, ...(open && { display: 'none' }) }}
       >
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
+          color='inherit'
+          aria-label='open drawer'
           onClick={handleDrawerOpen}
-          edge="start"
+          edge='start'
         >
           <MenuIcon />
         </IconButton>
@@ -41,28 +39,29 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
       <Box sx={{ ...(!open && { display: 'none' }) }}>
         <UserBoxHeader role={getRole(user?.role)} name={`${user?.firstName} ${user?.lastName}`} />
       </Box>
-      <Stack direction="row" alignItems="center" justifyContent="flex-start" gap={2}>
+      <Stack direction='row' alignItems='center' justifyContent='flex-start' gap={2}>
         <SearchHeader />
-        <Stack direction="row" alignItems="center" gap={1}>
-          <IconButton
-            aria-label="notifications"
-            sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}
-            size="large"
-          >
-            <BadgeIconButton color="secondary" variant="dot">
-              <NotificationsNoneRoundedIcon />
-            </BadgeIconButton>
-          </IconButton>
-          <IconButton
-            aria-label="chat"
-            sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}
-            size="large"
-          >
-            <BadgeIconButton color="secondary" variant="dot">
-              <ForumRoundedIcon />
-            </BadgeIconButton>
-          </IconButton>
-        </Stack>
+        <Notification />
+        {/*<Stack direction="row" alignItems="center" gap={1}>*/}
+        {/*  <IconButton*/}
+        {/*    aria-label="notifications"*/}
+        {/*    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
+        {/*    size="large"*/}
+        {/*  >*/}
+        {/*    <BadgeIconButton color="secondary" variant="dot">*/}
+        {/*      <NotificationsNoneRoundedIcon />*/}
+        {/*    </BadgeIconButton>*/}
+        {/*  </IconButton>*/}
+        {/*  <IconButton*/}
+        {/*    aria-label="chat"*/}
+        {/*    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
+        {/*    size="large"*/}
+        {/*  >*/}
+        {/*    <BadgeIconButton color="secondary" variant="dot">*/}
+        {/*      <ForumRoundedIcon />*/}
+        {/*    </BadgeIconButton>*/}
+        {/*  </IconButton>*/}
+        {/*</Stack>*/}
       </Stack>
     </Toolbar>
   );
