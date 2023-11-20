@@ -20,15 +20,13 @@ interface COEProps extends DialogAction {
   index: number;
 }
 
-const CODAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
+const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
   const [provinces, setProvinces] = useState<Array<Province>>(new Array<Province>());
   const [districts, setDistricts] = useState<Array<District>>(new Array<District>());
   const [wards, setWards] = useState<Array<Ward>>(new Array<Ward>());
 
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-
-  console.log(index);
 
   useEffect(() => {
     getProvince()
@@ -106,7 +104,7 @@ const CODAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
                   options={provinces}
                   displayLabel='province_name'
                   displaySelected='province_id'
-                  handleChange={async (value) => {
+                  handleChange={(value) => {
                     if (value !== null) {
                       loadDistricts(String((value as Province).province_id));
                     }
@@ -130,7 +128,7 @@ const CODAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
                   options={districts}
                   displayLabel='district_name'
                   displaySelected='district_id'
-                  handleChange={async (value) => {
+                  handleChange={(value) => {
                     if (value !== null) {
                       loadWards(String((value as District).district_id));
                     }
@@ -199,4 +197,4 @@ const CODAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
   );
 });
 
-export default CODAddress;
+export default COEAddress;

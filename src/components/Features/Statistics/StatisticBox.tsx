@@ -88,7 +88,7 @@ const StatisticBox = () => {
           <BoxRender
             name="Doanh số trong tháng"
             icon={<PaidRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={formatWithCommas(19200000) + ' ₫'}
+            value={formatWithCommas(19200000)}
             isUpper
           />
         </Grid>
@@ -96,7 +96,7 @@ const StatisticBox = () => {
           <BoxRender
             name="Doanh số trong tuần"
             icon={<AttachMoneyRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={formatWithCommas(9920000) + ' ₫'}
+            value={formatWithCommas(9920000)}
             isLower
           />
         </Grid>

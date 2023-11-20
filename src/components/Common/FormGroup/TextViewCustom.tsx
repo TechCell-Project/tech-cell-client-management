@@ -6,9 +6,8 @@ import Stack from '@mui/material/Stack';
 
 interface Props {
   label: string;
-  content: string;
+  content?: string;
   stylesLabel?: React.CSSProperties;
-  stylesContent?: React.CSSProperties;
   titleNoContent?: string;
   unit?: React.ReactNode;
 }
@@ -19,24 +18,30 @@ export const TextViewCustom = memo((
     content,
     titleNoContent = '.......',
     stylesLabel,
-    stylesContent,
     unit,
   }: Props) => {
 
   return (
-    <Stack flexDirection='row' alignItems='center' justifyContent='flex-start' gap='8px' width='100%'>
-      <Typography sx={{ ...stylesLabel, fontSize: '15px' }}>{label}:</Typography>
-      <Stack flexDirection='row' alignItems='center' gap='5px'>
-        <Typography sx={{
-          ...stylesContent,
-          fontSize: '15px',
-          fontWeight: 500,
-        }}
-        >
-          {content ?? titleNoContent}
-        </Typography>
-        {unit && unit}
-      </Stack>
-    </Stack>
+    <Typography
+      sx={{ ...stylesLabel, fontSize: '15px' }}
+    >
+      {label}:
+      <b style={{ fontSize: '15px', fontWeight: 500 }}> {content ?? titleNoContent} </b>
+      {unit && unit}
+    </Typography>
+    // <Stack flexDirection='row' alignItems='center' justifyContent='flex-start' gap='8px' width='100%'>
+    //   <Typography sx={{ ...stylesLabel, fontSize: '15px' }}>{label}:</Typography>
+    //   <Stack flexDirection='row' alignItems='center' gap='5px'>
+    //     <Typography sx={{
+    //       ...stylesContent,
+    //       fontSize: '15px',
+    //       fontWeight: 500,
+    //     }}
+    //     >
+    //       {content ?? titleNoContent}
+    //     </Typography>
+    //     {unit && unit}
+    //   </Stack>
+    // </Stack>
   );
 });

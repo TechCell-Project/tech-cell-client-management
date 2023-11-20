@@ -42,26 +42,6 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
       <Stack direction='row' alignItems='center' justifyContent='flex-start' gap={2}>
         <SearchHeader />
         <Notification />
-        {/*<Stack direction="row" alignItems="center" gap={1}>*/}
-        {/*  <IconButton*/}
-        {/*    aria-label="notifications"*/}
-        {/*    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
-        {/*    size="large"*/}
-        {/*  >*/}
-        {/*    <BadgeIconButton color="secondary" variant="dot">*/}
-        {/*      <NotificationsNoneRoundedIcon />*/}
-        {/*    </BadgeIconButton>*/}
-        {/*  </IconButton>*/}
-        {/*  <IconButton*/}
-        {/*    aria-label="chat"*/}
-        {/*    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
-        {/*    size="large"*/}
-        {/*  >*/}
-        {/*    <BadgeIconButton color="secondary" variant="dot">*/}
-        {/*      <ForumRoundedIcon />*/}
-        {/*    </BadgeIconButton>*/}
-        {/*  </IconButton>*/}
-        {/*</Stack>*/}
       </Stack>
     </Toolbar>
   );

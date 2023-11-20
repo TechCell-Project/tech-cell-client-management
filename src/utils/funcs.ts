@@ -47,10 +47,10 @@ export const productStatusMapping: { [key: number]: string } = {
 
 export const orderStatusMapping: { [key: string]: string } = {
   [PaymentStatus.PENDING]: 'Chưa xử lý',
-  [PaymentStatus.COMPLETED]: 'Đã hoàn thành',
+  [PaymentStatus.COMPLETED]: 'Giao hàng thành công',
   [PaymentStatus.CANCELLED]: 'Đã hủy',
   [PaymentStatus.REFUNDED]: 'Hoàn / trả hàng',
-  [PaymentStatus.PROCESSING]: 'Đang xử lý',
+  [PaymentStatus.PROCESSING]: 'Đang chuẩn bị hàng',
   [PaymentOrder.SHIPPING]: 'Đang vận chuyển',
 };
 
@@ -60,7 +60,7 @@ export const getIndexNo = (index: number, page: number, pageSize: number): numbe
 
 // format
 export const formatWithCommas = (number: number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ₫';
 };
 
 export const removeCommas = (inputString: string) => {
@@ -74,21 +74,24 @@ export const formatTimeCountdown = (seconds: number): string => {
 };
 
 export const formatDateViVN = (dateString: string) => {
-  const inputDate: Date = new Date(dateString);
-
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  };
-
-  const dateFormatter: Intl.DateTimeFormat = new Intl.DateTimeFormat('vi-VN', options);
-  return dateFormatter.format(inputDate);
+  try {
+    const inputDate: Date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    };
+    const dateFormatter: Intl.DateTimeFormat = new Intl.DateTimeFormat('vi-VN', options);
+    return dateFormatter.format(inputDate);
+  } catch {
+    return '';
+  }
 };
+
 
 export const isRoleAccepted = (role?: string): boolean => {
   const currentRole = getCurrentUserRole();
@@ -122,9 +125,13 @@ export const getSearchParams = <T extends number | string = any>(payload: Record
 };
 
 export const getAddressLocation = (address: Address) => {
-  return `
-    ${(address.wardLevel as Ward).ward_name},
-    ${(address.districtLevel as District).district_name},
-    ${(address.provinceLevel as Province).province_name}
-  `;
+  try {
+    return `
+      ${(address.wardLevel as Ward).ward_name},
+      ${(address.districtLevel as District).district_name},
+      ${(address.provinceLevel as Province).province_name}
+    `;
+  } catch {
+    return '';
+  }
 };

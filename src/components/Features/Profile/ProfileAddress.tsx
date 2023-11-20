@@ -13,8 +13,8 @@ import { getCurrentUser } from '@store/slices/authSlice';
 import { toast } from 'react-toastify';
 import { patchProfileAddress } from '@services/profileService';
 import { HttpStatusCode } from 'axios';
-import CODAddress from './COEAddress';
-import CFDeleteAddress from '@components/Features/Profile/CFDeleteAddress';
+import COEAddress from './COEAddress';
+import CFDeleteAddress from './CFDeleteAddress';
 import { getAddressLocation } from '@utils/funcs';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
@@ -125,7 +125,7 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
       </Stack>
 
       {Boolean(currentAddress) && (
-        <CODAddress
+        <COEAddress
           isOpen={Boolean(currentAddress)}
           handleClose={() => {
             setCurrentAddress(null);

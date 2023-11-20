@@ -5,7 +5,7 @@ import { PagingOrder } from '@models/Order';
 import { Paging } from '@models/Common';
 import { getAllOrder } from '@store/slices/orderSlice';
 import { Form, Formik } from 'formik';
-import { getIndexNo, orderStatusMapping } from '@utils/funcs';
+import { formatWithCommas, getIndexNo, orderStatusMapping } from '@utils/funcs';
 import { COLUMNS_ORDER } from '@constants/data';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
@@ -37,6 +37,8 @@ export const Order = () => {
     id: order._id,
     no: getIndexNo(i, searchOrder.page, searchOrder.pageSize),
     trackingCode: '# ' + order.trackingCode,
+    paymentOrder: PAYMENT_METHOD_OPTIONS.find((item) => order?.paymentOrder && order?.paymentOrder.method === item.value)?.name,
+    checkoutOrder: formatWithCommas(Number(order.checkoutOrder.totalPrice)),
     orderStatus: orderStatusMapping[String(order.orderStatus)],
   }));
 
@@ -45,7 +47,7 @@ export const Order = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 200,
+      width: 150,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',

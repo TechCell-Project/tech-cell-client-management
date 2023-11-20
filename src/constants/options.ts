@@ -45,19 +45,19 @@ export const PRODUCT_TYPE_OPTIONS = [
 ];
 
 export const PAYMENT_METHOD_OPTIONS = [
-  { name: 'COD', value: PaymentMethod.COD },
+  { name: 'Thanh toán khi nhận hàng', value: PaymentMethod.COD },
   { name: 'VNPay', value: PaymentMethod.VNPAY },
 ];
 
 export const PAYMENT_STATUS_OPTIONS = [
-  { name: 'Chưa xử lý', value: PaymentStatus.PENDING },
-  { name: 'Đã hoàn thành', value: PaymentStatus.COMPLETED },
-  { name: 'Hoàn / trả hàng', value: PaymentStatus.REFUNDED },
-  { name: 'Đã hủy', value: PaymentStatus.CANCELLED },
-  { name: 'Đang xử lý', value: PaymentStatus.PROCESSING },
+  { name: 'Chưa xử lý', value: PaymentStatus.PENDING, step: 1, content: 'Xác nhận đơn hàng' },
+  { name: 'Giao hàng thành công', value: PaymentStatus.COMPLETED, step: 4, content: 'Hoàn trả / hàng' },
+  { name: 'Hoàn / trả hàng', value: PaymentStatus.REFUNDED, step: 5 },
+  { name: 'Đã hủy', value: PaymentStatus.CANCELLED, step: 6 },
+  { name: 'Đang chuẩn bị hàng', value: PaymentStatus.PROCESSING, step: 2, content: 'Tiến hành giao hàng' },
 ];
 
 export const ORDER_STATUS_OPTIONS = [
   ...PAYMENT_STATUS_OPTIONS,
-  { name: 'Đang vận chuyển', value: PaymentOrder.SHIPPING },
+  { name: 'Đang vận chuyển', value: PaymentOrder.SHIPPING, step: 3, content: 'Xác nhận giao thành công' },
 ];

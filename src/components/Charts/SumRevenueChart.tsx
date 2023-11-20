@@ -45,7 +45,7 @@ export const SumRevenueChart = () => {
           <YAxis tickFormatter={formatWithCommas} />
           <Tooltip
             label="Tháng"
-            formatter={(value) => `${formatWithCommas(Number(value))}` + ' ₫'}
+            formatter={(value) => `${formatWithCommas(Number(value))}`}
           />
           <Legend />
           <Area type="monotone" dataKey="revenue" fill="#FF6666" />

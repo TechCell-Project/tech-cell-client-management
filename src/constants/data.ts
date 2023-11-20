@@ -100,6 +100,20 @@ export const COLUMNS_ORDER = [
     align: 'center',
     width: 150,
   },
+  {
+    field: 'paymentOrder',
+    headerName: 'Phương thức TT',
+    headerAlign: 'center',
+    align: 'center',
+    width: 180,
+  },
+  {
+    field: 'checkoutOrder',
+    headerName: 'Tổng tiền (VND)',
+    headerAlign: 'center',
+    align: 'center',
+    width: 150,
+  },
 ];
 
 export const PATHS = [

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { DialogAction } from '@interface/common';
 import { ShowDialog } from '@components/Common';
 import { ProfileAddress } from './ProfileAddress';

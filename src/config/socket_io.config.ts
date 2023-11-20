@@ -1,8 +1,8 @@
-import { Manager } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { URL_HOST_SOCKET_IO } from '@constants/service';
 import { getAccessToken } from '@utils/local';
 
-const manager = new Manager(URL_HOST_SOCKET_IO, {
+const socketIO = io(URL_HOST_SOCKET_IO, {
   extraHeaders: {
     Authorization: `Bearer ${getAccessToken()}`,
   },
@@ -10,9 +10,6 @@ const manager = new Manager(URL_HOST_SOCKET_IO, {
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,
   reconnectionDelayMax: 5000,
-  autoConnect: false,
 });
 
-const socket = manager.socket('/');
-
-export default socket;
+export default socketIO;

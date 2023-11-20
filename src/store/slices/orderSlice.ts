@@ -1,12 +1,13 @@
-import { OrderSlice, Order, PagingOrder } from '@models/Order';
+import { OrderSlice, OrderModel, PagingOrder } from '@models/Order';
 import { PagingResponse } from '@models/Common';
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { getOrderById, getOrders, patchOrderStatus } from '@services/orderService';
 import { HttpStatusCode } from 'axios';
 import { toast } from 'react-toastify';
+import { getDetailsUserAccount } from '@store/slices/accountSlice';
 
 const initialState: OrderSlice = {
-  orders: new PagingResponse<Order>(),
+  orders: new PagingResponse<OrderModel>(),
   order: null,
   isLoading: false,
   isLoadingDetails: false,
@@ -27,7 +28,7 @@ export const orderSlice = createSlice({
       state.isLoading = false;
     },
     getFailure: (state) => {
-      state.orders = new PagingResponse<Order>();
+      state.orders = new PagingResponse<OrderModel>();
       state.isLoading = false;
     },
     editStatusSuccess: (state, { payload }) => {
@@ -37,6 +38,10 @@ export const orderSlice = createSlice({
       if (index !== -1) {
         state.orders.data[index] = payload;
       }
+      // @ts-ignore
+      state.order.updatedAt = payload.updatedAt;
+      // @ts-ignore
+      state.order.orderStatus = payload.orderStatus;
       state.isLoadingDetails = false;
     },
     getDetailsSuccess: (state, { payload }) => {

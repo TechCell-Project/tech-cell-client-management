@@ -157,6 +157,11 @@
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
+.MuiStepIcon-root.Mui-completed,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-active {
+  color: $primaryColor !important;
+}
+
 // Recharts
 .recharts-text.recharts-cartesian-axis-tick-value {
   font-size: 13px;
