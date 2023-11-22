@@ -5,31 +5,26 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import { formatDateViVN, getRole } from '@utils/index';
-import { ButtonCustom, ShowDialog } from '@components/Common';
+import { formatDateViVN, getAddressLocation, getRole, getStatusAccount } from '@utils/index';
+import { ButtonCustom, ShowDialog, TextViewCustom } from '@components/Common';
 import { useAppSelector } from '@store/store';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const DetailsAccount = memo((props: Props) => {
+export const DetailsAccount = memo((props: DialogAction) => {
   const theme = useTheme();
   const { account, isLoadingDetails } = useAppSelector((state) => state.account);
 
   return (
     <ShowDialog
-      dialogTitle="Thông tin tài khoản"
+      dialogTitle='Thông tin tài khoản'
       handleClose={props.handleClose}
       isOpen={props.isOpen}
+      dialogStyle={{ minWidth: '45%' }}
     >
       <Box
         sx={{
           width: '100%',
-          marginTop: '10px',
           textAlign: isLoadingDetails ? 'center' : 'left',
         }}
       >
@@ -37,124 +32,81 @@ export const DetailsAccount = memo((props: Props) => {
           <CircularProgress sx={{ color: theme.color.red }} />
         ) : (
           <>
-            <Grid container columnSpacing={2} rowSpacing={3}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} mb={1}>
+                <p style={{ fontSize: '14px', fontWeight: 600 }}>1. Thông tin</p>
+              </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Họ và tên"
-                  value={`${account?.firstName} ${account?.lastName}`}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{ readOnly: true }}
+                <TextViewCustom
+                  label='Họ và tên'
+                  content={`${account?.firstName} ${account?.lastName}`}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Vai trò"
-                  value={getRole(account?.role) || ''}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{ readOnly: true }}
+                <TextViewCustom
+                  label='Vai trò'
+                  content={getRole(account?.role) ?? ''}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Email"
-                  value={account?.email}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{
-                    readOnly: true,
-                    endAdornment: account?.emailVerified && (
-                      <InputAdornment position="end">
-                        <CheckCircleRoundedIcon fontSize="small" color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
+                <TextViewCustom
+                  label='Email'
+                  content={String(account?.email)}
+                  unit={account?.emailVerified && (
+                    <CheckCircleRoundedIcon fontSize='small' color='primary' />
+                  )}
+                  stylesLabel={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Trạng thái tài khoản"
-                  value={account?.block && account?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{ readOnly: true }}
+                <TextViewCustom
+                  label='Trạng thái TK'
+                  content={getStatusAccount(account?.block && account?.block.isBlocked)}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Thời gian tạo"
-                  value={formatDateViVN(account?.createdAt || '')}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{ readOnly: true }}
+                <TextViewCustom
+                  label='Thời gian tạo'
+                  content={formatDateViVN(account?.createdAt ?? '')}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextField
-                  label="Thời gian chỉnh sửa"
-                  value={formatDateViVN(account?.updatedAt || '')}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  InputProps={{ readOnly: true }}
+                <TextViewCustom
+                  label='Thời gian chỉnh sửa'
+                  content={formatDateViVN(account?.updatedAt ?? '')}
                 />
               </Grid>
-              {account?.address && (
-                <>
-                  <Grid item md={4}>
-                    <TextField
-                      label="Tỉnh, Thành phố"
-                      value={account?.address[0]?.provinceLevel || '...'}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{ readOnly: true }}
-                    />
-                  </Grid>
-                  <Grid item md={4}>
-                    <TextField
-                      label="Quận, Huyện"
-                      value={account?.address[0]?.districtLevel || '...'}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{ readOnly: true }}
-                    />
-                  </Grid>
-                  <Grid item md={4}>
-                    <TextField
-                      label="Phường, Xã"
-                      value={account?.address[0]?.wardLevel || '...'}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{ readOnly: true }}
-                    />
-                  </Grid>
-                  <Grid item md={12}>
-                    <TextField
-                      label="Đia chỉ cụ thể"
-                      value={account?.address[0]?.detail || '...'}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{ readOnly: true }}
-                      multiline
-                      minRows={2}
-                      maxRows={4}
-                    />
-                  </Grid>
-                </>
+              <Grid item xs={12} my={1}>
+                <p style={{ fontSize: '14px', fontWeight: 600 }}>2. Địa chỉ mặc định</p>
+              </Grid>
+
+              {account?.address && account?.address.length > 0 ? account?.address.map((item) => {
+                return item.isDefault && (
+                  <>
+                    <Grid item xs={12}>
+                      <TextViewCustom label='Loại' content={String(item.addressName)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextViewCustom label='Địa chỉ' content={getAddressLocation(item)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextViewCustom label='SDT' content={String(item.phoneNumbers)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextViewCustom label='Chi tiết' content={String(item.detail)} />
+                    </Grid>
+                  </>
+                );
+              }) : (
+                <Grid item xs={12}>
+                  <p style={{ fontSize: '14px', fontWeight: 500 }}>
+                    Tài khoản này chưa có địa chỉ!
+                  </p>
+                </Grid>
               )}
             </Grid>
-            <Stack alignItems="flex-end" sx={{ marginTop: '20px' }}>
-              <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Đóng" />
+            <Stack alignItems='flex-end' sx={{ marginTop: '20px' }}>
+              <ButtonCustom variant='outlined' handleClick={props.handleClose} content='Đóng' />
             </Stack>
           </>
         )}

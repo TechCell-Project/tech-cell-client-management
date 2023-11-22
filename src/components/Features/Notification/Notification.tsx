@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useTheme } from '@mui/material/styles';
 
-import NotificationList from '@components/Features/Notification/NotificationList';
+import NotificationList from './NotificationList';
 
 export const Notification = memo(() => {
   const theme = useTheme();

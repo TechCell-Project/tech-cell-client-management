@@ -6,13 +6,11 @@ import { Paging } from '@models/Common';
 import { getAllOrder } from '@store/slices/orderSlice';
 import { Form, Formik } from 'formik';
 import { formatWithCommas, getIndexNo, orderStatusMapping } from '@utils/funcs';
-import { COLUMNS_ORDER } from '@constants/data';
-import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
+import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { RootRoutes } from '@constants/enum';
 import { useRouter } from 'next/navigation';
-import { IColumnOrder } from '@interface/data';
 import Grid from '@mui/material/Grid';
 import { ORDER_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
@@ -33,17 +31,48 @@ export const Order = () => {
     dispatch(getAllOrder({ ...searchOrder, page: paging.page, pageSize: paging.pageSize })).then();
   };
 
-  const rows: IColumnOrder[] = orders.data.map((order, i) => ({
-    id: order._id,
-    no: getIndexNo(i, searchOrder.page, searchOrder.pageSize),
-    trackingCode: '# ' + order.trackingCode,
-    paymentOrder: PAYMENT_METHOD_OPTIONS.find((item) => order?.paymentOrder && order?.paymentOrder.method === item.value)?.name,
-    checkoutOrder: formatWithCommas(Number(order.checkoutOrder.totalPrice)),
-    orderStatus: orderStatusMapping[String(order.orderStatus)],
-  }));
-
-  const columns: any[] = [
-    ...COLUMNS_ORDER,
+  const columns: Array<GridColDef> = [
+    {
+      field: 'no',
+      headerName: 'STT',
+      width: 70,
+      renderCell: (params) => {
+        const index = params.api.getAllRowIds().indexOf(params.id);
+        return getIndexNo(index, paging.page, paging.pageSize);
+      },
+    },
+    {
+      field: 'trackingCode',
+      headerName: 'Mã theo dõi',
+      width: 260,
+      valueGetter: (params) => `# ${params.row.trackingCode}`,
+    },
+    {
+      field: 'orderStatus',
+      headerName: 'Trạng thái',
+      width: 150,
+      valueGetter: (params) => orderStatusMapping[String(params.row.orderStatus)],
+    },
+    {
+      field: 'paymentOrder',
+      headerName: 'Phương thức TT',
+      headerAlign: 'center',
+      align: 'center',
+      width: 180,
+      valueGetter: (params) => {
+        const value = PAYMENT_METHOD_OPTIONS.find(
+          (item) => params.row.paymentOrder && params.row.paymentOrder.method === item.value);
+        return value?.name;
+      },
+    },
+    {
+      field: 'checkoutOrder',
+      headerName: 'Tổng tiền (VND)',
+      headerAlign: 'center',
+      align: 'center',
+      width: 150,
+      valueGetter: (params) => formatWithCommas(Number(params.row.checkoutOrder.totalPrice)),
+    },
     {
       field: 'options',
       headerName: 'Thao Tác',
@@ -52,10 +81,10 @@ export const Order = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams) => [
-        <Tooltip title='Chi tiết' key={params.row.no}>
+        <Tooltip title='Chi tiết' key={params.row._id}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
-            onClick={() => router.push(`${RootRoutes.ORDER_ROUTE}/${params.row.id}`)}
+            onClick={() => router.push(`${RootRoutes.ORDER_ROUTE}/${params.row._id}`)}
             label='Chi tiết'
           />
         </Tooltip>,
@@ -111,7 +140,7 @@ export const Order = () => {
 
       <DataTable
         column={columns}
-        row={rows}
+        row={orders.data}
         isLoading={isLoading}
         paginationModel={paging}
         setPaginationModel={setPaging}

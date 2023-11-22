@@ -25,13 +25,13 @@ export const EditCategory = (props: Props) => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     timeoutId = setTimeout(() => {
-      dispatch(getAllAttributes(searchAttribute)).then();
+      dispatch(getAllAttributes({ ...searchAttribute, pageSize: 40 })).then();
     }, 500);
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [searchAttribute]);
+  }, [searchAttribute, dispatch]);
 
   const handleSubmit = async (
     values: CategoryModel,

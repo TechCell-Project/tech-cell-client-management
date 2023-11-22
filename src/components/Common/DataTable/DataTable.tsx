@@ -30,7 +30,7 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
   }, [props.isLoading]);
 
   return (
-    <div style={{ height: 700, width: '100%' }}>
+    <div style={{ height: 680, width: '100%' }}>
       <DataGrid
         disableRowSelectionOnClick
         columns={props.column ?? []}
@@ -52,6 +52,7 @@ export const DataTable: FC<DataTableProps> = memo((props) => {
         paginationModel={props.paginationModel}
         onPaginationModelChange={props.setPaginationModel}
         sx={styledTable}
+        getRowId={(row) => row?._id}
       />
     </div>
   );

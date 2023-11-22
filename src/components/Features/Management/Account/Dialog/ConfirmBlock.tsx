@@ -3,13 +3,13 @@
 import React, { FC, memo } from 'react';
 import { ShowDialog, ButtonCustom } from '@components/Common';
 import { useAppDispatch } from '@store/store';
-import { IColumnAccount } from '@interface/data';
 import { blockAccount, unBlockAccount } from '@store/slices/accountSlice';
 import { toast } from 'react-toastify';
 import { DialogAction } from '@interface/common';
+import { UserAccount } from '@models/Account';
 
 interface Props extends DialogAction{
-  dataAccount?: IColumnAccount;
+  dataAccount?: UserAccount;
 }
 
 export const ConfirmBlock: FC<Props> = memo((props) => {
@@ -42,16 +42,16 @@ export const ConfirmBlock: FC<Props> = memo((props) => {
   };
 
   const handleConfirm = () => {
-    if (props.dataAccount?.status === 'Hoạt động') {
+    if (!props.dataAccount?.block?.isBlocked) {
       handleAccountStatus(
-        props.dataAccount?.id,
-        props.dataAccount?.email,
+        String(props.dataAccount?._id),
+        String(props.dataAccount?.email),
         'block',
       ).then();
     } else {
       handleAccountStatus(
-        props.dataAccount?.id,
-        props.dataAccount?.email,
+        String(props.dataAccount?._id),
+        String(props.dataAccount?.email),
         'unblock',
       ).then();
     }
@@ -61,13 +61,13 @@ export const ConfirmBlock: FC<Props> = memo((props) => {
   return (
     <ShowDialog
       dialogTitle={`Xác nhận ${
-        props.dataAccount?.status === 'Hoạt động' ? 'xóa' : 'mở khóa'
+        !props.dataAccount?.block?.isBlocked ? 'chặn' : 'mở khóa'
       }  tài khoản?`}
       isOpen={props.isOpen}
       handleClose={props.handleClose}
       dialogStyle={{ maxWidth: 500 }}
       dialogDesc={
-        props.dataAccount?.status === 'Hoạt động' ? (
+        !props.dataAccount?.block?.isBlocked ? (
           <>
             Bạn có chắc chắn muốn chặn tài khoản với email:
             <b style={{ display: 'block' }}>{props.dataAccount?.email}</b>

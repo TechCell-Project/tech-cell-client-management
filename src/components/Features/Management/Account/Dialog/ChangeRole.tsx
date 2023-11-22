@@ -10,11 +10,11 @@ import { getRole } from '@utils/index';
 import { ROLE_OPTIONS } from '@constants/options';
 import { roleValidate } from '@validate/account.validate';
 import { ButtonCustom, ShowDialog } from '@components/Common';
-import { IColumnAccount } from '@interface/data';
 import { toast } from 'react-toastify';
+import { UserAccount } from '@models/Account';
 
 interface Props {
-  dataAccount?: IColumnAccount;
+  dataAccount?: UserAccount;
   isLoading?: boolean;
   isOpen: boolean;
   handleClose: () => void;
@@ -29,7 +29,7 @@ export const ChangeRole = memo((props: Props) => {
   ) => {
     try {
       const response = await dispatch(
-        changeRoleAccount(String(props.dataAccount?.id), values.role),
+        changeRoleAccount(String(props.dataAccount?._id), values.role),
       );
       if (response.statusCode === 400 || response.statusCode === 403) {
         toast.error('Có lỗi xảy ra. Đổi vai trò thất bại!');
@@ -73,7 +73,7 @@ export const ChangeRole = memo((props: Props) => {
               >
                 <TextField
                   label='Họ và tên'
-                  value={props.dataAccount?.name}
+                  value={`${props.dataAccount?.firstName} ${props.dataAccount?.lastName}`}
                   fullWidth
                   variant='outlined'
                   size='small'
@@ -81,7 +81,7 @@ export const ChangeRole = memo((props: Props) => {
                 />
                 <TextField
                   label='Vai trò hiện tại'
-                  value={props.dataAccount?.role || ''}
+                  value={getRole(props.dataAccount?.role) ?? ''}
                   fullWidth
                   variant='outlined'
                   size='small'

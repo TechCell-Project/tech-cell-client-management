@@ -42,7 +42,7 @@ const OrderInvoice = () => {
           const image = item.images.find((img) => img.isThumbnail).url;
           return (
             <>
-              <Stack flexDirection='row' alignItems='flex-start' key={i} gap='20px' width='100%' mt={3} mb="20px">
+              <Stack flexDirection='row' alignItems='flex-start' key={i} gap='20px' width='100%' mt={3} mb='20px'>
                 <Avatar
                   src={String(image)}
                   alt='User Avatar'
@@ -55,7 +55,7 @@ const OrderInvoice = () => {
                     fontWeight={500}
                     textTransform='capitalize'
                   >
-                    {item.attributes.map((attr) => attr.v).join(' ,')}
+                    {item.attributes.map((attr) => `${attr.v}${attr?.u ?? ''}`).join(', ')}
                   </Typography>
                   <Typography fontSize='14px'>x{item.quantity}</Typography>
                   <Typography fontSize='15px' fontWeight={600}

@@ -1,10 +1,19 @@
-import { PaymentMethod, PaymentOrder, PaymentStatus, ProductStatus } from './enum';
+import {
+  AccountStatus,
+  EmailStatus,
+  PaymentMethod,
+  PaymentOrder,
+  PaymentStatus,
+  ProductStatus,
+  ProductType,
+  Roles,
+} from './enum';
 
 export const ROLE_OPTIONS = [
   { value: '', label: 'Không' },
-  { value: 'User', label: 'Khách hàng' },
-  { value: 'Mod', label: 'Điều hành viên' },
-  { value: 'Admin', label: 'Quản trị viên' },
+  { value: Roles.User, label: 'Khách hàng' },
+  { value: Roles.Mod, label: 'Điều hành viên' },
+  { value: Roles.Admin, label: 'Quản trị viên' },
 ];
 
 export const STATUS_PRODUCT_OPTIONS = [
@@ -22,26 +31,26 @@ export const STATUS_PRODUCT_OPTIONS = [
 
 // Filters
 export const ACCOUNT_STATUS_OPTIONS = [
-  { name: 'Hoạt động', value: 'unblocked' },
-  { name: 'Bị chặn', value: 'blocked' },
+  { name: 'Hoạt động', value: AccountStatus.Unblocked },
+  { name: 'Bị chặn', value: AccountStatus.Blocked },
 ];
 
 export const ACCOUNT_ROLE_OPTIONS = [
-  { value: 'User', name: 'Khách hàng' },
-  { value: 'Mod', name: 'Điều hành viên' },
-  { value: 'Admin', name: 'Quản trị viên' },
-  { value: 'SuperAdmin', name: 'Quản lý' },
+  { value: Roles.User, name: 'Khách hàng' },
+  { value: Roles.Mod, name: 'Điều hành viên' },
+  { value: Roles.Admin, name: 'Quản trị viên' },
+  { value: Roles.SuperAdmin, name: 'Quản lý' },
 ];
 
 export const ACCOUNT_EMAIL_OPTIONS = [
-  { name: 'Đã xác thực', value: 'verified' },
-  { name: 'Chưa xác thực', value: 'unverified' },
+  { name: 'Đã xác thực', value: EmailStatus.Verified },
+  { name: 'Chưa xác thực', value: EmailStatus.Unverified },
 ];
 
 export const PRODUCT_TYPE_OPTIONS = [
-  { name: 'Đang mở', value: 'only_active' },
-  { name: 'Đã xóa', value: 'only_deleted' },
-  { name: 'Tất cả', value: 'both_deleted_and_active' },
+  { name: 'Đang mở', value: ProductType.OnlyActive },
+  { name: 'Đã xóa', value: ProductType.OnlyDeleted },
+  { name: 'Tất cả', value: ProductType.BothDeleteAndActive },
 ];
 
 export const PAYMENT_METHOD_OPTIONS = [

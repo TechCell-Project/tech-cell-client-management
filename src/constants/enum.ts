@@ -16,6 +16,22 @@ export enum Roles {
   SuperAdmin = 'SuperAdmin',
 }
 
+export enum AccountStatus {
+  Unblocked = 'unblocked',
+  Blocked = 'blocked',
+}
+
+export enum EmailStatus {
+  Verified = 'verified',
+  Unverified = 'unverified'
+}
+
+export enum ProductType {
+  OnlyActive = 'only_active',
+  OnlyDeleted = 'only_deleted',
+  BothDeleteAndActive = 'both_deleted_and_active'
+}
+
 export enum ProductStatus {
   ComingSoon = 1,
   NewArrival = 2,

@@ -7,7 +7,7 @@ import { getAllCategory, getDetailsCategoryByLabel } from '@store/slices/categor
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getIndexNo } from '@utils/index';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid';
+import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import { EditCategory } from './Dialog/EditCategory';
 import { Form, Formik } from 'formik';
@@ -26,8 +26,8 @@ export const Category = () => {
   }, [searchCategory]);
 
   const loadCategories = () => {
-    dispatch(getAllCategory({...searchCategory})).then();
-  }
+    dispatch(getAllCategory({ ...searchCategory })).then();
+  };
 
   const handleGetDetails = (label: string) => {
     dispatch(getDetailsCategoryByLabel(label)).then();
@@ -41,8 +41,36 @@ export const Category = () => {
     requiresAttribute: category.requireAttributes?.map((attribute) => attribute.name).join(', '),
   }));
 
-  const columns: Array<any> = [
-    ...COLUMNS_CATEGORY,
+  const columns: Array<GridColDef> = [
+    {
+      field: 'no',
+      headerName: 'STT',
+      width: 70,
+      renderCell: (params) => {
+        const index = params.api.getAllRowIds().indexOf(params.id);
+        return getIndexNo(index, searchCategory.page, searchCategory.pageSize);
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Thể loại',
+      width: 200,
+    },
+    {
+      field: 'label',
+      headerName: '# Label',
+      width: 200,
+    },
+    {
+      field: 'requiresAttribute',
+      headerName: 'Danh sách thông số/thuộc tính',
+      width: 400,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        const value = params.row.requireAttributes?.map((attribute: any) => attribute.name);
+        return value.join(', ');
+      },
+    },
     {
       field: 'options',
       headerName: 'Thao Tác',
@@ -51,14 +79,14 @@ export const Category = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams) => [
-        <Tooltip title="Chỉnh sửa" key={params.row.no}>
+        <Tooltip title='Chỉnh sửa' key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
               handleGetDetails(params.row.label);
               setOpenEdit(true);
             }}
-            label="Chỉnh sửa"
+            label='Chỉnh sửa'
           />
         </Tooltip>,
       ],
@@ -68,39 +96,35 @@ export const Category = () => {
   return (
     <>
       <Formik
-        initialValues={{...searchCategory}}
+        initialValues={{ ...searchCategory }}
         onSubmit={(values) => {
           setSearchCategory({ ...values, page: 0 });
         }}
       >
-        {() => {
-          return (
-            <Form>
-              <Box sx={{
-                bgcolor: '#fff',
-                padding: '25px 20px 20px 20px',
-                borderRadius: 2,
-                gap: '15px',
-                border: 0,
-                mb: '30px',
-              }}>
-                <Grid container spacing={2}>
-                  <Grid item md={3}>
-                    <TextFieldCustom name='keyword' label='Từ khóa' />
-                  </Grid>
-                  <Grid item md={2} >
-                    <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Form>
-          )
-        }}
+        <Form>
+          <Box sx={{
+            bgcolor: '#fff',
+            padding: '25px 20px 20px 20px',
+            borderRadius: 2,
+            gap: '15px',
+            border: 0,
+            mb: '30px',
+          }}>
+            <Grid container spacing={2}>
+              <Grid item md={3}>
+                <TextFieldCustom name='keyword' label='Từ khóa' />
+              </Grid>
+              <Grid item md={2}>
+                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+              </Grid>
+            </Grid>
+          </Box>
+        </Form>
       </Formik>
 
       <DataTable
         column={columns}
-        row={rows}
+        row={categories.data}
         isQuickFilter
         paginationModel={searchCategory}
         setPaginationModel={setSearchCategory}

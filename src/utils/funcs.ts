@@ -32,6 +32,10 @@ export const getRole = (role?: string | null) => {
   }
 };
 
+export const getStatusAccount = (isBlocked?: boolean): string => {
+  return isBlocked ? 'Bị chặn' : 'Hoạt động';
+};
+
 // get status ViVN
 export const productStatusMapping: { [key: number]: string } = {
   [ProductStatus.ComingSoon]: 'Sắp ra mắt',
