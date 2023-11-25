@@ -14,6 +14,7 @@ import { RootRoutes } from '@constants/enum';
 import { formatDateViVN } from '@utils/funcs';
 import { useRouter } from 'next/navigation';
 import styles from '@styles/components/_noti.module.scss';
+import { Skeleton } from '@mui/material';
 
 interface Props {
   status: 'all' | 'unread';
@@ -23,6 +24,7 @@ interface Props {
 const NotificationList = memo(({ status, onClose }: Props) => {
   const { notifications, setNotifications, handleMarkAsRead } = useNotification();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingPage, setIsLoadingPage] = useState<boolean>(false);
   const [showReadmore, setShowReadmore] = useState<boolean>(true);
   const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
   const router = useRouter();
@@ -37,6 +39,7 @@ const NotificationList = memo(({ status, onClose }: Props) => {
 
   useEffect(() => {
     if (notifications.length > 0) {
+      setIsLoadingPage(true);
       getNotifications({ ...paging, readType: status })
         .then(({ data }) => {
           setNotifications((prev) => [...prev, ...data.data]);
@@ -44,7 +47,8 @@ const NotificationList = memo(({ status, onClose }: Props) => {
             setShowReadmore(false);
           }
         })
-        .catch(() => setShowReadmore(false));
+        .catch(() => setShowReadmore(false))
+        .finally(() => setIsLoadingPage(false));
     }
   }, [paging.pageSize]);
 
@@ -107,6 +111,11 @@ const NotificationList = memo(({ status, onClose }: Props) => {
                 </Stack>
               );
             })}
+            {isLoadingPage && (
+              <Skeleton variant="circular">
+                <Avatar />
+              </Skeleton>
+            )}
             {showReadmore && (
               <ButtonCustom
                 variant='text'

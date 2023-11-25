@@ -14,7 +14,7 @@ import { FieldImageProps } from '@models/Image';
 import { formatDateViVN, getCountImage } from '@utils/index';
 import { getCategoryByLabel } from '@services/categoryService';
 import { AttributeDynamics, AttributeModel } from '@models/Attribute';
-import { TextFieldCustom } from '@components/Common/FormFormik/TextFieldCustom';
+import { TextFieldCustom } from '@components/Common';
 import { Paging } from '@models/Common';
 
 export const InforSection = memo(() => {

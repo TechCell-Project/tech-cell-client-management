@@ -23,7 +23,11 @@ export const TextViewCustom = memo((
 
   return (
     <Typography
-      sx={{ ...stylesLabel, fontSize: '15px' }}
+      sx={{
+        ...stylesLabel, fontSize: '15px', '& svg': {
+          verticalAlign: 'sub',
+        },
+      }}
     >
       {label}:
       <b style={{ fontSize: '15px', fontWeight: 500 }}> {content ?? titleNoContent} </b>

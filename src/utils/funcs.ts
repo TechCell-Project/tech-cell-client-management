@@ -131,9 +131,9 @@ export const getSearchParams = <T extends number | string = any>(payload: Record
 export const getAddressLocation = (address: Address) => {
   try {
     return `
-      ${(address.wardLevel as Ward).ward_name},
-      ${(address.districtLevel as District).district_name},
-      ${(address.provinceLevel as Province).province_name}
+      ${(address.wardLevel as Ward)?.ward_name ?? ''},
+      ${(address.districtLevel as District)?.district_name ?? ''},
+      ${(address.provinceLevel as Province)?.province_name ?? ''}
     `;
   } catch {
     return '';

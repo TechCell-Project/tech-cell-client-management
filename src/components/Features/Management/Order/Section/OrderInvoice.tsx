@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import Stack from '@mui/material/Stack';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import Typography from '@mui/material/Typography';
@@ -21,6 +21,11 @@ const OrderInvoice = () => {
       </Stack>
     );
   };
+
+  const calculateTempPrice = useCallback(() => {
+    // @ts-ignore
+    return order?.products.reduce((acc, product) => acc + product.price.base * product.quantity, 0) ?? 0;
+  }, [order]);
 
   return (
     <>
@@ -67,7 +72,7 @@ const OrderInvoice = () => {
           );
         })}
         <Stack flexDirection='column' p='20px 0' width='100%' gap={1}>
-          {renderLine('Tạm tính', formatWithCommas(Number(order?.checkoutOrder.totalPrice)))}
+          {renderLine('Tạm tính', formatWithCommas(calculateTempPrice()))}
           {renderLine('Phí vận chuyển', formatWithCommas(Number(order?.checkoutOrder.shippingFee)))}
           {renderLine('Giảm giá', formatWithCommas(Number(order?.checkoutOrder.totalApplyDiscount)), true)}
           {renderLine('Voucher từ shop', formatWithCommas(Number(order?.checkoutOrder.totalApplyDiscount)), true)}

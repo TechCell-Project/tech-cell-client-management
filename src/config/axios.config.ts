@@ -34,10 +34,6 @@ instance.interceptors.response.use(
     const prevRequest = error.config;
     const statusCode = error.response?.status || error.response?.statusCode;
 
-    if (statusCode === 403) {
-      store.dispatch(logout());
-    }
-
     if (statusCode === 401 && !prevRequest._retry) {
       prevRequest._retry = true;
       const refreshToken = getRefreshToken();
@@ -56,7 +52,8 @@ instance.interceptors.response.use(
 
           return instance(prevRequest);
         } catch (error) {
-          return Promise.reject(error);
+          return store.dispatch(logout());
+          // return Promise.reject(error);
         }
       }
     }
