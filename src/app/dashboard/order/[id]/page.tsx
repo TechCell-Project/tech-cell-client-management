@@ -8,7 +8,7 @@ const OrderDetailsDynamic = dynamic(
   () => import('@components/Features').then((res) => res.OrderDetails),
   {
     ssr: false,
-    loading: () => <LoadingPage isLoading={true} isBlur />,
+    loading: () => <LoadingPage isLoading={true} />,
   },
 );
 

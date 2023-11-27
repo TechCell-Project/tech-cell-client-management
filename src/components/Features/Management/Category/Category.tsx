@@ -133,7 +133,7 @@ export const Category = () => {
       />
 
       {isLoadingDetails ? (
-        <LoadingPage isLoading={isLoadingDetails} isBlur />
+        <LoadingPage isLoading={isLoadingDetails} />
       ) : (
         <>{openEdit && <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />}</>
       )}

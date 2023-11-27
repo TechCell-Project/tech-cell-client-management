@@ -9,7 +9,7 @@ const ProductCreateDynamic = dynamic(
   () => import('@components/Features').then((res) => res.ProductCreate),
   {
     ssr: false,
-    loading: () => <LoadingPage isLoading={true} isBlur />,
+    loading: () => <LoadingPage isLoading={true} />,
   },
 );
 

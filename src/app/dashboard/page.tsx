@@ -7,7 +7,7 @@ import { LoadingPage } from '@components/Common';
 
 const StatisticsDynamic = dynamic(() => import('@components/Features').then((res) => res.Statistics), {
   ssr: false,
-  loading: () => <LoadingPage isLoading={true} isBlur />,
+  loading: () => <LoadingPage isLoading={true} />,
 });
 
 export default function Page() {

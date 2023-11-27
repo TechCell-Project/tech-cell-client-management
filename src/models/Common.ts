@@ -20,6 +20,11 @@ export class PagingResponse<T = unknown> {
   data: T[] = [];
 }
 
+export class FilterByDatetime {
+  fromDate: Date | string = '';
+  toDate: Date | string = '';
+}
+
 export class DataTableProps {
   column?: GridColDef[] | null;
   row?: readonly any[];

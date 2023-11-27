@@ -17,7 +17,7 @@ import { formatWithCommas } from '@utils/index';
 interface BoxProps {
   name: string;
   value: string | number;
-  icon?: any;
+  icon?: React.ReactNode;
   isUpper?: boolean;
   isLower?: boolean;
 }

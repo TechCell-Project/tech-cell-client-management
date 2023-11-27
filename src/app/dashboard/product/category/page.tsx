@@ -7,7 +7,7 @@ import { LoadingPage } from '@components/Common';
 
 const CategoryDynamic = dynamic(() => import('@components/Features').then((res) => res.Category), {
   ssr: false,
-  loading: () => <LoadingPage isLoading={true} isBlur />,
+  loading: () => <LoadingPage isLoading={true} />,
 });
 
 export default function Page() {

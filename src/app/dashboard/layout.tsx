@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@components/Navigation/Sidebar';
 import { LoadingPage } from '@components/Common';

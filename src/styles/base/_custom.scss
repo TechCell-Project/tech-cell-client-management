@@ -162,6 +162,23 @@
   color: $primaryColor !important;
 }
 
+.MuiToggleButtonGroup-root {
+  gap: 10px;
+
+  & .MuiButtonBase-root.MuiToggleButton-root {
+    line-height: 1;
+    text-transform: capitalize;
+    border: 0;
+    border-radius: 8px !important;
+    padding: 10px 15px;
+  }
+
+  & .MuiButtonBase-root.MuiToggleButton-root.Mui-selected {
+    background-color: $primaryColor;
+    color: #fff;
+  }
+}
+
 // Recharts
 .recharts-text.recharts-cartesian-axis-tick-value {
   font-size: 13px;

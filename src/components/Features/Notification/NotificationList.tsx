@@ -14,7 +14,7 @@ import { RootRoutes } from '@constants/enum';
 import { formatDateViVN } from '@utils/funcs';
 import { useRouter } from 'next/navigation';
 import styles from '@styles/components/_noti.module.scss';
-import { Skeleton } from '@mui/material';
+// import { Skeleton } from '@mui/material';
 
 interface Props {
   status: 'all' | 'unread';
@@ -111,11 +111,11 @@ const NotificationList = memo(({ status, onClose }: Props) => {
                 </Stack>
               );
             })}
-            {isLoadingPage && (
-              <Skeleton variant="circular">
-                <Avatar />
-              </Skeleton>
-            )}
+            {/*{isLoadingPage && (*/}
+            {/*  <Skeleton variant="circular">*/}
+            {/*    <Avatar />*/}
+            {/*  </Skeleton>*/}
+            {/*)}*/}
             {showReadmore && (
               <ButtonCustom
                 variant='text'

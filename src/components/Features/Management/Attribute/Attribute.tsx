@@ -29,7 +29,7 @@ export const Attribute = () => {
 
   useEffect(() => {
     loadAttributes();
-  }, [searchAttribute]);
+  }, [searchAttribute, paging]);
 
   const handleGetDetails = (id: string) => {
     dispatch(getDetailAttributeById(id)).then();
@@ -141,7 +141,7 @@ export const Attribute = () => {
       />
 
       {isLoadingDetail ? (
-        <LoadingPage isLoading={isLoadingDetail} isBlur />
+        <LoadingPage isLoading={isLoadingDetail} />
       ) : (
         <>
           {isOpen.openEdit && (

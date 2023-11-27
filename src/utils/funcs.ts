@@ -64,7 +64,7 @@ export const getIndexNo = (index: number, page: number, pageSize: number): numbe
 
 // format
 export const formatWithCommas = (number: number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ₫';
+  return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫`;
 };
 
 export const removeCommas = (inputString: string) => {

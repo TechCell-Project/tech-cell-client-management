@@ -9,7 +9,7 @@ const ProductEditDynamic = dynamic(
   () => import('@components/Features').then((res) => res.ProductEdit),
   {
     ssr: false,
-    loading: () => <LoadingPage isLoading={true} isBlur />,
+    loading: () => <LoadingPage isLoading={true} />,
   },
 );
 

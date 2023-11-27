@@ -72,11 +72,30 @@ export default function Sidebar({ children }: { children: ReactNode }) {
           subHeader='Khác'
         />
       </Drawer>
-      <Main open={open} sx={{ padding: 0, overflow: 'hidden auto' }}>
+      <Main open={open} sx={{ padding: 0, pb: '15px', overflow: 'hidden auto' }}>
         <DrawerHeader />
         <FrameBackground />
         <Stack direction='column' position='relative' top='-45px' p='0 30px 24px 30px'>
           {children}
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+            position='absolute'
+            bottom='-30px'
+            right='30px'
+            left='30px'
+          >
+            <p style={{ fontSize: '15px' }}>© 2023, made with ❤️ by <b style={{ fontWeight: 600 }}>Techcell Team</b></p>
+            <Stack direction='row' gap={3}>
+              <a style={{ fontSize: '15px', fontWeight: 600 }} target='_blank'
+                href='https://techcell.cloud/'>Website</a>
+              <a style={{ fontSize: '15px', fontWeight: 600 }} target='_blank'
+                href='https://docs.techcell.cloud/'>Document</a>
+              <a style={{ fontSize: '15px', fontWeight: 600 }}
+                href='mailto:teams@techcell.cloud'>Contact</a>
+            </Stack>
+          </Stack>
         </Stack>
       </Main>
     </Box>
