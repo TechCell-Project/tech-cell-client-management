@@ -11,10 +11,9 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { RootRoutes } from '@constants/enum';
-import { formatDateViVN } from '@utils/funcs';
 import { useRouter } from 'next/navigation';
 import styles from '@styles/components/_noti.module.scss';
-// import { Skeleton } from '@mui/material';
+import momentVi from '@config/moment.config';
 
 interface Props {
   status: 'all' | 'unread';
@@ -24,22 +23,26 @@ interface Props {
 const NotificationList = memo(({ status, onClose }: Props) => {
   const { notifications, setNotifications, handleMarkAsRead } = useNotification();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingPage, setIsLoadingPage] = useState<boolean>(false);
   const [showReadmore, setShowReadmore] = useState<boolean>(true);
   const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
   const router = useRouter();
 
+
   useEffect(() => {
     setIsLoading(true);
     getNotifications({ ...paging, readType: status })
-      .then(({ data }) => setNotifications(data.data))
+      .then(({ data }) => {
+        if (data.data.length < 10) {
+          setShowReadmore(false);
+        }
+        setNotifications(data.data);
+      })
       .catch(() => setNotifications([]))
       .finally(() => setIsLoading(false));
   }, [status, setNotifications]);
 
   useEffect(() => {
     if (notifications.length > 0) {
-      setIsLoadingPage(true);
       getNotifications({ ...paging, readType: status })
         .then(({ data }) => {
           setNotifications((prev) => [...prev, ...data.data]);
@@ -47,8 +50,7 @@ const NotificationList = memo(({ status, onClose }: Props) => {
             setShowReadmore(false);
           }
         })
-        .catch(() => setShowReadmore(false))
-        .finally(() => setIsLoadingPage(false));
+        .catch(() => setShowReadmore(false));
     }
   }, [paging.pageSize]);
 
@@ -84,17 +86,13 @@ const NotificationList = memo(({ status, onClose }: Props) => {
                   }}
                   className={styles.notifyItem}
                 >
-                  {/*{Boolean((item?.avatar as ImageModel)?.url) ? (*/}
-                  {/*  <Avatar src={String((item?.avatar as ImageModel)?.url)} alt='User Avatar'*/}
-                  {/*    sx={{ height: '45px', width: '45px' }} />*/}
-                  {/*) : (*/}
                   <Avatar sx={{ height: '50px', width: '50px' }}>
                     <PersonRoundedIcon />
                   </Avatar>
-                  {/*)}*/}
                   <Stack flexDirection='column' gap='5px' alignItems='flex-start'>
                     <Typography fontSize='15px' fontWeight={!item.readAt ? 600 : 400}>{item.content}</Typography>
-                    <Typography fontSize='13px' fontWeight={500}>{formatDateViVN(String(item.createdAt))}</Typography>
+                    <Typography fontSize='13px'
+                      fontWeight={500}>{momentVi(String(item.createdAt)).fromNow()}</Typography>
                   </Stack>
                   {!item.readAt && (
                     <FiberManualRecordIcon
@@ -111,11 +109,6 @@ const NotificationList = memo(({ status, onClose }: Props) => {
                 </Stack>
               );
             })}
-            {/*{isLoadingPage && (*/}
-            {/*  <Skeleton variant="circular">*/}
-            {/*    <Avatar />*/}
-            {/*  </Skeleton>*/}
-            {/*)}*/}
             {showReadmore && (
               <ButtonCustom
                 variant='text'

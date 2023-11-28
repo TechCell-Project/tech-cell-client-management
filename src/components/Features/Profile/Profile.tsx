@@ -17,8 +17,12 @@ export const Profile = ({ isOpen, handleClose }: DialogAction) => {
   ], [handleClose]);
 
   return (
-    <ShowDialog dialogTitle='Hồ sơ' isOpen={isOpen} handleClose={handleClose}
-      dialogStyle={{ minWidth: { lg: '65%', xs: '90%' } }}>
+    <ShowDialog
+      dialogTitle='Hồ sơ'
+      isOpen={isOpen}
+      handleClose={handleClose}
+      dialogStyle={{ minWidth: { lg: '65%', xs: '90%' } }}
+    >
       <div style={{ width: '100%' }}>
         <Tabs
           value={tabIndex}

@@ -43,7 +43,6 @@ const StatisticCharts = () => {
 
   return (
     <Box sx={{ p: '15px 20px', bgcolor: '#fff', borderRadius: '6px' }}>
-
       <Formik
         initialValues={new SearchStats()}
         onSubmit={() => {
