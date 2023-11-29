@@ -79,7 +79,7 @@ export const createNewCategory =
         return { success: true };
       }
     } catch (error) {
-      return { succes: false, error };
+      return { success: false, error };
     } finally {
       dispatch(fetchedDone());
     }

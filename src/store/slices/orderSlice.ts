@@ -4,7 +4,6 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { getOrderById, getOrders, patchOrderStatus } from '@services/orderService';
 import { HttpStatusCode } from 'axios';
 import { toast } from 'react-toastify';
-import { getDetailsUserAccount } from '@store/slices/accountSlice';
 
 const initialState: OrderSlice = {
   orders: new PagingResponse<OrderModel>(),
@@ -51,9 +50,6 @@ export const orderSlice = createSlice({
     getDetailsFailure: (state) => {
       state.order = null;
       state.isLoadingDetails = false;
-    },
-    fetchedDone: (state) => {
-      state.isLoading = false;
     },
     fetchedDetailsDone: (state) => {
       state.isLoadingDetails = false;
@@ -102,7 +98,6 @@ export const editOrderStatus = (id: string, orderStatus: string) => async (dispa
 const { actions, reducer } = orderSlice;
 
 export const {
-  fetchedDone,
   fetchedDetailsDone,
   isFetchingDetails,
   isFetching,

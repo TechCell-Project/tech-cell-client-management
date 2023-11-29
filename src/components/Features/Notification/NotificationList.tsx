@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import useNotification from '@hooks/useNotification';
 import { getNotifications } from '@services/notificationService';
-import { PagingNotify } from '@models/Notification';
+import { NotificationModel, PagingNotify } from '@models/Notification';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
@@ -18,15 +18,17 @@ import momentVi from '@config/moment.config';
 interface Props {
   status: 'all' | 'unread';
   onClose: () => void;
+  notifications: NotificationModel[];
+  setNotifications: React.Dispatch<React.SetStateAction<NotificationModel[]>>;
+  handleMarkAsRead: (notificationId: string) => void;
 }
 
-const NotificationList = memo(({ status, onClose }: Props) => {
-  const { notifications, setNotifications, handleMarkAsRead } = useNotification();
+const NotificationList = memo(
+  ({ status, onClose, notifications, setNotifications, handleMarkAsRead }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showReadmore, setShowReadmore] = useState<boolean>(true);
   const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
   const router = useRouter();
-
 
   useEffect(() => {
     setIsLoading(true);

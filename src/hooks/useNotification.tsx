@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import socketIO from '@config/socket_io.config';
 import { NotificationModel } from '@models/Notification';
+import { useAppSelector } from '@store/store';
 
 const useNotification = () => {
   const [notifications, setNotifications] = useState<Array<NotificationModel>>([]);
@@ -31,6 +32,7 @@ const useNotification = () => {
     setSocket(ws);
 
     return () => {
+      console.log('Disconnected SocketIO Server! 🙃');
       ws.disconnect();
     };
   }, []);
