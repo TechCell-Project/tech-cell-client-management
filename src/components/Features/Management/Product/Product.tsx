@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ButtonCustom, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllProduct } from '@store/slices/productSlice';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
@@ -14,11 +14,12 @@ import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
 import { IColumnProduct } from '@interface/data';
 import { DeleteProductDialog } from './Dialog/DeleteProductDialog';
-import { PagingProduct } from '@models/Product';
+import { ImageModel, PagingProduct, ProductModel } from '@models/Product';
 import { Form, Formik } from 'formik';
 import Grid from '@mui/material/Grid';
 import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
+import Image from 'next/image';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ export const Product = () => {
     dispatch(getAllProduct({ ...searchProduct, page: paging.page, pageSize: paging.pageSize })).then();
   };
 
-  const columns: Array<GridColDef> = [
+  const columns: Array<GridColDef<ProductModel>> = [
     {
       field: 'no',
       headerName: 'STT',
@@ -48,6 +49,23 @@ export const Product = () => {
         return getIndexNo(index, paging.page, paging.pageSize);
       },
     },
+    {
+      field: 'generalImages',
+      headerName: 'Hình ảnh',
+      width: 150,
+      renderCell: (params) => {
+        const thumbs = params.row.generalImages?.find((image: ImageModel) => image.isThumbnail)?.url;
+        return (
+          <Image
+            src={thumbs ?? '/empty.png'}
+            alt='thumbs-image-product'
+            height={50}
+            width={50}
+            style={{ objectFit: 'cover', width: 'auto' }}
+          />
+        );
+      },
+    },
     { field: 'name', headerName: 'Tên Sản Phẩm', width: 180 },
     {
       field: 'category',
@@ -55,23 +73,7 @@ export const Product = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
-      valueGetter: (params) => params.row.category.name,
-    },
-    {
-      field: 'status',
-      headerName: 'Tình Trạng',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-      valueGetter: (params) => productStatusMapping[Number(params.row.status)],
-    },
-    {
-      field: 'generalAttributes',
-      headerName: 'Tổng Số Thông Số',
-      width: 170,
-      align: 'center',
-      headerAlign: 'center',
-      valueGetter: (params) => params.row.generalAttributes.length,
+      valueGetter: (params) => params.row.category && params.row.category.name,
     },
     {
       field: 'variations',
@@ -80,6 +82,19 @@ export const Product = () => {
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params) => params.row.variations.length,
+    },
+    {
+      field: 'status',
+      headerName: 'Tình Trạng',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => (
+        <ChipStatus
+          label={productStatusMapping[Number(params.row.status)]}
+          type={String(params.row.status)}
+        />
+      ),
     },
     {
       field: 'options',
@@ -119,7 +134,6 @@ export const Product = () => {
           setPaging((prev) => ({ ...prev, page: 0 }));
         }}
       >
-
         <Form>
           <Box sx={{
             bgcolor: '#fff',

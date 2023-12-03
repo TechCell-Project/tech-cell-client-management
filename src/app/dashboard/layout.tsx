@@ -4,12 +4,16 @@ import React, { useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@components/Navigation/Sidebar';
 import { LoadingPage } from '@components/Common';
-import { useAppSelector } from '@store/store';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import Loading from 'app/loading';
+import socket from '@config/socket_io.config';
+import { getAllNotification, setPushNotifySocket, setSocket } from '@store/slices/notiSlice';
+import { PagingNotify } from '@models/Notification';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -20,6 +24,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         clearTimeout(timeout);
       };
     }
+
+    socket.on('connect', () => {
+      console.log('Connected To socket Server! 🙃🙃🙃');
+    });
+
+    socket.on('new-order-admin', (data) => {
+      console.log(data);
+      dispatch(setPushNotifySocket(data.notifications));
+    });
+
+    dispatch(setSocket(socket));
+    dispatch(getAllNotification(new PagingNotify(), 'get')).then();
+
+    return () => {
+      console.log('Disconnected socket Server! 🙃');
+      socket.disconnect();
+    };
   }, [isAuthenticated]);
 
   return (

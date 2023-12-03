@@ -1,10 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ButtonCustom, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { getAllUserAccount, getDetailsUserAccount } from '@store/slices/accountSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { getRole, getCurrentUserId, isRoleAccepted, getIndexNo, getStatusAccount } from '@utils/index';
+import {
+  getRole,
+  getCurrentUserId,
+  isRoleAccepted,
+  getIndexNo,
+  getStatusAccount,
+  productStatusMapping,
+} from '@utils/index';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
@@ -60,7 +67,7 @@ export const Account = () => {
     {
       field: 'name',
       headerName: 'Họ Và Tên',
-      width: 220,
+      width: 190,
       valueGetter: (params) => `${params.row.firstName} ${params.row.lastName}`,
     },
     {
@@ -77,8 +84,18 @@ export const Account = () => {
     {
       field: 'status',
       headerName: 'Trạng Thái',
-      width: 120,
-      valueGetter: (params) => getStatusAccount(params.row.block?.isBlocked),
+      width: 180,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => {
+        const status = getStatusAccount(params.row.block?.isBlocked);
+        return (
+          <ChipStatus
+            label={status}
+            type={status}
+          />
+        );
+      },
     },
     {
       field: 'options',

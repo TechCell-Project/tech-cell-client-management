@@ -1,6 +1,6 @@
 // common functions
 import { ImageModel } from '@models/Product';
-import { PaymentOrder, PaymentStatus, ProductStatus, Roles } from '@constants/enum';
+import { AccountStatusVi, PaymentOrder, PaymentStatus, ProductStatus, Roles } from '@constants/enum';
 import { getCurrentUserRole } from '@utils/local';
 import { Address } from '@models/Account';
 import { District, Province, Ward } from '@models/Location';
@@ -33,7 +33,7 @@ export const getRole = (role?: string | null) => {
 };
 
 export const getStatusAccount = (isBlocked?: boolean): string => {
-  return isBlocked ? 'Bị chặn' : 'Hoạt động';
+  return isBlocked ? AccountStatusVi.Blocked : AccountStatusVi.Unblocked;
 };
 
 // get status ViVN

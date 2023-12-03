@@ -9,13 +9,13 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useTheme } from '@mui/material/styles';
 import NotificationList from './NotificationList';
-import useNotification from '@hooks/useNotification';
+import { useAppSelector } from '@store/store';
 
 export const Notification = memo(() => {
+  const { notifications } = useAppSelector((state) => state.notification);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [tabNotifyIndex, setTabNotifyIndex] = useState<number>(0);
-  const { notifications, setNotifications, handleMarkAsRead } = useNotification();
 
   const open = Boolean(anchorEl);
   const id = open ? 'notify-popover' : undefined;
@@ -24,30 +24,14 @@ export const Notification = memo(() => {
     return [
       {
         name: 'Tất cả',
-        component: (
-          <NotificationList
-            status='all'
-            onClose={() => setAnchorEl(null)}
-            notifications={notifications}
-            setNotifications={setNotifications}
-            handleMarkAsRead={handleMarkAsRead}
-          />
-        ),
+        component: <NotificationList status='all' onClose={() => setAnchorEl(null)} />,
       },
       {
         name: 'Chưa đọc',
-        component: (
-          <NotificationList
-            status='unread'
-            onClose={() => setAnchorEl(null)}
-            notifications={notifications}
-            setNotifications={setNotifications}
-            handleMarkAsRead={handleMarkAsRead}
-          />
-        ),
+        component: <NotificationList status='unread' onClose={() => setAnchorEl(null)} />,
       },
     ];
-  }, [handleMarkAsRead, notifications, setNotifications]);
+  }, []);
 
   return (
     <>
@@ -58,7 +42,11 @@ export const Notification = memo(() => {
         size='large'
         onClick={(event) => setAnchorEl(event.currentTarget)}
       >
-        <BadgeIconButton color='secondary' variant='dot'>
+        <BadgeIconButton
+          color='secondary'
+          variant='dot'
+          invisible={!notifications.some((noti) => noti.readAt === null)}
+        >
           <NotificationsNoneRoundedIcon />
         </BadgeIconButton>
       </IconButton>

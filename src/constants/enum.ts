@@ -21,6 +21,11 @@ export enum AccountStatus {
   Blocked = 'blocked',
 }
 
+export enum AccountStatusVi {
+  Unblocked = 'Hoạt động',
+  Blocked = 'Bị chặn'
+}
+
 export enum EmailStatus {
   Verified = 'verified',
   Unverified = 'unverified'
