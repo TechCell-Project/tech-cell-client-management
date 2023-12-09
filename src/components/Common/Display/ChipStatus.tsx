@@ -6,15 +6,15 @@ import { AccountStatusVi, ProductStatus } from '@constants/enum';
 
 type TChip = {
   label: string,
-  type: string | number,
+  type: string,
 }
 
-type TColor = (number | string)[];
+type TColor = string[];
 
-const successColor: TColor = [ProductStatus.OnSales, ProductStatus.Pre_order, AccountStatusVi.Unblocked];
-const infoColor: TColor = [ProductStatus.ComingSoon, ProductStatus.NewArrival];
-const warningColor: TColor = [ProductStatus.Hide, ProductStatus.NotSales, ProductStatus.LowStock];
-const errorColor: TColor = [ProductStatus.Deleted, ProductStatus.TemporarilyOutOfStock, AccountStatusVi.Blocked];
+const successColor: TColor = [ProductStatus.OnSales.toString(), ProductStatus.Pre_order.toString(), AccountStatusVi.Unblocked];
+const infoColor: TColor = [ProductStatus.ComingSoon.toString(), ProductStatus.NewArrival.toString()];
+const warningColor: TColor = [ProductStatus.Hide.toString(), ProductStatus.NotSales.toString(), ProductStatus.LowStock.toString()];
+const errorColor: TColor = [ProductStatus.Deleted.toString(), ProductStatus.TemporarilyOutOfStock.toString(), AccountStatusVi.Blocked];
 
 export const ChipStatus = ({ label, type }: TChip) => {
   const getColor = () => {

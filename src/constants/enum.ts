@@ -64,4 +64,5 @@ export enum PaymentStatus {
 
 export enum PaymentOrder {
   SHIPPING = 'shipping',
+  WAIT_FOR_PAYMENT ='wait_for_payment',
 }

@@ -77,8 +77,8 @@ const OrderInfo = () => {
                   })?.name}
               />
               {/*@ts-ignore*/}
-              {/*<TextViewCustom label='Trạng thái' content={orderStatusMapping[String(order?.paymentOrder.status)]} />*/}
-              <TextViewCustom label='Trạng thái' content={"..."} />
+              <TextViewCustom label='Trạng thái' content={orderStatusMapping[String(order?.paymentOrder.status)]} />
+              {/*<TextViewCustom label='Trạng thái' content={"..."} />*/}
             </Stack>
           </Stack>
         </Grid>

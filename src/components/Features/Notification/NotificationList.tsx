@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import styles from '@styles/components/_noti.module.scss';
 import momentVi from '@config/moment.config';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { getAllNotification } from '@store/slices/notiSlice';
+import { getAllNotification, getFailure } from '@store/slices/notiSlice';
 
 interface Props {
   status: 'all' | 'unread';
@@ -27,13 +27,21 @@ const NotificationList = memo(
     const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
     const router = useRouter();
 
-    useEffect(() => {
-      dispatch(getAllNotification({...paging, readType: status}, 'get')).then()
-    }, [status, dispatch]);
+    console.log(notifications, showReadmore);
 
     useEffect(() => {
-      dispatch(getAllNotification({...paging, readType: status}, 'paging')).then()
-    }, [paging.pageSize]);
+      dispatch(getAllNotification({ ...paging, readType: status }, 'get')).then();
+
+      return () => {
+        dispatch(getFailure());
+      };
+    }, [status, dispatch]);
+
+    // useEffect(() => {
+    //   if (notifications.length > 0) {
+    //     dispatch(getAllNotification({ ...paging, readType: status }, 'paging')).then();
+    //   }
+    // }, [paging.page]);
 
     const handleMarkAsRead = (notificationId: string) => {
       if (socket) {
@@ -101,8 +109,16 @@ const NotificationList = memo(
                 <ButtonCustom
                   variant='text'
                   content='Xem thêm'
-                  handleClick={() => setPaging((prev) => (
-                    { ...prev, pageSize: prev.pageSize + 10 }))}
+                  handleClick={() => {
+                    setPaging((prev) => (
+                      { ...prev, page: prev.page + 1 }),
+                    );
+                    dispatch(getAllNotification({
+                      ...paging,
+                      page: paging.page + 1,
+                      readType: status,
+                    }, 'paging')).then();
+                  }}
                   styles={{
                     width: '100%',
                     lineHeight: '40px',

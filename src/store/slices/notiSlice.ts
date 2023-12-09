@@ -28,8 +28,8 @@ export const notificationSlice = createSlice({
     setSocket: (state, { payload }) => {
       state.socket = payload;
     },
-    setPushNotifySocket: (state, { payload }) => {
-      state.notifications.unshift(...payload);
+    setPushNotifySocket: (state, { payload }: { payload: NotificationModel }) => {
+      state.notifications = [payload, ...state.notifications];
     },
     getSuccess: (state, { payload }: { payload: Array<NotificationModel> }) => {
       if (payload.length < 10) {

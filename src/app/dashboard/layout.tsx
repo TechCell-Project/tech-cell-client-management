@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import Loading from 'app/loading';
 import socket from '@config/socket_io.config';
 import { getAllNotification, setPushNotifySocket, setSocket } from '@store/slices/notiSlice';
-import { PagingNotify } from '@models/Notification';
+import { NotificationModel, PagingNotify } from '@models/Notification';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -29,13 +29,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       console.log('Connected To socket Server! 🙃🙃🙃');
     });
 
-    socket.on('new-order-admin', (data) => {
+    socket.on('new-order-admin', (data: { time: string; notifications: NotificationModel }) => {
       console.log(data);
       dispatch(setPushNotifySocket(data.notifications));
     });
 
     dispatch(setSocket(socket));
-    dispatch(getAllNotification(new PagingNotify(), 'get')).then();
+    // dispatch(getAllNotification(new PagingNotify(), 'get')).then();
 
     return () => {
       console.log('Disconnected socket Server! 🙃');

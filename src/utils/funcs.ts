@@ -56,6 +56,7 @@ export const orderStatusMapping: { [key: string]: string } = {
   [PaymentStatus.REFUNDED]: 'Hoàn / trả hàng',
   [PaymentStatus.PROCESSING]: 'Đang chuẩn bị hàng',
   [PaymentOrder.SHIPPING]: 'Đang vận chuyển',
+  [PaymentOrder.WAIT_FOR_PAYMENT]: 'Chờ thanh toán',
 };
 
 export const getIndexNo = (index: number, page: number, pageSize: number): number => {
