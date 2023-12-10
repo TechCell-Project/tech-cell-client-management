@@ -12,7 +12,7 @@ import NotificationList from './NotificationList';
 import { useAppSelector } from '@store/store';
 
 export const Notification = memo(() => {
-  const { notifications } = useAppSelector((state) => state.notification);
+  const { isPing, notifications } = useAppSelector((state) => state.notification);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [tabNotifyIndex, setTabNotifyIndex] = useState<number>(0);
@@ -45,7 +45,8 @@ export const Notification = memo(() => {
         <BadgeIconButton
           color='secondary'
           variant='dot'
-          invisible={!notifications.some((noti) => noti.readAt === null)}
+          invisible={!isPing}
+          // invisible={!notifications.some((noti) => noti.readAt === null)}
         >
           <NotificationsNoneRoundedIcon />
         </BadgeIconButton>

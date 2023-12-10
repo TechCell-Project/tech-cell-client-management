@@ -43,6 +43,11 @@ export const ProductEdit = ({ id }: { id: string }) => {
       //   }
       // }
 
+      if (values.variations && values.variations.length < 1) {
+        toast.warning('Vui lòng chọn biến thể sản phẩm!');
+        return;
+      }
+
       const response = await dispatch(editProduct(values, String(values._id)));
 
       if (response?.success) {

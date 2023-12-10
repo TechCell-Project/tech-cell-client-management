@@ -27,8 +27,6 @@ const NotificationList = memo(
     const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
     const router = useRouter();
 
-    console.log(notifications, showReadmore);
-
     useEffect(() => {
       dispatch(getAllNotification({ ...paging, readType: status }, 'get')).then();
 

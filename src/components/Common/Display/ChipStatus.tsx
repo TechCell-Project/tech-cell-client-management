@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Chip from '@mui/material/Chip';
-import { AccountStatusVi, ProductStatus } from '@constants/enum';
+import { AccountStatusVi, PaymentOrder, PaymentStatus, ProductStatus } from '@constants/enum';
 
 type TChip = {
   label: string,
@@ -11,10 +11,32 @@ type TChip = {
 
 type TColor = string[];
 
-const successColor: TColor = [ProductStatus.OnSales.toString(), ProductStatus.Pre_order.toString(), AccountStatusVi.Unblocked];
-const infoColor: TColor = [ProductStatus.ComingSoon.toString(), ProductStatus.NewArrival.toString()];
-const warningColor: TColor = [ProductStatus.Hide.toString(), ProductStatus.NotSales.toString(), ProductStatus.LowStock.toString()];
-const errorColor: TColor = [ProductStatus.Deleted.toString(), ProductStatus.TemporarilyOutOfStock.toString(), AccountStatusVi.Blocked];
+const successColor: TColor = [
+  ProductStatus.OnSales.toString(),
+  ProductStatus.Pre_order.toString(),
+  AccountStatusVi.Unblocked,
+  PaymentStatus.COMPLETED,
+];
+const infoColor: TColor = [
+  ProductStatus.ComingSoon.toString(),
+  ProductStatus.NewArrival.toString(),
+  PaymentOrder.SHIPPING,
+  PaymentStatus.PROCESSING,
+  PaymentStatus.REFUNDED,
+];
+const warningColor: TColor = [
+  ProductStatus.Hide.toString(),
+  ProductStatus.NotSales.toString(),
+  ProductStatus.LowStock.toString(),
+  PaymentStatus.PENDING,
+  PaymentOrder.WAIT_FOR_PAYMENT,
+];
+const errorColor: TColor = [
+  ProductStatus.Deleted.toString(),
+  ProductStatus.TemporarilyOutOfStock.toString(),
+  AccountStatusVi.Blocked,
+  PaymentStatus.CANCELLED,
+];
 
 export const ChipStatus = ({ label, type }: TChip) => {
   const getColor = () => {

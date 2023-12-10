@@ -9,6 +9,7 @@ type TSliceNotify = {
   socket: Socket | null;
   isLoading: boolean;
   showReadmore: boolean;
+  isPing: boolean;
 }
 
 const initialState: TSliceNotify = {
@@ -16,6 +17,7 @@ const initialState: TSliceNotify = {
   socket: null,
   isLoading: false,
   showReadmore: true,
+  isPing: false,
 };
 
 export const notificationSlice = createSlice({
@@ -28,8 +30,12 @@ export const notificationSlice = createSlice({
     setSocket: (state, { payload }) => {
       state.socket = payload;
     },
+    setOnClickPing: (state) => {
+      state.isPing = false;
+    },
     setPushNotifySocket: (state, { payload }: { payload: NotificationModel }) => {
       state.notifications = [payload, ...state.notifications];
+      state.isPing = true;
     },
     getSuccess: (state, { payload }: { payload: Array<NotificationModel> }) => {
       if (payload.length < 10) {

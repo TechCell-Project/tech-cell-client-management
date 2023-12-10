@@ -1,4 +1,4 @@
-import { ButtonCustom, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { PagingOrder } from '@models/Order';
@@ -43,15 +43,9 @@ export const Order = () => {
     },
     {
       field: 'trackingCode',
-      headerName: 'Mã theo dõi',
+      headerName: 'Mã theo dõi (Tracking)',
       width: 260,
       valueGetter: (params) => `# ${params.row.trackingCode}`,
-    },
-    {
-      field: 'orderStatus',
-      headerName: 'Trạng thái',
-      width: 150,
-      valueGetter: (params) => orderStatusMapping[String(params.row.orderStatus)],
     },
     {
       field: 'paymentOrder',
@@ -70,8 +64,21 @@ export const Order = () => {
       headerName: 'Tổng tiền (VND)',
       headerAlign: 'center',
       align: 'center',
-      width: 150,
+      width: 170,
       valueGetter: (params) => formatWithCommas(Number(params.row.checkoutOrder.totalPrice)),
+    },
+    {
+      field: 'orderStatus',
+      headerName: 'Trạng thái',
+      headerAlign: 'center',
+      align: 'center',
+      width: 220,
+      renderCell: (params) => (
+        <ChipStatus
+          label={orderStatusMapping[String(params.row.orderStatus)]}
+          type={String(params.row.orderStatus)}
+        />
+      ),
     },
     {
       field: 'options',

@@ -34,6 +34,11 @@ export const ProductCreate = () => {
     { resetForm, setSubmitting }: FormikHelpers<ProductRequest>,
   ) => {
     try {
+      if (values.variations && values.variations.length < 1) {
+        toast.warning('Vui lòng chọn biến thể sản phẩm!');
+        return;
+      }
+
       if(values.listTempAtt) {
         delete values.listTempAtt;
       }
