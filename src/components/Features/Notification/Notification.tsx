@@ -1,19 +1,19 @@
 import React, { memo, useMemo, useState } from 'react';
 import Popover from '@mui/material/Popover';
-import { BadgeIconButton } from '@styled-mui/badge';
 import Stack from '@mui/material/Stack';
 import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useTheme } from '@mui/material/styles';
 import NotificationList from './NotificationList';
-import { useAppSelector } from '@store/store';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { IconBtnCustom } from '@components/Common';
+import { setOnClickPing } from '@store/slices/notiSlice';
 
 export const Notification = memo(() => {
-  const { isPing, notifications } = useAppSelector((state) => state.notification);
+  const dispatch = useAppDispatch();
+  const { isPing } = useAppSelector((state) => state.notification);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [tabNotifyIndex, setTabNotifyIndex] = useState<number>(0);
@@ -41,24 +41,12 @@ export const Notification = memo(() => {
         isBadge
         badgeVariant='dot'
         badgeInvisible={!isPing}
-        onClick={(event) => setAnchorEl(event.currentTarget)}
+        onClick={(event) => {
+          setAnchorEl(event.currentTarget);
+          if (isPing) dispatch(setOnClickPing());
+        }}
         styles={{ padding: '10px' }}
       />
-      {/*<IconButton*/}
-      {/*  aria-describedby={id}*/}
-      {/*  aria-label='notification'*/}
-      {/*  sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
-      {/*  size='large'*/}
-      {/*  onClick={(event) => setAnchorEl(event.currentTarget)}*/}
-      {/*>*/}
-      {/*  <BadgeIconButton*/}
-      {/*    color='secondary'*/}
-      {/*    variant='dot'*/}
-      {/*    invisible={!isPing}*/}
-      {/*  >*/}
-      {/*    <NotificationsNoneRoundedIcon />*/}
-      {/*  </BadgeIconButton>*/}
-      {/*</IconButton>*/}
 
       <Popover
         id={id}

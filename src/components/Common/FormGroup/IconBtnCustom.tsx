@@ -15,8 +15,8 @@ interface Props {
   badgeVariant?: 'standard' | 'dot';
   tooltip?: string;
   size?: 'small' | 'medium' | 'large';
-  type?: "button" | "reset" | "submit";
-  colorIcon?: "inherit" | "default" | "secondary" | "primary" | "error" | "info" | "success" | "warning";
+  type?: 'button' | 'reset' | 'submit';
+  colorIcon?: 'inherit' | 'default' | 'secondary' | 'primary' | 'error' | 'info' | 'success' | 'warning';
 }
 
 export const IconBtnCustom = ({
@@ -40,7 +40,7 @@ export const IconBtnCustom = ({
           bgcolor: 'rgba(0, 0, 0, 0.04)',
           p: '8px',
           width: 'max-content',
-          ...styles
+          ...styles,
         }}
         size={size}
         type={type}
@@ -49,7 +49,7 @@ export const IconBtnCustom = ({
         {isBadge ? (
           <Badge
             badgeContent={badgeContent}
-            color='primary'
+            color='secondary'
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right',
@@ -59,6 +59,8 @@ export const IconBtnCustom = ({
             sx={{
               '& .MuiBadge-badge': {
                 borderRadius: badgeVariant === 'standard' ? '.5rem' : '50%',
+                top: '-3px',
+                right: '-3px',
               },
             }}
           >

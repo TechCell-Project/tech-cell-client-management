@@ -18,7 +18,6 @@ export const requestProductValidate = Yup.object({
       stock: Yup.number().required('Vui lòng nhập số lượng!'),
       price: Yup.object().shape({
         base: Yup.string().required('Vui lòng nhập giá gốc!'),
-        sale: Yup.string().required('Vui lòng nhập đơn giá!'),
         special: Yup.string().required('Vui lòng nhập giá khuyến mãi!'),
       }),
     }),

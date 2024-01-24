@@ -95,5 +95,6 @@ export const {
   setSocket,
   setPushNotifySocket,
   resetNotification,
+  setOnClickPing,
 } = actions;
 export default reducer;

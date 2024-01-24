@@ -11,31 +11,32 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAppSelector((state) => state.auth);
   const { socket } = useAppSelector((state) => state.notification);
 
-  const dispatchNotification = (data: { time: string; notifications: NotificationModel }) => {
+  const handleNotifications = (data: { time: string; notifications: NotificationModel }) => {
     console.log(data);
     dispatch(setPushNotifySocket(data.notifications));
   };
 
   useEffect(() => {
     if (user && !socket) {
-      const socket = socketIO(String(user.accessToken));
+      const socketInstance = socketIO(String(user.accessToken));
 
-      socket.on(SocketEvent.newOrderAdmin, dispatchNotification);
-      socket.on(SocketEvent.allUserRoom, dispatchNotification);
-      socket.on(SocketEvent.userIdRoom(String(user._id)), dispatchNotification);
-      socket.on(SocketEvent.roleRoom(String(user.role)), dispatchNotification);
+      socketInstance.on(SocketEvent.newOrderAdmin, handleNotifications);
+      socketInstance.on(SocketEvent.allUserRoom, handleNotifications);
+      socketInstance.on(SocketEvent.userIdRoom(String(user._id)), handleNotifications);
+      socketInstance.on(SocketEvent.roleRoom(String(user.role)), handleNotifications);
 
-      dispatch(setSocket(socket));
+      dispatch(setSocket(socketInstance));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
-    if(!user && socket?.connected) {
+    if (!user && socket?.connected) {
       dispatch(setSocket(null));
       socket.disconnect();
     }
-  }, [dispatch, socket, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket?.connected, user]);
 
   return <>{children}</>;
 };
