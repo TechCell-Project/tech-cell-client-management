@@ -52,7 +52,9 @@ export const productSlice = createSlice({
       }
       state.isLoadingDetails = false;
     },
-    deleteSuccess: (state, { payload }: { payload: string }) => {
+    deleteSuccess: (state, { payload }: {
+      payload: string
+    }) => {
       state.products.data = state.products.data.filter(
         (product) => product._id !== payload,
       );

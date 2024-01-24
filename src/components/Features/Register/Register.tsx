@@ -9,13 +9,9 @@ import { useAppDispatch } from '@store/store';
 import { createNewAccount, getAllUserAccount } from '@store/slices/accountSlice';
 import { Paging } from '@models/Common';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const Register = memo((props: Props) => {
+export const Register = memo((props: DialogAction) => {
   const dispatch = useAppDispatch();
 
   const handleSubmit = (
@@ -27,7 +23,7 @@ export const Register = memo((props: Props) => {
         toast.success('Thêm mới tài khoản thành công!');
         resetForm();
         props.handleClose();
-        dispatch(getAllUserAccount(new Paging()));
+        dispatch(getAllUserAccount(new Paging())).then();
       })
       .catch(() => toast('Thêm mới tài khoản thất bại!'))
       .finally(() => setSubmitting(false));

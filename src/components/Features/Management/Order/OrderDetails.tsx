@@ -18,7 +18,7 @@ export const OrderDetails = ({ id }: { id: string }) => {
   return isLoadingDetails ? (
     <LoadingSection isLoading={isLoadingDetails} />
   ) : (
-    <Box sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
+    <Box sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '25px 30px' }}>
       <Grid container spacing={4} overflow='hidden'>
         <Grid item md={8}>
           <OrderInfo />

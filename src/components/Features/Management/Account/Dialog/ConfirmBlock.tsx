@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 import { ShowDialog, ButtonCustom } from '@components/Common';
 import { useAppDispatch } from '@store/store';
 import { blockAccount, unBlockAccount } from '@store/slices/accountSlice';
@@ -8,11 +8,7 @@ import { toast } from 'react-toastify';
 import { DialogAction } from '@interface/common';
 import { UserAccount } from '@models/Account';
 
-interface Props extends DialogAction{
-  dataAccount?: UserAccount;
-}
-
-export const ConfirmBlock: FC<Props> = memo((props) => {
+export const ConfirmBlock = memo((props: DialogAction & { dataAccount: UserAccount }) => {
   const dispatch = useAppDispatch();
 
   const handleAccountStatus = async (

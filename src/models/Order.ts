@@ -19,7 +19,7 @@ export class OrderModel {
   products: Array<OrderProduct> = new Array<OrderProduct>();
   checkoutOrder: OrderCheckout = new OrderCheckout();
   shippingOrder: OrderShipping = new OrderShipping();
-  paymentOrder?: OrderPayment = new OrderPayment();
+  paymentOrder: OrderPayment = new OrderPayment();
   trackingCode: string | null = null;
   orderStatus: string | null = null;
   createdAt: string | null = null;

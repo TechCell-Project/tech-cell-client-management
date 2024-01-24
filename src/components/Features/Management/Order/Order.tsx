@@ -1,7 +1,7 @@
 import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { PagingOrder } from '@models/Order';
+import { OrderModel, PagingOrder } from '@models/Order';
 import { Paging } from '@models/Common';
 import { getAllOrder } from '@store/slices/orderSlice';
 import { Form, Formik } from 'formik';
@@ -18,20 +18,21 @@ import Box from '@mui/material/Box';
 export const Order = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { orders, isLoading, isLoadingDetails } = useAppSelector((state) => state.order);
+  const { orders, isLoading } = useAppSelector((state) => state.order);
 
   const [searchOrder, setSearchOrder] = useState<PagingOrder>(new PagingOrder());
   const [paging, setPaging] = useState<Paging>(new Paging());
 
   useEffect(() => {
     loadOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchOrder, paging]);
 
   const loadOrders = () => {
     dispatch(getAllOrder({ ...searchOrder, page: paging.page, pageSize: paging.pageSize })).then();
   };
 
-  const columns: Array<GridColDef> = [
+  const columns: Array<GridColDef<OrderModel>> = [
     {
       field: 'no',
       headerName: 'STT',
@@ -44,8 +45,16 @@ export const Order = () => {
     {
       field: 'trackingCode',
       headerName: 'Mã theo dõi (Tracking)',
-      width: 260,
-      valueGetter: (params) => `# ${params.row.trackingCode}`,
+      width: 220,
+      valueGetter: (params) => params.row.trackingCode,
+    },
+    {
+      field: 'shippingOrder.toAddress.customerName',
+      headerName: 'Khách hàng',
+      width: 170,
+      align: 'center',
+      headerAlign: 'center',
+      valueGetter: (params) => params.row.shippingOrder.toAddress.customerName,
     },
     {
       field: 'paymentOrder',
@@ -83,11 +92,11 @@ export const Order = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 150,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams) => [
+      getActions: (params: GridRowParams<OrderModel>) => [
         <Tooltip title='Chi tiết' key={params.row._id}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
@@ -138,7 +147,12 @@ export const Order = () => {
                 <SelectInputCustom name='orderStatus' label='Trạng thái đơn hàng' options={ORDER_STATUS_OPTIONS} />
               </Grid>
               <Grid item md={2}>
-                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                <ButtonCustom
+                  type='submit'
+                  variant='outlined'
+                  content='Tìm kiếm'
+                  styles={{ padding: '6px 20px !important' }}
+                />
               </Grid>
             </Grid>
           </Box>

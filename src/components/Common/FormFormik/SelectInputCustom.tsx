@@ -79,6 +79,7 @@ function SelectComponent<Value, Option>(props: SelectInputCustomProps<Value, Opt
           setFieldValue(name, newValue);
         }
       }}
+      fullWidth
       loading={isLoading}
       noOptionsText='Không có dữ liệu'
       renderInput={(params) => (

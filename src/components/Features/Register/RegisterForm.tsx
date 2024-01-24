@@ -1,13 +1,11 @@
 import React, { memo, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
-import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Visibility from '@mui/icons-material/Visibility';
@@ -16,7 +14,8 @@ import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded';
 import { RegisterModel } from '@models/Auth';
 import { useFormikContext } from 'formik';
 import { ROLE_OPTIONS } from '@constants/options';
-import { TextFieldCustom } from '@components/Common';
+import { SelectInputCustom, TextFieldCustom } from '@components/Common';
+import { TOptions } from '@interface/common';
 
 const RegisterForm = () => {
   const [showPassword, setPassword] = useState<boolean>(false);
@@ -61,24 +60,11 @@ const RegisterForm = () => {
         </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
-        <TextField
-          id='role'
+        <SelectInputCustom<string, TOptions>
           name='role'
-          select
           label='Vai trò'
-          onChange={handleChange}
-          variant='outlined'
-          error={touched.role && Boolean(errors.role)}
-          helperText={touched.role && errors.role}
-          size='small'
-          fullWidth
-        >
-          {ROLE_OPTIONS.map((option, i) => (
-            <MenuItem key={i} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+          options={ROLE_OPTIONS}
+        />
       </Grid>
       <Grid item xs={12} md={6}>
         <TextFieldCustom

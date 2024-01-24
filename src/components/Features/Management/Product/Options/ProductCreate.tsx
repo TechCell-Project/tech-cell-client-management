@@ -27,7 +27,6 @@ export const ProductCreate = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
-  const [initValue, setInitValue] = useState<ProductRequest>(new ProductRequest());
 
   const handleSubmit = async (
     values: Partial<ProductRequest>,
@@ -39,7 +38,7 @@ export const ProductCreate = () => {
         return;
       }
 
-      if(values.listTempAtt) {
+      if (values.listTempAtt) {
         delete values.listTempAtt;
       }
       const response = await dispatch(createNewProduct(values));
@@ -61,12 +60,12 @@ export const ProductCreate = () => {
   return (
     <Box component='div' sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
       <Formik
-        initialValues={{ ...initValue }}
+        initialValues={new ProductRequest()}
         enableReinitialize
         onSubmit={handleSubmit}
         validationSchema={requestProductValidate}
       >
-        {({ values, isSubmitting }) => {
+        {({ isSubmitting }) => {
           return (
             <Form>
               <Stack width='100%' flexDirection='column' alignItems='flex-start'>
@@ -83,7 +82,7 @@ export const ProductCreate = () => {
 
                 <Tabs
                   value={tabIndex}
-                  onChange={(event: React.SyntheticEvent, index: number) => setTabIndex(index)}
+                  onChange={(_: React.SyntheticEvent, index: number) => setTabIndex(index)}
                   aria-label='tabs create product'
                   sx={{
                     mt: 1,

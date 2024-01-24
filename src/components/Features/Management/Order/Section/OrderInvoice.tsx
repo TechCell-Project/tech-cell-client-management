@@ -30,7 +30,7 @@ const OrderInvoice = () => {
   return (
     <>
       <Stack width='100%' flexDirection='column' alignItems='flex-start'>
-        <Stack flexDirection='row' alignItems='center' gap='10px'>
+        <Stack flexDirection='row' alignItems='center' gap='10px' mb={1}>
           <LocalMallOutlinedIcon />
           <Typography
             variant='h5'
@@ -39,7 +39,18 @@ const OrderInvoice = () => {
             color={theme.color.black}
           >
             Hóa đơn
-            <Chip label={`${order?.products.length}`} size='small' sx={{ ml: 2, minWidth: '24px' }} />
+            <Chip
+              label={`${order?.products.length}`}
+              size='small'
+              sx={{
+                ml: 2,
+                backgroundColor: theme.color.lightRed,
+                color: theme.color.red,
+                minWidth: 'unset',
+                height: 'unset',
+                p: '5px !important'
+              }}
+            />
           </Typography>
         </Stack>
         {order?.products.map((item, i) => {

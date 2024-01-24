@@ -13,7 +13,8 @@ import { useRouter } from 'next/navigation';
 import styles from '@styles/components/_noti.module.scss';
 import momentVi from '@config/moment.config';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { getAllNotification, getFailure } from '@store/slices/notiSlice';
+import { getAllNotification, resetNotification } from '@store/slices/notiSlice';
+import { SocketEvent } from '@config/socket_io.config';
 
 interface Props {
   status: 'all' | 'unread';
@@ -28,23 +29,23 @@ const NotificationList = memo(
     const router = useRouter();
 
     useEffect(() => {
-      dispatch(getAllNotification({ ...paging, readType: status }, 'get')).then();
+      dispatch(getAllNotification({
+        ...new PagingNotify(),
+        readType: status,
+      }, 'get')).then();
+
+      setPaging(new PagingNotify())
 
       return () => {
-        dispatch(getFailure());
+        dispatch(resetNotification());
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, dispatch]);
-
-    // useEffect(() => {
-    //   if (notifications.length > 0) {
-    //     dispatch(getAllNotification({ ...paging, readType: status }, 'paging')).then();
-    //   }
-    // }, [paging.page]);
 
     const handleMarkAsRead = (notificationId: string) => {
       if (socket) {
         console.log(`Read order #${notificationId}!`);
-        socket.emit('mark-notification-as-read', { notificationId });
+        socket.emit(SocketEvent.markNotifyAsRead, { notificationId });
       }
     };
 

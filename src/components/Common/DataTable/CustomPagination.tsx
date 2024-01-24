@@ -42,5 +42,5 @@ const Pagination = ({
 };
 
 export const CustomPagination = (props: any) => {
-  return <GridPagination ActionsComponent={Pagination} {...props} />;
+  return <GridPagination ActionsComponent={Pagination} {...props} sx={{ pt: '10px !important' }} />;
 };

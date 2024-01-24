@@ -6,9 +6,7 @@ import Sidebar from '@components/Navigation/Sidebar';
 import { LoadingPage } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import Loading from 'app/loading';
-import socket from '@config/socket_io.config';
-import { getAllNotification, setPushNotifySocket, setSocket } from '@store/slices/notiSlice';
-import { NotificationModel, PagingNotify } from '@models/Notification';
+import { RootRoutes } from '@constants/enum';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -18,30 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     if (!isAuthenticated) {
       const timeout = setTimeout(() => {
-        router.push('/');
+        router.push(RootRoutes.LOGIN_ROUTES);
       }, 300);
       return () => {
         clearTimeout(timeout);
       };
     }
-
-    socket.on('connect', () => {
-      console.log('Connected To socket Server! 🙃🙃🙃');
-    });
-
-    socket.on('new-order-admin', (data: { time: string; notifications: NotificationModel }) => {
-      console.log(data);
-      dispatch(setPushNotifySocket(data.notifications));
-    });
-
-    dispatch(setSocket(socket));
-    // dispatch(getAllNotification(new PagingNotify(), 'get')).then();
-
-    return () => {
-      console.log('Disconnected socket Server! 🙃');
-      socket.disconnect();
-    };
-  }, [isAuthenticated]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isAuthenticated]);
 
   return (
     <section style={{ backgroundColor: '#f3f6f9' }}>

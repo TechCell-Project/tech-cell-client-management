@@ -1,11 +1,7 @@
 'use client';
 
-import { ThemeProvider } from '@mui/material/styles';
-import { store, persistor } from '@store/store';
-import { theme } from 'components/Theme/theme';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { ToastContainer } from 'react-toastify';
+import React from 'react';
+import { RootProvider, SocketProvider } from '@components/Provider';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/base/index.scss';
 
@@ -23,14 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       />
     </head>
     <body>
-    <ToastContainer theme='colored' autoClose={3000} newestOnTop closeOnClick position='top-right' />
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          {children}
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
+    <RootProvider>
+      <SocketProvider>{children}</SocketProvider>
+    </RootProvider>
     </body>
     </html>
   );

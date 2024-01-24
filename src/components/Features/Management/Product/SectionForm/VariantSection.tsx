@@ -92,13 +92,6 @@ export const VariantSection = memo(() => {
                     </Grid>
                     <Grid item lg={5}>
                       <TextFieldCustom
-                        name={`variations[${i}].price.sale`}
-                        label='Đơn giá'
-                        type='numeric'
-                      />
-                    </Grid>
-                    <Grid item lg={5}>
-                      <TextFieldCustom
                         name={`variations[${i}].price.special`}
                         label='Giá khuyến mãi'
                         type='numeric'

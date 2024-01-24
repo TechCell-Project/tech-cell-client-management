@@ -12,7 +12,6 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
-import { IColumnProduct } from '@interface/data';
 import { DeleteProductDialog } from './Dialog/DeleteProductDialog';
 import { ImageModel, PagingProduct, ProductModel } from '@models/Product';
 import { Form, Formik } from 'formik';
@@ -26,13 +25,14 @@ export const Product = () => {
   const { products, isLoading } = useAppSelector((state) => state.product);
   const router = useRouter();
 
-  const [currentProduct, setCurrentProduct] = useState<IColumnProduct>();
+  const [currentProduct, setCurrentProduct] = useState<ProductModel>();
   const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
   const [searchProduct, setSearchProduct] = useState<PagingProduct>(new PagingProduct());
   const [paging, setPaging] = useState<Paging>(new Paging());
 
   useEffect(() => {
     loadProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchProduct, paging]);
 
   const loadProducts = () => {
@@ -103,7 +103,7 @@ export const Product = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams) => [
+      getActions: (params: GridRowParams<ProductModel>) => [
         <Tooltip title='Chỉnh sửa' key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
@@ -151,7 +151,12 @@ export const Product = () => {
                 <SelectInputCustom name='select_type' label='Trạng thái' options={PRODUCT_TYPE_OPTIONS} />
               </Grid>
               <Grid item md={2}>
-                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                <ButtonCustom
+                  type='submit'
+                  variant='outlined'
+                  content='Tìm kiếm'
+                  styles={{ padding: '6px 20px !important' }}
+                />
               </Grid>
             </Grid>
           </Box>

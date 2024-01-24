@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import Stack from '@mui/material/Stack';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -9,18 +8,12 @@ import { changeRoleAccount } from '@store/slices/accountSlice';
 import { getRole } from '@utils/index';
 import { ROLE_OPTIONS } from '@constants/options';
 import { roleValidate } from '@validate/account.validate';
-import { ButtonCustom, ShowDialog } from '@components/Common';
+import { ButtonCustom, SelectInputCustom, ShowDialog } from '@components/Common';
 import { toast } from 'react-toastify';
 import { UserAccount } from '@models/Account';
+import { DialogAction, TOptions } from '@interface/common';
 
-interface Props {
-  dataAccount?: UserAccount;
-  isLoading?: boolean;
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const ChangeRole = memo((props: Props) => {
+export const ChangeRole = memo((props: DialogAction & { dataAccount: UserAccount }) => {
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (
@@ -50,7 +43,7 @@ export const ChangeRole = memo((props: Props) => {
       dialogTitle='Thay đổi vai trò'
       handleClose={props.handleClose}
       isOpen={props.isOpen}
-      dialogStyle={{ minWidth: 370 }}
+      dialogStyle={{ minWidth: 390 }}
     >
       <Formik
         initialValues={{ role: '' }}
@@ -90,32 +83,11 @@ export const ChangeRole = memo((props: Props) => {
 
                 <SouthRoundedIcon fontSize='medium' />
 
-                <TextField
-                  id='role'
+                <SelectInputCustom<string, TOptions>
                   name='role'
-                  value={values.role}
-                  select
                   label='Vai trò mới'
-                  onChange={handleChange}
-                  defaultValue=''
-                  variant='outlined'
-                  error={touched.role && Boolean(errors.role)}
-                  helperText={touched.role && errors.role}
-                  size='small'
-                  fullWidth
-                >
-                  {ROLE_OPTIONS.map((option) => (
-                    <MenuItem
-                      key={option.value}
-                      value={option.value}
-                      disabled={
-                        props.dataAccount?.role === getRole(option.value)
-                      }
-                    >
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  options={ROLE_OPTIONS}
+                />
               </Stack>
               <Stack
                 direction='row'

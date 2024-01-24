@@ -1,22 +1,15 @@
 import React, { memo } from 'react';
 import { DialogAction } from '@interface/common';
-import { IColumnProduct } from '@interface/data';
 import { ButtonCustom, ShowDialog } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { removeProduct } from '@store/slices/productSlice';
+import { ProductModel } from '@models/Product';
 
-interface Props extends DialogAction {
-  data: IColumnProduct;
-}
 
-export const DeleteProductDialog = memo(({ isOpen, handleClose, data }: Props) => {
+export const DeleteProductDialog = memo((
+  { isOpen, handleClose, data }: DialogAction & { data: ProductModel }) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.product);
-
-  const handleConfirm = async () => {
-    await dispatch(removeProduct(String(data.id)));
-    handleClose();
-  };
 
   return (
     <ShowDialog
@@ -34,7 +27,10 @@ export const DeleteProductDialog = memo(({ isOpen, handleClose, data }: Props) =
       <ButtonCustom
         variant='contained'
         content='Xóa'
-        handleClick={handleConfirm}
+        handleClick={async () => {
+          await dispatch(removeProduct(String(data._id)));
+          handleClose();
+        }}
         disabled={isLoading}
       />
     </ShowDialog>

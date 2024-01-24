@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ButtonCustom, DataTable, LoadingPage, SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes, getDetailAttributeById } from '@store/slices/attributeSlice';
-import { PagingAttribute } from '@models/Attribute';
+import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { getIndexNo } from '@utils/index';
 import Tooltip from '@mui/material/Tooltip';
@@ -11,7 +11,6 @@ import AutoDeleteRoundedIcon from '@mui/icons-material/AutoDeleteRounded';
 import { AttributeDialog } from '@models/Dialog';
 import { EditAttribute } from './Dialog/EditAttribute';
 import { ConfirmDeleteAttribute } from './Dialog/ConfirmDeleteAttribute';
-import { IColumnAttribute } from '@interface/data';
 import { Paging } from '@models/Common';
 import { Form, Formik } from 'formik';
 import Box from '@mui/material/Box';
@@ -24,11 +23,12 @@ export const Attribute = () => {
 
   const [paging, setPaging] = useState<Paging>(new Paging());
   const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
-  const [currentAttribute, setCurrentAttribute] = useState<IColumnAttribute>();
+  const [currentAttribute, setCurrentAttribute] = useState<AttributeModel>();
   const [isOpen, setIsOpen] = useState<AttributeDialog>(new AttributeDialog());
 
   useEffect(() => {
     loadAttributes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchAttribute, paging]);
 
   const handleGetDetails = (id: string) => {
@@ -39,7 +39,7 @@ export const Attribute = () => {
     dispatch(getAllAttributes({ ...searchAttribute, page: paging.page, pageSize: paging.pageSize })).then();
   };
 
-  const columns: Array<GridColDef> = [
+  const columns: Array<GridColDef<AttributeModel>> = [
     {
       field: 'no',
       headerName: 'STT',
@@ -73,12 +73,12 @@ export const Attribute = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams) => [
+      getActions: (params: GridRowParams<AttributeModel>) => [
         <Tooltip title='Chỉnh sửa' key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
-              handleGetDetails(params.row._id);
+              handleGetDetails(params.row._id as string);
               setIsOpen((prev) => ({ ...prev, openEdit: true }));
             }}
             label='Chỉnh sửa'
@@ -124,7 +124,12 @@ export const Attribute = () => {
                 <SelectInputCustom name='select_type' label='Trạng thái' options={PRODUCT_TYPE_OPTIONS} />
               </Grid>
               <Grid item md={2}>
-                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                <ButtonCustom
+                  type='submit'
+                  variant='outlined'
+                  content='Tìm kiếm'
+                  styles={{ padding: '6px 20px !important' }}
+                />
               </Grid>
             </Grid>
           </Box>
@@ -141,7 +146,7 @@ export const Attribute = () => {
       />
 
       {isLoadingDetail ? (
-        <LoadingPage isLoading={isLoadingDetail} />
+        <LoadingPage isLoading={isLoadingDetail} isBlur/>
       ) : (
         <>
           {isOpen.openEdit && (
@@ -157,7 +162,7 @@ export const Attribute = () => {
         <ConfirmDeleteAttribute
           isOpen={isOpen.openConfirmDelete}
           handleClose={() => setIsOpen((prev) => ({ ...prev, openConfirmDelete: false }))}
-          dataAttribute={currentAttribute}
+          data={currentAttribute}
         />
       )}
     </>

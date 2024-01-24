@@ -1,11 +1,11 @@
-import { IUser } from '@interface/auth';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { UserAccount } from '@models/Account';
 
 export const getCurrentUserId = () => {
   if (typeof window !== 'undefined') {
     const userObj = localStorage.getItem('user');
     if (userObj) {
-      const user: IUser = JSON.parse(userObj);
+      const user: UserAccount = JSON.parse(userObj);
       return user._id;
     }
   }
@@ -16,7 +16,7 @@ export const getCurrentUserRole = () => {
   if (typeof window !== 'undefined') {
     const userObj = localStorage.getItem('user');
     if (userObj) {
-      const user: IUser = JSON.parse(userObj);
+      const user: UserAccount = JSON.parse(userObj);
       return user.role;
     }
   }
@@ -27,7 +27,7 @@ export const getAccessToken = () => {
   if (typeof window !== 'undefined') {
     const userObj = localStorage.getItem('user');
     if (userObj) {
-      const user: IUser = JSON.parse(userObj);
+      const user: UserAccount = JSON.parse(userObj);
       return user.accessToken;
     }
   }
@@ -38,7 +38,7 @@ export const getRefreshToken = () => {
   if (typeof window !== 'undefined') {
     const userObj = localStorage.getItem('user');
     if (userObj) {
-      const user: IUser = JSON.parse(userObj);
+      const user: UserAccount = JSON.parse(userObj);
       return user.refreshToken;
     }
   }
@@ -50,7 +50,7 @@ export const setToken = (accessToken: string, refreshToken: string) => {
   if (typeof window !== 'undefined') {
     const userObj = localStorage.getItem('user');
     if (userObj) {
-      const user: IUser = JSON.parse(userObj);
+      const user: UserAccount = JSON.parse(userObj);
       user.accessToken = accessToken;
       user.refreshToken = refreshToken;
       localStorage.setItem('user', JSON.stringify(user));

@@ -1,12 +1,12 @@
-import { CategoryModel, CategorySlice } from "@models/Category";
+import { CategoryModel, CategorySlice } from '@models/Category';
 import { Paging, PagingResponse } from '@models/Common';
-import { Dispatch, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from '@reduxjs/toolkit';
 import {
   postCategory,
   patchCategory,
   getCategories,
   getCategoryByLabel,
-} from "@services/categoryService";
+} from '@services/categoryService';
 
 const initialState: CategorySlice = {
   categories: new PagingResponse<CategoryModel>(),
@@ -16,7 +16,7 @@ const initialState: CategorySlice = {
 };
 
 export const categorySlice = createSlice({
-  name: "category",
+  name: 'category',
   initialState,
   reducers: {
     isFetching: (state) => {
@@ -43,7 +43,7 @@ export const categorySlice = createSlice({
     },
     editSuccess: (state, { payload }) => {
       const index = state.categories.data.findIndex(
-        (category) => category._id === payload._id
+        (category) => category._id === payload._id,
       );
       if (index !== -1) {
         state.categories.data[index] = payload;

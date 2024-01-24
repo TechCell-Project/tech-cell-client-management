@@ -1,14 +1,16 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { formatDateViVN, getAddressLocation, orderStatusMapping } from '@utils/funcs';
+import { formatDateViVN, getAddressLocation, paymentStatusMapping } from '@utils/funcs';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import FmdGoodRoundedIcon from '@mui/icons-material/FmdGoodRounded';
 import PaymentRoundedIcon from '@mui/icons-material/PaymentRounded';
-import { TextViewCustom } from '@components/Common';
+import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
+import { IconBtnCustom, TextViewCustom } from '@components/Common';
 import { getDetailsUserAccount } from '@store/slices/accountSlice';
 import Grid from '@mui/material/Grid';
 import { Address } from '@models/Account';
@@ -28,15 +30,17 @@ const OrderInfo = () => {
 
   return (
     <Stack width='100%' flexDirection='column' alignItems='flex-start'>
-      <Typography
-        variant='h5'
-        fontSize='1.2rem'
-        fontWeight='600'
-        color={theme.color.black}
-        mb={2}
-      >
-        Thông tin
-      </Typography>
+      <Stack flexDirection='row' alignItems='center' gap='10px' mb={3}>
+        <ContactSupportOutlinedIcon />
+        <Typography
+          variant='h5'
+          fontSize='1.2rem'
+          fontWeight='600'
+          color={theme.color.black}
+        >
+          Thông tin
+        </Typography>
+      </Stack>
       <Typography fontWeight={600} fontSize='14px' mb='5px'>ID: # {order?._id}</Typography>
       <Typography fontWeight={600} fontSize='14px' mb='5px'>Tracking Code: {order?.trackingCode}</Typography>
       <Typography
@@ -67,18 +71,23 @@ const OrderInfo = () => {
               <PaymentRoundedIcon />
             </Avatar>
             <Stack flexDirection='column'>
-              <Typography fontSize='17px' fontWeight={600} mb='5px'>Thanh toán</Typography>
+              <Stack direction='row' gap={2} alignItems='center' mb='5px'>
+                <Typography fontSize='17px' fontWeight={600}>Thanh toán</Typography>
+                <IconBtnCustom
+                  icon={<ErrorRoundedIcon fontSize='small' />}
+                  tooltip='Đối với những hình thức thanh toán Online, khách hàng cần hoàn tất thanh toán để tiến hành giao hàng'
+                  styles={{ padding: 0, backgroundColor: 'tranparent !important' }}
+                  colorIcon='secondary'
+                />
+              </Stack>
               <TextViewCustom
                 label='Phương thức'
                 content={PAYMENT_METHOD_OPTIONS.find(
                   (item) => {
-                    // @ts-ignore
                     return item.value === order?.paymentOrder.method;
                   })?.name}
               />
-              {/*@ts-ignore*/}
-              <TextViewCustom label='Trạng thái' content={orderStatusMapping[String(order?.paymentOrder.status)]} />
-              {/*<TextViewCustom label='Trạng thái' content={"..."} />*/}
+              <TextViewCustom label='Trạng thái' content={paymentStatusMapping[String(order?.paymentOrder.status)]} />
             </Stack>
           </Stack>
         </Grid>

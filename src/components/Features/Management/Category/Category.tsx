@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonCustom, DataTable, LoadingPage, TextFieldCustom } from '@components/Common';
-import { COLUMNS_CATEGORY } from '@constants/data';
-import { IColumnCategory } from '@interface/data';
 import { Paging } from '@models/Common';
 import { getAllCategory, getDetailsCategoryByLabel } from '@store/slices/categorySlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
@@ -13,6 +11,8 @@ import { EditCategory } from './Dialog/EditCategory';
 import { Form, Formik } from 'formik';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { CategoryModel } from '@models/Category';
+import { AttributeModel } from '@models/Attribute';
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +23,7 @@ export const Category = () => {
 
   useEffect(() => {
     loadCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchCategory]);
 
   const loadCategories = () => {
@@ -33,15 +34,7 @@ export const Category = () => {
     dispatch(getDetailsCategoryByLabel(label)).then();
   };
 
-  const rows: Array<IColumnCategory> = categories.data.map((category, i) => ({
-    id: category._id,
-    no: getIndexNo(i, searchCategory.page, searchCategory.pageSize),
-    name: category.name,
-    label: category.label,
-    requiresAttribute: category.requireAttributes?.map((attribute) => attribute.name).join(', '),
-  }));
-
-  const columns: Array<GridColDef> = [
+  const columns: Array<GridColDef<CategoryModel>> = [
     {
       field: 'no',
       headerName: 'STT',
@@ -67,7 +60,7 @@ export const Category = () => {
       width: 400,
       headerAlign: 'center',
       valueGetter: (params) => {
-        const value = params.row.requireAttributes?.map((attribute: any) => attribute.name);
+        const value = params.row.requireAttributes?.map((attribute: AttributeModel) => attribute.name);
         return value.join(', ');
       },
     },
@@ -78,12 +71,12 @@ export const Category = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams) => [
+      getActions: (params: GridRowParams<CategoryModel>) => [
         <Tooltip title='Chỉnh sửa' key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
-              handleGetDetails(params.row.label);
+              handleGetDetails(params.row.label as string);
               setOpenEdit(true);
             }}
             label='Chỉnh sửa'
@@ -115,7 +108,12 @@ export const Category = () => {
                 <TextFieldCustom name='keyword' label='Từ khóa' />
               </Grid>
               <Grid item md={2}>
-                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                <ButtonCustom
+                  type='submit'
+                  variant='outlined'
+                  content='Tìm kiếm'
+                  styles={{ padding: '6px 20px !important' }}
+                />
               </Grid>
             </Grid>
           </Box>
@@ -125,7 +123,6 @@ export const Category = () => {
       <DataTable
         column={columns}
         row={categories.data}
-        isQuickFilter
         paginationModel={searchCategory}
         setPaginationModel={setSearchCategory}
         isLoading={isLoading}
@@ -133,9 +130,13 @@ export const Category = () => {
       />
 
       {isLoadingDetails ? (
-        <LoadingPage isLoading={isLoadingDetails} />
+        <LoadingPage isLoading={isLoadingDetails} isBlur />
       ) : (
-        <>{openEdit && <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />}</>
+        <>
+          {openEdit && (
+            <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />
+          )}
+        </>
       )}
     </>
   );

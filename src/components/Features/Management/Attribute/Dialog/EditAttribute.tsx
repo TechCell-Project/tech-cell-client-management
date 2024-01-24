@@ -7,13 +7,9 @@ import { createOrEditValidate } from '@validate/attribute.validate';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { editAttribute } from '@store/slices/attributeSlice';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const EditAttribute = (props: Props) => {
+export const EditAttribute = (props: DialogAction) => {
   const { attribute } = useAppSelector((state) => state.attribute);
   const dispatch = useAppDispatch();
 

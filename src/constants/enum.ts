@@ -1,4 +1,5 @@
 export enum RootRoutes {
+  LOGIN_ROUTES = '/',
   DASHBOARD_ROUTE = '/dashboard',
   ACCOUNT_ROUTE = '/dashboard/account',
   PRODUCT_ROUTE = '/dashboard/product',
@@ -52,6 +53,10 @@ export enum ProductStatus {
 export enum PaymentMethod {
   COD = 'COD',
   VNPAY = 'VNPAY',
+  ATM = 'ATM',
+  VISA = 'VISA',
+  MASTERCARD = 'MASTERCARD',
+  JCB = 'JCB',
 }
 
 export enum PaymentStatus {
@@ -64,5 +69,20 @@ export enum PaymentStatus {
 
 export enum PaymentOrder {
   SHIPPING = 'shipping',
-  WAIT_FOR_PAYMENT ='wait_for_payment',
+  WAIT_FOR_PAYMENT = 'wait_for_payment',
+}
+
+export enum TimeSplit {
+  Day = 'day',
+  Week = 'week',
+  Month = 'month',
+  Year = 'year',
+}
+
+export enum OrderProcessStep {
+  First_Pending = 1,
+  Second_Processing = 2,
+  Third_Shipping = 3,
+  Four_Completed = 4,
+  Five_Cancel = 5,
 }

@@ -12,13 +12,9 @@ import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
 import { TextFieldCustom } from '@components/Common';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const CreateCategory = (props: Props) => {
+export const CreateCategory = (props: DialogAction) => {
   const dispatch = useAppDispatch();
   const { attributes, isLoading } = useAppSelector((state) => state.attribute);
   const [searchAttribute, setSearchAttribute] = useState<PagingAttribute>(new PagingAttribute());
@@ -88,10 +84,10 @@ export const CreateCategory = (props: Props) => {
                 <Grid item xs={12} md={6}>
                   <TextFieldCustom name='label' label='# Label' />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <TextFieldCustom name='url' label='URL' />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <TextFieldCustom
                     name='description'
                     label='Mô tả'

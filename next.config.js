@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
-const path = require("path");
+const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 // const CopyPlugin = require("copy-webpack-plugin");
 
 const nextConfig = {
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    includePaths: [path.join(__dirname, 'styles')],
   },
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
@@ -31,6 +31,9 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'],
   },
+  transpilePackages: [
+    '@TechCell-Project/tech-cell-server-node-sdk',
+  ],
   // Config Self-hosted Tiny MCE
   // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
   //   config.plugins.push(

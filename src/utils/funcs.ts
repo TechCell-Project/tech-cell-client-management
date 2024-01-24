@@ -59,17 +59,24 @@ export const orderStatusMapping: { [key: string]: string } = {
   [PaymentOrder.WAIT_FOR_PAYMENT]: 'Chờ thanh toán',
 };
 
+export const paymentStatusMapping: { [key: string]: string } = {
+  [PaymentStatus.PENDING]: 'Chưa xử lý',
+  [PaymentStatus.COMPLETED]: 'Đã thanh toán',
+  [PaymentStatus.PROCESSING]: 'Chờ thanh toán',
+  [PaymentOrder.WAIT_FOR_PAYMENT]: 'Chờ thanh toán',
+  [PaymentStatus.CANCELLED]: 'Đã hủy',
+};
+
 export const getIndexNo = (index: number, page: number, pageSize: number): number => {
   return index + 1 + page * pageSize;
 };
 
 // format
 export const formatWithCommas = (number: number) => {
-  return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫`;
-};
-
-export const removeCommas = (inputString: string) => {
-  return parseInt(inputString.replace(/,/g, ''), 10);
+  if (number) {
+    return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫`;
+  }
+  return '0₫';
 };
 
 export const formatTimeCountdown = (seconds: number): string => {
@@ -139,4 +146,13 @@ export const getAddressLocation = (address: Address) => {
   } catch {
     return '';
   }
+};
+
+export const getFirstAndLastDayOfMonth = (year: number, month: number): { firstDay: string, lastDay: string } => {
+  month = Math.max(0, Math.min(11, month));
+
+  const firstDay = new Date(year, month, 1).toISOString();
+  const lastDay = new Date(year, month + 1, 0).toISOString();
+
+  return { firstDay, lastDay };
 };

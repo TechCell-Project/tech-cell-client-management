@@ -8,19 +8,18 @@ import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import AttributionRoundedIcon from '@mui/icons-material/AttributionRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-
-const DASHBOARD_ROUTE = '/dashboard';
+import { RootRoutes } from '@constants/enum';
 
 export const DRAWER_WIDTH = 260;
 
 export const LIST_PRODUCT_NAV = [
-  { name: 'Điện thoại', to: `${DASHBOARD_ROUTE}/product`, icon: PhoneAndroidRoundedIcon },
-  { name: 'Thể loại', to: `${DASHBOARD_ROUTE}/product/category`, icon: CategoryRoundedIcon },
-  { name: 'Thông số', to: `${DASHBOARD_ROUTE}/product/attribute`, icon: AttributionRoundedIcon },
+  { name: 'Điện thoại', to: RootRoutes.PRODUCT_ROUTE, icon: PhoneAndroidRoundedIcon },
+  { name: 'Thể loại', to: RootRoutes.CATEGORY_ROUTE, icon: CategoryRoundedIcon },
+  { name: 'Thông số', to: RootRoutes.ATTRIBUTE_ROUTE, icon: AttributionRoundedIcon },
 ];
 
 export const LIST_NAV_MAIN = [
-  { name: 'Trang chủ', to: `${DASHBOARD_ROUTE}`, icon: HouseRoundedIcon },
+  { name: 'Trang chủ', to: RootRoutes.DASHBOARD_ROUTE, icon: HouseRoundedIcon },
   {
     name: 'Sản phẩm',
     isCollapse: true,
@@ -29,12 +28,12 @@ export const LIST_NAV_MAIN = [
   },
   {
     name: 'Tài khoản',
-    to: `${DASHBOARD_ROUTE}/account`,
+    to: RootRoutes.ACCOUNT_ROUTE,
     icon: SwitchAccountRoundedIcon,
   },
   {
     name: 'Đơn hàng',
-    to: `${DASHBOARD_ROUTE}/order`,
+    to: RootRoutes.ORDER_ROUTE,
     icon: ShoppingCartRoundedIcon,
   },
 ];

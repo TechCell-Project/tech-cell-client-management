@@ -1,7 +1,8 @@
 import { FilterByDatetime } from '@models/Common';
+import { TimeSplit } from '@constants/enum';
 
 export class SearchStats extends FilterByDatetime {
-  splitBy: string = 'day';
+  splitBy: TimeSplit = TimeSplit.Day;
   refreshCache: boolean | null = null;
 }
 

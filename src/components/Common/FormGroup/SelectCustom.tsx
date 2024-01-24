@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const SelectCustom = memo((props: Props) => {
-  const { displayOption = "label", displayValue = "value" } = props;
+  const { displayOption = "name", displayValue = "value" } = props;
 
   return (
     <TextField

@@ -10,7 +10,6 @@ import {
   isRoleAccepted,
   getIndexNo,
   getStatusAccount,
-  productStatusMapping,
 } from '@utils/index';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
@@ -40,6 +39,7 @@ export const Account = () => {
 
   useEffect(() => {
     loadUserAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchAccount, paging]);
 
   const loadUserAccount = () => {
@@ -54,7 +54,7 @@ export const Account = () => {
     dispatch(getDetailsUserAccount(id)).then();
   };
 
-  const columns: Array<GridColDef> = [
+  const columns: Array<GridColDef<UserAccount>> = [
     {
       field: 'no',
       headerName: 'STT',
@@ -104,13 +104,13 @@ export const Account = () => {
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
-      getActions: (params: GridRowParams) => [
+      getActions: (params: GridRowParams<UserAccount>) => [
         <Tooltip title='Chi tiết' key={params.row._id}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => {
               setOpenDetails(true);
-              loadDataDetails(params.row._id);
+              loadDataDetails(params.row._id as string);
             }}
             label='Chi tiết'
           />
@@ -124,7 +124,7 @@ export const Account = () => {
                 setDataRowSelected(params.row);
               }}
               label='Đổi vai trò'
-              disabled={params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role)}
+              disabled={params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)}
             />
           </span>
         </Tooltip>,
@@ -140,7 +140,7 @@ export const Account = () => {
                   }}
                   label='Chặn tài khoản'
                   disabled={
-                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role)
+                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
                   }
                 />
               </span>
@@ -156,7 +156,7 @@ export const Account = () => {
                   }}
                   label='Mở khóa tài khoản'
                   disabled={
-                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role)
+                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
                   }
                 />
               </span>
@@ -199,7 +199,12 @@ export const Account = () => {
                 <SelectInputCustom name='emailVerified' label='Tình trạng email' options={ACCOUNT_EMAIL_OPTIONS} />
               </Grid>
               <Grid item md={12} textAlign='right'>
-                <ButtonCustom type='submit' variant='outlined' content='Tìm kiếm' />
+                <ButtonCustom
+                  type='submit'
+                  variant='outlined'
+                  content='Tìm kiếm'
+                  styles={{ padding: '6px 20px !important' }}
+                />
               </Grid>
             </Grid>
           </Box>
@@ -210,7 +215,6 @@ export const Account = () => {
         column={columns}
         row={accounts.data}
         isLoading={isLoading}
-        isQuickFilter
         paginationModel={paging}
         setPaginationModel={setPaging}
         totalRecord={accounts?.totalRecord}
@@ -224,7 +228,7 @@ export const Account = () => {
         <ChangeRole
           isOpen={openChangeRole}
           handleClose={() => setOpenChangeRole(false)}
-          dataAccount={dataRowSelected}
+          dataAccount={dataRowSelected as UserAccount}
         />
       )}
 
@@ -232,7 +236,7 @@ export const Account = () => {
         <ConfirmBlock
           isOpen={openDeleteConfirm}
           handleClose={() => setOpenDeleteConfirm(false)}
-          dataAccount={dataRowSelected}
+          dataAccount={dataRowSelected as UserAccount}
         />
       )}
     </>

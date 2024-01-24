@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { formatDateViVN, getAddressLocation, getRole, getStatusAccount } from '@utils/index';
@@ -32,9 +31,19 @@ export const DetailsAccount = memo((props: DialogAction) => {
           <CircularProgress sx={{ color: theme.color.red }} />
         ) : (
           <>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               <Grid item xs={12} mb={1}>
                 <p style={{ fontSize: '14px', fontWeight: 600 }}>1. Thông tin</p>
+              </Grid>
+              <Grid item md={12}>
+                <TextViewCustom
+                  label='Email'
+                  content={String(account?.email)}
+                  unit={account?.emailVerified && (
+                    <CheckCircleRoundedIcon fontSize='small' color='primary' />
+                  )}
+                  stylesLabel={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+                />
               </Grid>
               <Grid item md={6}>
                 <TextViewCustom
@@ -46,16 +55,6 @@ export const DetailsAccount = memo((props: DialogAction) => {
                 <TextViewCustom
                   label='Vai trò'
                   content={getRole(account?.role) ?? ''}
-                />
-              </Grid>
-              <Grid item md={6}>
-                <TextViewCustom
-                  label='Email'
-                  content={String(account?.email)}
-                  unit={account?.emailVerified && (
-                    <CheckCircleRoundedIcon fontSize='small' color='primary' />
-                  )}
-                  stylesLabel={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 />
               </Grid>
               <Grid item md={6}>

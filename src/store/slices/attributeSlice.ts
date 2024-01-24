@@ -39,7 +39,9 @@ export const attributeSlice = createSlice({
       state.attributes = new PagingResponse<AttributeModel>();
       state.isLoading = false;
     },
-    getDetailsSuccess: (state, { payload }: { payload: AttributeModel }) => {
+    getDetailsSuccess: (state, { payload }: {
+      payload: AttributeModel
+    }) => {
       state.attribute = payload;
       state.isLoadingDetail = false;
     },
@@ -47,7 +49,9 @@ export const attributeSlice = createSlice({
       state.attribute = null;
       state.isLoadingDetail = false;
     },
-    editSuccess: (state, { payload }: { payload: AttributeModel }) => {
+    editSuccess: (state, { payload }: {
+      payload: AttributeModel
+    }) => {
       const index = state.attributes.data.findIndex(
         (attribute) => attribute._id === payload._id,
       );
@@ -56,7 +60,9 @@ export const attributeSlice = createSlice({
       }
       state.isLoading = false;
     },
-    deleteSuccess: (state, { payload }: { payload: string }) => {
+    deleteSuccess: (state, { payload }: {
+      payload: string
+    }) => {
       state.attributes.data = state.attributes.data.filter(
         (attribute) => attribute._id !== payload,
       );

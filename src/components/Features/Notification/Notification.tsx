@@ -10,6 +10,7 @@ import Tabs from '@mui/material/Tabs';
 import { useTheme } from '@mui/material/styles';
 import NotificationList from './NotificationList';
 import { useAppSelector } from '@store/store';
+import { IconBtnCustom } from '@components/Common';
 
 export const Notification = memo(() => {
   const { isPing, notifications } = useAppSelector((state) => state.notification);
@@ -35,22 +36,29 @@ export const Notification = memo(() => {
 
   return (
     <>
-      <IconButton
-        aria-describedby={id}
-        aria-label='notification'
-        sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}
-        size='large'
+      <IconBtnCustom
+        icon={<NotificationsNoneRoundedIcon />}
+        isBadge
+        badgeVariant='dot'
+        badgeInvisible={!isPing}
         onClick={(event) => setAnchorEl(event.currentTarget)}
-      >
-        <BadgeIconButton
-          color='secondary'
-          variant='dot'
-          invisible={!isPing}
-          // invisible={!notifications.some((noti) => noti.readAt === null)}
-        >
-          <NotificationsNoneRoundedIcon />
-        </BadgeIconButton>
-      </IconButton>
+        styles={{ padding: '10px' }}
+      />
+      {/*<IconButton*/}
+      {/*  aria-describedby={id}*/}
+      {/*  aria-label='notification'*/}
+      {/*  sx={{ backgroundColor: 'rgba(0, 0, 0, 0.04)' }}*/}
+      {/*  size='large'*/}
+      {/*  onClick={(event) => setAnchorEl(event.currentTarget)}*/}
+      {/*>*/}
+      {/*  <BadgeIconButton*/}
+      {/*    color='secondary'*/}
+      {/*    variant='dot'*/}
+      {/*    invisible={!isPing}*/}
+      {/*  >*/}
+      {/*    <NotificationsNoneRoundedIcon />*/}
+      {/*  </BadgeIconButton>*/}
+      {/*</IconButton>*/}
 
       <Popover
         id={id}

@@ -1,13 +1,18 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Login } from "@components/Features";
-import { useAppDispatch, useAppSelector } from "@store/store";
-import { authenticate } from "@store/slices/authSlice";
-import { LoadingPage } from "@components/Common";
-import { TITLE_TECHCELL } from "@constants/data";
-import { NoSSRWrapper } from "@components/Shared";
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@store/store';
+import { authenticate } from '@store/slices/authSlice';
+import { LoadingPage } from '@components/Common';
+import { TITLE_TECHCELL } from '@constants/data';
+import { RootRoutes } from '@constants/enum';
+import dynamic from 'next/dynamic';
+
+const LoginDynamic = dynamic(() => import('@components/Features').then((res) => res.Login), {
+  ssr: false,
+  loading: () => <LoadingPage isLoading={true} />,
+});
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,8 +20,8 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(authenticate());
-  }, []);
+    dispatch(authenticate()).then();
+  }, [dispatch]);
 
   useEffect(() => {
     document.title = `Đăng Nhập - ${TITLE_TECHCELL}`;
@@ -25,7 +30,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (isAuthenticated) {
       const timeout = setTimeout(() => {
-        router.push("/dashboard");
+        router.push(RootRoutes.DASHBOARD_ROUTE);
       }, 300);
       return () => {
         clearTimeout(timeout);
@@ -36,8 +41,6 @@ export default function LoginPage() {
   return isAuthenticated ? (
     <LoadingPage isLoading={true} />
   ) : (
-    <NoSSRWrapper>
-      <Login />
-    </NoSSRWrapper>
+    <LoginDynamic />
   );
 }

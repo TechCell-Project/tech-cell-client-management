@@ -13,10 +13,10 @@ export class Paging implements GridPaginationModel {
 }
 
 export class PagingResponse<T = unknown> {
-  page?: number | null = null;
-  pageSize?: number | null = null;
-  totalPage?: number | null = null;
-  totalRecord?: number | null = null;
+  page: number | null = null;
+  pageSize: number | null = null;
+  totalPage: number | null = null;
+  totalRecord: number | null = null;
   data: T[] = [];
 }
 
@@ -29,10 +29,8 @@ export class DataTableProps {
   column?: GridColDef[] | null;
   row?: readonly any[];
   isLoading?: boolean;
-  isQuickFilter?: boolean;
   totalPage?: number | null = null;
   totalRecord?: number | null = null;
   paginationModel?: GridPaginationModel;
   setPaginationModel?: React.Dispatch<React.SetStateAction<any>>;
-  disabledFilter?: boolean;
 }

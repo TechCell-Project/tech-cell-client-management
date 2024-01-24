@@ -1,4 +1,3 @@
-import { IUser } from '@interface/auth';
 import { UserAccount } from '@models/Account';
 
 export class LoginModel {

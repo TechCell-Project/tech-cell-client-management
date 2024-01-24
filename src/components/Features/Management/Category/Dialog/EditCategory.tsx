@@ -7,16 +7,12 @@ import { createOrEditValidate } from '@validate/category.validate';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { CategoryModel } from '@models/Category';
 import { getAllAttributes } from '@store/slices/attributeSlice';
-import { PagingAttribute } from '@models/Attribute';
+import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { editCategory } from '@store/slices/categorySlice';
 import { toast } from 'react-toastify';
+import { DialogAction } from '@interface/common';
 
-interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const EditCategory = (props: Props) => {
+export const EditCategory = (props: DialogAction) => {
   const { category } = useAppSelector((state) => state.category);
   const { attributes, isLoading } = useAppSelector((state) => state.attribute);
   const dispatch = useAppDispatch();
@@ -84,10 +80,10 @@ export const EditCategory = (props: Props) => {
               <Grid item xs={12} md={6}>
                 <TextFieldCustom name="label" label="# Label" />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <TextFieldCustom name="url" label="URL" />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <TextFieldCustom
                   name="description"
                   label="Mô tả"
@@ -97,7 +93,7 @@ export const EditCategory = (props: Props) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <AutocompleteCustom<CategoryModel>
+                <AutocompleteCustom<AttributeModel>
                   options={attributes.data}
                   name="requireAttributes"
                   label="Thông số kỹ thuật"

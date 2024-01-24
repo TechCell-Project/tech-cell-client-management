@@ -33,18 +33,24 @@ export const notificationSlice = createSlice({
     setOnClickPing: (state) => {
       state.isPing = false;
     },
-    setPushNotifySocket: (state, { payload }: { payload: NotificationModel }) => {
+    setPushNotifySocket: (state, { payload }: {
+      payload: NotificationModel
+    }) => {
       state.notifications = [payload, ...state.notifications];
       state.isPing = true;
     },
-    getSuccess: (state, { payload }: { payload: Array<NotificationModel> }) => {
+    getSuccess: (state, { payload }: {
+      payload: Array<NotificationModel>
+    }) => {
       if (payload.length < 10) {
         state.showReadmore = false;
       }
       state.notifications = payload;
       state.isLoading = false;
     },
-    getMoreSuccess: (state, { payload }: { payload: Array<NotificationModel> }) => {
+    getMoreSuccess: (state, { payload }: {
+      payload: Array<NotificationModel>
+    }) => {
       if (payload.length < 10) {
         state.showReadmore = false;
       }
@@ -55,6 +61,12 @@ export const notificationSlice = createSlice({
       state.notifications = [];
       state.isLoading = false;
       state.showReadmore = false;
+    },
+    resetNotification: (state) => {
+      state.notifications = [];
+      state.isPing = false;
+      state.isLoading = false;
+      state.showReadmore = true;
     },
   },
 });
@@ -82,5 +94,6 @@ export const {
   getMoreSuccess,
   setSocket,
   setPushNotifySocket,
+  resetNotification,
 } = actions;
 export default reducer;

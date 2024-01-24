@@ -4,7 +4,8 @@ import { productSlice } from './productSlice';
 import { attributeSlice } from './attributeSlice';
 import { categorySlice } from './categorySlice';
 import { orderSlice } from './orderSlice';
-import { notificationSlice} from '@store/slices/notiSlice';
+import { notificationSlice } from '@store/slices/notiSlice';
+import { statsSlice } from '@store/slices/statsSlice';
 
 export {
   authSlice,
@@ -14,4 +15,5 @@ export {
   categorySlice,
   orderSlice,
   notificationSlice,
+  statsSlice,
 };

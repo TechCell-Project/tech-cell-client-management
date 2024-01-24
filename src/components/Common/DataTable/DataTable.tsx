@@ -10,7 +10,7 @@ import { DataTableProps } from '@models/Common';
 export const DataTable: FC<DataTableProps> = memo((props) => {
   const styledTable = useMemo(() => {
     return {
-      padding: '0 20px',
+      padding: '10px 20px',
       borderRadius: 2,
       gap: '15px',
       border: 0,

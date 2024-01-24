@@ -12,10 +12,11 @@ export * from './FormGroup/PasswordCustom';
 export * from './FormGroup/SelectCustom';
 export * from './FormGroup/UploadFileCustom';
 export * from './FormGroup/TextViewCustom';
+export * from './FormGroup/IconBtnCustom';
 
 export * from './FormFormik/AutocompleteCustom';
 export * from './FormFormik/TextFieldCustom';
-export * from './FormFormik/SelectCustom';
+export * from './FormFormik/SelectInputCustom';
 export * from './FormFormik/DatetimePickerCustom';
 
 export * from './TextEditor/TinyEditor';
