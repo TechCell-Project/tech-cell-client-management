@@ -9,7 +9,7 @@ import PhotoRoundedIcon from '@mui/icons-material/PhotoRounded';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllCategory } from '@store/slices/categorySlice';
 import { CategoryModel } from '@models/Category';
-import { ImageDialog } from '../Dialog/ImageDialog';
+import { ImageDialog } from '../Dialog';
 import { FieldImageProps } from '@models/Image';
 import { formatDateViVN, getCountImage } from '@utils/index';
 import { getCategoryByLabel } from '@services/categoryService';
@@ -64,7 +64,7 @@ export const InforSection = memo(() => {
         setFieldValue('generalAttributes', new Array<AttributeDynamics>()).then();
       }
     },
-    [setIsFetchCategory, setFieldValue],
+    [setFieldValue, values.listTempAtt],
   );
 
   return (

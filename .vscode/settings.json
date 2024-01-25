@@ -1,0 +1,9 @@
+{
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "development"
+  ],
+  "conventionalCommits.scopes": [
+    "stats",
+    "socket"
+  ]
+}

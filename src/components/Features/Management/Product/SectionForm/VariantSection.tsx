@@ -13,12 +13,10 @@ import { STATUS_PRODUCT_OPTIONS } from '@constants/options';
 import PhotoRoundedIcon from '@mui/icons-material/PhotoRounded';
 import CollectionsRoundedIcon from '@mui/icons-material/CollectionsRounded';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { AttributeDialog } from '../Dialog/AttributeDialog';
-import { ImageDialog } from '../Dialog/ImageDialog';
 import { FieldImageProps } from '@models/Image';
 import { getCountImage } from '@utils/index';
 import { TextFieldCustom } from '@components/Common';
-import { DeleteVariationDialog } from '../Dialog/DeleteVariationDialog';
+import { DeleteVariationDialog, AttributeDialog, ImageDialog } from '../Dialog';
 
 export const VariantSection = memo(() => {
   const theme = useTheme();

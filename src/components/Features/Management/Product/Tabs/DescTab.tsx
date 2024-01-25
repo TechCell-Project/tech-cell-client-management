@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material';
 import { useFormikContext } from 'formik';
 import styles from '@styles/components/_common.module.scss';
-import { ImageDialog } from '../Dialog/ImageDialog';
+import { ImageDialog } from '../Dialog';
 import { ButtonCustom, TinyEditor } from '@components/Common';
 import CollectionsRoundedIcon from '@mui/icons-material/CollectionsRounded';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';

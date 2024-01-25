@@ -12,7 +12,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
-import { DeleteProductDialog } from './Dialog/DeleteProductDialog';
+import { DeleteProductDialog } from './Dialog';
 import { ImageModel, PagingProduct, ProductModel } from '@models/Product';
 import { Form, Formik } from 'formik';
 import Grid from '@mui/material/Grid';
