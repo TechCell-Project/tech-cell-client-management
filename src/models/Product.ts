@@ -36,7 +36,7 @@ export class ProductRequest {
   variations: Array<VariationModel> = new Array<VariationModel>();
   generalImages?: Array<ImageModel> = new Array<ImageModel>();
   descriptionImages?: Array<ImageModel> = new Array<ImageModel>();
-  listTempAtt: Array<AttributeDynamics> = new Array<AttributeDynamics>();
+  listTempAtt?: Array<AttributeDynamics> = new Array<AttributeDynamics>();
 }
 
 export class ProductModel extends ProductRequest {

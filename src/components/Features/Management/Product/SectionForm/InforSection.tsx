@@ -64,7 +64,7 @@ export const InforSection = memo(() => {
         setFieldValue('generalAttributes', new Array<AttributeDynamics>()).then();
       }
     },
-    [setFieldValue, values.listTempAtt],
+    [setFieldValue, values?.listTempAtt],
   );
 
   return (
