@@ -124,7 +124,7 @@ const StatisticBox = () => {
           <BoxRender
             name='Tổng hóa đơn'
             icon={<SellRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={isLoading ? renderSkeletonText() : (stats as Statistic)?.totalOrders}
+            value={isLoading ? renderSkeletonText() : (stats as Statistic)?.totalOrders ?? 0}
           />
         </Grid>
       </Grid>

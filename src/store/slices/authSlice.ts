@@ -145,6 +145,5 @@ export const {
   authenticatedSuccess,
   loginSuccess,
   loginFailure,
-} =
-  actions;
+} = actions;
 export default reducer;

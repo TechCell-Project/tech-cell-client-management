@@ -1,9 +1,10 @@
 import { FilterByDatetime } from '@models/Common';
-import { TimeSplit } from '@constants/enum';
+import { PaymentStatus, TimeSplit } from '@constants/enum';
 
 export class SearchStats extends FilterByDatetime {
   splitBy: TimeSplit = TimeSplit.Day;
   refreshCache: boolean | null = null;
+  type: 'order' | 'revenue' = 'revenue';
 }
 
 export class Statistic extends FilterByDatetime {

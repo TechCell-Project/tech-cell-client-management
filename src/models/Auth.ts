@@ -3,6 +3,12 @@ import { UserAccount } from '@models/Account';
 export class LoginModel {
   emailOrUsername?: string | null = null;
   password?: string | null = null;
+
+  constructor(initValues?: LoginModel) {
+    if(initValues) {
+      Object.assign(this, initValues)
+    }
+  }
 }
 
 export class RegisterModel {

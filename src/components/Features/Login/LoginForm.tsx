@@ -21,6 +21,7 @@ import { ForgotPassword } from '../ForgotPassword/ForgotPassword';
 import { useAppDispatch } from '@store/store';
 import { login } from '@store/slices/authSlice';
 import { VerifyForm } from '@components/Features';
+import { EMAIL_TEST, PASSWORD_TEST } from '@constants/data';
 
 
 export const LoginForm = memo(() => {
@@ -28,11 +29,6 @@ export const LoginForm = memo(() => {
   const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
   const [isOpenVerify, setIsOpenVerify] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
 
   const handleSubmit = async (values: LoginModel, { resetForm, setSubmitting }: FormikHelpers<LoginModel>) => {
     try {
@@ -49,7 +45,11 @@ export const LoginForm = memo(() => {
   return (
     <>
       <Formik
-        initialValues={new LoginModel()}
+        initialValues={new LoginModel({
+            emailOrUsername: EMAIL_TEST,
+            password: PASSWORD_TEST,
+          },
+        )}
         validationSchema={loginValidate}
         enableReinitialize
         onSubmit={handleSubmit}
@@ -89,8 +89,8 @@ export const LoginForm = memo(() => {
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+                        onClick={() => setShowPassword((show) => !show)}
+                        onMouseDown={(e) => e.preventDefault()}
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>

@@ -2,6 +2,9 @@ import { RootRoutes } from './enum';
 
 export const TITLE_TECHCELL = 'Trang Quản Trị TechCell';
 
+export const EMAIL_TEST = 'suad@techcell.cloud';
+export const PASSWORD_TEST = 'test12345'
+
 export const PATHS = [
   { pathname: RootRoutes.DASHBOARD_ROUTE, name: 'Trang chủ' },
   { pathname: RootRoutes.ACCOUNT_ROUTE, name: 'Tài khoản' },
