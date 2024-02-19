@@ -8,11 +8,11 @@ import { useFormikContext } from 'formik';
 import { toast } from 'react-toastify';
 import { getDetailsProduct } from '@store/slices/productSlice';
 
-interface Props extends DialogAction {
+interface Props {
   data: VariationModel;
 }
 
-export const DeleteVariationDialog = memo(({ isOpen, handleClose, data }: Props) => {
+export const DeleteVariationDialog = memo(({ isOpen, handleClose, data }: Props & DialogAction) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { values } = useFormikContext<ProductModel>();
@@ -20,7 +20,7 @@ export const DeleteVariationDialog = memo(({ isOpen, handleClose, data }: Props)
   const handleConfirm = async () => {
     setIsLoading(true);
     try {
-      const response = await deleteVariationProduct(String(values._id));
+      const response = await deleteVariationProduct(values._id as string, data.sku as string);
       if (response.status === 200) {
         toast.success('Xóa biến thể thành công!');
         await dispatch(getDetailsProduct(String(values._id)));
