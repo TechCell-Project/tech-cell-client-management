@@ -20,7 +20,7 @@ export const DeleteVariationDialog = memo(({ isOpen, handleClose, data }: Props)
   const handleConfirm = async () => {
     setIsLoading(true);
     try {
-      const response = await deleteVariationProduct(String(values._id), String(data.sku));
+      const response = await deleteVariationProduct(String(values._id));
       if (response.status === 200) {
         toast.success('Xóa biến thể thành công!');
         await dispatch(getDetailsProduct(String(values._id)));

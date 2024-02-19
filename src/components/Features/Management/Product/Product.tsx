@@ -19,6 +19,7 @@ import Grid from '@mui/material/Grid';
 import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
+import usePagination from '@hooks/usePagination';
 
 export const Product = () => {
   const dispatch = useAppDispatch();

@@ -25,5 +25,5 @@ export const putProduct = (payload: Partial<ProductModel>, id: string) =>
 
 export const deleteProduct = (id: string) => instance.delete(`${PRODUCTS_ENDPOINT}/${id}`);
 
-export const deleteVariationProduct = (id: string, sku: string) =>
-  instance.delete(`${PRODUCTS_ENDPOINT}/${id}?sku=${sku}`);
+export const deleteVariationProduct = (id: string) =>
+  instance.delete(`${PRODUCTS_ENDPOINT}/${id}/variation`);

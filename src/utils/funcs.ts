@@ -1,6 +1,12 @@
 // common functions
 import { ImageModel } from '@models/Product';
-import { AccountStatusVi, PaymentOrder, PaymentStatus, ProductStatus, Roles } from '@constants/enum';
+import {
+  AccountStatusVi,
+  PaymentOrder,
+  PaymentStatus,
+  ProductStatus,
+  Roles,
+} from '@constants/enum';
 import { getCurrentUserRole } from '@utils/local';
 import { Address } from '@models/Account';
 import { District, Province, Ward } from '@models/Location';
@@ -10,9 +16,7 @@ export const getCountImage = (images: ImageModel[], isThumbnail: boolean = false
   if (isThumbnail) {
     count = images?.filter((image) => image.isThumbnail).length;
   } else {
-    count = images?.filter(
-      (image) => !image.isThumbnail || false,
-    ).length;
+    count = images?.filter((image) => !image.isThumbnail || false).length;
   }
   return count;
 };
@@ -104,7 +108,6 @@ export const formatDateViVN = (dateString: string) => {
   }
 };
 
-
 export const isRoleAccepted = (role?: string): boolean => {
   const currentRole = getCurrentUserRole();
 
@@ -120,7 +123,9 @@ export const isRoleAccepted = (role?: string): boolean => {
   }
 };
 
-export const getSearchParams = <T extends number | string = any>(payload: Record<string, T>): string => {
+export const getSearchParams = <T extends number | string = any>(
+  payload: Record<string, T>,
+): string => {
   const url = new URLSearchParams();
 
   Object.entries(payload).map(([key, value]) => {
@@ -148,7 +153,10 @@ export const getAddressLocation = (address: Address) => {
   }
 };
 
-export const getFirstAndLastDayOfMonth = (year: number, month: number): { firstDay: string, lastDay: string } => {
+export const getFirstAndLastDayOfMonth = (
+  year: number,
+  month: number,
+): { firstDay: string; lastDay: string } => {
   month = Math.max(0, Math.min(11, month));
 
   const firstDay = new Date(year, month, 1).toISOString();
