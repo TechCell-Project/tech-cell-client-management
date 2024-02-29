@@ -80,6 +80,12 @@ export const Account = () => {
       field: 'email',
       headerName: 'Email',
       width: 280,
+      flex: 1,
+    },
+    {
+      field: 'userName',
+      headerName: 'Tài khoản',
+      width: 280,
     },
     {
       field: 'status',

@@ -48,6 +48,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
             src="/logo-red.png"
             alt="Logo Techcell"
             height={40}
+            width={150}
             priority
             style={{
               cursor: 'pointer',

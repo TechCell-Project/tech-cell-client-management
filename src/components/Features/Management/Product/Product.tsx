@@ -19,7 +19,6 @@ import Grid from '@mui/material/Grid';
 import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
-import usePagination from '@hooks/usePagination';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
@@ -53,7 +52,7 @@ export const Product = () => {
     {
       field: 'generalImages',
       headerName: 'Hình ảnh',
-      width: 150,
+      width: 120,
       renderCell: (params) => {
         const thumbs = params.row.generalImages?.find((image: ImageModel) => image.isThumbnail)?.url;
         return (
@@ -67,7 +66,7 @@ export const Product = () => {
         );
       },
     },
-    { field: 'name', headerName: 'Tên Sản Phẩm', width: 180 },
+    { field: 'name', headerName: 'Tên Sản Phẩm', width: 220, flex: 1 },
     {
       field: 'category',
       headerName: 'Thể Loại',
@@ -78,7 +77,7 @@ export const Product = () => {
     },
     {
       field: 'variations',
-      headerName: 'Tổng Số Biến Thể',
+      headerName: 'Biến Thể',
       width: 150,
       align: 'center',
       headerAlign: 'center',

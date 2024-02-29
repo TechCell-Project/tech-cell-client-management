@@ -9,6 +9,7 @@ import type {
   Legend,
   PieChart,
   Pie,
+  Cell,
 } from 'recharts';
 
 const AreaChartImpl: typeof AreaChart = require('recharts/es6/chart/AreaChart').AreaChart;
@@ -24,6 +25,7 @@ const LegendImpl: typeof Legend = require('recharts/es6/component/Legend').Legen
 
 const PieChartImpl: typeof PieChart = require('recharts/es6/chart/PieChart').PieChart;
 const PieImpl: typeof Pie = require('recharts/es6/polar/Pie').Pie;
+const CellIml: typeof Cell = require('recharts/es6/component/Cell').Cell;
 
 export {
   AreaChartImpl as AreaChart,
@@ -36,4 +38,5 @@ export {
   LegendImpl as Legend,
   PieChartImpl as PieChart,
   PieImpl as Pie,
+  CellIml as Cell
 };

@@ -82,6 +82,7 @@ export const Order = () => {
       headerAlign: 'center',
       align: 'center',
       width: 220,
+      flex: 1,
       renderCell: (params) => (
         <ChipStatus
           label={orderStatusMapping[String(params.row.orderStatus)]}

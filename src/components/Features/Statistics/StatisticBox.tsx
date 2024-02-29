@@ -102,7 +102,7 @@ const StatisticBox = () => {
             name='Tổng doanh thu'
             icon={<PaidRoundedIcon sx={{ fill: theme.color.red }} />}
             value={isLoading ? renderSkeletonText() : formatWithCommas((stats as Statistic)?.totalRevenue)}
-            isUpper
+            // isUpper
           />
         </Grid>
         <Grid item md={3}>
@@ -110,7 +110,7 @@ const StatisticBox = () => {
             name='Doanh số trong tuần'
             icon={<AttachMoneyRoundedIcon sx={{ fill: theme.color.red }} />}
             value={formatWithCommas(9920000)}
-            isLower
+            // isLower
           />
         </Grid>
         <Grid item md={3}>

@@ -16,13 +16,8 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllNotification, resetNotification } from '@store/slices/notiSlice';
 import { SocketEvent } from '@config/socket_io.config';
 
-interface Props {
-  status: 'all' | 'unread';
-  onClose: () => void;
-}
-
 const NotificationList = memo(
-  ({ status, onClose }: Props) => {
+  ({ status, onClose }: { status: 'all' | 'unread'; onClose: () => void }) => {
     const dispatch = useAppDispatch();
     const { notifications, isLoading, showReadmore, socket } = useAppSelector((state) => state.notification);
     const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
@@ -34,7 +29,7 @@ const NotificationList = memo(
         readType: status,
       }, 'get')).then();
 
-      setPaging(new PagingNotify())
+      setPaging(new PagingNotify());
 
       return () => {
         dispatch(resetNotification());

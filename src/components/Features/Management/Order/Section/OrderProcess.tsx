@@ -163,7 +163,7 @@ const OrderChangeStatusConfirm = memo((
       return 'Bạn có chắc muốn hủy đơn hàng này không?';
     } else if (action === ActionOrderType.ChangeByStep) {
       return (
-        <>Bạn có chắc muốn <b>{activeStatus?.content.toLowerCase()}</b>?'</>
+        <>Bạn có chắc muốn <b>{activeStatus?.content.toLowerCase()}</b>?</>
       );
     }
   };

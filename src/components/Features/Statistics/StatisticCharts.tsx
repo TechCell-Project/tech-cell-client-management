@@ -93,7 +93,7 @@ const StatisticCharts = () => {
             </Form>
           )}
         </Formik>
-        <Grid container spacing={4} columns={18}>
+        <Grid container spacing={4} columns={18} pb={5}>
           <Grid item md={12}>
             <Typography variant='h6' fontSize='1rem' fontWeight={600} mb={2}>
               1. Doanh thu

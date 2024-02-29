@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { OrderInfo, OrderInvoice, OrderProcess } from './Section';
 
-
 export const OrderDetails = ({ id }: { id: string }) => {
   const { isLoadingDetails } = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();

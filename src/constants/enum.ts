@@ -86,3 +86,12 @@ export enum OrderProcessStep {
   Four_Completed = 4,
   Five_Cancel = 5,
 }
+
+export enum OrderStatusStats {
+  Pending = 'PENDING',
+  Cancelled = 'CANCELLED',
+  Processing = 'PROCESSING',
+  Shipping = 'SHIPPING',
+  Completed = 'COMPLETED',
+  Refunded = 'REFUNDED'
+}
