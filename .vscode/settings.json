@@ -5,6 +5,7 @@
   "conventionalCommits.scopes": [
     "stats",
     "socket",
-    "apis"
+    "apis",
+    "components"
   ]
 }

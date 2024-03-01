@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -38,16 +38,11 @@ const ToggleSplit = () => {
 };
 
 const StatisticCharts = () => {
-  const { handleSearchStats, initialDate, isLoading } = useStats();
+  const { handleSearchStats, initialDate, isLoading, ok } = useStats();
   const [showSnack, setShowSnack] = useState({
     isOpen: false,
     message: '',
   });
-
-  useEffect(() => {
-    handleSearchStats(initialDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -77,14 +72,22 @@ const StatisticCharts = () => {
                       icon={<SearchRoundedIcon />}
                       type='submit'
                       tooltip='Tìm báo cáo'
-                      onClick={() => !isLoading && setShowSnack({ isOpen: true, message: 'Tìm báo cáo thành công!' })}
+                      styles={{ cursor: isLoading ? 'wait' : 'pointer' }}
+                      onClick={() => setShowSnack({
+                        isOpen: true,
+                        message: ok ? 'Tìm báo cáo thành công!' : 'Tìm báo cáo thất bại',
+                      })}
                     />
                     <IconBtnCustom
                       icon={<RestartAltRoundedIcon />}
                       tooltip='Tính lại báo cáo'
+                      styles={{ cursor: isLoading ? 'wait' : 'pointer' }}
                       onClick={() => {
                         handleSearchStats({ ...values, refreshCache: true });
-                        setShowSnack({ isOpen: true, message: 'Tính lại báo cáo thành công!' });
+                        setShowSnack({
+                          isOpen: true,
+                          message: ok ? 'Tính lại báo cáo thành công!' : 'Tính lại báo cáo thất bại',
+                        });
                       }}
                     />
                   </Stack>
@@ -109,7 +112,7 @@ const StatisticCharts = () => {
         </Grid>
       </Box>
 
-      {showSnack.isOpen && (
+      {showSnack.isOpen && !isLoading && (
         <ShowSnackbar
           isOpen={showSnack.isOpen}
           handleClose={() => setShowSnack({ isOpen: false, message: '' })}

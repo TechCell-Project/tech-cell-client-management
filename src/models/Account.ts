@@ -1,5 +1,5 @@
 import { Paging, PagingResponse } from './Common';
-import { District, Location, Province, Ward } from '@models/Location';
+import { District, Province, Ward } from '@models/Location';
 import { ImageModel } from '@models/Product';
 
 export class PagingAccount extends Paging {

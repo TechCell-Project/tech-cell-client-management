@@ -1,6 +1,4 @@
-import { Address, UserAccount } from '@models/Account';
-import { getDistrict, getWard } from '@services/locationService';
-import { District, Province, Ward } from '@models/Location';
+import { Address } from '@models/Account';
 
 export class ProfileAddressRequest {
   address: Array<Address> = new Array<Address>();

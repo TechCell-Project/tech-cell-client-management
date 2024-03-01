@@ -57,7 +57,7 @@ export const Category = () => {
     {
       field: 'requiresAttribute',
       headerName: 'Danh sách thông số/thuộc tính',
-      width: 400,
+      minWidth: 400,
       flex: 1,
       headerAlign: 'center',
       valueGetter: (params) => {
@@ -68,7 +68,7 @@ export const Category = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 200,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',

@@ -1,5 +1,4 @@
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid/models';
-import React from 'react';
 
 export class Paging implements GridPaginationModel {
   page: number;

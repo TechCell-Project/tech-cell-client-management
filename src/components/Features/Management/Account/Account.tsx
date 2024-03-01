@@ -73,13 +73,13 @@ export const Account = () => {
     {
       field: 'role',
       headerName: 'Vai Trò',
-      width: 200,
+      width: 150,
       valueGetter: (params) => getRole(params.row.role),
     },
     {
       field: 'email',
       headerName: 'Email',
-      width: 280,
+      minWidth: 300,
       flex: 1,
     },
     {

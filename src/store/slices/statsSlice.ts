@@ -7,12 +7,14 @@ export type TStatsSlice = {
   stats: Statistic | null;
   statsOrder: StatisticDataOrder | null;
   isLoading: boolean;
+  ok: boolean;
 }
 
 const initialState: TStatsSlice = {
   stats: null,
   statsOrder: null,
   isLoading: false,
+  ok: false,
 };
 
 export const statsSlice = createSlice({
@@ -27,6 +29,7 @@ export const statsSlice = createSlice({
     }) => {
       state.stats = payload;
       state.isLoading = false;
+      if (!state.ok) state.ok = true;
     },
     getSuccessOrder: (state, { payload }: { payload: StatisticDataOrder }) => {
       const values = payload.data.map((item) => {
@@ -34,10 +37,12 @@ export const statsSlice = createSlice({
         return item;
       });
       state.statsOrder = { ...payload, data: values };
+      if (!state.ok) state.ok = true;
     },
     getFailure: (state) => {
       state.stats = null;
       state.isLoading = false;
+      state.ok = false;
     },
   },
 });
