@@ -63,7 +63,6 @@ export const Attribute = () => {
       field: 'description',
       headerName: 'Mô tả',
       width: 400,
-      flex: 1,
       align: 'center',
       headerAlign: 'center',
     },

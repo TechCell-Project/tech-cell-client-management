@@ -58,7 +58,6 @@ export const Category = () => {
       field: 'requiresAttribute',
       headerName: 'Danh sách thông số/thuộc tính',
       minWidth: 400,
-      flex: 1,
       headerAlign: 'center',
       valueGetter: (params) => {
         const value = params.row.requireAttributes?.map((attribute: AttributeModel) => attribute.name);

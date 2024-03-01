@@ -66,7 +66,7 @@ export const Product = () => {
         );
       },
     },
-    { field: 'name', headerName: 'Tên Sản Phẩm', width: 220, flex: 1 },
+    { field: 'name', headerName: 'Tên Sản Phẩm', minWidth: 220 },
     {
       field: 'category',
       headerName: 'Thể Loại',
