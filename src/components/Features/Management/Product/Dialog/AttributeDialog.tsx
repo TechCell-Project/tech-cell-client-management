@@ -29,11 +29,10 @@ export const AttributeDialog = (props: Props) => {
   useEffect(() => {
     dispatch(getAllAttributes({
       ...new PagingAttribute(),
-      pageSize: 50,
+      pageSize: 100,
     })).then();
   }, [dispatch]);
 
-  // @ts-ignore
   return (
     <ShowDialog
       dialogTitle='Thuộc tính biến thể'
