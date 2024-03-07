@@ -55,6 +55,10 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Ensure no write permissions are assigned to the executable files
+RUN find /app/.next/standalone -type f -exec chmod 555 {} \;
+RUN find /app/.next/static -type f -exec chmod 555 {} \;
+
 USER nextjs
 
 EXPOSE 3000

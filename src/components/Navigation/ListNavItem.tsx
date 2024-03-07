@@ -89,8 +89,8 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
                 unmountOnExit
                 sx={{ transition: 'all ease-in 0.3s', m: '10px 0' }}
               >
-                {nav.listChildren.map((child: any, index: number) => (
-                  <Link href={`${child.to}`} style={{ width: '100%' }} key={index} shallow>
+                {nav.listChildren.map((child: any) => (
+                  <Link href={`${child.to}`} style={{ width: '100%' }} key={child.to} shallow>
                     <ListItemButton
                       selected={pathname === String(child.to)}
                       sx={{ borderRadius: '10px', pl: '5px' }}
