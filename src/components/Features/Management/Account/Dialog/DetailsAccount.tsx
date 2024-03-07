@@ -60,7 +60,7 @@ export const DetailsAccount = memo((props: DialogAction) => {
               <Grid item md={6}>
                 <TextViewCustom
                   label='Trạng thái TK'
-                  content={getStatusAccount(account?.block && account?.block.isBlocked)}
+                  content={getStatusAccount(account?.block?.isBlocked)}
                 />
               </Grid>
               <Grid item md={6}>

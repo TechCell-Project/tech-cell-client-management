@@ -97,7 +97,7 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
       }}
     >
       <Button
-        type={props.type || "button"}
+        type={props.type ?? "button"}
         onClick={props.handleClick}
         sx={[{ ...props.styles }, getVariant()]}
         disabled={props.disabled}

@@ -35,7 +35,7 @@ const Pagination = ({
       page={page + 1}
       shape="rounded"
       onChange={(event, newPage) => {
-        onPageChange(event as any, newPage - 1);
+        onPageChange(event as React.MouseEvent<HTMLButtonElement, MouseEvent>, newPage - 1);
       }}
     />
   );

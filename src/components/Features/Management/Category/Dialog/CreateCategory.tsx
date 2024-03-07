@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShowDialog, ButtonCustom, AutocompleteCustom } from '@components/Common';
+import { ShowDialog, ButtonCustom, AutocompleteCustom, TextFieldCustom } from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { CategoryModel } from '@models/Category';
@@ -10,7 +10,6 @@ import { getAllAttributes } from '@store/slices/attributeSlice';
 import { AttributeModel, PagingAttribute } from '@models/Attribute';
 import { Paging } from '@models/Common';
 import { createNewCategory, getAllCategory } from '@store/slices/categorySlice';
-import { TextFieldCustom } from '@components/Common';
 import { toast } from 'react-toastify';
 import { DialogAction } from '@interface/common';
 
@@ -58,7 +57,7 @@ export const CreateCategory = (props: DialogAction) => {
 
   return (
     <ShowDialog
-      dialogTitle='Thêm mới thể loại'
+      dialogTitle="Thêm mới thể loại"
       handleClose={props.handleClose}
       isOpen={props.isOpen}
       dialogStyle={{ minWidth: 560 }}
@@ -79,18 +78,18 @@ export const CreateCategory = (props: DialogAction) => {
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <TextFieldCustom name='name' label='Thể loại' />
+                  <TextFieldCustom name="name" label="Thể loại" />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextFieldCustom name='label' label='# Label' />
+                  <TextFieldCustom name="label" label="# Label" />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextFieldCustom name='url' label='URL' />
+                  <TextFieldCustom name="url" label="URL" />
                 </Grid>
                 <Grid item xs={12}>
                   <TextFieldCustom
-                    name='description'
-                    label='Mô tả'
+                    name="description"
+                    label="Mô tả"
                     isTextArea
                     minRowArea={1}
                     maxRowArea={3}
@@ -99,10 +98,10 @@ export const CreateCategory = (props: DialogAction) => {
                 <Grid item xs={12}>
                   <AutocompleteCustom<AttributeModel>
                     options={attributes.data}
-                    name='requireAttributes'
-                    label='Thông số kỹ thuật'
-                    displaySelected='name'
-                    placeholder='Thông số'
+                    name="requireAttributes"
+                    label="Thông số kỹ thuật"
+                    displaySelected="name"
+                    placeholder="Thông số"
                     multiple
                     searchValue={searchAttribute.keyword}
                     handleChangeSearchValue={({ target }) =>
@@ -118,13 +117,13 @@ export const CreateCategory = (props: DialogAction) => {
                 </Grid>
               </Grid>
 
-              <Stack direction='row' justifyContent='flex-end' gap={2} sx={{ mt: 4 }}>
-                <ButtonCustom variant='outlined' handleClick={props.handleClose} content='Hủy bỏ' />
+              <Stack direction="row" justifyContent="flex-end" gap={2} sx={{ mt: 4 }}>
+                <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Hủy bỏ" />
                 <ButtonCustom
-                  variant='contained'
-                  type='submit'
+                  variant="contained"
+                  type="submit"
                   disabled={isSubmitting}
-                  content='Thêm'
+                  content="Thêm"
                 />
               </Stack>
             </>

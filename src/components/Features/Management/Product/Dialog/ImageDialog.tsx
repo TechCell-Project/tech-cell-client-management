@@ -1,8 +1,7 @@
-import { ButtonCustom, ShowDialog } from '@components/Common';
+import { ButtonCustom, ShowDialog, UploadFileCustom } from '@components/Common';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import React, { memo, useState } from 'react';
-import { UploadFileCustom } from '@components/Common';
 import { useFormikContext } from 'formik';
 import { ImageModel, ProductRequest } from '@models/Product';
 import { FieldImageProps } from '@models/Image';

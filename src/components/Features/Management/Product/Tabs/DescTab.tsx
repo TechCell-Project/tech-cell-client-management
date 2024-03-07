@@ -51,8 +51,8 @@ export const DescTab = memo(() => {
               />
               {values.descriptionImages && values.descriptionImages.length > 0 && (
                 <Stack direction="column" gap={2}>
-                  {values.descriptionImages?.map((item, i) => (
-                    <Stack flexDirection="row" gap={2} alignItems="center" key={i}>
+                  {values.descriptionImages?.map((item) => (
+                    <Stack flexDirection="row" gap={2} alignItems="center" key={item.url}>
                       <Typography variant="body2">
                         URL: <b>{item.url}</b>
                       </Typography>

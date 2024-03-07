@@ -7,7 +7,7 @@ import NotSupportMobile from './not-support-mobile';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/base/index.scss';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const isMobile = useMobile();
 
   return (

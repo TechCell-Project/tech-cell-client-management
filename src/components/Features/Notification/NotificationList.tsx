@@ -19,15 +19,22 @@ import { SocketEvent } from '@config/socket_io.config';
 const NotificationList = memo(
   ({ status, onClose }: { status: 'all' | 'unread'; onClose: () => void }) => {
     const dispatch = useAppDispatch();
-    const { notifications, isLoading, showReadmore, socket } = useAppSelector((state) => state.notification);
+    const { notifications, isLoading, showReadmore, socket } = useAppSelector(
+      (state) => state.notification,
+    );
     const [paging, setPaging] = useState<PagingNotify>(new PagingNotify());
     const router = useRouter();
 
     useEffect(() => {
-      dispatch(getAllNotification({
-        ...new PagingNotify(),
-        readType: status,
-      }, 'get')).then();
+      dispatch(
+        getAllNotification(
+          {
+            ...new PagingNotify(),
+            readType: status,
+          },
+          'get',
+        ),
+      ).then();
 
       setPaging(new PagingNotify());
 
@@ -44,88 +51,100 @@ const NotificationList = memo(
       }
     };
 
-    return (
-      <Box sx={{
-        width: '100%',
-        height: 'max-content',
-        maxHeight: '520px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: notifications.length === 0 ? 'center' : 'flex-start',
-        alignItems: notifications.length === 0 ? 'center' : 'flex-start',
-      }}>
-        {!isLoading ? (
-          notifications?.length === 0 ? (
-            <div style={{ padding: '20px' }}>
-              <NotifyIcon />
-              <Typography variant='body2' mt='10px' fontWeight={500}>Chưa có thông báo nào!</Typography>
-            </div>
-          ) : (
-            <>
-              {notifications?.map((item) => {
-                return (
-                  <Stack
-                    flexDirection='row'
-                    gap='15px'
-                    alignItems='flex-start'
-                    key={item._id}
-                    onClick={() => {
-                      handleMarkAsRead(String(item._id));
-                      onClose();
-                      router.push(`${RootRoutes.ORDER_ROUTE}/${item.data.order._id}`);
+    const renderNotificationItem = () => {
+      return notifications?.length === 0 ? (
+        <div style={{ padding: '20px' }}>
+          <NotifyIcon />
+          <Typography variant="body2" mt="10px" fontWeight={500}>
+            Chưa có thông báo nào!
+          </Typography>
+        </div>
+      ) : (
+        <>
+          {notifications?.map((item) => {
+            return (
+              <Stack
+                flexDirection="row"
+                gap="15px"
+                alignItems="flex-start"
+                key={item._id}
+                onClick={() => {
+                  handleMarkAsRead(String(item._id));
+                  onClose();
+                  router.push(`${RootRoutes.ORDER_ROUTE}/${item.data.order._id}`);
+                }}
+                className={styles.notifyItem}
+              >
+                <Avatar sx={{ height: '50px', width: '50px' }}>
+                  <PersonRoundedIcon />
+                </Avatar>
+                <Stack flexDirection="column" gap="5px" alignItems="flex-start">
+                  <Typography fontSize="15px" fontWeight={!item.readAt ? 600 : 400}>
+                    {item.content}
+                  </Typography>
+                  <Typography fontSize="13px" fontWeight={500}>
+                    {momentVi(String(item.createdAt)).fromNow()}
+                  </Typography>
+                </Stack>
+                {!item.readAt && (
+                  <FiberManualRecordIcon
+                    color="secondary"
+                    fontSize="small"
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      right: '-10px',
                     }}
-                    className={styles.notifyItem}
-                  >
-                    <Avatar sx={{ height: '50px', width: '50px' }}>
-                      <PersonRoundedIcon />
-                    </Avatar>
-                    <Stack flexDirection='column' gap='5px' alignItems='flex-start'>
-                      <Typography fontSize='15px' fontWeight={!item.readAt ? 600 : 400}>{item.content}</Typography>
-                      <Typography fontSize='13px'
-                        fontWeight={500}>{momentVi(String(item.createdAt)).fromNow()}</Typography>
-                    </Stack>
-                    {!item.readAt && (
-                      <FiberManualRecordIcon
-                        color='secondary'
-                        fontSize='small'
-                        sx={{
-                          position: 'absolute',
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          right: '-10px',
-                        }}
-                      />
-                    )}
-                  </Stack>
-                );
-              })}
-              {showReadmore && (
-                <ButtonCustom
-                  variant='text'
-                  content='Xem thêm'
-                  handleClick={() => {
-                    setPaging((prev) => (
-                      { ...prev, page: prev.page + 1 }),
-                    );
-                    dispatch(getAllNotification({
+                  />
+                )}
+              </Stack>
+            );
+          })}
+          {showReadmore && (
+            <ButtonCustom
+              variant="text"
+              content="Xem thêm"
+              handleClick={() => {
+                setPaging((prev) => ({ ...prev, page: prev.page + 1 }));
+                dispatch(
+                  getAllNotification(
+                    {
                       ...paging,
                       page: paging.page + 1,
                       readType: status,
-                    }, 'paging')).then();
-                  }}
-                  styles={{
-                    width: '100%',
-                    lineHeight: '40px',
-                  }}
-                  startIcon={<ExpandMoreRoundedIcon />}
-                />
-              )}
-            </>
-          )) : (
-          <LoadingSection isLoading={isLoading} />
-        )}
+                    },
+                    'paging',
+                  ),
+                ).then();
+              }}
+              styles={{
+                width: '100%',
+                lineHeight: '40px',
+              }}
+              startIcon={<ExpandMoreRoundedIcon />}
+            />
+          )}
+        </>
+      );
+    };
+
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          height: 'max-content',
+          maxHeight: '520px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: notifications.length === 0 ? 'center' : 'flex-start',
+          alignItems: notifications.length === 0 ? 'center' : 'flex-start',
+        }}
+      >
+        {!isLoading ? <>{renderNotificationItem()}</> : <LoadingSection isLoading={isLoading} />}
       </Box>
     );
-  });
+  },
+);
 
 export default NotificationList;

@@ -20,6 +20,8 @@ import {
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
+type SelectValue<T> = T | T[] | null;
+
 interface Props<T> {
   name: string;
   options: T[];
@@ -34,7 +36,7 @@ interface Props<T> {
   isLoading?: boolean;
   multiple?: boolean;
   placeholder?: string;
-  handleChange?: (value: T | T[] | null, event: React.SyntheticEvent<Element, Event>) => void;
+  handleChange?: (value: SelectValue<T>, event: React.SyntheticEvent<Element, Event>) => void;
   isNotCheckbox?: boolean;
   handleBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
@@ -42,10 +44,10 @@ interface Props<T> {
 interface MultiSelectProps<T> extends Props<T> {
   field: FieldInputProps<T | T[]>;
   meta: FieldMetaProps<T | T[]>;
-  setFieldValue: (name: string, value: T | T[] | null) => void;
+  setFieldValue: (name: string, value: SelectValue<T>) => void;
 }
 
-function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
+function AutocompleteComponent<T>(props: Readonly<MultiSelectProps<T>>) {
   const {
     name,
     disabled,
@@ -72,7 +74,7 @@ function AutocompleteComponent<T>(props: MultiSelectProps<T>) {
 
   const defaultHandleChange = (
     event: React.SyntheticEvent<Element, Event>,
-    value: T | T[] | null,
+    value: SelectValue<T>,
   ) => {
     if (!value) {
       value = null;
@@ -164,7 +166,7 @@ const shouldComponentUpdate = (
   getIn(nextProps.formik.touched, currentProps.name) !==
   getIn(currentProps.formik.touched, currentProps.name);
 
-function AutocompleteCustom<T = any>(props: Props<T>) {
+function AutocompleteCustom<T = any>(props: Readonly<Props<T>>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({

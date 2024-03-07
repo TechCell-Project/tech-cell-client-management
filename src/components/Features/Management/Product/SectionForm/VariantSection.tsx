@@ -8,14 +8,13 @@ import { FieldArray, useFormikContext } from 'formik';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { ImageModel, ProductModel, ProductRequest, VariationModel } from '@models/Product';
-import { ButtonCustom, SelectCustom } from '@components/Common';
+import { ButtonCustom, SelectCustom, TextFieldCustom } from '@components/Common';
 import { STATUS_PRODUCT_OPTIONS } from '@constants/options';
 import PhotoRoundedIcon from '@mui/icons-material/PhotoRounded';
 import CollectionsRoundedIcon from '@mui/icons-material/CollectionsRounded';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { FieldImageProps } from '@models/Image';
 import { getCountImage } from '@utils/index';
-import { TextFieldCustom } from '@components/Common';
 import { DeleteVariationDialog, AttributeDialog, ImageDialog } from '../Dialog';
 
 export const VariantSection = memo(() => {
@@ -48,7 +47,7 @@ export const VariantSection = memo(() => {
             <Grid container spacing={2} columns={20}>
               {values?.variations?.map((item, i) => {
                 return (
-                  <React.Fragment key={i}>
+                  <React.Fragment key={item.sku}>
                     <Grid item lg={6}>
                       <Stack flexDirection='row' gap={2} alignItems='center'>
                         <p>3.{i + 1}</p>

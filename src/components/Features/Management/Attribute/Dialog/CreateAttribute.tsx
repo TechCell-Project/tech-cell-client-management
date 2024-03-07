@@ -1,12 +1,11 @@
 import React from 'react';
-import { ButtonCustom, ShowDialog } from '@components/Common';
+import { ButtonCustom, ShowDialog, TextFieldCustom } from '@components/Common';
 import { CreateAttributeModel, PagingAttribute } from '@models/Attribute';
 import { createOrEditValidate } from '@validate/attribute.validate';
 import { Form, Formik, FormikHelpers } from 'formik';
 import Stack from '@mui/material/Stack';
 import { useAppDispatch } from '@store/store';
 import { createNewAttribute, getAllAttributes } from '@store/slices/attributeSlice';
-import { TextFieldCustom } from '@components/Common';
 import { toast } from 'react-toastify';
 
 interface Props {

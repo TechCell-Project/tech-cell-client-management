@@ -2,7 +2,6 @@
 
 import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
 
 interface Props {
   label: string;
@@ -31,7 +30,7 @@ export const TextViewCustom = memo((
     >
       {label}:
       <b style={{ fontSize: '15px', fontWeight: 500 }}> {content ?? titleNoContent} </b>
-      {unit && unit}
+      {unit ?? <></>}
     </Typography>
   );
 });

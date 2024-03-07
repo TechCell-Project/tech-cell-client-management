@@ -15,20 +15,23 @@ const UserBoxHeader: FC<Props> = (props) => {
   const { user } = useAppSelector((state) => state.auth);
 
   return (
-    <Stack direction='row' alignItems='center' gap='10px'>
-      {Boolean((user?.avatar as ImageModel)?.url) ? (
-        <Avatar src={String((user?.avatar as ImageModel)?.url)} alt='User Avatar'
-          sx={{ height: '45px', width: '45px' }} />
+    <Stack direction="row" alignItems="center" gap="10px">
+      {(user?.avatar as ImageModel)?.url ? (
+        <Avatar
+          src={String((user?.avatar as ImageModel)?.url)}
+          alt="User Avatar"
+          sx={{ height: '45px', width: '45px' }}
+        />
       ) : (
         <Avatar sx={{ height: '45px', width: '45px' }}>
           <PersonRoundedIcon />
         </Avatar>
       )}
-      <Stack direction='column'>
-        <Typography variant='h6' fontSize={16} fontWeight={700}>
+      <Stack direction="column">
+        <Typography variant="h6" fontSize={16} fontWeight={700}>
           {props.name}
         </Typography>
-        <Typography variant='body1' fontSize={12} fontWeight={600} sx={{ opacity: 0.7 }}>
+        <Typography variant="body1" fontSize={12} fontWeight={600} sx={{ opacity: 0.7 }}>
           {props.role}
         </Typography>
       </Stack>

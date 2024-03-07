@@ -32,7 +32,7 @@ interface SelectInputCustomProps<Value = any, Option = DefaultOptionSelect<Value
   setFieldValue: (name: string, value: Value) => void;
 }
 
-function SelectComponent<Value, Option>(props: SelectInputCustomProps<Value, Option>) {
+function SelectComponent<Value, Option>(props: Readonly<SelectInputCustomProps<Value, Option>>) {
   const {
     name,
     disabled,
@@ -102,7 +102,7 @@ const shouldComponentUpdate = (
   nextProps: FastFieldAttributes<Props<any, any> & { formik: FormikValues }>,
   currentProps: FastFieldAttributes<Props<any, any> & { formik: FormikValues }>,
 ) => (
-  !(nextProps?.options === currentProps?.options) ||
+  nextProps?.options !== currentProps?.options ||
   nextProps?.value !== currentProps?.value ||
   nextProps?.handleChange !== currentProps?.handleChange ||
   nextProps?.disabled !== currentProps?.disabled ||
@@ -112,7 +112,7 @@ const shouldComponentUpdate = (
   getIn(nextProps.formik.touched, currentProps.name) !== getIn(currentProps.formik.touched, currentProps.name)
 );
 
-function SelectInputCustom<Value, Option>(props: Props<Value, Option>) {
+function SelectInputCustom<Value, Option>(props: Readonly<Props<Value, Option>>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({ field, meta, form }: {

@@ -53,7 +53,7 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
       <Grid container spacing={1}>
         {user?.address?.length !== 0 ? (
           user?.address?.map((item, i) => (
-            <React.Fragment key={i}>
+            <React.Fragment key={item.addressName}>
               <Grid item xs={12}>
                 <Stack flexDirection='row' justifyContent='space-between' alignItems='center'>
                   <Stack flexDirection='row' justifyContent='flex-start' alignItems='center' gap={2}>

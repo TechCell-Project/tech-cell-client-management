@@ -74,7 +74,7 @@ export const Product = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
-      valueGetter: (params) => params.row.category && params.row.category.name,
+      valueGetter: (params) => params.row?.category?.name,
     },
     {
       field: 'variations',

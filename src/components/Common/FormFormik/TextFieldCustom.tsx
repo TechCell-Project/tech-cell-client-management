@@ -128,7 +128,7 @@ const shouldComponentUpdate = (
   );
 };
 
-function TextFieldCustom(props: Props) {
+function TextFieldCustom(props: Readonly<Props>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({ field, meta, form }: FastFieldProps & { form: FormikProps<any> }) => (

@@ -31,9 +31,9 @@ export const BreadcrumbPath = () => {
       <Stack direction="row" alignItems="center">
         <HouseRoundedIcon fontSize="inherit" sx={{ fill: '#fff' }} />
       </Stack>
-      {generateBreadcrumbs().map((breadcrumb, index) => (
+      {generateBreadcrumbs().map((breadcrumb) => (
         <Link
-          key={index}
+          key={breadcrumb.pathname}
           href={breadcrumb.pathname}
           style={{
             pointerEvents: breadcrumb.pathname === pathname ? 'none' : 'auto',

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import Loading from 'app/loading';
 import { RootRoutes } from '@constants/enum';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();

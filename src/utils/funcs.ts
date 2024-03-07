@@ -1,4 +1,3 @@
-// common functions
 import { ImageModel } from '@models/Product';
 import {
   AccountStatusVi,

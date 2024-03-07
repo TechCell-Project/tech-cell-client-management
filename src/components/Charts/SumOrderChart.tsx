@@ -34,11 +34,13 @@ const COLORS = [
   },
 ];
 
-const RenderRemindColor = ({ color, content }: { color: string, content: string }) => {
+const RenderRemindColor = ({ color, content }: { color: string; content: string }) => {
   return (
-    <Stack flexDirection='row' gap={1} alignItems='center'>
+    <Stack flexDirection="row" gap={1} alignItems="center">
       <Box sx={{ width: '10px', height: '10px', borderRadius: 8, backgroundColor: color }} />
-      <Typography fontSize='12px' fontWeight={500}>{content}</Typography>
+      <Typography fontSize="12px" fontWeight={500}>
+        {content}
+      </Typography>
     </Stack>
   );
 };
@@ -46,32 +48,40 @@ const RenderRemindColor = ({ color, content }: { color: string, content: string 
 export const SumOrderChart = () => {
   const { statsOrder } = useAppSelector((state) => state.stats);
 
-  const updatedData = useMemo(() => statsOrder && statsOrder.data.map(item => {
-    const colorObj = COLORS.find(color => color.type === item.name);
-    if (colorObj) {
-      return { ...item, color: colorObj.color, name: orderStatusMapping[item.name.toLowerCase()] };
-    }
-    return item;
-  }), [statsOrder]);
+  // const updatedData = useMemo(() => statsOrder && statsOrder.data.map(item => {
+  //   const colorObj = COLORS.find(color => color.type === item.name);
+  //   if (colorObj) {
+  //     return { ...item, color: colorObj.color, name: orderStatusMapping[item.name.toLowerCase()] };
+  //   }
+  //   return item;
+  // }), [statsOrder]);
+
+  const updatedData = useMemo(
+    () =>
+      statsOrder?.data.map((item) => ({
+        ...item,
+        color: COLORS?.find((color) => color.type === item.name)?.color,
+        name: orderStatusMapping?.[item.name.toLowerCase()],
+      })),
+    [statsOrder],
+  );
 
   return (
-    <Box width='100%' height={300} mt={5}>
+    <Box width="100%" height={300} mt={5}>
       {updatedData && (
-        <ResponsiveContainer width='100%' height='100%'>
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart width={400} height={300}>
             <Pie
-              dataKey='value'
+              dataKey="value"
               data={updatedData}
-              cx='50%'
-              cy='50%'
+              cx="50%"
+              cy="50%"
               outerRadius={120}
-              fill='#FF6666'
+              fill="#FF6666"
               label
             >
               {updatedData.map((entry, index) => {
-                return (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                );
+                return <Cell key={`cell-${index}`} fill={entry.color} />;
               })}
             </Pie>
             <Tooltip />
@@ -80,16 +90,16 @@ export const SumOrderChart = () => {
       )}
 
       <Stack
-        flexDirection='row'
-        alignItems='center'
+        flexDirection="row"
+        alignItems="center"
         gap={2}
-        width='100%'
-        justifyContent='flex-start'
-        flexWrap='wrap'
+        width="100%"
+        justifyContent="flex-start"
+        flexWrap="wrap"
         mt={3}
       >
-        {updatedData && updatedData.map((item) => (
-          <RenderRemindColor color={item.color} content={item.name} key={item.name} />
+        {updatedData?.map((item) => (
+          <RenderRemindColor color={item.color as string} content={item.name} key={item.name} />
         ))}
       </Stack>
     </Box>

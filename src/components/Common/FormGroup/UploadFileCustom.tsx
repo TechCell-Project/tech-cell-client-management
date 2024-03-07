@@ -19,7 +19,7 @@ export const UploadFileCustom = memo(
     const { setFieldValue } = useFormikContext<any>();
     const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
 
-    const { getRootProps, getInputProps, fileRejections } = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
       accept: {
         'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
       },

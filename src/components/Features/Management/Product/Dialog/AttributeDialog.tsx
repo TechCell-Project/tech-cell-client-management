@@ -18,7 +18,7 @@ export const AttributeDialog = ({ isOpen, handleClose, index }: { index: number 
   const { values } = useFormikContext<ProductRequest | ProductModel>();
 
   const dispatch = useAppDispatch();
-  const { attributes, isLoading } = useAppSelector((state) => state.attribute);
+  const { attributes } = useAppSelector((state) => state.attribute);
 
   useEffect(() => {
     dispatch(getAllAttributes({

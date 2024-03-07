@@ -32,13 +32,13 @@ const BoxRender = ({ name, value, icon, isLower, isUpper }: BoxProps) => {
     return (
       <>
         {isLower && (
-          <Icon fontSize='small'>
-            <TrendingDownRoundedIcon sx={{ fill: theme.color.red }} fontSize='small' />
+          <Icon fontSize="small">
+            <TrendingDownRoundedIcon sx={{ fill: theme.color.red }} fontSize="small" />
           </Icon>
         )}
         {isUpper && (
-          <Icon fontSize='small'>
-            <TrendingUpRoundedIcon sx={{ fill: theme.color.green }} fontSize='small' />
+          <Icon fontSize="small">
+            <TrendingUpRoundedIcon sx={{ fill: theme.color.green }} fontSize="small" />
           </Icon>
         )}
       </>
@@ -55,9 +55,9 @@ const BoxRender = ({ name, value, icon, isLower, isUpper }: BoxProps) => {
         boxShadow: 'rgba(0, 0, 0, 0.04) 0px 3px 5px',
       }}
     >
-      <Stack flexDirection='column' gap={1} alignItems='center' justifyContent='center'>
+      <Stack flexDirection="column" gap={1} alignItems="center" justifyContent="center">
         <IconButton
-          aria-label='statistic'
+          aria-label="statistic"
           sx={{
             backgroundColor: theme.color.lightRed,
             padding: '10px',
@@ -68,15 +68,15 @@ const BoxRender = ({ name, value, icon, isLower, isUpper }: BoxProps) => {
           {icon}
         </IconButton>
         <Typography
-          variant='h5'
+          variant="h5"
           fontWeight={600}
-          fontSize='1.3rem'
+          fontSize="1.3rem"
           sx={{ textAlign: 'center', width: '100%' }}
         >
           {value}
         </Typography>
-        <Stack flexDirection='row' gap={1} alignItems='center'>
-          <Typography variant='caption' fontWeight={600}>
+        <Stack flexDirection="row" gap={1} alignItems="center">
+          <Typography variant="caption" fontWeight={600}>
             {name}
           </Typography>
           {renderTrend()}
@@ -91,44 +91,44 @@ const StatisticBox = () => {
   const { stats, isLoading } = useAppSelector((state) => state.stats);
 
   const renderSkeletonText = () => {
-    return <Skeleton variant='text' sx={{ fontSize: '1.3rem' }} />;
+    return <Skeleton variant="text" sx={{ fontSize: '1.3rem' }} />;
   };
 
   return (
-    <>
-      <Grid container spacing={4}>
-        <Grid item md={3}>
-          <BoxRender
-            name='Tổng doanh thu'
-            icon={<PaidRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={isLoading ? renderSkeletonText() : formatWithCommas((stats as Statistic)?.totalRevenue)}
-            // isUpper
-          />
-        </Grid>
-        <Grid item md={3}>
-          <BoxRender
-            name='Doanh số trong tuần'
-            icon={<AttachMoneyRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={formatWithCommas(9920000)}
-            // isLower
-          />
-        </Grid>
-        <Grid item md={3}>
-          <BoxRender
-            name='Tổng số mặt hàng'
-            icon={<PhoneIphoneRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={6}
-          />
-        </Grid>
-        <Grid item md={3}>
-          <BoxRender
-            name='Tổng hóa đơn'
-            icon={<SellRoundedIcon sx={{ fill: theme.color.red }} />}
-            value={isLoading ? renderSkeletonText() : (stats as Statistic)?.totalOrders ?? 0}
-          />
-        </Grid>
+    <Grid container spacing={4}>
+      <Grid item md={3}>
+        <BoxRender
+          name="Tổng doanh thu"
+          icon={<PaidRoundedIcon sx={{ fill: theme.color.red }} />}
+          value={
+            isLoading ? renderSkeletonText() : formatWithCommas((stats as Statistic)?.totalRevenue)
+          }
+          // isUpper
+        />
       </Grid>
-    </>
+      <Grid item md={3}>
+        <BoxRender
+          name="Doanh số trong tuần"
+          icon={<AttachMoneyRoundedIcon sx={{ fill: theme.color.red }} />}
+          value={formatWithCommas(9920000)}
+          // isLower
+        />
+      </Grid>
+      <Grid item md={3}>
+        <BoxRender
+          name="Tổng số mặt hàng"
+          icon={<PhoneIphoneRoundedIcon sx={{ fill: theme.color.red }} />}
+          value={6}
+        />
+      </Grid>
+      <Grid item md={3}>
+        <BoxRender
+          name="Tổng hóa đơn"
+          icon={<SellRoundedIcon sx={{ fill: theme.color.red }} />}
+          value={isLoading ? renderSkeletonText() : (stats as Statistic)?.totalOrders ?? 0}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

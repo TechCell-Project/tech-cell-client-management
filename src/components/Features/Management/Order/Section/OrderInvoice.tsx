@@ -53,12 +53,12 @@ const OrderInvoice = () => {
             />
           </Typography>
         </Stack>
-        {order?.products.map((item, i) => {
+        {order?.products.map((item) => {
           // @ts-ignore
           const image = item.images.find((img) => img.isThumbnail).url;
           return (
             <>
-              <Stack flexDirection='row' alignItems='flex-start' key={i} gap='20px' width='100%' mt={3} mb='20px'>
+              <Stack flexDirection='row' alignItems='flex-start' key={item.name} gap='20px' width='100%' mt={3} mb='20px'>
                 <Avatar
                   src={String(image)}
                   alt='User Avatar'

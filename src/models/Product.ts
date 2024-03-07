@@ -7,9 +7,10 @@ export class PagingProduct extends Paging {
   select_type?: string | null = null;
 }
 
+type PriceValue = number | string | null;
 export class PriceModel {
-  base?: number | string | null = null;
-  special?: number | string | null = null;
+  base: PriceValue = null;
+  special: PriceValue = null;
 }
 
 export class VariationModel {

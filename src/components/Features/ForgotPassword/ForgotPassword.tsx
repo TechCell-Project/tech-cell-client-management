@@ -68,48 +68,42 @@ export const ForgotPassword = memo((props: Props) => {
   };
 
   return (
-    <>
-      <ShowDialog
-        dialogTitle='Quên mật khẩu'
-        handleClose={props.handleClose}
-        isOpen={props.isOpen}
-        dialogStyle={{ minWidth: { xs: 320, md: 450 } }}
+    <ShowDialog
+      dialogTitle="Quên mật khẩu"
+      handleClose={props.handleClose}
+      isOpen={props.isOpen}
+      dialogStyle={{ minWidth: { xs: 320, md: 450 } }}
+    >
+      <Formik
+        enableReinitialize
+        initialValues={new ForgotPasswordModel()}
+        validationSchema={forgotPasswordValidate}
+        onSubmit={handleSubmit}
       >
-        <Formik
-          enableReinitialize
-          initialValues={new ForgotPasswordModel()}
-          validationSchema={forgotPasswordValidate}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form style={{ width: '100%' }}>
-              <Stack direction='column' gap={2}>
-                <ForgotForm sendCode={sendCode} />
+        {({ isSubmitting }) => (
+          <Form style={{ width: '100%' }}>
+            <Stack direction="column" gap={2}>
+              <ForgotForm sendCode={sendCode} />
 
-                {isActive && (
-                  <Typography variant='body2' fontSize='14px' textAlign='center'>
-                    Mã OTP còn hiệu lực trong vòng: <b>{formatTimeCountdown(countdown)}</b>
-                  </Typography>
-                )}
+              {isActive && (
+                <Typography variant="body2" fontSize="14px" textAlign="center">
+                  Mã OTP còn hiệu lực trong vòng: <b>{formatTimeCountdown(countdown)}</b>
+                </Typography>
+              )}
 
-                <Stack direction='row' justifyContent='flex-end' gap={1} sx={{ mt: 1 }}>
-                  <ButtonCustom
-                    content='Hủy bỏ'
-                    variant='outlined'
-                    handleClick={props.handleClose}
-                  />
-                  <ButtonCustom
-                    content='Xác nhận'
-                    variant='contained'
-                    type='submit'
-                    disabled={isSubmitting}
-                  />
-                </Stack>
+              <Stack direction="row" justifyContent="flex-end" gap={1} sx={{ mt: 1 }}>
+                <ButtonCustom content="Hủy bỏ" variant="outlined" handleClick={props.handleClose} />
+                <ButtonCustom
+                  content="Xác nhận"
+                  variant="contained"
+                  type="submit"
+                  disabled={isSubmitting}
+                />
               </Stack>
-            </Form>
-          )}
-        </Formik>
-      </ShowDialog>
-    </>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
+    </ShowDialog>
   );
 });

@@ -119,16 +119,6 @@ export const editProfileInfo = (payload: Partial<UserAccount>) => async (dispatc
   }
 };
 
-// export const editProfileAddress = (payload: ProfileAddressRequest) => async (dispatch: Dispatch) => {
-//   try {
-//     const { status } = await patchProfileAddress(payload);
-//     if (status === HttpStatusCode.Ok) {
-//       toast.success('Cập nhật địa chỉ hồ sơ thành công!');
-//     }
-//   } catch {
-//     toast.error('Cập nhật địa chỉ hồ sơ thất bại!');
-//   }
-// };
 
 export const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem('user');

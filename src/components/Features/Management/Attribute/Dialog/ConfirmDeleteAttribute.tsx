@@ -34,7 +34,7 @@ export const ConfirmDeleteAttribute = (props: DialogAction & { data: AttributeMo
       dialogStyle={{ maxWidth: 500 }}
       dialogDesc={
         <>
-          Bạn có chắc chắn muốn xóa thông số:
+          Bạn có chắc chắn muốn xóa thông số:{' '}
           <b style={{ display: 'block' }}>{props.data?.name}</b>
         </>
       }

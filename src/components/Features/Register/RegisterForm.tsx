@@ -18,7 +18,7 @@ import { SelectInputCustom, TextFieldCustom } from '@components/Common';
 import { TOptions } from '@interface/common';
 
 const RegisterForm = () => {
-  const [showPassword, setPassword] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { touched, handleChange, errors } = useFormikContext<RegisterModel>();
 
   return (
@@ -42,7 +42,7 @@ const RegisterForm = () => {
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
-                  onClick={() => setPassword((show) => !show)}
+                  onClick={() => setShowPassword((show) => !show)}
                   onMouseDown={(e) => e.preventDefault()}
                   edge='end'
                   size='small'

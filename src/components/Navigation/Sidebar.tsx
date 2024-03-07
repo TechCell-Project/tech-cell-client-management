@@ -18,7 +18,7 @@ import Header from './Header/Header';
 import { FrameBackground } from '@components/Shared';
 import { RootRoutes } from '@constants/enum';
 
-export default function Sidebar({ children }: { children: ReactNode }) {
+export default function Sidebar({ children }: Readonly<{ children: ReactNode }>) {
   const [open, setOpen] = useState<boolean>(true);
   const theme = useTheme();
   const pathname = usePathname();

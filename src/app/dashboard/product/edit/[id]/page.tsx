@@ -13,7 +13,7 @@ const ProductEditDynamic = dynamic(
   },
 );
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: Readonly<{ params: { id: string } }>) {
   useEffect(() => {
     document.title = `Chỉnh sửa sản phẩm - ${TITLE_TECHCELL}`;
   }, [document.title]);

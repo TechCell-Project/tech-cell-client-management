@@ -92,7 +92,7 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
                 <Grid item md={6}>
                   <TextViewCustom
                     label='Trạng thái'
-                    content={values?.block && values?.block.isBlocked ? 'Bị chặn' : 'Hoạt động'}
+                    content={values?.block?.isBlocked ? 'Bị chặn' : 'Hoạt động'}
                   />
                 </Grid>
                 <Grid item md={6}>

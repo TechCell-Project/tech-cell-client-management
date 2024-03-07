@@ -31,7 +31,7 @@ export const AttributeSection = memo(() => {
             <Grid item lg={5}>
               <TextFieldCustom
                 name={`generalAttributes[${i}].k`}
-                label={`${attribute.name}` ?? 'Thuộc Tính'}
+                label={`${attribute.name ?? 'Thuộc Tính'}`}
                 readOnly
               />
             </Grid>

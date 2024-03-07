@@ -53,7 +53,6 @@ instance.interceptors.response.use(
           return instance(prevRequest);
         } catch (error) {
           return store.dispatch(logout());
-          // return Promise.reject(error);
         }
       }
     }

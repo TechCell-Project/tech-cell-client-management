@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const PasswordCustom = memo((props: Props) => {
-  const [showPassword, setPassword] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <FormControl fullWidth variant="outlined" size="small">
@@ -40,7 +40,7 @@ export const PasswordCustom = memo((props: Props) => {
         endAdornment={
           <InputAdornment position="end">
             <IconButton
-              onClick={() => setPassword((show) => !show)}
+              onClick={() => setShowPassword((show) => !show)}
               onMouseDown={(e) => e.preventDefault()}
               edge="end"
               size="small"

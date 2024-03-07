@@ -65,12 +65,12 @@ export const ConfirmBlock = memo((props: DialogAction & { dataAccount: UserAccou
       dialogDesc={
         !props.dataAccount?.block?.isBlocked ? (
           <>
-            Bạn có chắc chắn muốn chặn tài khoản với email:
+            Bạn có chắc chắn muốn chặn tài khoản với email:{' '}
             <b style={{ display: 'block' }}>{props.dataAccount?.email}</b>
           </>
         ) : (
           <>
-            Bạn có chắc chắn muốn mở khóa tài khoản với email:
+            Bạn có chắc chắn muốn mở khóa tài khoản với email:{' '}
             <b style={{ display: 'block' }}>{props.dataAccount?.email}</b>
           </>
         )
