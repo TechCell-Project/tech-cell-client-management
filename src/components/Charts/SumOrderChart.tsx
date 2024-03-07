@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from './ReduceRecharts';
 import Box from '@mui/material/Box';
 import { useAppSelector } from '@store/store';
@@ -46,13 +46,13 @@ const RenderRemindColor = ({ color, content }: { color: string, content: string 
 export const SumOrderChart = () => {
   const { statsOrder } = useAppSelector((state) => state.stats);
 
-  const updatedData = statsOrder && statsOrder.data.map(item => {
+  const updatedData = useMemo(() => statsOrder && statsOrder.data.map(item => {
     const colorObj = COLORS.find(color => color.type === item.name);
     if (colorObj) {
       return { ...item, color: colorObj.color, name: orderStatusMapping[item.name.toLowerCase()] };
     }
     return item;
-  });
+  }), [statsOrder]);
 
   return (
     <Box width='100%' height={300} mt={5}>
@@ -68,7 +68,7 @@ export const SumOrderChart = () => {
               fill='#FF6666'
               label
             >
-              {updatedData && updatedData.map((entry, index) => {
+              {updatedData.map((entry, index) => {
                 return (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 );

@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  techcell_management_app:
+    container_name: techcell_management_app
+    image: techcell_management_app
+    build: .
+    ports:
+      - "3000:3000"

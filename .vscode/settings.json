@@ -6,6 +6,7 @@
     "stats",
     "socket",
     "apis",
-    "components"
+    "components",
+    "core"
   ]
 }

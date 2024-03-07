@@ -17,6 +17,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  output: 'standalone',
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',

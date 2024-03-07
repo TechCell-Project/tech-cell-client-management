@@ -14,14 +14,8 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes } from '@store/slices/attributeSlice';
 import { DialogAction } from '@interface/common';
 
-interface Props extends DialogAction{
-  index: number;
-}
-
-export const AttributeDialog = (props: Props) => {
+export const AttributeDialog = ({ isOpen, handleClose, index }: { index: number } & DialogAction) => {
   const { values } = useFormikContext<ProductRequest | ProductModel>();
-  const { isOpen, handleClose, index } = props;
-  // const [listAttributes, setListAttributes] = useState<AttributeModel>()
 
   const dispatch = useAppDispatch();
   const { attributes, isLoading } = useAppSelector((state) => state.attribute);

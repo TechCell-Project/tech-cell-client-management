@@ -5,7 +5,7 @@ import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllProduct } from '@store/slices/productSlice';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
-import { getIndexNo, productStatusMapping } from '@utils/index';
+import { formatWithCommas, getIndexNo, productStatusMapping } from '@utils/index';
 import Tooltip from '@mui/material/Tooltip';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
@@ -19,6 +19,7 @@ import Grid from '@mui/material/Grid';
 import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
+
 
 export const Product = () => {
   const dispatch = useAppDispatch();
@@ -84,6 +85,20 @@ export const Product = () => {
       valueGetter: (params) => params.row.variations.length,
     },
     {
+      field: 'price',
+      headerName: 'Giá gốc',
+      width: 180,
+      align: 'center',
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        const result = params.row.variations[0].price?.base;
+        if (result) {
+          return formatWithCommas(result as number);
+        }
+        return '0₫'
+      },
+    },
+    {
       field: 'status',
       headerName: 'Tình Trạng',
       width: 200,
@@ -99,7 +114,7 @@ export const Product = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 200,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
