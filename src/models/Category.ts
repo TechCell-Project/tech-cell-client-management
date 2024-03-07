@@ -7,7 +7,7 @@ export class CategoryModel {
   label: string | null = null;
   description: string | null = null;
   url: string | null = null;
-  requireAttributes: Array<AttributeModel | unknown> = new Array<AttributeModel>();
+  requireAttributes: Array<AttributeModel | any> = new Array<AttributeModel>();
 }
 
 export class CategorySlice {
