@@ -1,1 +1,1 @@
-export * from "./FrameBackground";
+export * from './FrameBackground';

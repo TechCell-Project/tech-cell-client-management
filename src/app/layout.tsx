@@ -3,6 +3,7 @@
 import React from 'react';
 import { RootProvider, SocketProvider } from '@components/Provider';
 import useMobile from '@hooks/useMobile';
+import { Analytics } from '@vercel/analytics/react';
 import NotSupportMobile from './not-support-mobile';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/base/index.scss';
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SocketProvider>{children}</SocketProvider>
           </RootProvider>
         )}
+      <Analytics />
       </body>
     </html>
   );

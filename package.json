@@ -24,6 +24,7 @@
     "@mui/x-data-grid": "^6.9.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@tinymce/tinymce-react": "^4.3.0",
+    "@vercel/analytics": "^1.2.2",
     "axios": "^1.4.0",
     "bufferutil": "^4.0.8",
     "copy-webpack-plugin": "^11.0.0",
