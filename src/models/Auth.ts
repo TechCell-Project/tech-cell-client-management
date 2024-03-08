@@ -5,8 +5,8 @@ export class LoginModel {
   password?: string | null = null;
 
   constructor(initValues?: LoginModel) {
-    if(initValues) {
-      Object.assign(this, initValues)
+    if (initValues) {
+      Object.assign(this, initValues);
     }
   }
 }

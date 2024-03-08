@@ -7,7 +7,7 @@ import { useCallback, useEffect } from 'react';
 type UseStats = TStatsSlice & {
   initialDate: SearchStats;
   handleSearchStats: (params: SearchStats) => void;
-}
+};
 
 const useStats = (): UseStats => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,6 @@ const useStats = (): UseStats => {
 
     return date.toISOString();
   }, []);
-
 
   const initialDate: SearchStats = {
     ...new SearchStats(),

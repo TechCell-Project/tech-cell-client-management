@@ -1,3 +1,3 @@
-export * from "./AttributeSection";
-export * from "./InforSection";
-export * from "./VariantSection";
+export * from './AttributeSection';
+export * from './InforSection';
+export * from './VariantSection';

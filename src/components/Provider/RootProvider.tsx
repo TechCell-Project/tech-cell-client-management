@@ -11,7 +11,13 @@ import { Provider } from 'react-redux';
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <ToastContainer theme='colored' autoClose={3000} newestOnTop closeOnClick position='top-right' />
+      <ToastContainer
+        theme="colored"
+        autoClose={3000}
+        newestOnTop
+        closeOnClick
+        position="top-right"
+      />
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>

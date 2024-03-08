@@ -47,7 +47,10 @@ export const ImageDialog = memo((props: Props) => {
 
         if (fieldImage.isThumbnail) {
           data = { ...(data as any)[0], isThumbnail: true };
-          await setFieldValue(fieldValue, [...imageGeneral?.filter((image: ImageModel) => !image.isThumbnail), data]);
+          await setFieldValue(fieldValue, [
+            ...imageGeneral?.filter((image: ImageModel) => !image.isThumbnail),
+            data,
+          ]);
         } else {
           await setFieldValue(fieldValue, [...imageGeneral, ...data]);
         }
@@ -62,7 +65,7 @@ export const ImageDialog = memo((props: Props) => {
 
   return (
     <ShowDialog
-      dialogTitle='Ảnh'
+      dialogTitle="Ảnh"
       handleClose={handleClose}
       isOpen={isOpen}
       dialogStyle={{ minWidth: 620 }}
@@ -81,13 +84,13 @@ export const ImageDialog = memo((props: Props) => {
               : (values as any)[`${fieldImage?.field}`]
           }
         />
-        <Stack direction='row' justifyContent='flex-end' sx={{ mt: 4 }} gap={1}>
-          <ButtonCustom variant='outlined' handleClick={handleClose} content='Đóng' />
+        <Stack direction="row" justifyContent="flex-end" sx={{ mt: 4 }} gap={1}>
+          <ButtonCustom variant="outlined" handleClick={handleClose} content="Đóng" />
           <ButtonCustom
-            variant='contained'
+            variant="contained"
             handleClick={() => handleUpload()}
             disabled={isLoading}
-            content='Tải lên'
+            content="Tải lên"
           />
         </Stack>
       </Box>

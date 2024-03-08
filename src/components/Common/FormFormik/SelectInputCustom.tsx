@@ -5,14 +5,15 @@ import {
   FastField,
   FastFieldAttributes,
   FieldInputProps,
-  FieldMetaProps, FormikProps,
+  FieldMetaProps,
+  FormikProps,
   FormikValues,
   getIn,
 } from 'formik';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-type DefaultOptionSelect<Value> = { name: string, value: Value }
+type DefaultOptionSelect<Value> = { name: string; value: Value };
 
 interface Props<Value, Option> {
   name: string;
@@ -26,7 +27,8 @@ interface Props<Value, Option> {
   isLoading?: boolean;
 }
 
-interface SelectInputCustomProps<Value = any, Option = DefaultOptionSelect<Value>> extends Props<Value, Option> {
+interface SelectInputCustomProps<Value = any, Option = DefaultOptionSelect<Value>>
+  extends Props<Value, Option> {
   field: FieldInputProps<Value>;
   meta: FieldMetaProps<Value>;
   setFieldValue: (name: string, value: Value) => void;
@@ -50,7 +52,7 @@ function SelectComponent<Value, Option>(props: Readonly<SelectInputCustomProps<V
   const getDefaultOptionLabel = (option: Option | Value): string => {
     if (option === field?.value) {
       // @ts-ignore
-      return options?.find(e => e[displayValue] === option)?.[displayLabel] ?? '';
+      return options?.find((e) => e[displayValue] === option)?.[displayLabel] ?? '';
     }
     // @ts-ignore
     return option?.[displayLabel] || '';
@@ -67,11 +69,11 @@ function SelectComponent<Value, Option>(props: Readonly<SelectInputCustomProps<V
         // @ts-ignore
         return option?.[displayValue] === value;
       }}
-      size='small'
+      size="small"
       getOptionLabel={getDefaultOptionLabel}
       onChange={(event, value) => {
         // @ts-ignore
-        let newValue: Value = value?.[displayValue] ?? null as Value;
+        let newValue: Value = value?.[displayValue] ?? (null as Value);
 
         if (handleChange) {
           handleChange(newValue, event);
@@ -81,7 +83,7 @@ function SelectComponent<Value, Option>(props: Readonly<SelectInputCustomProps<V
       }}
       fullWidth
       loading={isLoading}
-      noOptionsText='Không có dữ liệu'
+      noOptionsText="Không có dữ liệu"
       renderInput={(params) => (
         <TextField
           {...params}
@@ -101,21 +103,27 @@ function SelectComponent<Value, Option>(props: Readonly<SelectInputCustomProps<V
 const shouldComponentUpdate = (
   nextProps: FastFieldAttributes<Props<any, any> & { formik: FormikValues }>,
   currentProps: FastFieldAttributes<Props<any, any> & { formik: FormikValues }>,
-) => (
+) =>
   nextProps?.options !== currentProps?.options ||
   nextProps?.value !== currentProps?.value ||
   nextProps?.handleChange !== currentProps?.handleChange ||
   nextProps?.disabled !== currentProps?.disabled ||
   Object.keys(nextProps).length !== Object.keys(currentProps).length ||
-  getIn(nextProps.formik.values, currentProps.name) !== getIn(currentProps.formik.values, currentProps.name) ||
-  getIn(nextProps.formik.errors, currentProps.name) !== getIn(currentProps.formik.errors, currentProps.name) ||
-  getIn(nextProps.formik.touched, currentProps.name) !== getIn(currentProps.formik.touched, currentProps.name)
-);
+  getIn(nextProps.formik.values, currentProps.name) !==
+    getIn(currentProps.formik.values, currentProps.name) ||
+  getIn(nextProps.formik.errors, currentProps.name) !==
+    getIn(currentProps.formik.errors, currentProps.name) ||
+  getIn(nextProps.formik.touched, currentProps.name) !==
+    getIn(currentProps.formik.touched, currentProps.name);
 
 function SelectInputCustom<Value, Option>(props: Readonly<Props<Value, Option>>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
-      {({ field, meta, form }: {
+      {({
+        field,
+        meta,
+        form,
+      }: {
         field: FieldInputProps<Value>;
         meta: FieldMetaProps<Value>;
         form: FormikProps<Value>;
@@ -131,7 +139,10 @@ function SelectInputCustom<Value, Option>(props: Readonly<Props<Value, Option>>)
   );
 }
 
-const MemoizedSelectInputCustom = memo(SelectInputCustom) as <Value = any, Option = DefaultOptionSelect<Value>>(
+const MemoizedSelectInputCustom = memo(SelectInputCustom) as <
+  Value = any,
+  Option = DefaultOptionSelect<Value>,
+>(
   props: Props<Value, Option>,
 ) => React.JSX.Element;
 

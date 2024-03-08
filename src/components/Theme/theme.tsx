@@ -30,7 +30,7 @@ declare module '@mui/material/styles' {
       black?: string;
       lightBlack?: string;
       gray?: string;
-      green?: string
+      green?: string;
     };
     fontFamily?: {
       primary: string;

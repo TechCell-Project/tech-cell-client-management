@@ -85,7 +85,7 @@ const TextFieldComponent = (props: TextFieldProps) => {
       name={name}
       variant={variant}
       value={value}
-      size='small'
+      size="small"
       fullWidth
       label={label}
       onChange={onChange}
@@ -120,11 +120,11 @@ const shouldComponentUpdate = (
     nextProps?.disabled !== currentProps?.disabled ||
     Object.keys(nextProps).length !== Object.keys(currentProps).length ||
     getIn(nextProps.formik.values, currentProps.name) !==
-    getIn(currentProps.formik.values, currentProps.name) ||
+      getIn(currentProps.formik.values, currentProps.name) ||
     getIn(nextProps.formik.errors, currentProps.name) !==
-    getIn(currentProps.formik.errors, currentProps.name) ||
+      getIn(currentProps.formik.errors, currentProps.name) ||
     getIn(nextProps.formik.touched, currentProps.name) !==
-    getIn(currentProps.formik.touched, currentProps.name)
+      getIn(currentProps.formik.touched, currentProps.name)
   );
 };
 
@@ -146,4 +146,3 @@ function TextFieldCustom(props: Readonly<Props>) {
 const MemoizedTextFieldCustom = memo(TextFieldCustom);
 
 export { MemoizedTextFieldCustom as TextFieldCustom };
-

@@ -31,9 +31,7 @@ export const orderSlice = createSlice({
       state.isLoading = false;
     },
     editStatusSuccess: (state, { payload }) => {
-      const index = state.orders.data.findIndex(
-        (order) => order._id === payload._id,
-      );
+      const index = state.orders.data.findIndex((order) => order._id === payload._id);
       if (index !== -1) {
         state.orders.data[index] = payload;
       }

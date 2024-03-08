@@ -5,6 +5,8 @@ import instance from '@config/axios.config';
 
 export const getProfile = () => instance.get<UserAccount>(PROFILE_ENDPOINT);
 
-export const patchProfileInfo = (payload: Partial<UserAccount>) => instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/info`, payload);
+export const patchProfileInfo = (payload: Partial<UserAccount>) =>
+  instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/info`, payload);
 
-export const patchProfileAddress = (payload: ProfileAddressRequest) => instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/address`, payload);
+export const patchProfileAddress = (payload: ProfileAddressRequest) =>
+  instance.patch<UserAccount>(`${PROFILE_ENDPOINT}/address`, payload);

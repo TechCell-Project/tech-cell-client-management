@@ -29,87 +29,92 @@ const OrderInfo = () => {
   }, [order, dispatch]);
 
   return (
-    <Stack width='100%' flexDirection='column' alignItems='flex-start'>
-      <Stack flexDirection='row' alignItems='center' gap='10px' mb={3}>
+    <Stack width="100%" flexDirection="column" alignItems="flex-start">
+      <Stack flexDirection="row" alignItems="center" gap="10px" mb={3}>
         <ContactSupportOutlinedIcon />
-        <Typography
-          variant='h5'
-          fontSize='1.2rem'
-          fontWeight='600'
-          color={theme.color.black}
-        >
+        <Typography variant="h5" fontSize="1.2rem" fontWeight="600" color={theme.color.black}>
           Thông tin
         </Typography>
       </Stack>
-      <Typography fontWeight={600} fontSize='14px' mb='5px'>ID: # {order?._id}</Typography>
-      <Typography fontWeight={600} fontSize='14px' mb='5px'>Tracking Code: {order?.trackingCode}</Typography>
-      <Typography
-        fontWeight={600}
-        fontSize='14px'
-        sx={{ opacity: 0.7 }}
-      >
+      <Typography fontWeight={600} fontSize="14px" mb="5px">
+        ID: # {order?._id}
+      </Typography>
+      <Typography fontWeight={600} fontSize="14px" mb="5px">
+        Tracking Code: {order?.trackingCode}
+      </Typography>
+      <Typography fontWeight={600} fontSize="14px" sx={{ opacity: 0.7 }}>
         {formatDateViVN(String(order?.createdAt))}
       </Typography>
 
       <Grid container rowSpacing={3} columnSpacing={2} mt={1}>
         <Grid item md={6}>
-          <Stack flexDirection='row' alignItems='flex-start' gap={2}>
+          <Stack flexDirection="row" alignItems="flex-start" gap={2}>
             <Avatar sx={{ height: '45px', width: '45px' }}>
               <PersonRoundedIcon />
             </Avatar>
-            <Stack flexDirection='column'>
-              <Typography fontSize='17px' fontWeight={600} mb='5px'>Khách hàng</Typography>
-              <TextViewCustom label='Tên' content={`${account?.firstName} ${account?.lastName}`} />
-              <TextViewCustom label='Email' content={`${account?.email}`} />
-              <TextViewCustom label='SĐT' content={`${order?.shippingOrder.toAddress.phoneNumbers}`} />
+            <Stack flexDirection="column">
+              <Typography fontSize="17px" fontWeight={600} mb="5px">
+                Khách hàng
+              </Typography>
+              <TextViewCustom label="Tên" content={`${account?.firstName} ${account?.lastName}`} />
+              <TextViewCustom label="Email" content={`${account?.email}`} />
+              <TextViewCustom
+                label="SĐT"
+                content={`${order?.shippingOrder.toAddress.phoneNumbers}`}
+              />
             </Stack>
           </Stack>
         </Grid>
         <Grid item md={6}>
-          <Stack flexDirection='row' alignItems='flex-start' gap={2}>
+          <Stack flexDirection="row" alignItems="flex-start" gap={2}>
             <Avatar sx={{ height: '45px', width: '45px' }}>
               <PaymentRoundedIcon />
             </Avatar>
-            <Stack flexDirection='column'>
-              <Stack direction='row' gap={2} alignItems='center' mb='5px'>
-                <Typography fontSize='17px' fontWeight={600}>Thanh toán</Typography>
+            <Stack flexDirection="column">
+              <Stack direction="row" gap={2} alignItems="center" mb="5px">
+                <Typography fontSize="17px" fontWeight={600}>
+                  Thanh toán
+                </Typography>
                 <IconBtnCustom
-                  icon={<ErrorRoundedIcon fontSize='small' />}
-                  tooltip='Đối với những hình thức thanh toán Online, khách hàng cần hoàn tất thanh toán để tiến hành giao hàng'
+                  icon={<ErrorRoundedIcon fontSize="small" />}
+                  tooltip="Đối với những hình thức thanh toán Online, khách hàng cần hoàn tất thanh toán để tiến hành giao hàng"
                   styles={{ padding: 0, backgroundColor: 'tranparent !important' }}
-                  colorIcon='secondary'
+                  colorIcon="secondary"
                 />
               </Stack>
               <TextViewCustom
-                label='Phương thức'
-                content={PAYMENT_METHOD_OPTIONS.find(
-                  (item) => {
+                label="Phương thức"
+                content={
+                  PAYMENT_METHOD_OPTIONS.find((item) => {
                     return item.value === order?.paymentOrder.method;
-                  })?.name}
+                  })?.name
+                }
               />
-              <TextViewCustom label='Trạng thái' content={paymentStatusMapping[String(order?.paymentOrder.status)]} />
+              <TextViewCustom
+                label="Trạng thái"
+                content={paymentStatusMapping[String(order?.paymentOrder.status)]}
+              />
             </Stack>
           </Stack>
         </Grid>
         <Grid item md={6}>
-          <Stack flexDirection='row' alignItems='flex-start' gap={2}>
+          <Stack flexDirection="row" alignItems="flex-start" gap={2}>
             <Avatar sx={{ height: '45px', width: '45px' }}>
               <FmdGoodRoundedIcon />
             </Avatar>
-            <Stack flexDirection='column'>
-              <Typography fontSize='17px' fontWeight={600} mb='5px'>Vị trí</Typography>
+            <Stack flexDirection="column">
+              <Typography fontSize="17px" fontWeight={600} mb="5px">
+                Vị trí
+              </Typography>
               <TextViewCustom
-                label='Loại địa chỉ'
+                label="Loại địa chỉ"
                 content={`${order?.shippingOrder.toAddress.addressName}`}
               />
               <TextViewCustom
-                label='Địa chỉ'
+                label="Địa chỉ"
                 content={`${getAddressLocation(order?.shippingOrder.toAddress as Address)}`}
               />
-              <TextViewCustom
-                label='Cụ thể'
-                content={`${order?.shippingOrder.toAddress.detail}`}
-              />
+              <TextViewCustom label="Cụ thể" content={`${order?.shippingOrder.toAddress.detail}`} />
             </Stack>
           </Stack>
         </Grid>

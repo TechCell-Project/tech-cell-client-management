@@ -1,4 +1,4 @@
-import { PagingResponse, Paging } from "./Common";
+import { PagingResponse, Paging } from './Common';
 
 export class CreateAttributeModel {
   label?: string | null = null;

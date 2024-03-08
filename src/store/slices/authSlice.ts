@@ -58,33 +58,31 @@ export const authenticate = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const login =
-  (payload: LoginModel) =>
-    async (dispatch: Dispatch) => {
-      dispatch(isLogin());
-      try {
-        const response = await fetchLogin(payload);
+export const login = (payload: LoginModel) => async (dispatch: Dispatch) => {
+  dispatch(isLogin());
+  try {
+    const response = await fetchLogin(payload);
 
-        if (response.data.role !== 'User') {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          dispatch(loginSuccess(response.data));
-          toast.success('Đăng nhập thành công!');
-        } else {
-          dispatch(loginFailure());
-          toast.warning('Tài khoản này không có quyền đăng nhập!');
-        }
-      } catch (error) {
-        dispatch(loginFailure());
-        if (axios.isAxiosError(error)) {
-          if (error.response && error.response.status === 406) {
-            toast.warning('Vui lòng xác thực email để đăng nhập!');
-            return { isNotVerify: true };
-          } else {
-            toast.error('Đăng nhập không thành công!');
-          }
-        }
+    if (response.data.role !== 'User') {
+      localStorage.setItem('user', JSON.stringify(response.data));
+      dispatch(loginSuccess(response.data));
+      toast.success('Đăng nhập thành công!');
+    } else {
+      dispatch(loginFailure());
+      toast.warning('Tài khoản này không có quyền đăng nhập!');
+    }
+  } catch (error) {
+    dispatch(loginFailure());
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 406) {
+        toast.warning('Vui lòng xác thực email để đăng nhập!');
+        return { isNotVerify: true };
+      } else {
+        toast.error('Đăng nhập không thành công!');
       }
-    };
+    }
+  }
+};
 
 export const getCurrentUser = () => async (dispatch: Dispatch) => {
   dispatch(isLoadingProfile());
@@ -118,7 +116,6 @@ export const editProfileInfo = (payload: Partial<UserAccount>) => async (dispatc
     }
   }
 };
-
 
 export const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem('user');

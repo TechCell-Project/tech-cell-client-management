@@ -34,20 +34,16 @@ export const DeleteVariationDialog = memo(({ isOpen, handleClose, data }: Props 
 
   return (
     <ShowDialog
-      dialogTitle='Xóa sản phẩm'
+      dialogTitle="Xóa sản phẩm"
       handleClose={handleClose}
       isOpen={isOpen}
       dialogStyle={{ maxWidth: 500 }}
       dialogDesc={<>Bạn có chắc chắn muốn xóa biến thể này ?</>}
     >
+      <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={handleClose} />
       <ButtonCustom
-        variant='outlined'
-        content='Hủy bỏ'
-        handleClick={handleClose}
-      />
-      <ButtonCustom
-        variant='contained'
-        content='Xóa'
+        variant="contained"
+        content="Xóa"
         handleClick={handleConfirm}
         disabled={isLoading}
       />

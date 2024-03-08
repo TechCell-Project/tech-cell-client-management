@@ -11,14 +11,17 @@ export const Profile = ({ isOpen, handleClose }: DialogAction) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
   const theme = useTheme();
 
-  const tabs = useMemo(() => [
-    { name: 'Thông tin', component: <ProfileInfo handleClose={handleClose} /> },
-    { name: 'Địa chỉ', component: <ProfileAddress handleClose={handleClose} /> },
-  ], [handleClose]);
+  const tabs = useMemo(
+    () => [
+      { name: 'Thông tin', component: <ProfileInfo handleClose={handleClose} /> },
+      { name: 'Địa chỉ', component: <ProfileAddress handleClose={handleClose} /> },
+    ],
+    [handleClose],
+  );
 
   return (
     <ShowDialog
-      dialogTitle='Hồ sơ'
+      dialogTitle="Hồ sơ"
       isOpen={isOpen}
       handleClose={handleClose}
       dialogStyle={{ minWidth: { lg: '65%', xs: '90%' } }}
@@ -27,7 +30,7 @@ export const Profile = ({ isOpen, handleClose }: DialogAction) => {
         <Tabs
           value={tabIndex}
           onChange={(_: React.SyntheticEvent, index: number) => setTabIndex(index)}
-          aria-label='tabs'
+          aria-label="tabs"
           sx={{
             '& .MuiTabs-indicator': {
               backgroundColor: theme.color.red,

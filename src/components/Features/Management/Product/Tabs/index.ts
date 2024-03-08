@@ -1,2 +1,2 @@
-export * from "./InfoBasicTab";
-export * from "./DescTab";
+export * from './InfoBasicTab';
+export * from './DescTab';

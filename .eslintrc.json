@@ -1,19 +1,14 @@
 {
-    "extends": [
-        "next",
-        "next/core-web-vitals"
-    ],
-    "rules": {
-        "react/display-name": "off",
-        "react/no-unescaped-entities": "off",
-        "@next/next/no-page-custom-font": "off",
-        "no-restricted-imports": [
-            "error",
-            {
-                "patterns": [
-                    "@mui/*/*/*"
-                ]
-            }
-        ]
-    }
+  "extends": ["next", "next/core-web-vitals"],
+  "rules": {
+    "react/display-name": "off",
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*"]
+      }
+    ]
+  }
 }

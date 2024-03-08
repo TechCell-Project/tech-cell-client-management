@@ -17,7 +17,7 @@ export const SumRevenueChart = () => {
   const { stats } = useAppSelector((state) => state.stats);
 
   return (
-    <Box width='100%' height={400}>
+    <Box width="100%" height={400}>
       <ResponsiveContainer>
         <AreaChart
           data={stats ? stats.data : []}
@@ -28,15 +28,12 @@ export const SumRevenueChart = () => {
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='dateString' />
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="dateString" />
           <YAxis tickFormatter={formatWithCommas} />
-          <Tooltip
-            label='Tháng'
-            formatter={(value) => `${formatWithCommas(Number(value))}`}
-          />
+          <Tooltip label="Tháng" formatter={(value) => `${formatWithCommas(Number(value))}`} />
           <Legend />
-          <Area type='monotone' dataKey='revenue' fill='#FF6666' />
+          <Area type="monotone" dataKey="revenue" fill="#FF6666" />
         </AreaChart>
       </ResponsiveContainer>
     </Box>

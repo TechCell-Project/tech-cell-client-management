@@ -60,7 +60,9 @@ export const Category = () => {
       minWidth: 400,
       headerAlign: 'center',
       valueGetter: (params) => {
-        const value = params.row.requireAttributes?.map((attribute: AttributeModel) => attribute.name);
+        const value = params.row.requireAttributes?.map(
+          (attribute: AttributeModel) => attribute.name,
+        );
         return value.join(', ');
       },
     },
@@ -72,14 +74,14 @@ export const Category = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<CategoryModel>) => [
-        <Tooltip title='Chỉnh sửa' key={params.row._id}>
+        <Tooltip title="Chỉnh sửa" key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
               handleGetDetails(params.row.label as string);
               setOpenEdit(true);
             }}
-            label='Chỉnh sửa'
+            label="Chỉnh sửa"
           />
         </Tooltip>,
       ],
@@ -95,23 +97,25 @@ export const Category = () => {
         }}
       >
         <Form>
-          <Box sx={{
-            bgcolor: '#fff',
-            padding: '25px 20px 20px 20px',
-            borderRadius: 2,
-            gap: '15px',
-            border: 0,
-            mb: '30px',
-          }}>
+          <Box
+            sx={{
+              bgcolor: '#fff',
+              padding: '25px 20px 20px 20px',
+              borderRadius: 2,
+              gap: '15px',
+              border: 0,
+              mb: '30px',
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item md={3}>
-                <TextFieldCustom name='keyword' label='Từ khóa' />
+                <TextFieldCustom name="keyword" label="Từ khóa" />
               </Grid>
               <Grid item md={2}>
                 <ButtonCustom
-                  type='submit'
-                  variant='outlined'
-                  content='Tìm kiếm'
+                  type="submit"
+                  variant="outlined"
+                  content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
               </Grid>
@@ -132,11 +136,7 @@ export const Category = () => {
       {isLoadingDetails ? (
         <LoadingPage isLoading={isLoadingDetails} isBlur />
       ) : (
-        <>
-          {openEdit && (
-            <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />
-          )}
-        </>
+        <>{openEdit && <EditCategory isOpen={openEdit} handleClose={() => setOpenEdit(false)} />}</>
       )}
     </>
   );

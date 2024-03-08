@@ -5,9 +5,9 @@ import Chip from '@mui/material/Chip';
 import { AccountStatusVi, PaymentOrder, PaymentStatus, ProductStatus } from '@constants/enum';
 
 type TChip = {
-  label: string,
-  type: string,
-}
+  label: string;
+  type: string;
+};
 
 type TColor = string[];
 
@@ -52,7 +52,5 @@ export const ChipStatus = ({ label, type }: TChip) => {
     return 'default';
   };
 
-  return (
-    <Chip label={label} variant='filled' size='medium' color={getColor()} />
-  );
+  return <Chip label={label} variant="filled" size="medium" color={getColor()} />;
 };

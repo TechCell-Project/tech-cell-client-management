@@ -1,12 +1,4 @@
 {
-  "githubPullRequests.ignoredPullRequestBranches": [
-    "development"
-  ],
-  "conventionalCommits.scopes": [
-    "stats",
-    "socket",
-    "apis",
-    "components",
-    "core"
-  ]
+  "githubPullRequests.ignoredPullRequestBranches": ["development"],
+  "conventionalCommits.scopes": ["stats", "socket", "apis", "components", "core"]
 }

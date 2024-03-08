@@ -48,9 +48,7 @@ export const accountSlice = createSlice({
       state.isLoading = false;
     },
     patchAccountSuccess: (state, { payload }) => {
-      const index = state.accounts.data.findIndex(
-        (account) => account._id === payload._id,
-      );
+      const index = state.accounts.data.findIndex((account) => account._id === payload._id);
       if (index !== -1) {
         state.accounts.data[index] = payload;
       }
@@ -76,33 +74,31 @@ export const getAllUserAccount = (payload: PagingAccount) => async (dispatch: Di
   }
 };
 
-export const getDetailsUserAccount =
-  (id: string) => async (dispatch: Dispatch) => {
-    dispatch(isFetchingDetails());
-    try {
-      const response = await getDetailsAccount(id);
-      if (response.data) {
-        dispatch(getDetailsSuccess(response.data));
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(getDetailsFailure());
+export const getDetailsUserAccount = (id: string) => async (dispatch: Dispatch) => {
+  dispatch(isFetchingDetails());
+  try {
+    const response = await getDetailsAccount(id);
+    if (response.data) {
+      dispatch(getDetailsSuccess(response.data));
     }
-  };
+  } catch (error) {
+    console.log(error);
+    dispatch(getDetailsFailure());
+  }
+};
 
-export const createNewAccount =
-  (payload: RegisterModel) => async (dispatch: Dispatch) => {
-    dispatch(isFetching());
-    try {
-      const response = await postAccount(payload);
-      if (response.data) {
-        dispatch(createAccountSuccess(response.data));
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(requestAccountFailure());
+export const createNewAccount = (payload: RegisterModel) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await postAccount(payload);
+    if (response.data) {
+      dispatch(createAccountSuccess(response.data));
     }
-  };
+  } catch (error) {
+    console.log(error);
+    dispatch(requestAccountFailure());
+  }
+};
 
 export const blockAccount = (id: string) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
@@ -132,20 +128,19 @@ export const unBlockAccount = (id: string) => async (dispatch: Dispatch) => {
   }
 };
 
-export const changeRoleAccount =
-  (id: string, role: string) => async (dispatch: Dispatch) => {
-    dispatch(isFetching());
-    try {
-      const response = await patchChangeRoleAccount(id, role);
-      if (response.data) {
-        dispatch(patchAccountSuccess(response.data));
-      }
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      dispatch(requestAccountFailure());
+export const changeRoleAccount = (id: string, role: string) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await patchChangeRoleAccount(id, role);
+    if (response.data) {
+      dispatch(patchAccountSuccess(response.data));
     }
-  };
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    dispatch(requestAccountFailure());
+  }
+};
 
 const { actions, reducer } = accountSlice;
 

@@ -12,15 +12,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const isMobile = useMobile();
 
   return (
-    <html lang='en'>
+    <html lang="en">
       <head>
-        <link rel='icon' href='/favicon.ico?v=2' />
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+        <link rel="icon" href="/favicon.ico?v=2" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <title>TechCell</title>
         <link
-          href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'
-          rel='stylesheet'
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
         />
       </head>
       <body>
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SocketProvider>{children}</SocketProvider>
           </RootProvider>
         )}
-      <Analytics />
+        <Analytics />
       </body>
     </html>
   );

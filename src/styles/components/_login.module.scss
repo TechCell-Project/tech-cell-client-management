@@ -1,12 +1,12 @@
-@import "../base/variables";
-@import "../base/mixins";
+@import '../base/variables';
+@import '../base/mixins';
 
 .login {
   height: 100vh;
   overflow: hidden;
   position: relative;
 
-  &>img {
+  & > img {
     @media (max-width: 1390px) {
       height: 100% !important;
     }
@@ -49,7 +49,6 @@
         min-width: 320px;
         padding: 50px 30px;
       }
-
 
       &Title {
         margin-bottom: 15px;

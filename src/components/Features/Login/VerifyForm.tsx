@@ -36,7 +36,6 @@ export const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
     return () => clearInterval(interval);
   }, [isActive, countdown]);
 
-
   const sendCode = (email: string) => {
     sendOtpVerify(email)
       .then(() => {
@@ -51,8 +50,12 @@ export const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
   };
 
   return (
-    <ShowDialog dialogTitle='Xác thực email' isOpen={isOpen} handleClose={handleClose}
-      dialogStyle={{ minWidth: { xs: 350, md: 480 } }}>
+    <ShowDialog
+      dialogTitle="Xác thực email"
+      isOpen={isOpen}
+      handleClose={handleClose}
+      dialogStyle={{ minWidth: { xs: 350, md: 480 } }}
+    >
       <Formik
         enableReinitialize
         initialValues={{ email: '', otpCode: '' }}
@@ -70,12 +73,12 @@ export const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
         {({ values, isSubmitting }) => {
           return (
             <Form style={{ width: '100%' }}>
-              <Stack direction='column' gap={2}>
-                <Stack direction='row' gap={2} alignItems='baseline'>
-                  <TextFieldCustom name='email' label='Email' />
+              <Stack direction="column" gap={2}>
+                <Stack direction="row" gap={2} alignItems="baseline">
+                  <TextFieldCustom name="email" label="Email" />
                   <ButtonCustom
-                    content='Gửi OTP'
-                    variant='text'
+                    content="Gửi OTP"
+                    variant="text"
                     handleClick={() => {
                       if (values.email) {
                         sendCode(values.email);
@@ -85,24 +88,20 @@ export const VerifyForm = memo(({ isOpen, handleClose }: Props) => {
                     styles={{ fontSize: '12px' }}
                   />
                 </Stack>
-                <TextFieldCustom name='otpCode' label='OTP' />
+                <TextFieldCustom name="otpCode" label="OTP" />
 
                 {isActive && (
-                  <Typography variant='body2' fontSize='14px' textAlign='center'>
+                  <Typography variant="body2" fontSize="14px" textAlign="center">
                     Mã OTP còn hiệu lực trong vòng: <b>{formatTimeCountdown(countdown)}</b>
                   </Typography>
                 )}
 
-                <Stack direction='row' justifyContent='flex-end' gap={1} sx={{ mt: 1 }}>
+                <Stack direction="row" justifyContent="flex-end" gap={1} sx={{ mt: 1 }}>
+                  <ButtonCustom content="Hủy bỏ" variant="outlined" handleClick={handleClose} />
                   <ButtonCustom
-                    content='Hủy bỏ'
-                    variant='outlined'
-                    handleClick={handleClose}
-                  />
-                  <ButtonCustom
-                    content='Xác nhận'
-                    variant='contained'
-                    type='submit'
+                    content="Xác nhận"
+                    variant="contained"
+                    type="submit"
                     disabled={isSubmitting}
                   />
                 </Stack>

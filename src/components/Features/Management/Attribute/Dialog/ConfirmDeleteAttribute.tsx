@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { DialogAction } from '@interface/common';
 import { AttributeModel } from '@models/Attribute';
 
-export const ConfirmDeleteAttribute = (props: DialogAction & { data: AttributeModel}) => {
+export const ConfirmDeleteAttribute = (props: DialogAction & { data: AttributeModel }) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.attribute);
 
@@ -28,25 +28,20 @@ export const ConfirmDeleteAttribute = (props: DialogAction & { data: AttributeMo
 
   return (
     <ShowDialog
-      dialogTitle='Xóa thông số'
+      dialogTitle="Xóa thông số"
       isOpen={props.isOpen}
       handleClose={props.handleClose}
       dialogStyle={{ maxWidth: 500 }}
       dialogDesc={
         <>
-          Bạn có chắc chắn muốn xóa thông số:{' '}
-          <b style={{ display: 'block' }}>{props.data?.name}</b>
+          Bạn có chắc chắn muốn xóa thông số: <b style={{ display: 'block' }}>{props.data?.name}</b>
         </>
       }
     >
+      <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={props.handleClose} />
       <ButtonCustom
-        variant='outlined'
-        content='Hủy bỏ'
-        handleClick={props.handleClose}
-      />
-      <ButtonCustom
-        variant='contained'
-        content='Xác nhận'
+        variant="contained"
+        content="Xác nhận"
         disabled={isLoading}
         handleClick={handleConfirm}
       />

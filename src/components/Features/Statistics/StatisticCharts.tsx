@@ -21,17 +21,19 @@ const ToggleSplit = () => {
 
   return (
     <ToggleButtonGroup
-      color='primary'
+      color="primary"
       value={values.splitBy}
       exclusive
       onChange={(_, newValue: TimeSplit) => {
         setFieldValue('splitBy', newValue).then();
         handleSubmit();
       }}
-      aria-label='Platform'
+      aria-label="Platform"
     >
       {LIST_SPLIT_BY.map((item) => (
-        <ToggleButton key={item.value} value={item.value as {}}>{item.name}</ToggleButton>
+        <ToggleButton key={item.value} value={item.value as {}}>
+          {item.name}
+        </ToggleButton>
       ))}
     </ToggleButtonGroup>
   );
@@ -55,38 +57,44 @@ const StatisticCharts = () => {
         >
           {({ values }) => (
             <Form style={{ marginBottom: '25px' }}>
-              <Stack direction='row' alignItems='center' justifyContent='space-between' mb='10px'>
-                <Typography fontWeight={600} fontSize='20px'>Báo cáo thống kê</Typography>
+              <Stack direction="row" alignItems="center" justifyContent="space-between" mb="10px">
+                <Typography fontWeight={600} fontSize="20px">
+                  Báo cáo thống kê
+                </Typography>
                 <ToggleSplit />
               </Stack>
               <Grid container spacing={3} mt={2}>
                 <Grid item md={3}>
-                  <DatetimePickerCustom label='Từ ngày' name='fromDate' />
+                  <DatetimePickerCustom label="Từ ngày" name="fromDate" />
                 </Grid>
                 <Grid item md={3}>
-                  <DatetimePickerCustom label='Đến ngày' name='toDate' />
+                  <DatetimePickerCustom label="Đến ngày" name="toDate" />
                 </Grid>
                 <Grid item md={2}>
-                  <Stack direction='row' justifyContent='flex-start' gap={2}>
+                  <Stack direction="row" justifyContent="flex-start" gap={2}>
                     <IconBtnCustom
                       icon={<SearchRoundedIcon />}
-                      type='submit'
-                      tooltip='Tìm báo cáo'
+                      type="submit"
+                      tooltip="Tìm báo cáo"
                       styles={{ cursor: isLoading ? 'wait' : 'pointer' }}
-                      onClick={() => setShowSnack({
-                        isOpen: true,
-                        message: ok ? 'Tìm báo cáo thành công!' : 'Tìm báo cáo thất bại',
-                      })}
+                      onClick={() =>
+                        setShowSnack({
+                          isOpen: true,
+                          message: ok ? 'Tìm báo cáo thành công!' : 'Tìm báo cáo thất bại',
+                        })
+                      }
                     />
                     <IconBtnCustom
                       icon={<RestartAltRoundedIcon />}
-                      tooltip='Tính lại báo cáo'
+                      tooltip="Tính lại báo cáo"
                       styles={{ cursor: isLoading ? 'wait' : 'pointer' }}
                       onClick={() => {
                         handleSearchStats({ ...values, refreshCache: true });
                         setShowSnack({
                           isOpen: true,
-                          message: ok ? 'Tính lại báo cáo thành công!' : 'Tính lại báo cáo thất bại',
+                          message: ok
+                            ? 'Tính lại báo cáo thành công!'
+                            : 'Tính lại báo cáo thất bại',
                         });
                       }}
                     />
@@ -98,13 +106,13 @@ const StatisticCharts = () => {
         </Formik>
         <Grid container spacing={4} columns={18} pb={5}>
           <Grid item md={12}>
-            <Typography variant='h6' fontSize='1rem' fontWeight={600} mb={2}>
+            <Typography variant="h6" fontSize="1rem" fontWeight={600} mb={2}>
               1. Doanh thu
             </Typography>
             <SumRevenueChart />
           </Grid>
           <Grid item md={6}>
-            <Typography variant='h6' fontSize='1rem' fontWeight={600} mb={2}>
+            <Typography variant="h6" fontSize="1rem" fontWeight={600} mb={2}>
               2. Đơn hàng
             </Typography>
             <SumOrderChart />

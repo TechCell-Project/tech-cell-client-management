@@ -55,7 +55,7 @@ const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
   };
 
   const handleSubmit = (values: Address, { setSubmitting }: FormikHelpers<Address>) => {
-    let cloneAddress = [...user?.address as Address[]];
+    let cloneAddress = [...(user?.address as Address[])];
 
     if (index === null) {
       cloneAddress.push(values);
@@ -100,15 +100,15 @@ const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
                 <AutocompleteCustom<Province>
                   name={`provinceLevel`}
                   isNotCheckbox
-                  label='Tỉnh / thành'
+                  label="Tỉnh / thành"
                   options={provinces}
-                  displayLabel='province_name'
-                  displaySelected='province_id'
+                  displayLabel="province_name"
+                  displaySelected="province_id"
                   handleChange={(value) => {
                     if (value !== null) {
                       loadDistricts(String((value as Province).province_id));
                     }
-                    setValues(prev => {
+                    setValues((prev) => {
                       const newValue = { ...prev };
 
                       newValue.provinceLevel = value;
@@ -123,16 +123,16 @@ const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
               <Grid item md={4}>
                 <AutocompleteCustom<District>
                   name={`districtLevel`}
-                  label='Quận / huyện'
+                  label="Quận / huyện"
                   isNotCheckbox
                   options={districts}
-                  displayLabel='district_name'
-                  displaySelected='district_id'
+                  displayLabel="district_name"
+                  displaySelected="district_id"
                   handleChange={(value) => {
                     if (value !== null) {
                       loadWards(String((value as District).district_id));
                     }
-                    setValues(prev => {
+                    setValues((prev) => {
                       const newValue = { ...prev };
 
                       newValue.districtLevel = value;
@@ -146,30 +146,30 @@ const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
               <Grid item md={4}>
                 <AutocompleteCustom<Ward>
                   name={`wardLevel`}
-                  label='Xã / phường'
+                  label="Xã / phường"
                   isNotCheckbox
                   options={wards}
-                  displayLabel='ward_name'
-                  displaySelected='ward_code'
+                  displayLabel="ward_name"
+                  displaySelected="ward_code"
                 />
               </Grid>
               <Grid item md={4}>
                 <TextFieldCustom
                   name={`addressName`}
-                  label='Địa chỉ'
-                  placeholder='Nhà, công ty,...'
+                  label="Địa chỉ"
+                  placeholder="Nhà, công ty,..."
                 />
               </Grid>
               <Grid item md={4}>
-                <TextFieldCustom name={`customerName`} label='Tên khách hàng' />
+                <TextFieldCustom name={`customerName`} label="Tên khách hàng" />
               </Grid>
               <Grid item md={4}>
-                <TextFieldCustom name={`phoneNumbers`} label='Số điện thoại' type='number' />
+                <TextFieldCustom name={`phoneNumbers`} label="Số điện thoại" type="number" />
               </Grid>
               <Grid item xs={12} md={7}>
                 <TextFieldCustom
                   name={`detail`}
-                  label='Địa chỉ cụ thể'
+                  label="Địa chỉ cụ thể"
                   isTextArea
                   minRowArea={2}
                   maxRowArea={3}
@@ -177,16 +177,12 @@ const COEAddress = memo(({ isOpen, handleClose, data, index }: COEProps) => {
               </Grid>
             </Grid>
 
-            <Stack direction='row' justifyContent='flex-end' gap={1} mt={2}>
+            <Stack direction="row" justifyContent="flex-end" gap={1} mt={2}>
+              <ButtonCustom content="Hủy bỏ" variant="outlined" handleClick={handleClose} />
               <ButtonCustom
-                content='Hủy bỏ'
-                variant='outlined'
-                handleClick={handleClose}
-              />
-              <ButtonCustom
-                content='Lưu'
-                variant='contained'
-                type='submit'
+                content="Lưu"
+                variant="contained"
+                type="submit"
                 disabled={isSubmitting}
               />
             </Stack>

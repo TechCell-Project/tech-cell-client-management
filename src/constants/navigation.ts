@@ -38,7 +38,6 @@ export const LIST_NAV_MAIN = [
   },
 ];
 
-
 export const LIST_NAV_OTHER = [
   { name: 'Hồ sơ', icon: AccountCircleRoundedIcon, isProfile: true },
   { name: 'Đổi mật khẩu', icon: ManageAccountsRoundedIcon, isChangePass: true },

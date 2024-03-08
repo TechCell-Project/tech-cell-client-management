@@ -40,16 +40,12 @@ export const ChangeRole = memo((props: DialogAction & { dataAccount: UserAccount
 
   return (
     <ShowDialog
-      dialogTitle='Thay đổi vai trò'
+      dialogTitle="Thay đổi vai trò"
       handleClose={props.handleClose}
       isOpen={props.isOpen}
       dialogStyle={{ minWidth: 390 }}
     >
-      <Formik
-        initialValues={{ role: '' }}
-        validationSchema={roleValidate}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={{ role: '' }} validationSchema={roleValidate} onSubmit={handleSubmit}>
         {({ values, handleChange, errors, touched, isSubmitting }) => (
           <Form
             style={{
@@ -58,53 +54,39 @@ export const ChangeRole = memo((props: DialogAction & { dataAccount: UserAccount
             }}
           >
             <>
-              <Stack
-                direction='column'
-                gap={2}
-                alignItems='center'
-                justifyContent='center'
-              >
+              <Stack direction="column" gap={2} alignItems="center" justifyContent="center">
                 <TextField
-                  label='Họ và tên'
+                  label="Họ và tên"
                   value={`${props.dataAccount?.firstName} ${props.dataAccount?.lastName}`}
                   fullWidth
-                  variant='outlined'
-                  size='small'
+                  variant="outlined"
+                  size="small"
                   inputProps={{ readOnly: true }}
                 />
                 <TextField
-                  label='Vai trò hiện tại'
+                  label="Vai trò hiện tại"
                   value={getRole(props.dataAccount?.role) ?? ''}
                   fullWidth
-                  variant='outlined'
-                  size='small'
+                  variant="outlined"
+                  size="small"
                   inputProps={{ readOnly: true }}
                 />
 
-                <SouthRoundedIcon fontSize='medium' />
+                <SouthRoundedIcon fontSize="medium" />
 
                 <SelectInputCustom<string, TOptions>
-                  name='role'
-                  label='Vai trò mới'
+                  name="role"
+                  label="Vai trò mới"
                   options={ROLE_OPTIONS}
                 />
               </Stack>
-              <Stack
-                direction='row'
-                justifyContent='flex-end'
-                gap={2}
-                sx={{ mt: 4 }}
-              >
+              <Stack direction="row" justifyContent="flex-end" gap={2} sx={{ mt: 4 }}>
+                <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Hủy bỏ" />
                 <ButtonCustom
-                  variant='outlined'
-                  handleClick={props.handleClose}
-                  content='Hủy bỏ'
-                />
-                <ButtonCustom
-                  variant='contained'
-                  type='submit'
+                  variant="contained"
+                  type="submit"
                   disabled={isSubmitting}
-                  content='Xác nhận'
+                  content="Xác nhận"
                 />
               </Stack>
             </>

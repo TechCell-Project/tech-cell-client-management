@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import React, { memo } from "react";
-import { useTheme, SxProps } from "@mui/material";
-import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
+import React, { memo } from 'react';
+import { useTheme, SxProps } from '@mui/material';
+import Button from '@mui/material/Button';
+import Badge from '@mui/material/Badge';
 
 interface IButtonCustom {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
-  type?: "submit" | "button";
-  variant: "outlined" | "contained" | "text";
-  size?: "large" | "small" | "medium";
+  type?: 'submit' | 'button';
+  variant: 'outlined' | 'contained' | 'text';
+  size?: 'large' | 'small' | 'medium';
   content?: string;
   disabled?: boolean;
   fullWidth?: boolean;
@@ -27,44 +27,40 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
   const theme = useTheme();
 
   const outlinedStyle: SxProps = {
-    color: props.colorWhite
-      ? "#fff !important"
-      : `${theme.color.red} !important`,
+    color: props.colorWhite ? '#fff !important' : `${theme.color.red} !important`,
     border: props.colorWhite
-      ? "1px solid #fff !important"
+      ? '1px solid #fff !important'
       : `1px solid ${theme.color.red} !important`,
-    textTransform: "unset",
-    padding: "8px 20px",
-    width: "max-content",
-    whiteSpace: "nowrap",
+    textTransform: 'unset',
+    padding: '8px 20px',
+    width: 'max-content',
+    whiteSpace: 'nowrap',
   };
 
   const containedStyle: SxProps = {
     bgcolor: `${theme.color.red} !important`,
     border: `1px solid ${theme.color.red} !important`,
-    color: "#fff !important",
-    textTransform: "unset",
-    padding: "8px 20px",
-    whiteSpace: "nowrap",
+    color: '#fff !important',
+    textTransform: 'unset',
+    padding: '8px 20px',
+    whiteSpace: 'nowrap',
   };
 
   const textStyle: SxProps = {
-    color: props.colorWhite
-      ? `#fff !important`
-      : `${theme.color.red} !important`,
-    bgcolor: "transparent",
-    padding: "8px 20px",
-    whiteSpace: "nowrap",
-    textTransform: "unset",
+    color: props.colorWhite ? `#fff !important` : `${theme.color.red} !important`,
+    bgcolor: 'transparent',
+    padding: '8px 20px',
+    whiteSpace: 'nowrap',
+    textTransform: 'unset',
   };
 
   const getVariant = () => {
     switch (props.variant) {
-      case "contained":
+      case 'contained':
         return containedStyle;
-      case "outlined":
+      case 'outlined':
         return outlinedStyle;
-      case "text":
+      case 'text':
         return textStyle;
       default:
         return null;
@@ -73,7 +69,7 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
 
   return !props.isBadge ? (
     <Button
-      type={props.type ?? "button"}
+      type={props.type ?? 'button'}
       onClick={props.handleClick}
       sx={[{ ...props.styles }, getVariant()]}
       disabled={props.disabled}
@@ -91,13 +87,13 @@ export const ButtonCustom = memo((props: IButtonCustom) => {
       badgeContent={props.badgeCount}
       color="secondary"
       sx={{
-        "& .MuiBadge-invisible": {
-          transform: "scale(1) translate(50%, -50%)",
+        '& .MuiBadge-invisible': {
+          transform: 'scale(1) translate(50%, -50%)',
         },
       }}
     >
       <Button
-        type={props.type ?? "button"}
+        type={props.type ?? 'button'}
         onClick={props.handleClick}
         sx={[{ ...props.styles }, getVariant()]}
         disabled={props.disabled}

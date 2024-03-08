@@ -1,4 +1,4 @@
-@import "../base/variables";
+@import '../base/variables';
 
 .titleHighlight {
   position: relative;
@@ -8,7 +8,7 @@
   border-radius: 8px;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -23,7 +23,7 @@
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;

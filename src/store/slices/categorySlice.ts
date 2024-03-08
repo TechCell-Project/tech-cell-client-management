@@ -42,9 +42,7 @@ export const categorySlice = createSlice({
       state.isLoadingDetails = false;
     },
     editSuccess: (state, { payload }) => {
-      const index = state.categories.data.findIndex(
-        (category) => category._id === payload._id,
-      );
+      const index = state.categories.data.findIndex((category) => category._id === payload._id);
       if (index !== -1) {
         state.categories.data[index] = payload;
       }
@@ -57,61 +55,57 @@ export const categorySlice = createSlice({
 });
 
 // Thunk
-export const getAllCategory =
-  (payload: Paging) => async (dispatch: Dispatch) => {
-    dispatch(isFetching());
-    try {
-      const response = await getCategories(payload);
-      if (response.data) {
-        dispatch(getAllSuccess(response.data));
-      }
-    } catch (error) {
-      dispatch(getAllFailure());
+export const getAllCategory = (payload: Paging) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await getCategories(payload);
+    if (response.data) {
+      dispatch(getAllSuccess(response.data));
     }
-  };
+  } catch (error) {
+    dispatch(getAllFailure());
+  }
+};
 
-export const createNewCategory =
-  (payload: CategoryModel) => async (dispatch: Dispatch) => {
-    dispatch(isFetching());
-    try {
-      const response = await postCategory(payload);
-      if (response.data) {
-        return { success: true };
-      }
-    } catch (error) {
-      return { success: false, error };
-    } finally {
-      dispatch(fetchedDone());
+export const createNewCategory = (payload: CategoryModel) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await postCategory(payload);
+    if (response.data) {
+      return { success: true };
     }
-  };
+  } catch (error) {
+    return { success: false, error };
+  } finally {
+    dispatch(fetchedDone());
+  }
+};
 
-export const getDetailsCategoryByLabel =
-  (label: string) => async (dispatch: Dispatch) => {
-    dispatch(isFetchingDetails());
-    try {
-      const response = await getCategoryByLabel(label);
-      if (response.data) {
-        dispatch(getDetailsSuccess(response.data));
-      }
-    } catch (error) {
-      dispatch(getDetailsFailure());
+export const getDetailsCategoryByLabel = (label: string) => async (dispatch: Dispatch) => {
+  dispatch(isFetchingDetails());
+  try {
+    const response = await getCategoryByLabel(label);
+    if (response.data) {
+      dispatch(getDetailsSuccess(response.data));
     }
-  };
+  } catch (error) {
+    dispatch(getDetailsFailure());
+  }
+};
 
-export const editCategory =
-  (payload: CategoryModel, id: string) => async (dispatch: Dispatch) => {
-    dispatch(isFetching());
-    try {
-      const response = await patchCategory(payload, id);
-      if (response.data) {
-        dispatch(editSuccess(response.data));
-        return { success: true };
-      }
-    } catch (error) {
-      dispatch(fetchedDone());
-      return { success: false, error };
+export const editCategory = (payload: CategoryModel, id: string) => async (dispatch: Dispatch) => {
+  dispatch(isFetching());
+  try {
+    const response = await patchCategory(payload, id);
+    if (response.data) {
+      dispatch(editSuccess(response.data));
+      return { success: true };
     }
-  };
+  } catch (error) {
+    dispatch(fetchedDone());
+    return { success: false, error };
+  }
+};
 
 const { actions, reducer } = categorySlice;
 

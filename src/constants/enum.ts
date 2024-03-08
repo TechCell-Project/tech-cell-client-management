@@ -24,18 +24,18 @@ export enum AccountStatus {
 
 export enum AccountStatusVi {
   Unblocked = 'Hoạt động',
-  Blocked = 'Bị chặn'
+  Blocked = 'Bị chặn',
 }
 
 export enum EmailStatus {
   Verified = 'verified',
-  Unverified = 'unverified'
+  Unverified = 'unverified',
 }
 
 export enum ProductType {
   OnlyActive = 'only_active',
   OnlyDeleted = 'only_deleted',
-  BothDeleteAndActive = 'both_deleted_and_active'
+  BothDeleteAndActive = 'both_deleted_and_active',
 }
 
 export enum ProductStatus {
@@ -93,5 +93,5 @@ export enum OrderStatusStats {
   Processing = 'PROCESSING',
   Shipping = 'SHIPPING',
   Completed = 'COMPLETED',
-  Refunded = 'REFUNDED'
+  Refunded = 'REFUNDED',
 }

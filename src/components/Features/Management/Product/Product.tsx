@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import {
+  ButtonCustom,
+  ChipStatus,
+  DataTable,
+  SelectInputCustom,
+  TextFieldCustom,
+} from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllProduct } from '@store/slices/productSlice';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
@@ -20,7 +26,6 @@ import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
 
-
 export const Product = () => {
   const dispatch = useAppDispatch();
   const { products, isLoading } = useAppSelector((state) => state.product);
@@ -37,7 +42,9 @@ export const Product = () => {
   }, [searchProduct, paging]);
 
   const loadProducts = () => {
-    dispatch(getAllProduct({ ...searchProduct, page: paging.page, pageSize: paging.pageSize })).then();
+    dispatch(
+      getAllProduct({ ...searchProduct, page: paging.page, pageSize: paging.pageSize }),
+    ).then();
   };
 
   const columns: Array<GridColDef<ProductModel>> = [
@@ -55,11 +62,13 @@ export const Product = () => {
       headerName: 'Hình ảnh',
       width: 120,
       renderCell: (params) => {
-        const thumbs = params.row.generalImages?.find((image: ImageModel) => image.isThumbnail)?.url;
+        const thumbs = params.row.generalImages?.find(
+          (image: ImageModel) => image.isThumbnail,
+        )?.url;
         return (
           <Image
             src={thumbs ?? '/empty.png'}
-            alt='thumbs-image-product'
+            alt="thumbs-image-product"
             height={50}
             width={50}
             style={{ objectFit: 'cover', width: 'auto' }}
@@ -95,7 +104,7 @@ export const Product = () => {
         if (result) {
           return formatWithCommas(result as number);
         }
-        return '0₫'
+        return '0₫';
       },
     },
     {
@@ -119,21 +128,21 @@ export const Product = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<ProductModel>) => [
-        <Tooltip title='Chỉnh sửa' key={params.row._id}>
+        <Tooltip title="Chỉnh sửa" key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => router.push(`${RootRoutes.PRODUCT_EDIT_ROUTE}/${params.row._id}`)}
-            label='Chỉnh sửa'
+            label="Chỉnh sửa"
           />
         </Tooltip>,
-        <Tooltip title='Xóa' key={params.row._id}>
+        <Tooltip title="Xóa" key={params.row._id}>
           <GridActionsCellItem
             icon={<DeleteRoundedIcon />}
             onClick={() => {
               setCurrentProduct(params.row);
               setOpenConfirmDelete(true);
             }}
-            label='Xóa'
+            label="Xóa"
           />
         </Tooltip>,
       ],
@@ -150,26 +159,32 @@ export const Product = () => {
         }}
       >
         <Form>
-          <Box sx={{
-            bgcolor: '#fff',
-            padding: '25px 20px 20px 20px',
-            borderRadius: 2,
-            gap: '15px',
-            border: 0,
-            mb: '30px',
-          }}>
+          <Box
+            sx={{
+              bgcolor: '#fff',
+              padding: '25px 20px 20px 20px',
+              borderRadius: 2,
+              gap: '15px',
+              border: 0,
+              mb: '30px',
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item md={3}>
-                <TextFieldCustom name='keyword' label='Từ khóa' />
+                <TextFieldCustom name="keyword" label="Từ khóa" />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='select_type' label='Trạng thái' options={PRODUCT_TYPE_OPTIONS} />
+                <SelectInputCustom
+                  name="select_type"
+                  label="Trạng thái"
+                  options={PRODUCT_TYPE_OPTIONS}
+                />
               </Grid>
               <Grid item md={2}>
                 <ButtonCustom
-                  type='submit'
-                  variant='outlined'
-                  content='Tìm kiếm'
+                  type="submit"
+                  variant="outlined"
+                  content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
               </Grid>

@@ -1,11 +1,12 @@
-import {
-  PagingProduct,
-  ProductModel,
-  ProductRequest,
-  ProductSlice,
-} from '@models/Product';
+import { PagingProduct, ProductModel, ProductRequest, ProductSlice } from '@models/Product';
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { deleteProduct, getProductById, getProducts, postProduct, putProduct } from '@services/productService';
+import {
+  deleteProduct,
+  getProductById,
+  getProducts,
+  postProduct,
+  putProduct,
+} from '@services/productService';
 import { toast } from 'react-toastify';
 import { PagingResponse } from '@models/Common';
 import { HttpStatusCode } from 'axios';
@@ -44,20 +45,21 @@ export const productSlice = createSlice({
       state.isLoadingDetails = false;
     },
     editSuccess: (state, { payload }) => {
-      const index = state.products.data.findIndex(
-        (product) => product._id === payload._id,
-      );
+      const index = state.products.data.findIndex((product) => product._id === payload._id);
       if (index !== -1) {
         state.products.data[index] = payload;
       }
       state.isLoadingDetails = false;
     },
-    deleteSuccess: (state, { payload }: {
-      payload: string
-    }) => {
-      state.products.data = state.products.data.filter(
-        (product) => product._id !== payload,
-      );
+    deleteSuccess: (
+      state,
+      {
+        payload,
+      }: {
+        payload: string;
+      },
+    ) => {
+      state.products.data = state.products.data.filter((product) => product._id !== payload);
       state.isLoading = false;
     },
     fetchedDone: (state) => {
@@ -85,46 +87,48 @@ export const getAllProduct = (payload: PagingProduct) => async (dispatch: Dispat
 
 export const getDetailsProduct =
   (id: string, isDetails: boolean = true) =>
-    async (dispatch: Dispatch) => {
-      dispatch(isFetchingDetails());
-      try {
-        const response = await getProductById(id, isDetails);
-        if (response.data) {
-          dispatch(getDetailsSuccess(response.data));
-        }
-      } catch (error) {
-        dispatch(getDetailsFailure());
+  async (dispatch: Dispatch) => {
+    dispatch(isFetchingDetails());
+    try {
+      const response = await getProductById(id, isDetails);
+      if (response.data) {
+        dispatch(getDetailsSuccess(response.data));
       }
-    };
-
-export const createNewProduct = (payload: Partial<ProductRequest>) => async (dispatch: Dispatch) => {
-  dispatch(isFetchingDetails());
-  try {
-    const response = await postProduct(payload);
-    if (response.data) {
-      return { success: true };
+    } catch (error) {
+      dispatch(getDetailsFailure());
     }
-  } catch (error) {
-    return { success: false, error };
-  } finally {
-    dispatch(fetchedDetailsDone());
-  }
-};
+  };
 
-export const editProduct = (payload: Partial<ProductModel>, id: string) => async (dispatch: Dispatch) => {
-  dispatch(isFetchingDetails());
-  try {
-    const response = await putProduct(payload, id);
-    if (response.data) {
-      dispatch(editSuccess(response.data));
-      return { success: true };
+export const createNewProduct =
+  (payload: Partial<ProductRequest>) => async (dispatch: Dispatch) => {
+    dispatch(isFetchingDetails());
+    try {
+      const response = await postProduct(payload);
+      if (response.data) {
+        return { success: true };
+      }
+    } catch (error) {
+      return { success: false, error };
+    } finally {
+      dispatch(fetchedDetailsDone());
     }
-  } catch (error) {
-    return { success: false, error };
-  } finally {
-    dispatch(fetchedDetailsDone());
-  }
-};
+  };
+
+export const editProduct =
+  (payload: Partial<ProductModel>, id: string) => async (dispatch: Dispatch) => {
+    dispatch(isFetchingDetails());
+    try {
+      const response = await putProduct(payload, id);
+      if (response.data) {
+        dispatch(editSuccess(response.data));
+        return { success: true };
+      }
+    } catch (error) {
+      return { success: false, error };
+    } finally {
+      dispatch(fetchedDetailsDone());
+    }
+  };
 
 export const removeProduct = (id: string) => async (dispatch: Dispatch) => {
   dispatch(isFetching());

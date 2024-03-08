@@ -28,10 +28,10 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
   const [addressIndex, setAddressIndex] = useState<number | null>(null);
 
   const handleSetDefault = (index: number) => {
-    const newValue: Array<Address> | undefined = user?.address.map(
-      (item, i) => (
-        { ...item, isDefault: i === index }
-      ));
+    const newValue: Array<Address> | undefined = user?.address.map((item, i) => ({
+      ...item,
+      isDefault: i === index,
+    }));
     if (newValue) {
       const values = new ProfileAddressRequest(newValue);
 
@@ -55,71 +55,82 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
           user?.address?.map((item, i) => (
             <React.Fragment key={item.addressName}>
               <Grid item xs={12}>
-                <Stack flexDirection='row' justifyContent='space-between' alignItems='center'>
-                  <Stack flexDirection='row' justifyContent='flex-start' alignItems='center' gap={2}>
-                    <p style={{ fontSize: '14px', fontWeight: 600 }}>{i + 1}. {item.addressName}</p>
+                <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
+                  <Stack
+                    flexDirection="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    gap={2}
+                  >
+                    <p style={{ fontSize: '14px', fontWeight: 600 }}>
+                      {i + 1}. {item.addressName}
+                    </p>
                     {item.isDefault ? (
-                      <CheckCircleRoundedIcon fontSize='small' color='primary' />
+                      <CheckCircleRoundedIcon fontSize="small" color="primary" />
                     ) : (
                       <ButtonCustom
-                        variant='text'
-                        content='Chọn làm mặc định'
+                        variant="text"
+                        content="Chọn làm mặc định"
                         handleClick={() => handleSetDefault(i)}
                       />
                     )}
                   </Stack>
-                  <Stack flexDirection='row' alignItems='center' gap='5px'>
-                    <IconButton onClick={() => {
-                      setCurrentAddress(item);
-                      setAddressIndex(i);
-                    }}>
+                  <Stack flexDirection="row" alignItems="center" gap="5px">
+                    <IconButton
+                      onClick={() => {
+                        setCurrentAddress(item);
+                        setAddressIndex(i);
+                      }}
+                    >
                       <EditRoundedIcon />
                     </IconButton>
-                    <IconButton onClick={() => {
-                      setOpenConfirm(true);
-                      setAddressIndex(i);
-                    }}>
+                    <IconButton
+                      onClick={() => {
+                        setOpenConfirm(true);
+                        setAddressIndex(i);
+                      }}
+                    >
                       <RemoveCircleRoundedIcon />
                     </IconButton>
                   </Stack>
                 </Stack>
               </Grid>
               <Grid item xs={12}>
-                <Typography fontSize='18px'>{item.customerName} &nbsp;|&nbsp; {item.phoneNumbers}</Typography>
+                <Typography fontSize="18px">
+                  {item.customerName} &nbsp;|&nbsp; {item.phoneNumbers}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <TextViewCustom label='Địa chỉ' content={getAddressLocation(item)} />
+                <TextViewCustom label="Địa chỉ" content={getAddressLocation(item)} />
               </Grid>
               <Grid item xs={12}>
-                <TextViewCustom label='Địa chỉ cụ thể' content={String(item.detail)} />
+                <TextViewCustom label="Địa chỉ cụ thể" content={String(item.detail)} />
               </Grid>
             </React.Fragment>
           ))
         ) : (
           <Grid item xs={12}>
-            <Stack flexDirection='column' gap='10px' alignItems='center' justifyContent='center'>
+            <Stack flexDirection="column" gap="10px" alignItems="center" justifyContent="center">
               <Image
                 width={250}
                 height={250}
-                src='/empty.png'
-                alt='Empty address'
+                src="/empty.png"
+                alt="Empty address"
                 style={{ objectFit: 'contain' }}
               />
-              <Typography variant='body2' fontWeight={500}>Bạn chưa có địa chỉ nào!</Typography>
+              <Typography variant="body2" fontWeight={500}>
+                Bạn chưa có địa chỉ nào!
+              </Typography>
             </Stack>
           </Grid>
         )}
       </Grid>
 
-      <Stack direction='row' justifyContent='flex-end' gap={1} mt={2}>
+      <Stack direction="row" justifyContent="flex-end" gap={1} mt={2}>
+        <ButtonCustom content="Hủy bỏ" variant="outlined" handleClick={handleClose} />
         <ButtonCustom
-          content='Hủy bỏ'
-          variant='outlined'
-          handleClick={handleClose}
-        />
-        <ButtonCustom
-          content='Thêm địa chỉ'
-          variant='contained'
+          content="Thêm địa chỉ"
+          variant="contained"
           handleClick={() => setCurrentAddress(new Address())}
         />
       </Stack>
@@ -149,4 +160,3 @@ export const ProfileAddress = memo(({ handleClose }: { handleClose: () => void }
     </>
   );
 });
-

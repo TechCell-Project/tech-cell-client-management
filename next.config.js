@@ -23,7 +23,8 @@ const nextConfig = {
       transform: '@mui/icons-material/{{member}}',
     },
     '@mui/material': {
-      transform: '{{#if (eq member "useTheme")}}@components/Theme/useTheme{{else}}@mui/material/{{member}}{{/if}}',
+      transform:
+        '{{#if (eq member "useTheme")}}@components/Theme/useTheme{{else}}@mui/material/{{member}}{{/if}}',
     },
   },
   eslint: {
@@ -32,9 +33,7 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'],
   },
-  transpilePackages: [
-    '@TechCell-Project/tech-cell-server-node-sdk',
-  ],
+  transpilePackages: ['@TechCell-Project/tech-cell-server-node-sdk'],
   // Config Self-hosted Tiny MCE
   // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
   //   config.plugins.push(

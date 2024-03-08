@@ -1,4 +1,10 @@
-import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import {
+  ButtonCustom,
+  ChipStatus,
+  DataTable,
+  SelectInputCustom,
+  TextFieldCustom,
+} from '@components/Common';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { OrderModel, PagingOrder } from '@models/Order';
@@ -64,7 +70,8 @@ export const Order = () => {
       width: 180,
       valueGetter: (params) => {
         const value = PAYMENT_METHOD_OPTIONS.find(
-          (item) => params.row.paymentOrder && params.row.paymentOrder.method === item.value);
+          (item) => params.row.paymentOrder && params.row.paymentOrder.method === item.value,
+        );
         return value?.name;
       },
     },
@@ -97,11 +104,11 @@ export const Order = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<OrderModel>) => [
-        <Tooltip title='Chi tiết' key={params.row._id}>
+        <Tooltip title="Chi tiết" key={params.row._id}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => router.push(`${RootRoutes.ORDER_ROUTE}/${params.row._id}`)}
-            label='Chi tiết'
+            label="Chi tiết"
           />
         </Tooltip>,
       ],
@@ -118,39 +125,48 @@ export const Order = () => {
         }}
       >
         <Form>
-          <Box sx={{
-            bgcolor: '#fff',
-            padding: '25px 20px 20px 20px',
-            borderRadius: 2,
-            gap: '15px',
-            border: 0,
-            mb: '30px',
-          }}>
+          <Box
+            sx={{
+              bgcolor: '#fff',
+              padding: '25px 20px 20px 20px',
+              borderRadius: 2,
+              gap: '15px',
+              border: 0,
+              mb: '30px',
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item md={3}>
-                <TextFieldCustom name='orderId' label='Mã đơn hàng' />
+                <TextFieldCustom name="orderId" label="Mã đơn hàng" />
               </Grid>
               <Grid item md={3}>
-                <TextFieldCustom name='userId' label='Mã khách hàng' />
+                <TextFieldCustom name="userId" label="Mã khách hàng" />
               </Grid>
               <Grid item md={3}>
-                <TextFieldCustom name='productId' label='Mã sản phẩm' />
+                <TextFieldCustom name="productId" label="Mã sản phẩm" />
               </Grid>
               <Grid item md={3}>
-                <TextFieldCustom name='trackingCode' label='Mã theo dõi (tracking)' />
+                <TextFieldCustom name="trackingCode" label="Mã theo dõi (tracking)" />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='paymentMethod' label='Phương thức thanh toán'
-                  options={PAYMENT_METHOD_OPTIONS} />
+                <SelectInputCustom
+                  name="paymentMethod"
+                  label="Phương thức thanh toán"
+                  options={PAYMENT_METHOD_OPTIONS}
+                />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='orderStatus' label='Trạng thái đơn hàng' options={ORDER_STATUS_OPTIONS} />
+                <SelectInputCustom
+                  name="orderStatus"
+                  label="Trạng thái đơn hàng"
+                  options={ORDER_STATUS_OPTIONS}
+                />
               </Grid>
               <Grid item md={2}>
                 <ButtonCustom
-                  type='submit'
-                  variant='outlined'
-                  content='Tìm kiếm'
+                  type="submit"
+                  variant="outlined"
+                  content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
               </Grid>

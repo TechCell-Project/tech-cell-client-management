@@ -14,22 +14,28 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes } from '@store/slices/attributeSlice';
 import { DialogAction } from '@interface/common';
 
-export const AttributeDialog = ({ isOpen, handleClose, index }: { index: number } & DialogAction) => {
+export const AttributeDialog = ({
+  isOpen,
+  handleClose,
+  index,
+}: { index: number } & DialogAction) => {
   const { values } = useFormikContext<ProductRequest | ProductModel>();
 
   const dispatch = useAppDispatch();
   const { attributes } = useAppSelector((state) => state.attribute);
 
   useEffect(() => {
-    dispatch(getAllAttributes({
-      ...new PagingAttribute(),
-      pageSize: 100,
-    })).then();
+    dispatch(
+      getAllAttributes({
+        ...new PagingAttribute(),
+        pageSize: 100,
+      }),
+    ).then();
   }, [dispatch]);
 
   return (
     <ShowDialog
-      dialogTitle='Thuộc tính biến thể'
+      dialogTitle="Thuộc tính biến thể"
       handleClose={handleClose}
       isOpen={isOpen}
       dialogStyle={{ minWidth: 800 }}
@@ -40,49 +46,47 @@ export const AttributeDialog = ({ isOpen, handleClose, index }: { index: number 
           render={(arrayHelpers) => (
             <>
               <Grid container spacing={2} columns={20}>
-                {values.variations[index].attributes?.map(
-                  (_, i) => (
-                    <React.Fragment key={i}>
-                      <Grid item lg={6}>
-                        <SelectInputCustom
-                          name={`variations[${index}].attributes[${i}].k`}
-                          options={attributes.data}
-                          displayValue='label'
-                          label='Thuộc tính'
-                        />
-                      </Grid>
-                      <Grid item lg={6}>
-                        <TextFieldCustom
-                          name={`variations[${index}].attributes[${i}].v`}
-                          label='Giá trị'
-                        />
-                      </Grid>
-                      <Grid item lg={6}>
-                        <TextFieldCustom
-                          name={`variations[${index}].attributes[${i}].u`}
-                          label='Đơn vị'
-                        />
-                      </Grid>
-                      <Grid item lg={2} sx={{ textAlign: 'center' }}>
-                        <IconButton onClick={() => arrayHelpers.remove(i)}>
-                          <RemoveCircleRoundedIcon />
-                        </IconButton>
-                      </Grid>
-                    </React.Fragment>
-                  ),
-                )}
+                {values.variations[index].attributes?.map((_, i) => (
+                  <React.Fragment key={i}>
+                    <Grid item lg={6}>
+                      <SelectInputCustom
+                        name={`variations[${index}].attributes[${i}].k`}
+                        options={attributes.data}
+                        displayValue="label"
+                        label="Thuộc tính"
+                      />
+                    </Grid>
+                    <Grid item lg={6}>
+                      <TextFieldCustom
+                        name={`variations[${index}].attributes[${i}].v`}
+                        label="Giá trị"
+                      />
+                    </Grid>
+                    <Grid item lg={6}>
+                      <TextFieldCustom
+                        name={`variations[${index}].attributes[${i}].u`}
+                        label="Đơn vị"
+                      />
+                    </Grid>
+                    <Grid item lg={2} sx={{ textAlign: 'center' }}>
+                      <IconButton onClick={() => arrayHelpers.remove(i)}>
+                        <RemoveCircleRoundedIcon />
+                      </IconButton>
+                    </Grid>
+                  </React.Fragment>
+                ))}
               </Grid>
 
               <ButtonCustom
-                variant='outlined'
-                content='Thêm thuộc tính'
+                variant="outlined"
+                content="Thêm thuộc tính"
                 startIcon={<AddBoxRoundedIcon />}
                 handleClick={() => arrayHelpers.push(new AttributeDynamics())}
                 styles={{ marginTop: '20px' }}
               />
 
-              <Stack direction='row' justifyContent='flex-end' sx={{ mt: 4 }}>
-                <ButtonCustom variant='outlined' handleClick={handleClose} content='Đóng' />
+              <Stack direction="row" justifyContent="flex-end" sx={{ mt: 4 }}>
+                <ButtonCustom variant="outlined" handleClick={handleClose} content="Đóng" />
               </Stack>
             </>
           )}

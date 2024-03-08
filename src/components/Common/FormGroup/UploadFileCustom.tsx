@@ -49,9 +49,7 @@ export const UploadFileCustom = memo(
 
     const handleRemoveImage = (index: number) => {
       const files = imageInits.filter((file) =>
-        name.isThumbnail
-          ? file.isThumbnail
-          : !file.isThumbnail || false,
+        name.isThumbnail ? file.isThumbnail : !file.isThumbnail || false,
       );
       const newFiles = files.filter((_, i) => i !== index);
 
@@ -80,8 +78,8 @@ export const UploadFileCustom = memo(
             <Image
               width={0}
               height={0}
-              loading='lazy'
-              sizes='100vw'
+              loading="lazy"
+              sizes="100vw"
               style={{ width: '100%', height: 'auto' }}
               src={item.url || item.preview}
               alt={item?.name}
@@ -109,9 +107,7 @@ export const UploadFileCustom = memo(
 
     const handleUploadCase = () => {
       const files = imageInits.filter((file) =>
-        name.isThumbnail
-          ? file.isThumbnail
-          : !file.isThumbnail || false,
+        name.isThumbnail ? file.isThumbnail : !file.isThumbnail || false,
       );
 
       return files.map(renderImage);
@@ -121,18 +117,18 @@ export const UploadFileCustom = memo(
       <Box>
         <div {...getRootProps({ className: styles.dropzone })}>
           <input {...getInputProps()} />
-          <Stack flexDirection='row' gap={2} alignContent='center' justifyContent='center'>
+          <Stack flexDirection="row" gap={2} alignContent="center" justifyContent="center">
             <CloudUploadIcon />
             <p>Kéo, thả tệp hoặc click để mở</p>
           </Stack>
         </div>
 
-        <Typography fontSize='15px' fontWeight={600} mt='20px'>
+        <Typography fontSize="15px" fontWeight={600} mt="20px">
           • Phần ảnh preview:
         </Typography>
         <aside className={styles.thumbnailContainer}>{uploadedFiles?.map(renderImage)}</aside>
 
-        <Typography fontSize='15px' fontWeight={600} mt='20px'>
+        <Typography fontSize="15px" fontWeight={600} mt="20px">
           • Phần ảnh đã tải lên:
         </Typography>
         <aside className={styles.thumbnailContainer}>{handleUploadCase()}</aside>

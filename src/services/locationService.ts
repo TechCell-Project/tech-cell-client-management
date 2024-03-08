@@ -7,10 +7,13 @@ const instanceLocation: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-})
+});
 
-export const getProvince = () => instanceLocation.get<Array<Province>>(`${ADDRESS_ENDPOINT}/provinces`)
+export const getProvince = () =>
+  instanceLocation.get<Array<Province>>(`${ADDRESS_ENDPOINT}/provinces`);
 
-export const getDistrict = (province_id: string) => instanceLocation.get<Array<District>>(`${ADDRESS_ENDPOINT}/districts/${province_id}`)
+export const getDistrict = (province_id: string) =>
+  instanceLocation.get<Array<District>>(`${ADDRESS_ENDPOINT}/districts/${province_id}`);
 
-export const getWard = (district_id: string) => instanceLocation.get<Array<Ward>>(`${ADDRESS_ENDPOINT}/wards/${district_id}`)
+export const getWard = (district_id: string) =>
+  instanceLocation.get<Array<Ward>>(`${ADDRESS_ENDPOINT}/wards/${district_id}`);

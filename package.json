@@ -9,10 +9,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,css,scss}'",
     "analyze": "cross-env ANALYZE=true next build",
     "sdk": "yarn add TechCell-Project/tech-cell-server-node-sdk",
     "docker:build": "docker compose build",
-    "docker:up": "docker compose up "
+    "docker:up": "docker compose up ",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,scss}": [
+      "npx prettier --config .prettierrc --write"
+    ]
   },
   "dependencies": {
     "@TechCell-Project/tech-cell-server-node-sdk": "TechCell-Project/tech-cell-server-node-sdk",
@@ -64,6 +76,9 @@
     "@types/recharts": "^1.8.24",
     "babel-plugin-import": "^1.13.8",
     "cross-env": "^7.0.3",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
     "sass": "^1.63.3",
     "tsconfig-paths": "^4.2.0"
   }

@@ -31,7 +31,7 @@ export const ADDRESS_ENDPOINT = '/address';
 export const NOTIFICATION_ENDPOINT = '/notifications';
 
 // Orders
-export const ORDER_ENDPOINT = '/orders-mnt'
+export const ORDER_ENDPOINT = '/orders-mnt';
 
 // Statistic
-export const STATS_ENDPOINT = '/stats'
+export const STATS_ENDPOINT = '/stats';

@@ -5,10 +5,13 @@ import { TITLE_TECHCELL } from '@constants/data';
 import dynamic from 'next/dynamic';
 import { LoadingPage } from '@components/Common';
 
-const AttributeDynamic = dynamic(() => import('@components/Features').then((res) => res.Attribute), {
-  ssr: false,
-  loading: () => <LoadingPage isLoading={true} />,
-});
+const AttributeDynamic = dynamic(
+  () => import('@components/Features').then((res) => res.Attribute),
+  {
+    ssr: false,
+    loading: () => <LoadingPage isLoading={true} />,
+  },
+);
 
 export default function Page() {
   useEffect(() => {

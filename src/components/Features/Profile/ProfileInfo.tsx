@@ -18,7 +18,10 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (values: UserAccount, { setSubmitting }: FormikHelpers<UserAccount>) => {
+  const handleSubmit = async (
+    values: UserAccount,
+    { setSubmitting }: FormikHelpers<UserAccount>,
+  ) => {
     const valueChanged: Partial<UserAccount> = {};
     for (const key in values) {
       if ((values as any)[key] !== (user as any)[key]) {
@@ -50,7 +53,7 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
 
   return (
     <Formik
-      initialValues={{ ...user as UserAccount }}
+      initialValues={{ ...(user as UserAccount) }}
       enableReinitialize
       onSubmit={handleSubmit}
       validationSchema={profileInfoValidate}
@@ -58,7 +61,7 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
       {({ values, dirty, isSubmitting }) => {
         return (
           <Form>
-            <Stack flexDirection='row' alignItems='flex-start' gap={5}>
+            <Stack flexDirection="row" alignItems="flex-start" gap={5}>
               <ProfileAvatar />
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -66,66 +69,60 @@ export const ProfileInfo = memo(({ handleClose }: { handleClose: () => void }) =
                 </Grid>
                 <Grid item md={6}>
                   <TextViewCustom
-                    label='Email'
+                    label="Email"
                     content={String(values.email)}
-                    unit={values?.emailVerified && <CheckCircleRoundedIcon fontSize='small' color='primary' />}
+                    unit={
+                      values?.emailVerified && (
+                        <CheckCircleRoundedIcon fontSize="small" color="primary" />
+                      )
+                    }
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextViewCustom
-                    label='Id'
-                    content={String(values._id)}
-                  />
+                  <TextViewCustom label="Id" content={String(values._id)} />
                 </Grid>
                 <Grid item md={6}>
                   <TextViewCustom
-                    label='Ngày tạo'
+                    label="Ngày tạo"
                     content={formatDateViVN(String(values?.createdAt))}
                   />
                 </Grid>
                 <Grid item md={6}>
                   <TextViewCustom
-                    label='Ngày cập nhật'
+                    label="Ngày cập nhật"
                     content={formatDateViVN(String(values?.updatedAt))}
                   />
                 </Grid>
                 <Grid item md={6}>
                   <TextViewCustom
-                    label='Trạng thái'
+                    label="Trạng thái"
                     content={values?.block?.isBlocked ? 'Bị chặn' : 'Hoạt động'}
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextViewCustom
-                    label='Vai trò'
-                    content={getRole(values.role)}
-                  />
+                  <TextViewCustom label="Vai trò" content={getRole(values.role)} />
                 </Grid>
                 <Grid item xs={12} mt={1}>
                   <p style={{ fontSize: '13px', fontWeight: 600 }}>2. Thông tin chỉnh sửa</p>
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='lastName' label='Họ' />
+                  <TextFieldCustom name="lastName" label="Họ" />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='firstName' label='Tên' />
+                  <TextFieldCustom name="firstName" label="Tên" />
                 </Grid>
                 <Grid item md={4}>
-                  <TextFieldCustom name='userName' label='Tên người dùng' />
+                  <TextFieldCustom name="userName" label="Tên người dùng" />
                 </Grid>
               </Grid>
             </Stack>
 
-            <Stack direction='row' justifyContent='flex-end' gap={1} mt={4}>
+            <Stack direction="row" justifyContent="flex-end" gap={1} mt={4}>
+              <ButtonCustom content="Hủy bỏ" variant="outlined" handleClick={handleClose} />
               <ButtonCustom
-                content='Hủy bỏ'
-                variant='outlined'
-                handleClick={handleClose}
-              />
-              <ButtonCustom
-                content='Lưu thông tin'
-                variant='contained'
-                type='submit'
+                content="Lưu thông tin"
+                variant="contained"
+                type="submit"
                 disabled={!dirty || isSubmitting}
               />
             </Stack>

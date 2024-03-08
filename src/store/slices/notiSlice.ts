@@ -10,7 +10,7 @@ type TSliceNotify = {
   isLoading: boolean;
   showReadmore: boolean;
   isPing: boolean;
-}
+};
 
 const initialState: TSliceNotify = {
   notifications: [],
@@ -33,24 +33,39 @@ export const notificationSlice = createSlice({
     setOnClickPing: (state) => {
       state.isPing = false;
     },
-    setPushNotifySocket: (state, { payload }: {
-      payload: NotificationModel
-    }) => {
+    setPushNotifySocket: (
+      state,
+      {
+        payload,
+      }: {
+        payload: NotificationModel;
+      },
+    ) => {
       state.notifications = [payload, ...state.notifications];
       state.isPing = true;
     },
-    getSuccess: (state, { payload }: {
-      payload: Array<NotificationModel>
-    }) => {
+    getSuccess: (
+      state,
+      {
+        payload,
+      }: {
+        payload: Array<NotificationModel>;
+      },
+    ) => {
       if (payload.length < 10) {
         state.showReadmore = false;
       }
       state.notifications = payload;
       state.isLoading = false;
     },
-    getMoreSuccess: (state, { payload }: {
-      payload: Array<NotificationModel>
-    }) => {
+    getMoreSuccess: (
+      state,
+      {
+        payload,
+      }: {
+        payload: Array<NotificationModel>;
+      },
+    ) => {
       if (payload.length < 10) {
         state.showReadmore = false;
       }
@@ -83,7 +98,6 @@ export const getAllNotification =
       dispatch(getFailure());
     }
   };
-
 
 const { actions, reducer } = notificationSlice;
 

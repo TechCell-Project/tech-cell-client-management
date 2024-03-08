@@ -42,24 +42,16 @@ const CFDeleteAddress = ({ isOpen, handleClose, addressIndex }: Props) => {
 
   return (
     <ShowDialog
-      dialogTitle='Xóa địa chỉ'
+      dialogTitle="Xóa địa chỉ"
       isOpen={isOpen}
       handleClose={handleClose}
       dialogStyle={{ maxWidth: 500 }}
-      dialogDesc={
-        <>
-          Bạn có chắc chắn muốn xóa địa chỉ này không?
-        </>
-      }
+      dialogDesc={<>Bạn có chắc chắn muốn xóa địa chỉ này không?</>}
     >
+      <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={handleClose} />
       <ButtonCustom
-        variant='outlined'
-        content='Hủy bỏ'
-        handleClick={handleClose}
-      />
-      <ButtonCustom
-        variant='contained'
-        content='Xác nhận'
+        variant="contained"
+        content="Xác nhận"
         handleClick={handleConfirm}
         disabled={isLoading}
       />

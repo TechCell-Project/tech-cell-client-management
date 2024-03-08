@@ -1,2 +1,2 @@
-export * from "./local";
-export * from "./funcs";
+export * from './local';
+export * from './funcs';

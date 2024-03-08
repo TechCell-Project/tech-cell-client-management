@@ -8,7 +8,7 @@ export type TStatsSlice = {
   statsOrder: StatisticDataOrder | null;
   isLoading: boolean;
   ok: boolean;
-}
+};
 
 const initialState: TStatsSlice = {
   stats: null,
@@ -24,9 +24,14 @@ export const statsSlice = createSlice({
     isFetching: (state) => {
       state.isLoading = true;
     },
-    getSuccessRevenue: (state, { payload }: {
-      payload: Statistic
-    }) => {
+    getSuccessRevenue: (
+      state,
+      {
+        payload,
+      }: {
+        payload: Statistic;
+      },
+    ) => {
       state.stats = payload;
       state.isLoading = false;
       if (!state.ok) state.ok = true;
@@ -51,7 +56,9 @@ export const getStats = (params: SearchStats) => async (dispatch: Dispatch) => {
   dispatch(isFetching());
   try {
     const { data, status } = await searchStatsRevenue(params, 'vi_VN');
-    const { data: dataOrder, status: statusOrder } = await searchStatsOrder(new SearchStatsOrder(params));
+    const { data: dataOrder, status: statusOrder } = await searchStatsOrder(
+      new SearchStatsOrder(params),
+    );
     if (status === HttpStatusCode.Ok) {
       dispatch(getSuccessRevenue(data));
     }
@@ -66,10 +73,5 @@ export const getStats = (params: SearchStats) => async (dispatch: Dispatch) => {
 
 const { actions, reducer } = statsSlice;
 
-export const {
-  isFetching,
-  getSuccessRevenue,
-  getSuccessOrder,
-  getFailure,
-} = actions;
+export const { isFetching, getSuccessRevenue, getSuccessOrder, getFailure } = actions;
 export default reducer;

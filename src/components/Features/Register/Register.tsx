@@ -31,7 +31,7 @@ export const Register = memo((props: DialogAction) => {
 
   return (
     <ShowDialog
-      dialogTitle='Thêm mới tài khoản'
+      dialogTitle="Thêm mới tài khoản"
       isOpen={props.isOpen}
       handleClose={props.handleClose}
       dialogStyle={{ minWidth: { sm: 380, md: 520 } }}
@@ -44,14 +44,14 @@ export const Register = memo((props: DialogAction) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Stack direction='column' gap={2}>
+            <Stack direction="column" gap={2}>
               <RegisterForm />
-              <Stack direction='row' gap={1} justifyContent='flex-end' sx={{ mt: 2 }}>
-                <ButtonCustom variant='outlined' content='Hủy bỏ' handleClick={props.handleClose} />
+              <Stack direction="row" gap={1} justifyContent="flex-end" sx={{ mt: 2 }}>
+                <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={props.handleClose} />
                 <ButtonCustom
-                  variant='contained'
-                  content='Đăng ký'
-                  type='submit'
+                  variant="contained"
+                  content="Đăng ký"
+                  type="submit"
                   disabled={isSubmitting}
                 />
               </Stack>

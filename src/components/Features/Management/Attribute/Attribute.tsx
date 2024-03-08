@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonCustom, DataTable, LoadingPage, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import {
+  ButtonCustom,
+  DataTable,
+  LoadingPage,
+  SelectInputCustom,
+  TextFieldCustom,
+} from '@components/Common';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { getAllAttributes, getDetailAttributeById } from '@store/slices/attributeSlice';
 import { AttributeModel, PagingAttribute } from '@models/Attribute';
@@ -36,7 +42,9 @@ export const Attribute = () => {
   };
 
   const loadAttributes = () => {
-    dispatch(getAllAttributes({ ...searchAttribute, page: paging.page, pageSize: paging.pageSize })).then();
+    dispatch(
+      getAllAttributes({ ...searchAttribute, page: paging.page, pageSize: paging.pageSize }),
+    ).then();
   };
 
   const columns: Array<GridColDef<AttributeModel>> = [
@@ -74,24 +82,24 @@ export const Attribute = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<AttributeModel>) => [
-        <Tooltip title='Chỉnh sửa' key={params.row._id}>
+        <Tooltip title="Chỉnh sửa" key={params.row._id}>
           <GridActionsCellItem
             icon={<EditRoundedIcon />}
             onClick={() => {
               handleGetDetails(params.row._id as string);
               setIsOpen((prev) => ({ ...prev, openEdit: true }));
             }}
-            label='Chỉnh sửa'
+            label="Chỉnh sửa"
           />
         </Tooltip>,
-        <Tooltip title='Xóa' key={params.row._id}>
+        <Tooltip title="Xóa" key={params.row._id}>
           <GridActionsCellItem
             icon={<AutoDeleteRoundedIcon />}
             onClick={() => {
               setCurrentAttribute(params.row);
               setIsOpen((prev) => ({ ...prev, openConfirmDelete: true }));
             }}
-            label='Xóa'
+            label="Xóa"
           />
         </Tooltip>,
       ],
@@ -108,26 +116,32 @@ export const Attribute = () => {
         }}
       >
         <Form>
-          <Box sx={{
-            bgcolor: '#fff',
-            padding: '25px 20px 20px 20px',
-            borderRadius: 2,
-            gap: '15px',
-            border: 0,
-            mb: '30px',
-          }}>
+          <Box
+            sx={{
+              bgcolor: '#fff',
+              padding: '25px 20px 20px 20px',
+              borderRadius: 2,
+              gap: '15px',
+              border: 0,
+              mb: '30px',
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item md={3}>
-                <TextFieldCustom name='keyword' label='Từ khóa' />
+                <TextFieldCustom name="keyword" label="Từ khóa" />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='select_type' label='Trạng thái' options={PRODUCT_TYPE_OPTIONS} />
+                <SelectInputCustom
+                  name="select_type"
+                  label="Trạng thái"
+                  options={PRODUCT_TYPE_OPTIONS}
+                />
               </Grid>
               <Grid item md={2}>
                 <ButtonCustom
-                  type='submit'
-                  variant='outlined'
-                  content='Tìm kiếm'
+                  type="submit"
+                  variant="outlined"
+                  content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
               </Grid>
@@ -146,7 +160,7 @@ export const Attribute = () => {
       />
 
       {isLoadingDetail ? (
-        <LoadingPage isLoading={isLoadingDetail} isBlur/>
+        <LoadingPage isLoading={isLoadingDetail} isBlur />
       ) : (
         <>
           {isOpen.openEdit && (

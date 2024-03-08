@@ -84,7 +84,11 @@ export const ORDER_STATUS_OPTIONS: TOrderStatusOptions[] = [
     step: OrderProcessStep.Third_Shipping,
     content: 'Xác nhận giao thành công',
   },
-  { name: 'Giao hàng thành công', value: PaymentStatus.COMPLETED, step: OrderProcessStep.Four_Completed },
+  {
+    name: 'Giao hàng thành công',
+    value: PaymentStatus.COMPLETED,
+    step: OrderProcessStep.Four_Completed,
+  },
   { name: 'Đã hủy', value: PaymentStatus.CANCELLED, step: OrderProcessStep.Five_Cancel },
 ];
 

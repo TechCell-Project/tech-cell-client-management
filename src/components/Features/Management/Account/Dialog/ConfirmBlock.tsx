@@ -11,11 +11,7 @@ import { UserAccount } from '@models/Account';
 export const ConfirmBlock = memo((props: DialogAction & { dataAccount: UserAccount }) => {
   const dispatch = useAppDispatch();
 
-  const handleAccountStatus = async (
-    id?: string,
-    email?: string,
-    action?: 'block' | 'unblock',
-  ) => {
+  const handleAccountStatus = async (id?: string, email?: string, action?: 'block' | 'unblock') => {
     let actionFunction;
     let successMessage;
 
@@ -76,16 +72,8 @@ export const ConfirmBlock = memo((props: DialogAction & { dataAccount: UserAccou
         )
       }
     >
-      <ButtonCustom
-        variant='outlined'
-        content='Hủy bỏ'
-        handleClick={props.handleClose}
-      />
-      <ButtonCustom
-        variant='contained'
-        content='Xác nhận'
-        handleClick={handleConfirm}
-      />
+      <ButtonCustom variant="outlined" content="Hủy bỏ" handleClick={props.handleClose} />
+      <ButtonCustom variant="contained" content="Xác nhận" handleClick={handleConfirm} />
     </ShowDialog>
   );
 });

@@ -21,16 +21,16 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
   return (
     <Toolbar sx={{ justifyContent: 'space-between' }}>
       <Stack
-        direction='row'
-        alignItems='center'
+        direction="row"
+        alignItems="center"
         gap={3}
         sx={{ mr: 2, ...(open && { display: 'none' }) }}
       >
         <IconButton
-          color='inherit'
-          aria-label='open drawer'
+          color="inherit"
+          aria-label="open drawer"
           onClick={handleDrawerOpen}
-          edge='start'
+          edge="start"
         >
           <MenuIcon />
         </IconButton>
@@ -39,7 +39,7 @@ const Header: FC<IHeader> = ({ open, handleDrawerOpen }) => {
       <Box sx={{ ...(!open && { display: 'none' }) }}>
         <UserBoxHeader role={getRole(user?.role)} name={`${user?.firstName} ${user?.lastName}`} />
       </Box>
-      <Stack direction='row' alignItems='center' justifyContent='flex-start' gap={2}>
+      <Stack direction="row" alignItems="center" justifyContent="flex-start" gap={2}>
         <SearchHeader />
         <Notification />
       </Stack>

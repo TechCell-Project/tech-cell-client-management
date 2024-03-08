@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { memo, useEffect, useState } from 'react';
 import DatePicker from '@mui/lab/DatePicker';
@@ -8,7 +8,8 @@ import {
   FastField,
   FastFieldAttributes,
   FastFieldProps,
-  FieldInputProps, FieldMetaProps,
+  FieldInputProps,
+  FieldMetaProps,
   FormikProps,
   FormikValues,
   getIn,
@@ -40,7 +41,8 @@ const DatetimePickerComponent = (props: DatetimeProps) => {
     meta,
     field,
     setFieldValue,
-    name, maxDate,
+    name,
+    maxDate,
     minDate,
     disabled,
     label,
@@ -96,11 +98,11 @@ const DatetimePickerComponent = (props: DatetimeProps) => {
         value={value}
         inputFormat={format}
         onChange={onChange}
-        renderInput={props => (
+        renderInput={(props) => (
           <TextField
             {...props}
             fullWidth
-            size='small'
+            size="small"
             label={label}
             placeholder={placeholder}
             InputLabelProps={{
@@ -127,9 +129,12 @@ const shouldComponentUpdate = (
     nextProps?.minDate !== currentProps?.minDate ||
     nextProps?.maxDate !== currentProps?.maxDate ||
     Object.keys(nextProps).length !== Object.keys(currentProps).length ||
-    getIn(nextProps.formik.values, currentProps.name) !== getIn(currentProps.formik.values, currentProps.name) ||
-    getIn(nextProps.formik.errors, currentProps.name) !== getIn(currentProps.formik.errors, currentProps.name) ||
-    getIn(nextProps.formik.touched, currentProps.name) !== getIn(currentProps.formik.touched, currentProps.name)
+    getIn(nextProps.formik.values, currentProps.name) !==
+      getIn(currentProps.formik.values, currentProps.name) ||
+    getIn(nextProps.formik.errors, currentProps.name) !==
+      getIn(currentProps.formik.errors, currentProps.name) ||
+    getIn(nextProps.formik.touched, currentProps.name) !==
+      getIn(currentProps.formik.touched, currentProps.name)
   );
 };
 

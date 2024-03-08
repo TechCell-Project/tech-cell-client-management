@@ -1,6 +1,6 @@
-import { AttributeDynamics } from "./Attribute";
-import { CategoryModel } from "./Category";
-import { Paging, PagingResponse } from "./Common";
+import { AttributeDynamics } from './Attribute';
+import { CategoryModel } from './Category';
+import { Paging, PagingResponse } from './Common';
 
 export class PagingProduct extends Paging {
   detail?: boolean = false;
@@ -30,7 +30,7 @@ export class ImageModel {
 
 export class ProductRequest {
   name?: string | null = null;
-  description?: string = "Chưa có mô tả!";
+  description?: string = 'Chưa có mô tả!';
   status?: number | null = null;
   category?: CategoryModel | null = null;
   generalAttributes?: Array<AttributeDynamics> = new Array<AttributeDynamics>();

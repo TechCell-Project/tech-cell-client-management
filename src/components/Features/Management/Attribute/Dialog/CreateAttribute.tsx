@@ -40,7 +40,7 @@ export const CreateAttribute = (props: Props) => {
 
   return (
     <ShowDialog
-      dialogTitle='Thêm mới thông số'
+      dialogTitle="Thêm mới thông số"
       handleClose={props.handleClose}
       isOpen={props.isOpen}
       dialogStyle={{ minWidth: 420 }}
@@ -59,27 +59,27 @@ export const CreateAttribute = (props: Props) => {
             }}
           >
             <>
-              <Stack direction='column' gap={2} alignItems='center' justifyContent='center'>
-                <TextFieldCustom name='name' label='Tên thông số' />
+              <Stack direction="column" gap={2} alignItems="center" justifyContent="center">
+                <TextFieldCustom name="name" label="Tên thông số" />
 
-                <TextFieldCustom name='label' label='# Label' />
+                <TextFieldCustom name="label" label="# Label" />
 
                 <TextFieldCustom
-                  name='description'
-                  label='Mô tả'
+                  name="description"
+                  label="Mô tả"
                   isTextArea
                   minRowArea={3}
                   maxRowArea={4}
                 />
               </Stack>
 
-              <Stack direction='row' justifyContent='flex-end' gap={2} sx={{ mt: 4 }}>
-                <ButtonCustom variant='outlined' handleClick={props.handleClose} content='Hủy bỏ' />
+              <Stack direction="row" justifyContent="flex-end" gap={2} sx={{ mt: 4 }}>
+                <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Hủy bỏ" />
                 <ButtonCustom
-                  variant='contained'
-                  type='submit'
+                  variant="contained"
+                  type="submit"
                   disabled={isSubmitting}
-                  content='Xác nhận'
+                  content="Xác nhận"
                 />
               </Stack>
             </>

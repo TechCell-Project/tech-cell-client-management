@@ -56,7 +56,10 @@
   }
 }
 
-.MuiCollapse-root .MuiCollapse-wrapper .MuiCollapse-wrapperInner .MuiButtonBase-root.MuiListItemButton-root.Mui-selected {
+.MuiCollapse-root
+  .MuiCollapse-wrapper
+  .MuiCollapse-wrapperInner
+  .MuiButtonBase-root.MuiListItemButton-root.Mui-selected {
   background-color: transparent;
 
   &::before {
@@ -219,5 +222,3 @@ g.recharts-layer {
   font-size: 10px;
   font-weight: 600;
 }
-
-

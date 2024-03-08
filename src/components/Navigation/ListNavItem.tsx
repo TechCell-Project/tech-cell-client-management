@@ -22,14 +22,17 @@ interface Props {
   subHeader?: string;
 }
 
-const NavWithAction = ({ item, handleClick }: { item: any, handleClick: React.MouseEventHandler<HTMLDivElement> }) => {
+const NavWithAction = ({
+  item,
+  handleClick,
+}: {
+  item: any;
+  handleClick: React.MouseEventHandler<HTMLDivElement>;
+}) => {
   const theme = useTheme();
 
   return (
-    <ListItemButton
-      sx={{ borderRadius: '10px' }}
-      onClick={handleClick}
-    >
+    <ListItemButton sx={{ borderRadius: '10px' }} onClick={handleClick}>
       <ListItemIcon sx={{ minWidth: '40px' }}>
         <item.icon />
       </ListItemIcon>
@@ -60,17 +63,11 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
             </Link>
           );
         } else if (nav.isLogout) {
-          return (
-            <NavWithAction item={nav} handleClick={() => dispatch(logout())} />
-          );
+          return <NavWithAction item={nav} handleClick={() => dispatch(logout())} />;
         } else if (nav.isChangePass) {
-          return (
-            <NavWithAction item={nav} handleClick={() => setOpenChangePass(true)} />
-          );
+          return <NavWithAction item={nav} handleClick={() => setOpenChangePass(true)} />;
         } else if (nav.isProfile) {
-          return (
-            <NavWithAction item={nav} handleClick={() => setOpenProfile(true)} />
-          );
+          return <NavWithAction item={nav} handleClick={() => setOpenProfile(true)} />;
         } else if (nav.isCollapse) {
           return (
             <>
@@ -85,7 +82,7 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
               </ListItemButton>
               <Collapse
                 in={openCollapse}
-                timeout='auto'
+                timeout="auto"
                 unmountOnExit
                 sx={{ transition: 'all ease-in 0.3s', m: '10px 0' }}
               >
@@ -141,7 +138,7 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
               color: 'rgba(0, 0, 0, 0.8)',
               textTransform: 'uppercase',
             }}
-            component='div'
+            component="div"
           >
             {subHeader ?? ''}
           </ListSubheader>
@@ -154,9 +151,7 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
         <ChangePassword isOpen={openChangePass} handleClose={() => setOpenChangePass(false)} />
       )}
 
-      {openProfile && (
-        <Profile isOpen={openProfile} handleClose={() => setOpenProfile(false)} />
-      )}
+      {openProfile && <Profile isOpen={openProfile} handleClose={() => setOpenProfile(false)} />}
     </>
   );
 };

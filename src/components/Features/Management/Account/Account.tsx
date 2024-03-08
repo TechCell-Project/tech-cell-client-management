@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ButtonCustom, ChipStatus, DataTable, SelectInputCustom, TextFieldCustom } from '@components/Common';
+import {
+  ButtonCustom,
+  ChipStatus,
+  DataTable,
+  SelectInputCustom,
+  TextFieldCustom,
+} from '@components/Common';
 import { getAllUserAccount, getDetailsUserAccount } from '@store/slices/accountSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import {
@@ -23,7 +29,11 @@ import { PagingAccount, UserAccount } from '@models/Account';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Paging } from '@models/Common';
-import { ACCOUNT_EMAIL_OPTIONS, ACCOUNT_ROLE_OPTIONS, ACCOUNT_STATUS_OPTIONS } from '@constants/options';
+import {
+  ACCOUNT_EMAIL_OPTIONS,
+  ACCOUNT_ROLE_OPTIONS,
+  ACCOUNT_STATUS_OPTIONS,
+} from '@constants/options';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -43,11 +53,13 @@ export const Account = () => {
   }, [searchAccount, paging]);
 
   const loadUserAccount = () => {
-    dispatch(getAllUserAccount({
-      ...searchAccount,
-      page: paging.page,
-      pageSize: paging.pageSize,
-    })).then();
+    dispatch(
+      getAllUserAccount({
+        ...searchAccount,
+        page: paging.page,
+        pageSize: paging.pageSize,
+      }),
+    ).then();
   };
 
   const loadDataDetails = (id: string) => {
@@ -95,12 +107,7 @@ export const Account = () => {
       headerAlign: 'center',
       renderCell: (params) => {
         const status = getStatusAccount(params.row.block?.isBlocked);
-        return (
-          <ChipStatus
-            label={status}
-            type={status}
-          />
-        );
+        return <ChipStatus label={status} type={status} />;
       },
     },
     {
@@ -111,17 +118,17 @@ export const Account = () => {
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<UserAccount>) => [
-        <Tooltip title='Chi tiết' key={params.row._id}>
+        <Tooltip title="Chi tiết" key={params.row._id}>
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => {
               setOpenDetails(true);
               loadDataDetails(params.row._id as string);
             }}
-            label='Chi tiết'
+            label="Chi tiết"
           />
         </Tooltip>,
-        <Tooltip title='Thay đổi vai trò' key={params.row._id}>
+        <Tooltip title="Thay đổi vai trò" key={params.row._id}>
           <span>
             <GridActionsCellItem
               icon={<ChangeCircleOutlinedIcon />}
@@ -129,14 +136,16 @@ export const Account = () => {
                 setOpenChangeRole(true);
                 setDataRowSelected(params.row);
               }}
-              label='Đổi vai trò'
-              disabled={params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)}
+              label="Đổi vai trò"
+              disabled={
+                params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
+              }
             />
           </span>
         </Tooltip>,
         <>
           {!params.row?.block?.isBlocked ? (
-            <Tooltip title='Chặn'>
+            <Tooltip title="Chặn">
               <span>
                 <GridActionsCellItem
                   icon={<BlockOutlinedIcon />}
@@ -144,15 +153,16 @@ export const Account = () => {
                     setOpenDeleteConfirm(true);
                     setDataRowSelected(params.row);
                   }}
-                  label='Chặn tài khoản'
+                  label="Chặn tài khoản"
                   disabled={
-                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
+                    params.row._id === getCurrentUserId() ||
+                    !isRoleAccepted(params.row.role as string)
                   }
                 />
               </span>
             </Tooltip>
           ) : (
-            <Tooltip title='Mở khóa'>
+            <Tooltip title="Mở khóa">
               <span>
                 <GridActionsCellItem
                   icon={<LockOpenOutlinedIcon />}
@@ -160,9 +170,10 @@ export const Account = () => {
                     setOpenDeleteConfirm(true);
                     setDataRowSelected(params.row);
                   }}
-                  label='Mở khóa tài khoản'
+                  label="Mở khóa tài khoản"
                   disabled={
-                    params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
+                    params.row._id === getCurrentUserId() ||
+                    !isRoleAccepted(params.row.role as string)
                   }
                 />
               </span>
@@ -183,32 +194,42 @@ export const Account = () => {
         }}
       >
         <Form>
-          <Box sx={{
-            bgcolor: '#fff',
-            padding: '25px 20px 20px 20px',
-            borderRadius: 2,
-            gap: '15px',
-            border: 0,
-            mb: '30px',
-          }}>
+          <Box
+            sx={{
+              bgcolor: '#fff',
+              padding: '25px 20px 20px 20px',
+              borderRadius: 2,
+              gap: '15px',
+              border: 0,
+              mb: '30px',
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item md={3}>
-                <TextFieldCustom name='keyword' label='Từ khóa' />
+                <TextFieldCustom name="keyword" label="Từ khóa" />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='status' label='Trạng thái' options={ACCOUNT_STATUS_OPTIONS} />
+                <SelectInputCustom
+                  name="status"
+                  label="Trạng thái"
+                  options={ACCOUNT_STATUS_OPTIONS}
+                />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='role' label='Vai trò' options={ACCOUNT_ROLE_OPTIONS} />
+                <SelectInputCustom name="role" label="Vai trò" options={ACCOUNT_ROLE_OPTIONS} />
               </Grid>
               <Grid item md={3}>
-                <SelectInputCustom name='emailVerified' label='Tình trạng email' options={ACCOUNT_EMAIL_OPTIONS} />
+                <SelectInputCustom
+                  name="emailVerified"
+                  label="Tình trạng email"
+                  options={ACCOUNT_EMAIL_OPTIONS}
+                />
               </Grid>
-              <Grid item md={12} textAlign='right'>
+              <Grid item md={12} textAlign="right">
                 <ButtonCustom
-                  type='submit'
-                  variant='outlined'
-                  content='Tìm kiếm'
+                  type="submit"
+                  variant="outlined"
+                  content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
               </Grid>

@@ -38,9 +38,5 @@ export default function LoginPage() {
     }
   }, [isAuthenticated]);
 
-  return isAuthenticated ? (
-    <LoadingPage isLoading={true} />
-  ) : (
-    <LoginDynamic />
-  );
+  return isAuthenticated ? <LoadingPage isLoading={true} /> : <LoginDynamic />;
 }

@@ -27,23 +27,12 @@ const createNoopStorage = () => {
   };
 };
 
-const storage =
-  typeof window !== 'undefined'
-    ? createWebStorage('local')
-    : createNoopStorage();
+const storage = typeof window !== 'undefined' ? createWebStorage('local') : createNoopStorage();
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [
-    'account',
-    'product',
-    'attribute',
-    'category',
-    'order',
-    'notification',
-    'stats',
-  ],
+  blacklist: ['account', 'product', 'attribute', 'category', 'order', 'notification', 'stats'],
 };
 
 const rootReducer = combineReducers({

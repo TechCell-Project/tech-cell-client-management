@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import React, { memo } from "react";
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import React, { memo } from 'react';
 
 interface Props {
   name: string;
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const SelectCustom = memo((props: Props) => {
-  const { displayOption = "name", displayValue = "value" } = props;
+  const { displayOption = 'name', displayValue = 'value' } = props;
 
   return (
     <TextField
@@ -39,8 +39,8 @@ export const SelectCustom = memo((props: Props) => {
       fullWidth
       sx={{
         ...props.styles,
-        "& .MuiInputBase-root .MuiSelect-select": {
-          maxHeight: "20px",
+        '& .MuiInputBase-root .MuiSelect-select': {
+          maxHeight: '20px',
         },
       }}
       InputLabelProps={{
@@ -51,9 +51,7 @@ export const SelectCustom = memo((props: Props) => {
     >
       {props.options.map((option) => (
         <MenuItem
-          defaultValue={
-            option[displayValue] === null ? "" : option[displayValue]
-          }
+          defaultValue={option[displayValue] === null ? '' : option[displayValue]}
           key={option[displayValue]}
           value={option[displayValue]}
           disabled={props.disabledItem}

@@ -86,8 +86,8 @@ export const TinyEditor = memo((props: Props) => {
               right: '12px',
               zIndex: 100,
             }}
-            variant='text'
-            content='Lưu bài'
+            variant="text"
+            content="Lưu bài"
             handleClick={handleSaveContent}
             endIcon={<SaveAsRoundedIcon />}
           />

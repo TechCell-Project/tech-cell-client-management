@@ -25,11 +25,11 @@ export const Notification = memo(() => {
     return [
       {
         name: 'Tất cả',
-        component: <NotificationList status='all' onClose={() => setAnchorEl(null)} />,
+        component: <NotificationList status="all" onClose={() => setAnchorEl(null)} />,
       },
       {
         name: 'Chưa đọc',
-        component: <NotificationList status='unread' onClose={() => setAnchorEl(null)} />,
+        component: <NotificationList status="unread" onClose={() => setAnchorEl(null)} />,
       },
     ];
   }, []);
@@ -39,7 +39,7 @@ export const Notification = memo(() => {
       <IconBtnCustom
         icon={<NotificationsNoneRoundedIcon />}
         isBadge
-        badgeVariant='dot'
+        badgeVariant="dot"
         badgeInvisible={!isPing}
         onClick={(event) => {
           setAnchorEl(event.currentTarget);
@@ -63,19 +63,21 @@ export const Notification = memo(() => {
         }}
       >
         <Stack
-          flexDirection='column'
-          alignItems='flex-start'
+          flexDirection="column"
+          alignItems="flex-start"
           gap={1}
           sx={{ width: '380px' }}
-          padding='12px 20px'
+          padding="12px 20px"
         >
-          <Stack flexDirection='row' alignItems='center' gap={1} width='100%'>
-            <Typography variant='h6' fontWeight={700}>Thông báo</Typography>
+          <Stack flexDirection="row" alignItems="center" gap={1} width="100%">
+            <Typography variant="h6" fontWeight={700}>
+              Thông báo
+            </Typography>
           </Stack>
           <Tabs
             value={tabNotifyIndex}
             onChange={(_: React.SyntheticEvent, index: number) => setTabNotifyIndex(index)}
-            aria-label='tabs'
+            aria-label="tabs"
             sx={{
               '& .MuiTabs-indicator': {
                 display: 'none',

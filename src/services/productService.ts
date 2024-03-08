@@ -6,7 +6,7 @@ import instance from '@config/axios.config';
 
 export const getProducts = (payload: PagingProduct) => {
   const url = getSearchParams(payload);
-  return instance.get<PagingResponse<ProductModel>>(PRODUCTS_ENDPOINT + "?" + url);
+  return instance.get<PagingResponse<ProductModel>>(PRODUCTS_ENDPOINT + '?' + url);
 };
 
 export const postProduct = (payload: Partial<ProductRequest>) =>

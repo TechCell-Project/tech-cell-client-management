@@ -16,7 +16,7 @@ export const DetailsAccount = memo((props: DialogAction) => {
 
   return (
     <ShowDialog
-      dialogTitle='Thông tin tài khoản'
+      dialogTitle="Thông tin tài khoản"
       handleClose={props.handleClose}
       isOpen={props.isOpen}
       dialogStyle={{ minWidth: '45%' }}
@@ -37,41 +37,40 @@ export const DetailsAccount = memo((props: DialogAction) => {
               </Grid>
               <Grid item md={12}>
                 <TextViewCustom
-                  label='Email'
+                  label="Email"
                   content={String(account?.email)}
-                  unit={account?.emailVerified && (
-                    <CheckCircleRoundedIcon fontSize='small' color='primary' />
-                  )}
+                  unit={
+                    account?.emailVerified && (
+                      <CheckCircleRoundedIcon fontSize="small" color="primary" />
+                    )
+                  }
                   stylesLabel={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 />
               </Grid>
               <Grid item md={6}>
                 <TextViewCustom
-                  label='Họ và tên'
+                  label="Họ và tên"
                   content={`${account?.firstName} ${account?.lastName}`}
                 />
               </Grid>
               <Grid item md={6}>
-                <TextViewCustom
-                  label='Vai trò'
-                  content={getRole(account?.role) ?? ''}
-                />
+                <TextViewCustom label="Vai trò" content={getRole(account?.role) ?? ''} />
               </Grid>
               <Grid item md={6}>
                 <TextViewCustom
-                  label='Trạng thái TK'
+                  label="Trạng thái TK"
                   content={getStatusAccount(account?.block?.isBlocked)}
                 />
               </Grid>
               <Grid item md={6}>
                 <TextViewCustom
-                  label='Thời gian tạo'
+                  label="Thời gian tạo"
                   content={formatDateViVN(account?.createdAt ?? '')}
                 />
               </Grid>
               <Grid item md={6}>
                 <TextViewCustom
-                  label='Thời gian chỉnh sửa'
+                  label="Thời gian chỉnh sửa"
                   content={formatDateViVN(account?.updatedAt ?? '')}
                 />
               </Grid>
@@ -79,24 +78,28 @@ export const DetailsAccount = memo((props: DialogAction) => {
                 <p style={{ fontSize: '14px', fontWeight: 600 }}>2. Địa chỉ mặc định</p>
               </Grid>
 
-              {account?.address && account?.address.length > 0 ? account?.address.map((item) => {
-                return item.isDefault && (
-                  <>
-                    <Grid item xs={12}>
-                      <TextViewCustom label='Loại' content={String(item.addressName)} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextViewCustom label='Địa chỉ' content={getAddressLocation(item)} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextViewCustom label='SDT' content={String(item.phoneNumbers)} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextViewCustom label='Chi tiết' content={String(item.detail)} />
-                    </Grid>
-                  </>
-                );
-              }) : (
+              {account?.address && account?.address.length > 0 ? (
+                account?.address.map((item) => {
+                  return (
+                    item.isDefault && (
+                      <>
+                        <Grid item xs={12}>
+                          <TextViewCustom label="Loại" content={String(item.addressName)} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextViewCustom label="Địa chỉ" content={getAddressLocation(item)} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextViewCustom label="SDT" content={String(item.phoneNumbers)} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextViewCustom label="Chi tiết" content={String(item.detail)} />
+                        </Grid>
+                      </>
+                    )
+                  );
+                })
+              ) : (
                 <Grid item xs={12}>
                   <p style={{ fontSize: '14px', fontWeight: 500 }}>
                     Tài khoản này chưa có địa chỉ!
@@ -104,8 +107,8 @@ export const DetailsAccount = memo((props: DialogAction) => {
                 </Grid>
               )}
             </Grid>
-            <Stack alignItems='flex-end' sx={{ marginTop: '20px' }}>
-              <ButtonCustom variant='outlined' handleClick={props.handleClose} content='Đóng' />
+            <Stack alignItems="flex-end" sx={{ marginTop: '20px' }}>
+              <ButtonCustom variant="outlined" handleClick={props.handleClose} content="Đóng" />
             </Stack>
           </>
         )}

@@ -10,7 +10,7 @@ moment.locale('vi', {
     w: '%d tuần',
     M: '%d tháng',
     y: '%d năm',
-  }
+  },
 });
 const momentVi = (date: Date | string | number) => moment(date);
 

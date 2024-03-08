@@ -29,10 +29,9 @@ export class Statistic extends FilterByDatetime {
   data: Array<StatisticData> = new Array<StatisticData>();
 }
 
+export type StatsOrderDataType = { name: string; value: number; color: string };
 
-export type StatsOrderDataType = { name: string; value: number, color: string }
-
-export class StatisticDataOrder extends FilterByDatetime{
+export class StatisticDataOrder extends FilterByDatetime {
   data: StatsOrderDataType[] = [];
 }
 

@@ -18,18 +18,20 @@ export const OrderDetails = ({ id }: { id: string }) => {
     <LoadingSection isLoading={isLoadingDetails} />
   ) : (
     <Box sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '25px 30px' }}>
-      <Grid container spacing={4} overflow='hidden'>
+      <Grid container spacing={4} overflow="hidden">
         <Grid item md={8}>
           <OrderInfo />
         </Grid>
-        <Grid item md={4} position='relative'>
-          <hr style={{
-            position: 'absolute',
-            left: -1,
-            width: '1px',
-            height: '100%',
-            backgroundColor: 'rgba(0,0,0,0.1)',
-          }} />
+        <Grid item md={4} position="relative">
+          <hr
+            style={{
+              position: 'absolute',
+              left: -1,
+              width: '1px',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.1)',
+            }}
+          />
           <OrderInvoice />
         </Grid>
       </Grid>

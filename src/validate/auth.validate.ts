@@ -9,7 +9,9 @@ export const loginValidate = Yup.object({
 });
 
 export const registerValidate = Yup.object({
-  userName: Yup.string().min(8, 'Tên tài khoản ít nhất 8 ký tự!').required('Bạn hãy nhập tên tài khoản!'),
+  userName: Yup.string()
+    .min(8, 'Tên tài khoản ít nhất 8 ký tự!')
+    .required('Bạn hãy nhập tên tài khoản!'),
   password: Yup.string()
     .min(8, 'Mật khẩu có ít nhất 8 kí tự!')
     .max(24, 'Mật khẩu có nhiều nhất 24 kí tự')
@@ -18,9 +20,7 @@ export const registerValidate = Yup.object({
 });
 
 export const forgotPasswordValidate = Yup.object({
-  email: Yup.string()
-    .email('Sai định dạng email!')
-    .required('Email không được bỏ trống!'),
+  email: Yup.string().email('Sai định dạng email!').required('Email không được bỏ trống!'),
   otpCode: Yup.string()
     .matches(/^\d+$/, 'Mã OTP chỉ được chứa ký tự số!')
     .length(6, 'Mã OTP gồm 6 ký tự số!')
@@ -35,9 +35,7 @@ export const forgotPasswordValidate = Yup.object({
 });
 
 export const verifyEmailValidate = Yup.object({
-  email: Yup.string()
-    .email('Sai định dạng email!')
-    .required('Email không được bỏ trống!'),
+  email: Yup.string().email('Sai định dạng email!').required('Email không được bỏ trống!'),
   otpCode: Yup.string()
     .matches(/^\d+$/, 'Mã OTP chỉ được chứa ký tự số!')
     .length(6, 'Mã OTP gồm 6 ký tự số!')

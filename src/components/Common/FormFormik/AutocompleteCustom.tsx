@@ -17,8 +17,8 @@ import {
   getIn,
 } from 'formik';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
-const checkedIcon = <CheckBoxIcon fontSize='small' />;
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 type SelectValue<T> = T | T[] | null;
 
@@ -120,7 +120,7 @@ function AutocompleteComponent<T>(props: Readonly<MultiSelectProps<T>>) {
       getOptionLabel={getDefaultOptionLabel}
       onChange={defaultHandleChange}
       // noOptionsText="Không có dữ liệu"
-      size='small'
+      size="small"
       renderInput={(params) => (
         <TextField
           {...params}
@@ -135,7 +135,7 @@ function AutocompleteComponent<T>(props: Readonly<MultiSelectProps<T>>) {
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading ? <CircularProgress color='inherit' size={15} /> : null}
+                {isLoading ? <CircularProgress color="inherit" size={15} /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
@@ -160,20 +160,20 @@ const shouldComponentUpdate = (
   nextProps?.disabled !== currentProps?.disabled ||
   Object.keys(nextProps).length !== Object.keys(currentProps).length ||
   getIn(nextProps.formik.values, currentProps.name) !==
-  getIn(currentProps.formik.values, currentProps.name) ||
+    getIn(currentProps.formik.values, currentProps.name) ||
   getIn(nextProps.formik.errors, currentProps.name) !==
-  getIn(currentProps.formik.errors, currentProps.name) ||
+    getIn(currentProps.formik.errors, currentProps.name) ||
   getIn(nextProps.formik.touched, currentProps.name) !==
-  getIn(currentProps.formik.touched, currentProps.name);
+    getIn(currentProps.formik.touched, currentProps.name);
 
 function AutocompleteCustom<T = any>(props: Readonly<Props<T>>) {
   return (
     <FastField {...props} name={props.name} shouldUpdate={shouldComponentUpdate}>
       {({
-          field,
-          meta,
-          form,
-        }: {
+        field,
+        meta,
+        form,
+      }: {
         field: FieldInputProps<T | T[]>;
         meta: FieldMetaProps<T | T[]>;
         form: FormikProps<T | T[]>;

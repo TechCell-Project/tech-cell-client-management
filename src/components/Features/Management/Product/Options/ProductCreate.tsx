@@ -58,7 +58,7 @@ export const ProductCreate = () => {
   };
 
   return (
-    <Box component='div' sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
+    <Box component="div" sx={{ bgcolor: '#fff', borderRadius: '8px', padding: '15px 25px' }}>
       <Formik
         initialValues={new ProductRequest()}
         enableReinitialize
@@ -68,12 +68,12 @@ export const ProductCreate = () => {
         {({ isSubmitting }) => {
           return (
             <Form>
-              <Stack width='100%' flexDirection='column' alignItems='flex-start'>
-                <Stack flexDirection='row' alignItems='center' gap={2}>
+              <Stack width="100%" flexDirection="column" alignItems="flex-start">
+                <Stack flexDirection="row" alignItems="center" gap={2}>
                   <Typography
-                    variant='h5'
-                    fontSize='1.2rem'
-                    fontWeight='600'
+                    variant="h5"
+                    fontSize="1.2rem"
+                    fontWeight="600"
                     color={theme.color.black}
                   >
                     Thêm mới sản phẩm
@@ -83,7 +83,7 @@ export const ProductCreate = () => {
                 <Tabs
                   value={tabIndex}
                   onChange={(_: React.SyntheticEvent, index: number) => setTabIndex(index)}
-                  aria-label='tabs create product'
+                  aria-label="tabs create product"
                   sx={{
                     mt: 1,
                     '& .MuiTabs-indicator': {
@@ -110,24 +110,24 @@ export const ProductCreate = () => {
                 {tabsProduct[tabIndex].component}
 
                 <Stack
-                  flexDirection='row'
-                  alignItems='center'
-                  justifyContent='flex-end'
-                  width='100%'
-                  gap='15px'
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  width="100%"
+                  gap="15px"
                   mt={2}
                 >
                   <ButtonCustom
-                    variant='text'
+                    variant="text"
                     handleClick={() => router.back()}
-                    content='Quay lại'
+                    content="Quay lại"
                     startIcon={<KeyboardBackspaceRoundedIcon />}
                   />
                   <ButtonCustom
-                    variant='contained'
-                    type='submit'
+                    variant="contained"
+                    type="submit"
                     disabled={isSubmitting}
-                    content='Thêm mới'
+                    content="Thêm mới"
                   />
                 </Stack>
               </Stack>

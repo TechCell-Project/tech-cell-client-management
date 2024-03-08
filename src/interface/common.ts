@@ -18,9 +18,9 @@ export interface DialogAction {
 export type TOptions = {
   name: string;
   value: string | number | null;
-}
+};
 
 export type TOrderStatusOptions = TOptions & {
   step: number;
   content?: string;
-}
+};

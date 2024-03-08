@@ -16,7 +16,15 @@ interface Props {
   tooltip?: string;
   size?: 'small' | 'medium' | 'large';
   type?: 'button' | 'reset' | 'submit';
-  colorIcon?: 'inherit' | 'default' | 'secondary' | 'primary' | 'error' | 'info' | 'success' | 'warning';
+  colorIcon?:
+    | 'inherit'
+    | 'default'
+    | 'secondary'
+    | 'primary'
+    | 'error'
+    | 'info'
+    | 'success'
+    | 'warning';
 }
 
 export const IconBtnCustom = ({
@@ -49,7 +57,7 @@ export const IconBtnCustom = ({
         {isBadge ? (
           <Badge
             badgeContent={badgeContent}
-            color='secondary'
+            color="secondary"
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right',
@@ -74,7 +82,7 @@ export const IconBtnCustom = ({
   };
 
   return tooltip ? (
-    <Tooltip title={tooltip} placement='bottom'>
+    <Tooltip title={tooltip} placement="bottom">
       {renderButton()}
     </Tooltip>
   ) : (

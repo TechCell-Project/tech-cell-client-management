@@ -19,14 +19,12 @@ export const ProfileAvatar = memo(() => {
   };
 
   return (
-    <Dropzone
-      onDrop={handleDrop}
-      noClick={false}
-      noKeyboard
-    >
+    <Dropzone onDrop={handleDrop} noClick={false} noKeyboard>
       {({ getRootProps, getInputProps }) => (
         <div className={styles.dropzoneAvatar}>
-          <Typography variant='body1' fontWeight={600} textAlign='center'>Avatar</Typography>
+          <Typography variant="body1" fontWeight={600} textAlign="center">
+            Avatar
+          </Typography>
           <div {...getRootProps()}>
             <AvatarEditor width={120} height={120} image={avatar} borderRadius={1000} />
             <input {...getInputProps()} />

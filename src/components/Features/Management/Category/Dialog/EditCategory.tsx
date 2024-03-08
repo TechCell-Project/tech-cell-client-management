@@ -101,7 +101,7 @@ export const EditCategory = (props: DialogAction) => {
                   placeholder="Thông số"
                   multiple
                   searchValue={searchAttribute.keyword}
-                  handleChangeSearchValue={({target}) =>
+                  handleChangeSearchValue={({ target }) =>
                     setSearchAttribute((prev) => ({ ...prev, keyword: target.value }))
                   }
                   handleBlurSearchValue={() => {

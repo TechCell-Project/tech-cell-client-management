@@ -38,5 +38,5 @@ export {
   LegendImpl as Legend,
   PieChartImpl as PieChart,
   PieImpl as Pie,
-  CellIml as Cell
+  CellIml as Cell,
 };

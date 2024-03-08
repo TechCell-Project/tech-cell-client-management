@@ -23,14 +23,16 @@ import { login } from '@store/slices/authSlice';
 import { VerifyForm } from '@components/Features';
 import { EMAIL_TEST, PASSWORD_TEST } from '@constants/data';
 
-
 export const LoginForm = memo(() => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
   const [isOpenVerify, setIsOpenVerify] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (values: LoginModel, { resetForm, setSubmitting }: FormikHelpers<LoginModel>) => {
+  const handleSubmit = async (
+    values: LoginModel,
+    { resetForm, setSubmitting }: FormikHelpers<LoginModel>,
+  ) => {
     try {
       const response = await dispatch(login(values));
       if (response?.isNotVerify) {
@@ -45,50 +47,51 @@ export const LoginForm = memo(() => {
   return (
     <>
       <Formik
-        initialValues={new LoginModel({
+        initialValues={
+          new LoginModel({
             emailOrUsername: EMAIL_TEST,
             password: PASSWORD_TEST,
-          },
-        )}
+          })
+        }
         validationSchema={loginValidate}
         enableReinitialize
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, values, handleChange, errors, touched }) => (
           <Form>
-            <Stack direction='column'>
+            <Stack direction="column">
               <TextField
-                label='Tên tài khoản hoặc email'
-                name='emailOrUsername'
+                label="Tên tài khoản hoặc email"
+                name="emailOrUsername"
                 value={values.emailOrUsername ?? ''}
                 error={touched.emailOrUsername && Boolean(errors.emailOrUsername)}
                 helperText={touched.emailOrUsername && errors.emailOrUsername}
                 fullWidth
                 onChange={handleChange}
-                variant='standard'
+                variant="standard"
                 sx={{ mb: 3 }}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position='start'>
+                    <InputAdornment position="start">
                       <AttachEmailIcon />
                     </InputAdornment>
                   ),
                 }}
               />
-              <FormControl fullWidth variant='standard'>
-                <InputLabel htmlFor='password' error={touched.password && Boolean(errors.password)}>
+              <FormControl fullWidth variant="standard">
+                <InputLabel htmlFor="password" error={touched.password && Boolean(errors.password)}>
                   Mật khẩu
                 </InputLabel>
                 <Input
-                  name='password'
+                  name="password"
                   value={values.password || ''}
                   onChange={handleChange}
                   error={touched.password && Boolean(errors.password)}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
-                        aria-label='toggle password visibility'
+                        aria-label="toggle password visibility"
                         onClick={() => setShowPassword((show) => !show)}
                         onMouseDown={(e) => e.preventDefault()}
                       >
@@ -105,8 +108,8 @@ export const LoginForm = memo(() => {
               </FormControl>
 
               <Typography
-                variant='body2'
-                textAlign='right'
+                variant="body2"
+                textAlign="right"
                 fontWeight={500}
                 sx={{ pt: 2, cursor: 'pointer' }}
                 onClick={() => setOpenForgotPassword(true)}
@@ -115,12 +118,12 @@ export const LoginForm = memo(() => {
               </Typography>
 
               <ButtonCustom
-                variant='contained'
+                variant="contained"
                 fullWidth
-                type='submit'
-                content='Đăng Nhập'
+                type="submit"
+                content="Đăng Nhập"
                 disabled={isSubmitting}
-                size='large'
+                size="large"
                 styles={{
                   marginTop: '20px',
                   fontWeight: 600,
@@ -140,10 +143,7 @@ export const LoginForm = memo(() => {
       )}
 
       {isOpenVerify && (
-        <VerifyForm
-          isOpen={isOpenVerify}
-          handleClose={() => setIsOpenVerify(false)}
-        />
+        <VerifyForm isOpen={isOpenVerify} handleClose={() => setIsOpenVerify(false)} />
       )}
     </>
   );
