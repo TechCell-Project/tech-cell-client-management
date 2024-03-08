@@ -76,11 +76,8 @@ export const getIndexNo = (index: number, page: number, pageSize: number): numbe
 
 // format
 export const formatWithCommas = (number: number) => {
-  // if (number) {
-  //   return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫`;
-  // }
-  if(number) {
-    return number.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+  if (number) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
   }
   return '0₫';
 };
