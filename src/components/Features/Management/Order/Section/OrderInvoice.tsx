@@ -28,7 +28,10 @@ const OrderInvoice = () => {
   const calculateTempPrice = useCallback(() => {
     // @ts-ignore
     return (
-      order?.products.reduce((acc, product) => acc + product.price.base * product.quantity, 0) ?? 0
+      order?.products.reduce(
+        (acc, product) => acc + Number(product.price.base) * Number(product.quantity),
+        0,
+      ) ?? 0
     );
   }, [order]);
 
