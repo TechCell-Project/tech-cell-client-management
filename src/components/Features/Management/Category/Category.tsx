@@ -47,17 +47,20 @@ export const Category = () => {
     {
       field: 'name',
       headerName: 'Thể loại',
-      width: 200,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: 'label',
       headerName: '# Label',
-      width: 200,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: 'requiresAttribute',
       headerName: 'Danh sách thông số/thuộc tính',
-      minWidth: 400,
+      minWidth: 560,
+      flex: 1,
       headerAlign: 'center',
       valueGetter: (params) => {
         const value = params.row.requireAttributes?.map(
@@ -69,7 +72,8 @@ export const Category = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 100,
+      minWidth: 100,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',

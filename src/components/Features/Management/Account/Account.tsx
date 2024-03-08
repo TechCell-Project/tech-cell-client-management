@@ -79,13 +79,15 @@ export const Account = () => {
     {
       field: 'name',
       headerName: 'Họ Và Tên',
-      width: 190,
+      minWidth: 190,
+      flex: 1,
       valueGetter: (params) => `${params.row.firstName} ${params.row.lastName}`,
     },
     {
       field: 'role',
       headerName: 'Vai Trò',
-      width: 150,
+      minWidth: 150,
+      flex: 1,
       valueGetter: (params) => getRole(params.row.role),
     },
     {
@@ -97,12 +99,14 @@ export const Account = () => {
     {
       field: 'userName',
       headerName: 'Tài khoản',
-      width: 280,
+      minWidth: 280,
+      flex: 1,
     },
     {
       field: 'status',
       headerName: 'Trạng Thái',
-      width: 180,
+      minWidth: 180,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => {
@@ -113,7 +117,8 @@ export const Account = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 200,
+      minWidth: 120,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',

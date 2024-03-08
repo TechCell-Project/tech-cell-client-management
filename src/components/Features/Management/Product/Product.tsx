@@ -76,11 +76,12 @@ export const Product = () => {
         );
       },
     },
-    { field: 'name', headerName: 'Tên Sản Phẩm', minWidth: 220 },
+    { field: 'name', headerName: 'Tên Sản Phẩm', minWidth: 260, flex: 1 },
     {
       field: 'category',
       headerName: 'Thể Loại',
-      width: 150,
+      flex: 1,
+      minWidth: 150,
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params) => params.row?.category?.name,
@@ -88,7 +89,8 @@ export const Product = () => {
     {
       field: 'variations',
       headerName: 'Biến Thể',
-      width: 150,
+      flex: 1,
+      minWidth: 150,
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params) => params.row.variations.length,
@@ -96,7 +98,8 @@ export const Product = () => {
     {
       field: 'price',
       headerName: 'Giá gốc',
-      width: 180,
+      flex: 1,
+      minWidth: 180,
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params) => {
@@ -110,8 +113,9 @@ export const Product = () => {
     {
       field: 'status',
       headerName: 'Tình Trạng',
-      width: 200,
+      minWidth: 200,
       align: 'center',
+      flex: 1,
       headerAlign: 'center',
       renderCell: (params) => (
         <ChipStatus
@@ -123,7 +127,8 @@ export const Product = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 100,
+      minWidth: 100,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',

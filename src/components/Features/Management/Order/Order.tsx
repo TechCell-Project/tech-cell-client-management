@@ -51,13 +51,15 @@ export const Order = () => {
     {
       field: 'trackingCode',
       headerName: 'Mã theo dõi (Tracking)',
-      width: 220,
+      minWidth: 220,
+      flex: 1,
       valueGetter: (params) => params.row.trackingCode,
     },
     {
       field: 'shippingOrder.toAddress.customerName',
       headerName: 'Khách hàng',
-      width: 170,
+      minWidth: 170,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params) => params.row.shippingOrder.toAddress.customerName,
@@ -67,7 +69,8 @@ export const Order = () => {
       headerName: 'Phương thức TT',
       headerAlign: 'center',
       align: 'center',
-      width: 180,
+      minWidth: 200,
+      flex: 1,
       valueGetter: (params) => {
         const value = PAYMENT_METHOD_OPTIONS.find(
           (item) => params.row.paymentOrder && params.row.paymentOrder.method === item.value,
@@ -80,7 +83,8 @@ export const Order = () => {
       headerName: 'Tổng tiền (VND)',
       headerAlign: 'center',
       align: 'center',
-      width: 170,
+      flex: 1,
+      minWidth: 170,
       valueGetter: (params) => formatWithCommas(Number(params.row.checkoutOrder.totalPrice)),
     },
     {
@@ -88,7 +92,8 @@ export const Order = () => {
       headerName: 'Trạng thái',
       headerAlign: 'center',
       align: 'center',
-      width: 220,
+      minWidth: 220,
+      flex: 1,
       renderCell: (params) => (
         <ChipStatus
           label={orderStatusMapping[String(params.row.orderStatus)]}
