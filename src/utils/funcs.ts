@@ -79,7 +79,7 @@ export const formatWithCommas = (number: number) => {
   if (number) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
   }
-  return '0₫';
+  return '0 ₫';
 };
 
 export const formatTimeCountdown = (seconds: number): string => {

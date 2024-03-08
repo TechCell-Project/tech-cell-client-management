@@ -7,6 +7,58 @@ import Avatar from '@mui/material/Avatar';
 import { formatWithCommas } from '@utils/funcs';
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from '@store/store';
+import { OrderProduct } from '@models/Order';
+import styles from '@styles/components/_common.module.scss';
+
+const InvoiceItem = ({ order }: { order: OrderProduct }) => {
+  // @ts-ignore
+  const image = order.images.find((img) => img.isThumbnail).url;
+
+  return (
+    <>
+      <Stack
+        flexDirection="row"
+        alignItems="flex-start"
+        key={order.name}
+        gap="20px"
+        width="100%"
+        mt={3}
+        mb="20px"
+      >
+        <Avatar
+          src={String(image)}
+          alt="User Avatar"
+          sx={{ height: '80px', width: '80px', borderRadius: '5px' }}
+          variant="square"
+        />
+        <Stack flexDirection="column" width="100%">
+          <Typography fontSize="16px" fontWeight={600}>
+            {order.name}
+          </Typography>
+          <Typography fontSize="15px" fontWeight={500} textTransform="capitalize">
+            {order.attributes.map((attr) => `${attr.v}${attr?.u ?? ''}`).join(', ')}
+          </Typography>
+          <Typography fontSize="14px">x{order.quantity}</Typography>
+          {order.price.special !== 0 ? (
+            <Stack flexDirection="row" gap={2} alignItems="baseline" justifyContent="flex-end">
+              <Typography fontSize="15px" fontWeight={600} textAlign="right">
+                {formatWithCommas(Number(order.price.special))}
+              </Typography>
+              <span className={styles.priceCrossedOut}>
+                {formatWithCommas(Number(order.price.base))}
+              </span>
+            </Stack>
+          ) : (
+            <Typography fontSize="15px" fontWeight={600} textAlign="right">
+              {formatWithCommas(Number(order.price.base))}
+            </Typography>
+          )}
+        </Stack>
+      </Stack>
+      <Divider sx={{ ml: 0, mr: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.1)' }} />
+    </>
+  );
+};
 
 const OrderInvoice = () => {
   const theme = useTheme();
@@ -28,10 +80,12 @@ const OrderInvoice = () => {
   const calculateTempPrice = useCallback(() => {
     // @ts-ignore
     return (
-      order?.products.reduce(
-        (acc, product) => acc + Number(product.price.base) * Number(product.quantity),
-        0,
-      ) ?? 0
+      order?.products.reduce((acc, product) => {
+        if (product.price.special !== 0) {
+          return acc + Number(product.price.special) * Number(product.quantity);
+        }
+        return acc + Number(product.price.base) * Number(product.quantity);
+      }, 0) ?? 0
     );
   }, [order]);
 
@@ -56,43 +110,7 @@ const OrderInvoice = () => {
             />
           </Typography>
         </Stack>
-        {order?.products.map((item) => {
-          // @ts-ignore
-          const image = item.images.find((img) => img.isThumbnail).url;
-          return (
-            <>
-              <Stack
-                flexDirection="row"
-                alignItems="flex-start"
-                key={item.name}
-                gap="20px"
-                width="100%"
-                mt={3}
-                mb="20px"
-              >
-                <Avatar
-                  src={String(image)}
-                  alt="User Avatar"
-                  sx={{ height: '80px', width: '80px', borderRadius: '5px' }}
-                  variant="square"
-                />
-                <Stack flexDirection="column" width="100%">
-                  <Typography fontSize="16px" fontWeight={600}>
-                    {item.name}
-                  </Typography>
-                  <Typography fontSize="15px" fontWeight={500} textTransform="capitalize">
-                    {item.attributes.map((attr) => `${attr.v}${attr?.u ?? ''}`).join(', ')}
-                  </Typography>
-                  <Typography fontSize="14px">x{item.quantity}</Typography>
-                  <Typography fontSize="15px" fontWeight={600} textAlign="right">
-                    {formatWithCommas(Number(item.price.base))}
-                  </Typography>
-                </Stack>
-              </Stack>
-              <Divider sx={{ ml: 0, mr: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.1)' }} />
-            </>
-          );
-        })}
+        {order?.products.map((item) => <InvoiceItem key={item.sku} order={item} />)}
         <Stack flexDirection="column" p="20px 0" width="100%" gap={1}>
           {renderLine('Tạm tính', formatWithCommas(calculateTempPrice()))}
           {renderLine('Phí vận chuyển', formatWithCommas(Number(order?.checkoutOrder.shippingFee)))}
