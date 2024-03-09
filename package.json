@@ -13,7 +13,7 @@
     "analyze": "cross-env ANALYZE=true next build",
     "sdk": "yarn add TechCell-Project/tech-cell-server-node-sdk",
     "docker:build": "docker compose build",
-    "docker:up": "docker compose up ",
+    "docker:up": "docker compose up",
     "prepare": "husky install"
   },
   "husky": {

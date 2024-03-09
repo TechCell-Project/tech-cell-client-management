@@ -30,18 +30,18 @@ export const orderSlice = createSlice({
       state.orders = new PagingResponse<OrderModel>();
       state.isLoading = false;
     },
-    editStatusSuccess: (state, { payload }) => {
+    editStatusSuccess: (state, { payload }: { payload: OrderModel }) => {
       const index = state.orders.data.findIndex((order) => order._id === payload._id);
       if (index !== -1) {
         state.orders.data[index] = payload;
       }
-      // @ts-ignore
-      state.order.updatedAt = payload.updatedAt;
-      // @ts-ignore
-      state.order.orderStatus = payload.orderStatus;
+      if (state.order) {
+        state.order.updatedAt = payload.updatedAt;
+        state.order.orderStatus = payload.orderStatus;
+      }
       state.isLoadingDetails = false;
     },
-    getDetailsSuccess: (state, { payload }) => {
+    getDetailsSuccess: (state, { payload }: { payload: OrderModel }) => {
       state.order = payload;
       state.isLoadingDetails = false;
     },

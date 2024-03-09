@@ -5,26 +5,29 @@ import {
   SelectInputCustom,
   TextFieldCustom,
 } from '@components/Common';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { OrderModel, PagingOrder } from '@models/Order';
 import { Paging } from '@models/Common';
-import { getAllOrder } from '@store/slices/orderSlice';
+import { editOrderStatus, getAllOrder } from '@store/slices/orderSlice';
 import { Form, Formik } from 'formik';
 import { formatWithCommas, getIndexNo, orderStatusMapping } from '@utils/funcs';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { RootRoutes } from '@constants/enum';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { PaymentStatus, RootRoutes } from '@constants/enum';
 import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Grid';
 import { ORDER_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
+import { toast } from 'react-toastify';
 
 export const Order = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { orders, isLoading } = useAppSelector((state) => state.order);
+  const { orders, isLoading, isLoadingDetails } = useAppSelector((state) => state.order);
 
   const [searchOrder, setSearchOrder] = useState<PagingOrder>(new PagingOrder());
   const [paging, setPaging] = useState<Paging>(new Paging());
@@ -37,6 +40,20 @@ export const Order = () => {
   const loadOrders = () => {
     dispatch(getAllOrder({ ...searchOrder, page: paging.page, pageSize: paging.pageSize })).then();
   };
+
+  const handleEditOrderStatus = useCallback(
+    async (id: string, status: string) => {
+      return dispatch(editOrderStatus(id, status))
+        .then()
+        .then(() => {
+          status === PaymentStatus.PROCESSING
+            ? toast.success('Xác nhận đơn hàng thành công!')
+            : toast.success('Hủy đơn hàng thành công!');
+        })
+        .catch(() => toast.error('Có lỗi xảy ra, vui lòng thử lại sau!'));
+    },
+    [dispatch],
+  );
 
   const columns: Array<GridColDef<OrderModel>> = [
     {
@@ -66,10 +83,10 @@ export const Order = () => {
     },
     {
       field: 'paymentOrder',
-      headerName: 'Phương thức TT',
+      headerName: 'Thanh toán',
       headerAlign: 'center',
       align: 'center',
-      minWidth: 200,
+      minWidth: 170,
       flex: 1,
       valueGetter: (params) => {
         const value = PAYMENT_METHOD_OPTIONS.find(
@@ -84,7 +101,7 @@ export const Order = () => {
       headerAlign: 'center',
       align: 'center',
       flex: 1,
-      minWidth: 170,
+      minWidth: 150,
       valueGetter: (params) => formatWithCommas(Number(params.row.checkoutOrder.totalPrice)),
     },
     {
@@ -104,12 +121,48 @@ export const Order = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 100,
+      width: 120,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
       getActions: (params: GridRowParams<OrderModel>) => [
-        <Tooltip title="Chi tiết" key={params.row._id}>
+        <>
+          {params.row.orderStatus === PaymentStatus.PENDING && (
+            <>
+              <Tooltip
+                title="Xác nhận"
+                key={params.row._id}
+                style={{ cursor: isLoadingDetails ? 'wait' : 'pointer' }}
+              >
+                <GridActionsCellItem
+                  icon={<CheckCircleOutlinedIcon />}
+                  onClick={() =>
+                    handleEditOrderStatus(String(params.row._id), PaymentStatus.PROCESSING)
+                  }
+                  label="Xác nhận"
+                />
+              </Tooltip>
+              <Tooltip
+                title="Hủy đơn"
+                key={params.row._id}
+                style={{ cursor: isLoadingDetails ? 'wait' : 'pointer' }}
+              >
+                <GridActionsCellItem
+                  icon={<HighlightOffOutlinedIcon />}
+                  onClick={() =>
+                    handleEditOrderStatus(String(params.row._id), PaymentStatus.CANCELLED)
+                  }
+                  label="Hủy đơn"
+                />
+              </Tooltip>
+            </>
+          )}
+        </>,
+        <Tooltip
+          title="Chi tiết"
+          key={params.row._id}
+          style={{ cursor: isLoadingDetails ? 'wait' : 'pointer' }}
+        >
           <GridActionsCellItem
             icon={<InfoOutlinedIcon />}
             onClick={() => router.push(`${RootRoutes.ORDER_ROUTE}/${params.row._id}`)}

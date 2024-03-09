@@ -1,7 +1,12 @@
 import React, { memo, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { formatDateViVN, getAddressLocation, paymentStatusMapping } from '@utils/funcs';
+import {
+  formatDateViVN,
+  getAddressLocation,
+  orderStatusMapping,
+  paymentStatusMapping,
+} from '@utils/funcs';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
@@ -10,7 +15,7 @@ import FmdGoodRoundedIcon from '@mui/icons-material/FmdGoodRounded';
 import PaymentRoundedIcon from '@mui/icons-material/PaymentRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { IconBtnCustom, TextViewCustom } from '@components/Common';
+import { ChipStatus, IconBtnCustom, TextViewCustom } from '@components/Common';
 import { getDetailsUserAccount } from '@store/slices/accountSlice';
 import Grid from '@mui/material/Grid';
 import { Address } from '@models/Account';
@@ -32,18 +37,28 @@ const OrderInfo = () => {
     <Stack width="100%" flexDirection="column" alignItems="flex-start">
       <Stack flexDirection="row" alignItems="center" gap="10px" mb={3}>
         <ContactSupportOutlinedIcon />
-        <Typography variant="h5" fontSize="1.2rem" fontWeight="600" color={theme.color.black}>
+        <Typography
+          variant="h5"
+          fontSize="1.2rem"
+          fontWeight="600"
+          color={theme.color.black}
+          mr={5}
+        >
           Thông tin
         </Typography>
+        <ChipStatus
+          label={orderStatusMapping[String(order?.orderStatus)]}
+          type={String(order?.orderStatus)}
+        />
       </Stack>
+      <Typography fontWeight={600} fontSize="16px" sx={{ opacity: 0.7, mb: 1 }}>
+        {formatDateViVN(String(order?.createdAt))}
+      </Typography>
       <Typography fontWeight={600} fontSize="14px" mb="5px">
         ID: # {order?._id}
       </Typography>
       <Typography fontWeight={600} fontSize="14px" mb="5px">
         Tracking Code: {order?.trackingCode}
-      </Typography>
-      <Typography fontWeight={600} fontSize="14px" sx={{ opacity: 0.7 }}>
-        {formatDateViVN(String(order?.createdAt))}
       </Typography>
 
       <Grid container rowSpacing={3} columnSpacing={2} mt={1}>

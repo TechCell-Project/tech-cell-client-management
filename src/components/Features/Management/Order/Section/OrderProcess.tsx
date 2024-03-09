@@ -20,7 +20,7 @@ import { editOrderStatus } from '@store/slices/orderSlice';
 enum ActionOrderType {
   ChangeByStep = 'change_by_step',
   Cancel = 'cancel',
-  Refund = 'refund',
+  // Refund = 'refund',
 }
 
 const OrderProcess = () => {
@@ -144,7 +144,7 @@ const OrderChangeStatusConfirm = memo(
     const { order } = useAppSelector((state) => state.order);
 
     const handleStatusStepByStep = () => {
-      if (activeStatus && activeStatus?.step <= 4) {
+      if (activeStatus && activeStatus?.step <= OrderProcessStep.Four_Completed) {
         const orderStatus = listStatus[activeStatus?.step].value;
         dispatch(editOrderStatus(String(order?._id), orderStatus)).then(() => handleClose());
       }
