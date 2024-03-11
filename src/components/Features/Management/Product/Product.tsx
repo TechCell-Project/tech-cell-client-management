@@ -15,7 +15,6 @@ import { formatWithCommas, getIndexNo, productStatusMapping } from '@utils/index
 import Tooltip from '@mui/material/Tooltip';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import { Paging } from '@models/Common';
 import { useRouter } from 'next/navigation';
 import { RootRoutes } from '@constants/enum';
 import { DeleteProductDialog } from './Dialog';
@@ -25,6 +24,7 @@ import Grid from '@mui/material/Grid';
 import { PRODUCT_TYPE_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
+import usePagination from '@hooks/usePagination';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
@@ -33,8 +33,13 @@ export const Product = () => {
 
   const [currentProduct, setCurrentProduct] = useState<ProductModel>();
   const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
-  const [searchProduct, setSearchProduct] = useState<PagingProduct>(new PagingProduct());
-  const [paging, setPaging] = useState<Paging>(new Paging());
+
+  const {
+    paging,
+    setPaging,
+    handleSearchSubmit,
+    searchParams: searchProduct,
+  } = usePagination<PagingProduct>(new PagingProduct());
 
   useEffect(() => {
     loadProducts();
@@ -156,13 +161,7 @@ export const Product = () => {
 
   return (
     <>
-      <Formik
-        initialValues={{ ...searchProduct }}
-        onSubmit={(values) => {
-          setSearchProduct(values);
-          setPaging((prev) => ({ ...prev, page: 0 }));
-        }}
-      >
+      <Formik initialValues={searchProduct} onSubmit={(values) => handleSearchSubmit(values)}>
         <Form>
           <Box
             sx={{

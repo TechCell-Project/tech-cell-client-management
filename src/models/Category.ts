@@ -1,5 +1,5 @@
 import { AttributeModel } from './Attribute';
-import { PagingResponse } from './Common';
+import { Paging, PagingResponse } from './Common';
 
 export class CategoryModel {
   _id: string | null = null;

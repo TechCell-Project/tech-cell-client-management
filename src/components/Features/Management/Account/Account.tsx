@@ -28,12 +28,12 @@ import { Form, Formik } from 'formik';
 import { PagingAccount, UserAccount } from '@models/Account';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { Paging } from '@models/Common';
 import {
   ACCOUNT_EMAIL_OPTIONS,
   ACCOUNT_ROLE_OPTIONS,
   ACCOUNT_STATUS_OPTIONS,
 } from '@constants/options';
+import usePagination from '@hooks/usePagination';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -44,8 +44,12 @@ export const Account = () => {
   const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
 
-  const [searchAccount, setSearchAccount] = useState<PagingAccount>(new PagingAccount());
-  const [paging, setPaging] = useState<Paging>(new Paging());
+  const {
+    paging,
+    setPaging,
+    handleSearchSubmit,
+    searchParams: searchAccount,
+  } = usePagination<PagingAccount>(new PagingAccount());
 
   useEffect(() => {
     loadUserAccount();
@@ -191,13 +195,7 @@ export const Account = () => {
 
   return (
     <>
-      <Formik
-        initialValues={{ ...searchAccount }}
-        onSubmit={(values) => {
-          setSearchAccount(values);
-          setPaging((prev) => ({ ...prev, page: 0 }));
-        }}
-      >
+      <Formik initialValues={searchAccount} onSubmit={(values) => handleSearchSubmit(values)}>
         <Form>
           <Box
             sx={{

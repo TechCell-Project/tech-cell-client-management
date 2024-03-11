@@ -5,10 +5,9 @@ import {
   SelectInputCustom,
   TextFieldCustom,
 } from '@components/Common';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { OrderModel, PagingOrder } from '@models/Order';
-import { Paging } from '@models/Common';
 import { editOrderStatus, getAllOrder } from '@store/slices/orderSlice';
 import { Form, Formik } from 'formik';
 import { formatWithCommas, getIndexNo, orderStatusMapping } from '@utils/funcs';
@@ -22,15 +21,19 @@ import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Grid';
 import { ORDER_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '@constants/options';
 import Box from '@mui/material/Box';
-import { toast } from 'react-toastify';
+import usePagination from '@hooks/usePagination';
 
 export const Order = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { orders, isLoading, isLoadingDetails } = useAppSelector((state) => state.order);
 
-  const [searchOrder, setSearchOrder] = useState<PagingOrder>(new PagingOrder());
-  const [paging, setPaging] = useState<Paging>(new Paging());
+  const {
+    paging,
+    setPaging,
+    handleSearchSubmit,
+    searchParams: searchOrder,
+  } = usePagination<PagingOrder>(new PagingOrder());
 
   useEffect(() => {
     loadOrders();
@@ -40,20 +43,6 @@ export const Order = () => {
   const loadOrders = () => {
     dispatch(getAllOrder({ ...searchOrder, page: paging.page, pageSize: paging.pageSize })).then();
   };
-
-  const handleEditOrderStatus = useCallback(
-    async (id: string, status: string) => {
-      return dispatch(editOrderStatus(id, status))
-        .then()
-        .then(() => {
-          status === PaymentStatus.PROCESSING
-            ? toast.success('Xác nhận đơn hàng thành công!')
-            : toast.success('Hủy đơn hàng thành công!');
-        })
-        .catch(() => toast.error('Có lỗi xảy ra, vui lòng thử lại sau!'));
-    },
-    [dispatch],
-  );
 
   const columns: Array<GridColDef<OrderModel>> = [
     {
@@ -137,7 +126,7 @@ export const Order = () => {
                 <GridActionsCellItem
                   icon={<CheckCircleOutlinedIcon />}
                   onClick={() =>
-                    handleEditOrderStatus(String(params.row._id), PaymentStatus.PROCESSING)
+                    dispatch(editOrderStatus(String(params.row._id), PaymentStatus.PROCESSING))
                   }
                   label="Xác nhận"
                 />
@@ -150,7 +139,7 @@ export const Order = () => {
                 <GridActionsCellItem
                   icon={<HighlightOffOutlinedIcon />}
                   onClick={() =>
-                    handleEditOrderStatus(String(params.row._id), PaymentStatus.CANCELLED)
+                    dispatch(editOrderStatus(String(params.row._id), PaymentStatus.CANCELLED))
                   }
                   label="Hủy đơn"
                 />
@@ -175,13 +164,7 @@ export const Order = () => {
 
   return (
     <>
-      <Formik
-        initialValues={{ ...searchOrder }}
-        onSubmit={(values) => {
-          setSearchOrder(values);
-          setPaging((prev) => ({ ...prev, page: 0 }));
-        }}
-      >
+      <Formik initialValues={searchOrder} onSubmit={(values) => handleSearchSubmit(values)}>
         <Form>
           <Box
             sx={{
