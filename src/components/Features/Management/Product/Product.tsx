@@ -81,7 +81,24 @@ export const Product = () => {
         );
       },
     },
-    { field: 'name', headerName: 'Tên Sản Phẩm', minWidth: 260, flex: 1 },
+    {
+      field: 'name',
+      headerName: 'Tên Sản Phẩm',
+      minWidth: 260,
+      flex: 1,
+      renderCell: ({ row }) => (
+        <b
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textUnderlineOffset: '2px',
+          }}
+          onClick={() => router.push(`${RootRoutes.PRODUCT_EDIT_ROUTE}/${row._id}`)}
+        >
+          {String(row?.name)}
+        </b>
+      ),
+    },
     {
       field: 'category',
       headerName: 'Thể Loại',
@@ -187,7 +204,7 @@ export const Product = () => {
               <Grid item md={2}>
                 <ButtonCustom
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />

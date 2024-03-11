@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { CategoryModel } from '@models/Category';
 import { AttributeModel } from '@models/Attribute';
+import { RootRoutes } from '@constants/enum';
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,21 @@ export const Category = () => {
       headerName: 'Thể loại',
       minWidth: 150,
       flex: 1,
+      renderCell: ({ row }) => (
+        <b
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textUnderlineOffset: '2px',
+          }}
+          onClick={() => {
+            handleGetDetails(row.label as string);
+            setOpenEdit(true);
+          }}
+        >
+          {row.name}
+        </b>
+      ),
     },
     {
       field: 'label',
@@ -118,7 +134,7 @@ export const Category = () => {
               <Grid item md={2}>
                 <ButtonCustom
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />

@@ -59,7 +59,18 @@ export const Order = () => {
       headerName: 'Mã theo dõi (Tracking)',
       minWidth: 220,
       flex: 1,
-      valueGetter: (params) => params.row.trackingCode,
+      renderCell: ({ row }) => (
+        <b
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textUnderlineOffset: '2px',
+          }}
+          onClick={() => router.push(`${RootRoutes.ORDER_ROUTE}/${row._id}`)}
+        >
+          {row.trackingCode}
+        </b>
+      ),
     },
     {
       field: 'shippingOrder.toAddress.customerName',
@@ -110,7 +121,7 @@ export const Order = () => {
     {
       field: 'options',
       headerName: 'Thao Tác',
-      width: 120,
+      width: 160,
       align: 'center',
       headerAlign: 'center',
       type: 'actions',
@@ -206,7 +217,7 @@ export const Order = () => {
               <Grid item md={2}>
                 <ButtonCustom
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />

@@ -62,6 +62,21 @@ export const Attribute = () => {
       headerName: 'Thông số',
       minWidth: 250,
       flex: 1,
+      renderCell: ({ row }) => (
+        <b
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textUnderlineOffset: '2px',
+          }}
+          onClick={() => {
+            handleGetDetails(row._id as string);
+            setIsOpen((prev) => ({ ...prev, openEdit: true }));
+          }}
+        >
+          {row.name}
+        </b>
+      ),
     },
     {
       field: 'label',
@@ -144,7 +159,7 @@ export const Attribute = () => {
               <Grid item md={2}>
                 <ButtonCustom
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />

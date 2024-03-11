@@ -85,7 +85,22 @@ export const Account = () => {
       headerName: 'Họ Và Tên',
       minWidth: 190,
       flex: 1,
-      valueGetter: (params) => `${params.row.firstName} ${params.row.lastName}`,
+      // valueGetter: (params) => `${params.row.firstName} ${params.row.lastName}`,
+      renderCell: ({ row }) => (
+        <b
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textUnderlineOffset: '2px',
+          }}
+          onClick={() => {
+            setOpenDetails(true);
+            loadDataDetails(row._id as string);
+          }}
+        >
+          {`${row.firstName} ${row.lastName}`}
+        </b>
+      ),
     },
     {
       field: 'role',
@@ -231,7 +246,7 @@ export const Account = () => {
               <Grid item md={12} textAlign="right">
                 <ButtonCustom
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   content="Tìm kiếm"
                   styles={{ padding: '6px 20px !important' }}
                 />
