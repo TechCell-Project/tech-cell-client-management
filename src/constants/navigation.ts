@@ -19,24 +19,27 @@ export const LIST_PRODUCT_NAV = [
   { name: 'Thông số', to: RootRoutes.ATTRIBUTE_ROUTE, icon: AttributionRoundedIcon },
 ];
 
-const checkIsManager = () => getCurrentUserRole() === Roles.Manager;
-export const LIST_NAV_MAIN = [
+export const STAFF_ROUTES = [
   { name: 'Trang chủ', to: RootRoutes.DASHBOARD_ROUTE, icon: HouseRoundedIcon },
-  checkIsManager() && {
-    name: 'Tài khoản',
-    to: RootRoutes.ACCOUNT_ROUTE,
-    icon: SwitchAccountRoundedIcon,
+  {
+    name: 'Đơn hàng',
+    to: RootRoutes.ORDER_ROUTE,
+    icon: ShoppingCartRoundedIcon,
   },
-  !checkIsManager() && {
+  {
     name: 'Sản phẩm',
     isCollapse: true,
     icon: BurstModeRoundedIcon,
     listChildren: LIST_PRODUCT_NAV,
   },
-  !checkIsManager() && {
-    name: 'Đơn hàng',
-    to: RootRoutes.ORDER_ROUTE,
-    icon: ShoppingCartRoundedIcon,
+];
+
+export const MANAGER_ROUTES = [
+  { name: 'Trang chủ', to: RootRoutes.DASHBOARD_ROUTE, icon: HouseRoundedIcon },
+  {
+    name: 'Tài khoản',
+    to: RootRoutes.ACCOUNT_ROUTE,
+    icon: SwitchAccountRoundedIcon,
   },
 ];
 
