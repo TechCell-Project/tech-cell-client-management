@@ -6,6 +6,7 @@ import { AuthSlice, LoginModel } from '@models/Auth';
 import { UserAccount } from '@models/Account';
 import { getProfile, patchProfileInfo } from '@services/profileService';
 import { getAccessToken, getRefreshToken } from '@utils/local';
+import { Roles } from '@constants/enum';
 
 const initialState: AuthSlice = {
   user: new UserAccount(),
@@ -63,7 +64,7 @@ export const login = (payload: LoginModel) => async (dispatch: Dispatch) => {
   try {
     const response = await fetchLogin(payload);
 
-    if (response.data.role !== 'User') {
+    if (response.data.role !== Roles.User) {
       localStorage.setItem('user', JSON.stringify(response.data));
       dispatch(loginSuccess(response.data));
       toast.success('Đăng nhập thành công!');

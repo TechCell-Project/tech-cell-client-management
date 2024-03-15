@@ -42,16 +42,17 @@ const NavWithAction = ({
 };
 
 const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
-  const theme = useTheme();
-  const dispatch = useAppDispatch();
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
   const [openChangePass, setOpenChangePass] = useState<boolean>(false);
   const [openProfile, setOpenProfile] = useState<boolean>(false);
 
+  const theme = useTheme();
+  const dispatch = useAppDispatch();
+
   const renderLinkNav = () => {
     return list?.map((nav: any, i: number) => {
       const renderItem = () => {
-        if (!nav.isCollapse && !nav.isLogout && !nav.isChangePass && !nav.isProfile) {
+        if (nav && !nav.isCollapse && !nav.isLogout && !nav.isChangePass && !nav.isProfile) {
           return (
             <Link href={`${nav.to}`} style={{ width: '100%' }} shallow>
               <ListItemButton selected={pathname === String(nav.to)} sx={{ borderRadius: '10px' }}>
@@ -62,13 +63,13 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
               </ListItemButton>
             </Link>
           );
-        } else if (nav.isLogout) {
+        } else if (nav && nav.isLogout) {
           return <NavWithAction item={nav} handleClick={() => dispatch(logout())} />;
-        } else if (nav.isChangePass) {
+        } else if (nav && nav.isChangePass) {
           return <NavWithAction item={nav} handleClick={() => setOpenChangePass(true)} />;
-        } else if (nav.isProfile) {
+        } else if (nav && nav.isProfile) {
           return <NavWithAction item={nav} handleClick={() => setOpenProfile(true)} />;
-        } else if (nav.isCollapse) {
+        } else if (nav && nav.isCollapse) {
           return (
             <>
               <ListItemButton
@@ -115,7 +116,7 @@ const ListNavItem: FC<Props> = ({ list, pathname, subHeader }) => {
           disablePadding
           key={i}
           sx={{
-            flexDirection: nav.listChildren ? 'column' : 'row',
+            flexDirection: nav?.listChildren ? 'column' : 'row',
             transition: 'all linear 0.3s',
           }}
         >

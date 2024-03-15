@@ -8,7 +8,8 @@ import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import AttributionRoundedIcon from '@mui/icons-material/AttributionRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import { RootRoutes } from '@constants/enum';
+import { Roles, RootRoutes } from '@constants/enum';
+import { getCurrentUserRole } from '@utils/local';
 
 export const DRAWER_WIDTH = 260;
 
@@ -18,20 +19,21 @@ export const LIST_PRODUCT_NAV = [
   { name: 'Thông số', to: RootRoutes.ATTRIBUTE_ROUTE, icon: AttributionRoundedIcon },
 ];
 
+const checkIsManager = () => getCurrentUserRole() === Roles.Manager;
 export const LIST_NAV_MAIN = [
   { name: 'Trang chủ', to: RootRoutes.DASHBOARD_ROUTE, icon: HouseRoundedIcon },
-  {
+  checkIsManager() && {
+    name: 'Tài khoản',
+    to: RootRoutes.ACCOUNT_ROUTE,
+    icon: SwitchAccountRoundedIcon,
+  },
+  !checkIsManager() && {
     name: 'Sản phẩm',
     isCollapse: true,
     icon: BurstModeRoundedIcon,
     listChildren: LIST_PRODUCT_NAV,
   },
-  {
-    name: 'Tài khoản',
-    to: RootRoutes.ACCOUNT_ROUTE,
-    icon: SwitchAccountRoundedIcon,
-  },
-  {
+  !checkIsManager() && {
     name: 'Đơn hàng',
     to: RootRoutes.ORDER_ROUTE,
     icon: ShoppingCartRoundedIcon,

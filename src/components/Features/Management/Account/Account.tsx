@@ -10,19 +10,12 @@ import {
 } from '@components/Common';
 import { getAllUserAccount, getDetailsUserAccount } from '@store/slices/accountSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import {
-  getRole,
-  getCurrentUserId,
-  isRoleAccepted,
-  getIndexNo,
-  getStatusAccount,
-} from '@utils/index';
+import { getRole, getCurrentUserId, getIndexNo, getStatusAccount } from '@utils/index';
 import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
-import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { ConfirmBlock, ChangeRole, DetailsAccount } from './Dialog';
+import { ConfirmBlock, DetailsAccount } from './Dialog';
 import Tooltip from '@mui/material/Tooltip';
 import { Form, Formik } from 'formik';
 import { PagingAccount, UserAccount } from '@models/Account';
@@ -34,6 +27,7 @@ import {
   ACCOUNT_STATUS_OPTIONS,
 } from '@constants/options';
 import usePagination from '@hooks/usePagination';
+import { Roles } from '@constants/enum';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +35,7 @@ export const Account = () => {
 
   const [dataRowSelected, setDataRowSelected] = useState<UserAccount>();
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState<boolean>(false);
-  const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
+  // const [openChangeRole, setOpenChangeRole] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
 
   const {
@@ -152,21 +146,21 @@ export const Account = () => {
             label="Chi tiết"
           />
         </Tooltip>,
-        <Tooltip title="Thay đổi vai trò" key={params.row._id}>
-          <span>
-            <GridActionsCellItem
-              icon={<ChangeCircleOutlinedIcon />}
-              onClick={() => {
-                setOpenChangeRole(true);
-                setDataRowSelected(params.row);
-              }}
-              label="Đổi vai trò"
-              disabled={
-                params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
-              }
-            />
-          </span>
-        </Tooltip>,
+        // <Tooltip title="Thay đổi vai trò" key={params.row._id}>
+        //   <span>
+        //     <GridActionsCellItem
+        //       icon={<ChangeCircleOutlinedIcon />}
+        //       onClick={() => {
+        //         setOpenChangeRole(true);
+        //         setDataRowSelected(params.row);
+        //       }}
+        //       label="Đổi vai trò"
+        //       disabled={
+        //         params.row._id === getCurrentUserId() || !isRoleAccepted(params.row.role as string)
+        //       }
+        //     />
+        //   </span>
+        // </Tooltip>,
         <>
           {!params.row?.block?.isBlocked ? (
             <Tooltip title="Chặn">
@@ -179,8 +173,7 @@ export const Account = () => {
                   }}
                   label="Chặn tài khoản"
                   disabled={
-                    params.row._id === getCurrentUserId() ||
-                    !isRoleAccepted(params.row.role as string)
+                    params.row._id === getCurrentUserId() || params.row.role === Roles.Manager
                   }
                 />
               </span>
@@ -196,8 +189,7 @@ export const Account = () => {
                   }}
                   label="Mở khóa tài khoản"
                   disabled={
-                    params.row._id === getCurrentUserId() ||
-                    !isRoleAccepted(params.row.role as string)
+                    params.row._id === getCurrentUserId() || params.row.role === Roles.Manager
                   }
                 />
               </span>
@@ -269,13 +261,13 @@ export const Account = () => {
         <DetailsAccount isOpen={openDetails} handleClose={() => setOpenDetails(false)} />
       )}
 
-      {openChangeRole && (
-        <ChangeRole
-          isOpen={openChangeRole}
-          handleClose={() => setOpenChangeRole(false)}
-          dataAccount={dataRowSelected as UserAccount}
-        />
-      )}
+      {/*{openChangeRole && (*/}
+      {/*  <ChangeRole*/}
+      {/*    isOpen={openChangeRole}*/}
+      {/*    handleClose={() => setOpenChangeRole(false)}*/}
+      {/*    dataAccount={dataRowSelected as UserAccount}*/}
+      {/*  />*/}
+      {/*)}*/}
 
       {openDeleteConfirm && (
         <ConfirmBlock

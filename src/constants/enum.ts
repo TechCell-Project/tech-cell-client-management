@@ -15,6 +15,8 @@ export enum Roles {
   Admin = 'Admin',
   Mod = 'Mod',
   SuperAdmin = 'SuperAdmin',
+  Staff = 'Staff',
+  Manager = 'Manager',
 }
 
 export enum AccountStatus {

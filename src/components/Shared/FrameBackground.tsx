@@ -51,7 +51,7 @@ export const FrameBackground: FC = memo(() => {
   };
 
   const renderAddButton = () => {
-    if (pathname === RootRoutes.ACCOUNT_ROUTE && getCurrentUserRole() === Roles.SuperAdmin) {
+    if (pathname === RootRoutes.ACCOUNT_ROUTE && getCurrentUserRole() === Roles.Manager) {
       return handleClick(() => setIsOpen((prev) => ({ ...prev, openRegister: true })));
     } else if (pathname === RootRoutes.ATTRIBUTE_ROUTE) {
       return handleClick(() => setIsOpen((prev) => ({ ...prev, openAttribute: true })));

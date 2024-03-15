@@ -6,7 +6,6 @@ import {
   ProductStatus,
   Roles,
 } from '@constants/enum';
-import { getCurrentUserRole } from '@utils/local';
 import { Address } from '@models/Account';
 import { District, Province, Ward } from '@models/Location';
 
@@ -23,13 +22,11 @@ export const getCountImage = (images: ImageModel[], isThumbnail: boolean = false
 export const getRole = (role?: string | null) => {
   switch (role) {
     case Roles.User:
-      return 'Khách hàng';
-    case Roles.Admin:
-      return 'Quản trị viên';
-    case Roles.Mod:
-      return 'Điều hành viên';
-    case Roles.SuperAdmin:
-      return 'Quản lý';
+      return 'Khách hàng - User';
+    case Roles.Staff:
+      return 'Nhân viên - Staff';
+    case Roles.Manager:
+      return 'Quản lý - Manager';
     default:
       return '';
   }
@@ -104,21 +101,6 @@ export const formatDateViVN = (dateString: string) => {
     return dateFormatter.format(inputDate);
   } catch {
     return '';
-  }
-};
-
-export const isRoleAccepted = (role?: string): boolean => {
-  const currentRole = getCurrentUserRole();
-
-  switch (currentRole) {
-    case Roles.SuperAdmin:
-      return true;
-    case Roles.Admin:
-      return role !== getRole(Roles.SuperAdmin) && role !== getRole(Roles.Admin);
-    case Roles.Mod:
-      return role === getRole(Roles.User);
-    default:
-      return false;
   }
 };
 

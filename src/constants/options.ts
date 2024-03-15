@@ -15,8 +15,10 @@ import { TOptions, TOrderStatusOptions } from '@interface/common';
 export const ROLE_OPTIONS: TOptions[] = [
   { value: '', name: 'Không' },
   { value: Roles.User, name: 'Khách hàng' },
-  { value: Roles.Mod, name: 'Điều hành viên' },
-  { value: Roles.Admin, name: 'Quản trị viên' },
+  { value: Roles.Staff, name: 'Nhân viên' },
+  { value: Roles.Manager, name: 'Quản lý' },
+  // { value: Roles.Mod, name: 'Điều hành viên' },
+  // { value: Roles.Admin, name: 'Quản trị viên' },
 ];
 
 export const STATUS_PRODUCT_OPTIONS: TOptions[] = [
@@ -40,9 +42,8 @@ export const ACCOUNT_STATUS_OPTIONS: TOptions[] = [
 
 export const ACCOUNT_ROLE_OPTIONS: TOptions[] = [
   { value: Roles.User, name: 'Khách hàng' },
-  { value: Roles.Mod, name: 'Điều hành viên' },
-  { value: Roles.Admin, name: 'Quản trị viên' },
-  { value: Roles.SuperAdmin, name: 'Quản lý' },
+  { value: Roles.Staff, name: 'Nhân viên' },
+  { value: Roles.Manager, name: 'Quản lý' },
 ];
 
 export const ACCOUNT_EMAIL_OPTIONS: TOptions[] = [
