@@ -14,7 +14,7 @@ import { TOptions, TOrderStatusOptions } from '@interface/common';
 
 export const ROLE_OPTIONS: TOptions[] = [
   { value: '', name: 'Không' },
-  { value: Roles.User, name: 'Khách hàng' },
+  // { value: Roles.User, name: 'Khách hàng' },
   { value: Roles.Staff, name: 'Nhân viên' },
   { value: Roles.Manager, name: 'Quản lý' },
   // { value: Roles.Mod, name: 'Điều hành viên' },

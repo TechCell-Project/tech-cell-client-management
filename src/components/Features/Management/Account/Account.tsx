@@ -15,6 +15,7 @@ import { GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { ConfirmBlock, DetailsAccount } from './Dialog';
 import Tooltip from '@mui/material/Tooltip';
 import { Form, Formik } from 'formik';
@@ -28,6 +29,7 @@ import {
 } from '@constants/options';
 import usePagination from '@hooks/usePagination';
 import { Roles } from '@constants/enum';
+import { Typography } from '@mui/material';
 
 export const Account = () => {
   const dispatch = useAppDispatch();
@@ -108,6 +110,12 @@ export const Account = () => {
       headerName: 'Email',
       minWidth: 300,
       flex: 1,
+      renderCell: ({ row }) => (
+        <Typography fontSize={14} display="flex" alignItems="center" gap={2}>
+          {row.email}{' '}
+          {row?.emailVerified && <CheckCircleRoundedIcon fontSize="small" color="secondary" />}
+        </Typography>
+      ),
     },
     {
       field: 'userName',

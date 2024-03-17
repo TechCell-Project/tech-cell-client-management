@@ -8,8 +8,7 @@ import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import AttributionRoundedIcon from '@mui/icons-material/AttributionRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import { Roles, RootRoutes } from '@constants/enum';
-import { getCurrentUserRole } from '@utils/local';
+import { RootRoutes } from '@constants/enum';
 
 export const DRAWER_WIDTH = 260;
 

@@ -12,9 +12,9 @@ export enum RootRoutes {
 
 export enum Roles {
   User = 'User',
-  Admin = 'Admin',
-  Mod = 'Mod',
-  SuperAdmin = 'SuperAdmin',
+  // Admin = 'Admin',
+  // Mod = 'Mod',
+  // SuperAdmin = 'SuperAdmin',
   Staff = 'Staff',
   Manager = 'Manager',
 }
