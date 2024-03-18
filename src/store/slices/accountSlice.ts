@@ -10,6 +10,8 @@ import {
 import { PagingResponse } from '@models/Common';
 import { RegisterModel } from '@models/Auth';
 import { AccountSlice, PagingAccount, UserAccount } from '@models/Account';
+import { toast } from 'react-toastify';
+import { HttpStatusCode } from 'axios';
 
 const initialState: AccountSlice = {
   accounts: new PagingResponse<UserAccount>(),
@@ -92,10 +94,17 @@ export const createNewAccount = (payload: RegisterModel) => async (dispatch: Dis
   try {
     const response = await postAccount(payload);
     if (response.data) {
-      dispatch(createAccountSuccess(response.data));
+      dispatch(createAccountSuccess());
+      toast.success('Thêm mới tài khoản thành công!');
     }
   } catch (error) {
     console.log(error);
+    // @ts-ignore
+    if (error?.response?.status === HttpStatusCode.UnprocessableEntity) {
+      toast.error('Email đã được sử dụng! Thêm mới tài khoản thất bại!');
+    } else {
+      toast.error('Thêm mới tài khoản thất bại!');
+    }
     dispatch(requestAccountFailure());
   }
 };

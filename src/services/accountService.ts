@@ -13,7 +13,8 @@ export const getAllAccounts = (payload: PagingAccount) => {
 export const getDetailsAccount = (id: string) =>
   instance.get<UserAccount>(`${USERS_ENDPOINT}/${id}`);
 
-export const postAccount = (payload: RegisterModel) => instance.post(`${USERS_ENDPOINT}`, payload);
+export const postAccount = (payload: RegisterModel) =>
+  instance.post<UserAccount>(`${USERS_ENDPOINT}`, payload);
 
 export const patchBlockAccount = (id: string) => instance.patch(`${USERS_ENDPOINT}/${id}/block`);
 
