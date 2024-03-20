@@ -35,7 +35,7 @@ interface Props {
 interface TextFieldProps extends Props {
   field: FieldInputProps<string>;
   meta: FieldMetaProps<string>;
-  setFieldValue: (name: string, value: string) => void;
+  setFieldValue: (name: string, value: string | number) => void;
 }
 
 const TextFieldComponent = (props: TextFieldProps) => {
@@ -68,13 +68,16 @@ const TextFieldComponent = (props: TextFieldProps) => {
     ((e: ChangeEvent<HTMLInputElement>) => {
       e?.persist?.();
       setValue(e.target.value);
+
+      const value = type === 'number' ? Number(e.target.value) : e.target.value;
+
       if (!notDelay) {
         if (t) {
           clearTimeout(t);
         }
-        setT(setTimeout(() => setFieldValue(name, e.target.value ?? null), debounceTime));
+        setT(setTimeout(() => setFieldValue(name, value ?? null), debounceTime));
       } else {
-        setFieldValue(name, e.target.value ?? null);
+        setFieldValue(name, value ?? null);
       }
     });
 

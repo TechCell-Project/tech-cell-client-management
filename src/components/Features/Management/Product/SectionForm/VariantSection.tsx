@@ -55,7 +55,6 @@ export const VariantSection = memo(() => {
                           name={`variations[${i}].stock`}
                           label="Số lượng"
                           type="number"
-                          handleChange={({ target }) => setFieldValue(target.name, +target.value)}
                         />
                       </Stack>
                     </Grid>

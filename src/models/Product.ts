@@ -8,6 +8,7 @@ export class PagingProduct extends Paging {
 }
 
 type PriceValue = number | string | null;
+
 export class PriceModel {
   base: PriceValue = null;
   special: PriceValue = null;
@@ -38,6 +39,7 @@ export class ProductRequest {
   generalImages?: Array<ImageModel> = new Array<ImageModel>();
   descriptionImages?: Array<ImageModel> = new Array<ImageModel>();
   listTempAtt?: Array<AttributeDynamics> = new Array<AttributeDynamics>();
+  listAttributePlus?: Array<AttributeDynamics> = [];
 }
 
 export class ProductModel extends ProductRequest {

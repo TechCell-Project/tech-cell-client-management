@@ -41,6 +41,12 @@ export const ProductCreate = () => {
       if (values.listTempAtt) {
         delete values.listTempAtt;
       }
+
+      if (values.listAttributePlus && values.listAttributePlus.length > 0) {
+        values.generalAttributes?.push(...values.listAttributePlus);
+        delete values.listAttributePlus;
+      }
+
       const response = await dispatch(createNewProduct(values));
 
       if (response?.success) {

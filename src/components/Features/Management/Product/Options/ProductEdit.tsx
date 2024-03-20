@@ -16,6 +16,7 @@ import { tabsProduct } from './ProductCreate';
 import { toast } from 'react-toastify';
 import { RootRoutes } from '@constants/enum';
 import { requestProductValidate } from '@validate/product.validate';
+import { AttributeDynamics } from '@models/Attribute';
 
 export const ProductEdit = ({ id }: { id: string }) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -48,16 +49,33 @@ export const ProductEdit = ({ id }: { id: string }) => {
         return;
       }
 
-      const response = await dispatch(editProduct(values, String(values._id)));
+      let attributes: AttributeDynamics[] = [];
+
+      if (values.listAttributePlus && values.generalAttributes) {
+        attributes = [...values?.generalAttributes, ...values.listAttributePlus];
+      }
+
+      const response = await dispatch(
+        editProduct(
+          {
+            ...values,
+            generalAttributes: attributes,
+          },
+          String(values._id),
+        ),
+      );
 
       if (response?.success) {
         toast.success('Chỉnh sửa sản phẩm thành công!');
         router.push(RootRoutes.PRODUCT_ROUTE);
       } else {
-        toast.error('Có lỗi xảy ra, Chỉnh sửa thất bại!');
+        // @ts-ignore
+        if (response?.error && response?.error?.response?.data.message?.startsWith('Duplicate')) {
+          toast.error('Chỉnh sửa thất bại, thuộc tính bị trùng lặp!');
+        } else if (!response?.success) {
+          toast.error('Có lỗi xảy ra, Chỉnh sửa thất bại!');
+        }
       }
-    } catch (error) {
-      toast.error('Có lỗi xảy ra, chỉnh sửa thất bại!');
     } finally {
       setSubmitting(false);
     }
